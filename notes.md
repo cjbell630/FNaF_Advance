@@ -69,7 +69,7 @@ seconds, they will attack anyway.
 
 #### Dormant Phase
 
-On a successful movement opportunity, a countdown begins. The countdown lasts `100 * (10 - lvl)` (at 60fps)
+On a successful movement opportunity, a countdown begins. The countdown lasts `100 * (10 - lvl)` frames (at 60fps)
 
 (yes, it hits 0 at night 10, but Freddy never goes past level 4). But on custom nights, (I assume), it has a minimum
 value of 0 (it doesn't go negative or anything)
@@ -112,7 +112,7 @@ Freddy map:
 
 ## Questions
 
-* Does foxy start at phase 1 or 0?
+* Does Foxy start at phase 1 or 0?
 * Can the animatronics return to the stage?
 * What does the light do to Chica and Bonnie
 * Where does Freddy start when entering attack mode?
