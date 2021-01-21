@@ -28,18 +28,18 @@
 ### Power decrease interval per night:
 
 | <ins>Night</ins>           | -1% every ___ seconds |
-|----------------------------|-----------------------|
+|----------------------------|:---------------------:|
 | **Night 2**                |           6           |
 | **Night 3**                |           5           |
 | **Night 4**                |           4           |
 | **Night 5, 6, and Custom** |           3           |
 
 ## Movement
+### Basic movement:
 
 Every ___ seconds, an imaginary D20 is rolled once (separate for each animatronic). The resulting number is then
 compared to each animatronic's AI level. Movement will happen if `lvl >= rnd`.
 
-#### Basic movement:
 |                 |            <ins>**Freddy**</ins>            |      <ins>**Bonnie**</ins>      |            <ins>**Chica**</ins>           |                   <ins>**Foxy**</ins>                  |
 |-----------------|:-------------------------------------------:|:-------------------------------:|:-----------------------------------------:|:------------------------------------------------------:|
 | **Frequency:**  |                     3.02s                   |              4.97s              |                   4.98s                   |                          5.08s                         |
