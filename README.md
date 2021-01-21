@@ -10,6 +10,11 @@ Before playing this game, please support the original developers by buying the o
 
 Any files not containing any code written by me should have a file called `.SOURCE.md` in the same directory as them. That will have the source for the corresponding file and an explanation of which file(s) this applies to.
 
+## Big thanks to the following sources! (Some in advance):
+* [Scott Cawthon][4] / [Five Night's at Freddy's (PC)][3]
+* J Vijn ([excellent and extrememly helful GBA tutorial][5]
+* JetBrains ([CLion][6] is awesome)
+* Tech Rules (This would've been immensely difficult without his [animatronic AI explanation][7])
 
 GitHub todo: (things to do that really only affect the GitHub page)
 * Copyright info in README
@@ -18,3 +23,7 @@ GitHub todo: (things to do that really only affect the GitHub page)
 [1]: https://github.com/cjbell630/FNaF_Advance/releases/latest
 [2]: /out/FNaF_Advance.gba
 [3]: https://store.steampowered.com/app/319510/Five_Nights_at_Freddys/
+[4]: http://www.scottgames.com/
+[5]: https://www.coranac.com/tonc/text/toc.htm
+[6]: https://www.jetbrains.com/clion/
+[7]: https://youtu.be/ujg0Y5IziiY
