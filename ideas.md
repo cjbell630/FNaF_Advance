@@ -21,3 +21,7 @@ FnaF theoretical gameplay loop:
 	* So the office should be 360px wide and 160px tall
 	* Flat horizontal scrolling looks fine at that resolution
 	* Looks alright at 4bpp 16 colors, should improve if I remove the buttons and fan and make them sprites
+
+
+Should I use listeners for events, and have a central timer time everything? Should I create one animatronic class and have other animatronics extend it? 
+Here's a resource: https://www.pvv.ntnu.no/~hakonhal/main.cgi/c/classes/
