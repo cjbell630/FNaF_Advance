@@ -7,7 +7,7 @@
 ### Levels at the beginning of each night:
 
 | ↓Night &#124; Animatronic→ | Freddy | Bonnie | Chica | Foxy |
-|:--------------------------:|:------:|:------:|:-----:|:----:|
+|----------------------------|:------:|:------:|:-----:|:----:|
 | Night 1                    |    0   |    0   |   0   |   0  |
 | Night 2                    |    0   |    3   |   1   |   1  |
 | Night 3                    |    1   |    0   |   5   |   2  |
@@ -108,7 +108,7 @@ Every time cam 2B is checked, there is a 1 in 100,000 chance the golden freddy p
 
 Freddy map:
 
-`Stage -> 4B -> `
+`Stage -> 4B -> ???`
 
 ## Questions
 
