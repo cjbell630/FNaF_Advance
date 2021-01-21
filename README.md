@@ -10,12 +10,15 @@ Before playing this game, please support the original developers by buying the o
 
 Any files not containing any code written by me should have a file called `.SOURCE.md` in the same directory as them. That will have the source for the corresponding file and an explanation of which file(s) this applies to.
 
-## Big thanks to the following sources! (Some in advance):
+## Big thanks to the following sources! (some in advance):
 * [Scott Cawthon][4] / [Five Night's at Freddy's (PC)][3]
 * J Vijn ([excellent and extrememly helful GBA tutorial][5]
 * JetBrains ([CLion][6] is awesome)
 * Tech Rules (This would've been immensely difficult without his [animatronic AI explanation][7])
 
+
+
+### Other
 GitHub todo: (things to do that really only affect the GitHub page)
 * Copyright info in README
 * Download instructions for people who don't know GitHub
