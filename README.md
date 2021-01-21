@@ -14,8 +14,8 @@ Any files not containing any code written by me should have a file called `.SOUR
 * [Scott Cawthon][4] / [Five Night's at Freddy's (PC)][3]
 * J Vijn ([excellent and extrememly helful GBA tutorial][5]
 * JetBrains ([CLion][6] is awesome)
-* Tech Rules (This would've been immensely difficult without his [animatronic AI explanation][7])
-
+* Tech Rules (This would've been immensely difficult and confusing without his [animatronic AI explanation][7])
+* [Spriter's Resource][8]
 
 
 ### Other
@@ -30,3 +30,4 @@ GitHub todo: (things to do that really only affect the GitHub page)
 [5]: https://www.coranac.com/tonc/text/toc.htm
 [6]: https://www.jetbrains.com/clion/
 [7]: https://youtu.be/ujg0Y5IziiY
+[8]: https://www.spriters-resource.com/pc_computer/fivenightsatfreddys/
