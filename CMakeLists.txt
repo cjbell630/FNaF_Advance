@@ -5,4 +5,5 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(FNaF_Advance
         source/main.c
-        )
+        source/menu.c
+        source/init.c source/init.c source/init.c source/game.c source/game.h)

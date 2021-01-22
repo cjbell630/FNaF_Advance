@@ -80,6 +80,8 @@
 #define obj_mem            ((OBJ_ATTR*)MEM_OAM)
 #define obj_aff_mem        ((OBJ_AFFINE*)MEM_OAM)
 
+// --- Other ---
+#define GAMEPAK_RAM  ((u8*)0x0E000000)
 
 // === REGISTER LIST ==================================================
 

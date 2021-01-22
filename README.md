@@ -16,6 +16,7 @@ Any files not containing any code written by me should have a file called `.SOUR
 * JetBrains ([CLion][6] is awesome)
 * Tech Rules (This would've been immensely difficult and confusing without his [animatronic AI explanation][7])
 * [Spriter's Resource][8]
+* How to save data to cartridge [link][9]
 
 
 ### Other
@@ -31,3 +32,4 @@ GitHub todo: (things to do that really only affect the GitHub page)
 [6]: https://www.jetbrains.com/clion/
 [7]: https://youtu.be/ujg0Y5IziiY
 [8]: https://www.spriters-resource.com/pc_computer/fivenightsatfreddys/
+[9]: https://gbadev.org/docs.php?showinfo=13

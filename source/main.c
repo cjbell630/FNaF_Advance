@@ -7,15 +7,18 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "../include/tonc/toolbox.h"
+#include "../include/DWedit//debug.h"
+
 #include "../assets/images/backgrounds/office/office.h"
 #include "../assets/images/sprites/buttons/buttons.h"
 #include "../assets/images/sprites/buttons/buttons_apower.h"
 
-#include "../include/DWedit//debug.h"
+#include "menu.h"
+#include "init.h"
 
-OBJ_ATTR obj_buffer[128];
-OBJ_AFFINE *obj_aff_buffer = (OBJ_AFFINE *) obj_buffer;
+//OBJ_AFFINE *obj_aff_buffer = (OBJ_AFFINE *) obj_buffer;
 
 
 int scroll_test() {
@@ -33,7 +36,7 @@ int scroll_test() {
     //SPRITES
     u32 tid = 0, pb = 0;        // tile id, pal-bank
 
-    OBJ_ATTR *l_button = &obj_buffer[0];
+    OBJ_ATTR *l_button = &OBJ_BUFFER[0];
     obj_set_attr(l_button,
                  ATTR0_TALL | ATTR0_4BPP,
                  ATTR1_SIZE_32x64,                    // 16x16p,
@@ -69,7 +72,7 @@ int scroll_test() {
 
         obj_set_pos(l_button, BUTTON_HORIZ_OFFSET - x, y + BUTTON_VERT_OFFSET);
         l_button->attr2 = ATTR2_BUILD(tid, pb, 0);
-        oam_copy(oam_mem, obj_buffer, 128);
+        oam_copy(oam_mem, OBJ_BUFFER, 128);
     }
 
     return 0;
@@ -94,7 +97,7 @@ int main() {
     obj_test();
      **/
 
-    memcpy(&tile_mem[4][0], buttonsTiles, fnaf_button_abTilesLen);
+    /*memcpy(&tile_mem[4][0], buttonsTiles, fnaf_button_abTilesLen);
     memcpy(&pal_obj_mem[0], buttonsPal, fnaf_button_abPalLen);
     memcpy(&pal_obj_mem[16], buttons_apowerPal, fnaf_button_ab_apowerPalLen);
     oam_init(obj_buffer, 128);
@@ -112,10 +115,11 @@ int main() {
     REG_BG0CNT = BG_CBB(0) | BG_SBB(30) | BG_4BPP | BG_REG_64x32;
     REG_DISPCNT = DCNT_OBJ | DCNT_BG0 | DCNT_OBJ_1D |
                   DCNT_MODE0; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
+                  */
 
-
-    scroll_test();
-
+    //scroll_test();
+    init_menu();
+    activate_menu();
     while (1);
 
     return 0;

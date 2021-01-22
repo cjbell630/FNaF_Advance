@@ -14,7 +14,9 @@ PATH := $(DEVKITARM)/bin:$(PATH)
 PROJ    := FNaF_Advance
 TITLE   := $(PROJ)
 
-COBJS   := source/main.o include/tonc/toolbox.o assets/images/backgrounds/office/office.o assets/images/sprites/buttons/buttons.o assets/images/sprites/buttons/buttons_apower.o
+COBJS   := source/main.o include/tonc/toolbox.o assets/images/backgrounds/office/office.o \
+			assets/images/sprites/buttons/buttons.o assets/images/sprites/buttons/buttons_apower.o \
+			source/init.o source/menu.o assets/images/backgrounds/menu/menu.o source/game.o
 
 SOBJS   := include/DWedit/debug.o
 
