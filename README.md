@@ -16,12 +16,12 @@ Any files not containing any code written by me should have a file called `.SOUR
 * JetBrains ([CLion][6] is awesome)
 * Tech Rules (This would've been immensely difficult and confusing without his [animatronic AI explanation][7])
 * [Spriter's Resource][8]
-* How to save data to cartridge [link][9]
+* [How to use save-data][9]
 
 
 ### Other
 Reminders (for myself mostly):
-* Once all images are working in the game, check if they should be brightened or compressed
+* Once all images are working in the game, check if any should be brightened or compressed
 
 GitHub todo: (things to do that really only affect the GitHub page)
 * Copyright info in README
