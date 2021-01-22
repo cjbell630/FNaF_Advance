@@ -20,6 +20,9 @@ Any files not containing any code written by me should have a file called `.SOUR
 
 
 ### Other
+Reminders (for myself mostly):
+* Once all images are working in the game, check if they should be brightened or compressed
+
 GitHub todo: (things to do that really only affect the GitHub page)
 * Copyright info in README
 * Download instructions for people who don't know GitHub
