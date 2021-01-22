@@ -6,4 +6,4 @@ set(CMAKE_C_STANDARD 11)
 add_executable(FNaF_Advance
         source/main.c
         source/menu.c
-        source/init.c source/init.c source/init.c source/game.c source/game.h)
+        source/init.c source/init.c source/init.c source/game.c source/game.h source/screen_handler.c source/screen_handler.h source/camera.c source/camera.h source/controls.h)

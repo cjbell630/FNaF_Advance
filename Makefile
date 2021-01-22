@@ -17,7 +17,9 @@ TITLE   := $(PROJ)
 COBJS   := source/main.o include/tonc/toolbox.o assets/images/backgrounds/office/office.o \
 			assets/images/sprites/buttons/buttons.o assets/images/sprites/buttons/buttons_apower.o \
 			source/init.o source/menu.o assets/images/backgrounds/menu/menu.o source/game.o \
-			assets/images/backgrounds/newspaper/newspaper.o
+			assets/images/backgrounds/newspaper/newspaper.o source/screen_handler.o \
+			assets/images/backgrounds/loading/loading.o assets/images/backgrounds/error/error.o \
+			source/camera.o
 
 SOBJS   := include/DWedit/debug.o
 

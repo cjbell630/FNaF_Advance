@@ -8,75 +8,114 @@
 #include "../include/DWedit/debug.h"
 #include "../assets/images/backgrounds/office/office.h"
 #include "../assets/images/backgrounds/newspaper/newspaper.h"
+#include "../assets/images/backgrounds/loading/loading.h"
 #include <string.h>
+#include "screen_handler.h"
+#include "camera.h"
+#include "controls.h"
+
+const int NEWSPAPER_PB = 1;
+const int NEWSPAPER_CBB = 3;
+const int NEWSPAPER_SBB = 20;
 
 void init_game(int night) {
-    vbaprint("loading now\n");
+    //vbaprint("loading now\n");
+
+    //TODO: write to save on new game
 
     //TODO: should load this into a buffer so it doesn't mess up
-
+    /*
     // Load palette
-    memcpy(pal_bg_mem, officePal, officePalLen);
 
     // Load tiles into CBB 0
-    memcpy(&tile_mem[0][0], officeTiles, officeTilesLen);
+    memcpy(&tile_mem[0][0], loadingTiles, loadingTilesLen);
 
     // Load map into SBB 30
-    memcpy(&se_mem[24][0], officeMap, officeMapLen);
+    memcpy(&se_mem[13][0], loadingMap, loadingMapLen);
+    load_bg_pal(loadingPal, loadingPalLen, 0);
 
-    //Show loading screen
-    //TODO
-    REG_BG0HOFS = 0;
-    REG_BG0VOFS = 160;
+    vid_vsync();
+    int timer = 0;
+    while (timer < 60) {
+        vid_vsync();
+        timer++;
+    }
+
+
+    //TODO: should load this into a buffer so it doesn't mess up
+     */
+    // Load palette
+    load_bg_pal(officePal, officePalLen, OFFICE_PB);
+
+    // Load tiles into CBB 0
+    memcpy(&tile_mem[OFFICE_CBB][0], officeTiles, officeTilesLen);
+
+    // Load map into SBB 30
+    memcpy(&se_mem[OFFICE_SBB][0], officeMap, officeMapLen);
+
 
     oam_init(OBJ_BUFFER, 128);
     int calc_night = night == 0 ? 1 : night; // ensures start positions and audio is loaded in for new game
     if (night == 0) {
         // load newspaper into memory
         // Load palette
-        memcpy(&pal_bg_mem[16], newspaperPal, newspaperPalLen);
+        load_bg_pal(newspaperPal, newspaperPalLen, NEWSPAPER_PB);
 
         // Load tiles into CBB 0
-        memcpy(&tile_mem[3][0], newspaperTiles, newspaperTilesLen);
+        memcpy(&tile_mem[NEWSPAPER_CBB][0], newspaperTiles, newspaperTilesLen);
 
         // Load map into SBB 30
-        memcpy(&se_mem[4][0], newspaperMap, newspaperMapLen);
+        memcpy(&se_mem[NEWSPAPER_SBB][0], newspaperMap, newspaperMapLen);
     }
 
     //load night intro screen
 
     //load everything else
+    /*
     int timer = 0;
     while (timer < 60) {
         vid_vsync();
         timer++;
-    }
-    vbaprint("done loading\n");
+    }*/
+
+    //vbaprint("start cams\n");
+    init_cams();
+    //vbaprint("done init cams\n");
+    select_cam(0);
+    //vbaprint("done select cam\n");
+    set_cam_display(0);
+    //vbaprint("done set cam display\n");
+
+    //vbaprint("done loading\n");
 }
 
 void start_game() {
-    vbaprint("starting now\n");
+    //vbaprint("starting now\n");
     if (/*night==0*/1) {
-        vbaprint("newspaper now\n");
-        vid_vsync();
+        //vbaprint("newspaper now\n");
         //show newspaper
-        REG_BG1HOFS = 0;
-        REG_BG1VOFS = 0;
-        REG_BG1CNT = BG_CBB(3) | BG_SBB(4) | BG_4BPP | BG_REG_32x32;
-        REG_DISPCNT = DCNT_BG1 | DCNT_MODE0;
+        set_bg_palbank(NEWSPAPER_PB);
+
+        //vbaprint("done showing newspaper pallette\n");
+        REG_BG0HOFS = 0;
+        REG_BG0VOFS = 0;
+        REG_BG0CNT = BG_CBB(NEWSPAPER_CBB) | BG_SBB(NEWSPAPER_SBB) | BG_4BPP | BG_REG_32x32;
+        REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
         int timer = 120;
-        while(timer >=0) {
+        while (timer >= 0) {
             vid_vsync();
             timer--;
         }
         //night++;
     }
+
     //show night intro screen
     //TODO
 
     //show office
-    vbaprint("office now\n");
-    REG_BG0CNT = BG_CBB(0) | BG_SBB(24) | BG_4BPP | BG_REG_32x32;
+    set_bg_palbank(OFFICE_PB);
+    //vbaprint("office now\n");
+    REG_BG0CNT = BG_CBB(OFFICE_CBB) | BG_SBB(OFFICE_SBB) | BG_4BPP | BG_REG_64x64;
     REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
     REG_BG0VOFS = 0;
 
@@ -92,13 +131,26 @@ void start_game() {
         key_poll();
 
         //BACKGROUND
-        x += SPEED_SCALE * key_tri_shoulder(); //move
-        x = (x > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
-            (x < 0) ? 0 : // if too far left, fix
-            x; // otherwise, don't change
-        //y += key_tri_vert();
+        if (!get_cam_status()) {
+            x += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
+            x = (x > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
+                (x < 0) ? 0 : // if too far left, fix
+                x; // otherwise, don't change
+            //y += key_tri_vert();
 
-        REG_BG0HOFS = x;
-        //REG_BG0VOFS = y;
+            REG_BG0HOFS = x;
+            //REG_BG0VOFS = y;
+        }
+
+        //TODO: make a cool gate for this
+        if (get_cam_status()) { // cams up
+            if (CTRL_CLOSE_CAM) {
+                toggle_cam_display();
+            }
+        } else {
+            if (CTRL_OPEN_CAM) {
+                toggle_cam_display();
+            }
+        }
     }
 }

@@ -8,9 +8,12 @@
 #include "menu.h"
 #include "../include/tonc/toolbox.h"
 #include "../assets/images/backgrounds/menu/menu.h"
+#include "../assets/images/backgrounds/office/office.h"
 #include "init.h"
 #include "game.h"
 #include "../include/DWedit/debug.h"
+#include "screen_handler.h"
+#include "controls.h"
 
 const int MAX_FRAMES_FOR_FACE_GLITCH = 10;
 const int MIN_FRAMES_FOR_FACE_GLITCH = 2;
@@ -24,6 +27,9 @@ void init_menu() {
 
     // Load map into SBB 30
     memcpy(&se_mem[13][0], menuMap, menuMapLen);
+
+    // TODO remove
+    memcpy(&pal_bg_mem[16], officePal, officePalLen);
 }
 
 void activate_menu() {
@@ -44,7 +50,8 @@ void activate_menu() {
         key_poll();
 
         // Selection Keys
-        if (key_hit(KEY_UP) || key_hit(KEY_DOWN) || key_hit(KEY_SELECT)) {
+        //if (key_hit(KEY_UP) || key_hit(KEY_DOWN) || key_hit(KEY_SELECT)) {
+        if (CTRL_MENU_SELECT) {
             // swap palette color for cursors
             COLOR temp = pal_bg_mem[15];
             pal_bg_mem[15] = pal_bg_mem[14];
@@ -55,7 +62,7 @@ void activate_menu() {
         }
 
         // Start keys
-        if (key_hit(KEY_START) || key_hit(KEY_A)) {
+        if (CTRL_MENU_START) {
             if (menu_choice == 0) { // New Game
                 init_game(0); //Night 0 shows the newspaper
             } else if (menu_choice == 1) { //Continue
@@ -91,6 +98,7 @@ void activate_menu() {
         //TODO: remove
         if (key_hit(KEY_B)) {
             GAMEPAK_RAM[0] = 9;
+            set_bg_palbank(!curr_bg_palbank);
         }
 
         if (timer == -1) { // maybe change to less than 0
