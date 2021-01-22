@@ -26,6 +26,7 @@ int scroll_test() {
     //BACKGROUND
     //office screen is 45 tiles wide (360px)
     //so it should start right around 1/3 (120px)
+    /*
     const int SPEED_SCALE = 3;
     const int ART_WIDTH = 360;
     const int GBA_SCREEN_WIDTH = 240;
@@ -73,7 +74,7 @@ int scroll_test() {
         obj_set_pos(l_button, BUTTON_HORIZ_OFFSET - x, y + BUTTON_VERT_OFFSET);
         l_button->attr2 = ATTR2_BUILD(tid, pb, 0);
         oam_copy(oam_mem, OBJ_BUFFER, 128);
-    }
+    }*/
 
     return 0;
 }

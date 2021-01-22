@@ -29,12 +29,26 @@
 
 | <ins>Night</ins>           | -1% every ___ seconds |
 |----------------------------|:---------------------:|
-| **Night 2**                |           6           |
-| **Night 3**                |           5           |
-| **Night 4**                |           4           |
-| **Night 5, 6, and Custom** |           3           |
+| **Night 1**                |        9.6 (576f)     |
+| **Night 2**                |          6 (360f)     |
+| **Night 3**                |           5 (300f)    |
+| **Night 4**                |           4 (240f)    |
+| **Night 5, 6, and Custom** |           3 (180f)    |
+
+Each of these are divided by the power level to get the current rate. (so in increments of x/3 and x/4)
+
+### Extra Drain
+
+According to https://freddy-fazbears-pizza.fandom.com/wiki/Power_Indicator#What_Drains_Power
+there is an extra, super small drain applied each second that adds up to:
+
+* Night 2: 1.5/hour
+* Night 3: 1.8/hour
+* Night 4: 2.25/hour
+* Night 5+: 3/hour
 
 ## Movement
+
 ### Basic movement:
 
 Every ___ seconds, an imaginary D20 is rolled once (separate for each animatronic). The resulting number is then
@@ -42,8 +56,10 @@ compared to each animatronic's AI level. Movement will happen if `lvl >= rnd`.
 
 |                 |            <ins>**Freddy**</ins>            |      <ins>**Bonnie**</ins>      |            <ins>**Chica**</ins>           |                   <ins>**Foxy**</ins>                  |
 |-----------------|:-------------------------------------------:|:-------------------------------:|:-----------------------------------------:|:------------------------------------------------------:|
-| **Frequency:**  |                     3.02s                   |              4.97s              |                   4.98s                   |                          5.08s                         |
+| **Frequency:**  |                     ~~181f~~ 180f           |              298f               |                   ~~299f~~ 300f           |                          305f                           |
 | **Movement:**   | [See below],<br/>**ONLY** if camera is down | Random room,<br/>left side only | Random adjacent room,<br/>right side only | Increase 1 phase,<br/>**ONLY** if unlocked (see below) |
+
+These values have been converted to frames (assuming 60fps) and tweaked slightly to allow for an lcm the size of an int.
 
 ### Foxy
 
@@ -55,6 +71,10 @@ closed.
 * The left hall is checked
 * 25 seconds have passed Whichever comes first. If blocked by the door, he steals power and returns to phase 1 or 2 (50%
   chance)
+
+#### Stolen power amount:
+
+`-drain = 5a + 1` where `a` is the number of times Foxy has drained power that night.
 
 ### Chica and Bonnie:
 
@@ -109,6 +129,16 @@ Every time cam 2B is checked, there is a 1 in 100,000 chance the golden freddy p
 Freddy map:
 
 `Stage -> 4B -> ???`
+
+## Intervals
+
+LCM of all modified frame intervals is 130,881,600. This will fit in an int, and as such, will play nicely with the GBA.
+In this way, frames can actually be counted, and this counter will not take up too much space in memory. Every
+130,881,600 frames, the framecount can be polled, modulo'd, and compared to the values listed above. It should also be
+possible to offset this value for situations in which animatronics are delayed.
+
+One minute of in-game time is 90 frames. This could be lumped in with whatever needed 360 frames to only update every 4
+minutes.
 
 ## Questions
 
