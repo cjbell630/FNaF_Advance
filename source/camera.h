@@ -5,8 +5,7 @@
 #ifndef FNAF_ADVANCE_CAMERA_H
 #define FNAF_ADVANCE_CAMERA_H
 
-#include "../assets/images/backgrounds/error/error.h"
-#include "screen_handler.h"
+#include "bg_pal_handler.h"
 
 typedef struct {
     char cam_num: 4;
@@ -23,22 +22,9 @@ typedef struct {
     unsigned short *cam_map_len;
 } CAM_IMG_DATA;
 
-static const CAM_IMG_DATA CAM_IMG_MAP[12][5][2] = {
-        { /* STAGE (0) */
-                { // Empty
-                        { // Std
-                                errorTiles, errorTilesLen,
-                                errorPal, errorPalLen,
-                                errorMap, errorMapLen
-                        },
-                        { // Spec
+extern const CAM_IMG_DATA CAM_IMG_MAP[12][5][2];
 
-                        }
-                }
-        }
-};
-
-extern CAM_DATA *CAMS[16];
+extern CAM_DATA CAMS[16];
 
 void init_cams();
 
@@ -53,5 +39,7 @@ void set_cam_display(int on);
 void toggle_cam_display();
 
 int get_cam_status();
+
+void scroll_stage();
 
 #endif //FNAF_ADVANCE_CAMERA_H

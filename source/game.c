@@ -10,15 +10,18 @@
 #include "../assets/images/backgrounds/newspaper/newspaper.h"
 #include "../assets/images/backgrounds/loading/loading.h"
 #include <string.h>
-#include "screen_handler.h"
+#include "bg_pal_handler.h"
 #include "camera.h"
 #include "controls.h"
 
 const int NEWSPAPER_PB = 1;
-const int NEWSPAPER_CBB = 3;
-const int NEWSPAPER_SBB = 20;
+const int NEWSPAPER_CBB = 2;
+const int NEWSPAPER_SBB = 30;
+
+int curr_night;
 
 void init_game(int night) {
+    curr_night = night;
     //vbaprint("loading now\n");
 
     //TODO: write to save on new game
@@ -57,15 +60,7 @@ void init_game(int night) {
     oam_init(OBJ_BUFFER, 128);
     int calc_night = night == 0 ? 1 : night; // ensures start positions and audio is loaded in for new game
     if (night == 0) {
-        // load newspaper into memory
-        // Load palette
-        load_bg_pal(newspaperPal, newspaperPalLen, NEWSPAPER_PB);
 
-        // Load tiles into CBB 0
-        memcpy(&tile_mem[NEWSPAPER_CBB][0], newspaperTiles, newspaperTilesLen);
-
-        // Load map into SBB 30
-        memcpy(&se_mem[NEWSPAPER_SBB][0], newspaperMap, newspaperMapLen);
     }
 
     //load night intro screen
@@ -79,11 +74,7 @@ void init_game(int night) {
     }*/
 
     //vbaprint("start cams\n");
-    init_cams();
-    //vbaprint("done init cams\n");
-    select_cam(0);
-    //vbaprint("done select cam\n");
-    set_cam_display(0);
+
     //vbaprint("done set cam display\n");
 
     //vbaprint("done loading\n");
@@ -91,14 +82,22 @@ void init_game(int night) {
 
 void start_game() {
     //vbaprint("starting now\n");
-    if (/*night==0*/1) {
+    if (curr_night == 0) {
         //vbaprint("newspaper now\n");
         //show newspaper
-        set_bg_palbank(NEWSPAPER_PB);
 
         //vbaprint("done showing newspaper pallette\n");
         REG_BG0HOFS = 0;
-        REG_BG0VOFS = 0;
+        REG_BG0VOFS = 0;        // load newspaper into memory
+        // Load palette
+        load_bg_pal(newspaperPal, newspaperPalLen, NEWSPAPER_PB);
+        set_bg_palbank(NEWSPAPER_PB);
+
+        // Load tiles into CBB 0
+        memcpy(&tile_mem[NEWSPAPER_CBB][0], newspaperTiles, newspaperTilesLen);
+
+        // Load map into SBB 30
+        memcpy(&se_mem[NEWSPAPER_SBB][0], newspaperMap, newspaperMapLen);
         REG_BG0CNT = BG_CBB(NEWSPAPER_CBB) | BG_SBB(NEWSPAPER_SBB) | BG_4BPP | BG_REG_32x32;
         REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
         int timer = 120;
@@ -106,16 +105,22 @@ void start_game() {
             vid_vsync();
             timer--;
         }
-        //night++;
+        curr_night++;
     }
 
     //show night intro screen
     //TODO
 
+    init_cams();
+    //vbaprint("done init cams\n");
+    select_cam(0);
+    //vbaprint("done select cam\n");
+    set_cam_display(0);
+
     //show office
     set_bg_palbank(OFFICE_PB);
     //vbaprint("office now\n");
-    REG_BG0CNT = BG_CBB(OFFICE_CBB) | BG_SBB(OFFICE_SBB) | BG_4BPP | BG_REG_64x64;
+    REG_BG0CNT = BG_CBB(OFFICE_CBB) | BG_SBB(OFFICE_SBB) | BG_4BPP | BG_REG_64x32;
     REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
     REG_BG0VOFS = 0;
 
@@ -152,5 +157,8 @@ void start_game() {
                 toggle_cam_display();
             }
         }
+
+        /*scroll stage*/
+        scroll_stage();
     }
 }

@@ -10,9 +10,9 @@
 int curr_bg_palbank = 0;
 
 //cell 0-5 inclusive
-void load_screen_tiles(unsigned short *tiles, int tilesLen, int charblock, int cell) {
+/*void load_screen_tiles(unsigned short *tiles, int tilesLen, int charblock, int cell) {
     memcpy(&tile_mem[charblock][cell * 600], tiles, tilesLen);
-}
+}*/
 
 void load_bg_pal(COLOR *pal, int palLen, int palbank) {
     memcpy(&pal_bg_mem[16 * palbank], pal, palLen);

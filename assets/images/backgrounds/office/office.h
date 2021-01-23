@@ -3,13 +3,13 @@
 
 //======================================================================
 //
-//	office, 512x512@4, 
+//	office, 512x256@4, 
 //	+ palette 16 entries, not compressed
-//	+ 512 tiles (t|f|p reduced) not compressed
-//	+ regular map (in SBBs), not compressed, 64x64 
-//	Total size: 32 + 16384 + 8192 = 24608
+//	+ 501 tiles (t|f|p reduced) not compressed
+//	+ regular map (in SBBs), not compressed, 64x32 
+//	Total size: 32 + 16032 + 4096 = 20160
 //
-//	Time-stamp: 2021-01-22, 00:47:36
+//	Time-stamp: 2021-01-22, 17:03:03
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.3
 //	( http://www.coranac.com/projects/#grit )
 //
@@ -18,11 +18,11 @@
 #ifndef GRIT_OFFICE_H
 #define GRIT_OFFICE_H
 
-#define officeTilesLen 16384
-extern const unsigned short officeTiles[8192];
+#define officeTilesLen 16032
+extern const unsigned short officeTiles[8016];
 
-#define officeMapLen 8192
-extern const unsigned short officeMap[4096];
+#define officeMapLen 4096
+extern const unsigned short officeMap[2048];
 
 #define officePalLen 32
 extern const unsigned short officePal[16];
