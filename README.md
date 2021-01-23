@@ -24,10 +24,6 @@ That will have the source for the corresponding file and an explanation of which
 
 ### Other
 
-Immediate todo: (things to do the next time I open this project)
-
-* Write something to easily cycle the background palette (ex switches the first 16 with the 16 of the user's choosing)
-
 Reminders: (for myself mostly)
 
 * Once all images are working in the game, check if any should be brightened or compressed
