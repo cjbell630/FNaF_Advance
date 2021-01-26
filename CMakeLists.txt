@@ -10,4 +10,4 @@ add_executable(FNaF_Advance
         source/game/graphics/bg_pal_handler.h source/game/control/camera.c source/game/control/camera.h
         source/game/control/controls.h source/game/control/game_clock.c source/game/control/game_clock.h
         source/util/random.h
-        source/util/random.c)
+        source/util/random.c source/util/util.c source/util/util.h)

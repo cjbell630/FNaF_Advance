@@ -16,6 +16,7 @@
 #include "control/controls.h"
 #include "../util/random.h"
 #include "control/game_clock.h"
+#include "../../assets/images/sprites/cam_map/cam_map.h"
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 2;
@@ -60,8 +61,12 @@ void init_game(int night) {
     // Load map into SBB 30
     memcpy(&se_mem[OFFICE_SBB][0], officeMap, officeMapLen);
 
+    memcpy(&tile_mem[4][0], cam_mapTiles, cam_mapTilesLen);
+    memcpy(&pal_obj_mem[0], cam_mapPal, cam_mapPalLen);
 
     oam_init(OBJ_BUFFER, 128);
+
+
     int calc_night = night == 0 ? 1 : night; // ensures start positions and audio is loaded in for new game
     if (night == 0) {
 
@@ -155,19 +160,22 @@ void start_game() {
         //TODO: make a cool gate for this
         if (are_cams_up()) { // cams up
             if (CTRL_CLOSE_CAM) {
-                vbaprint("close cam");
                 toggle_cam_display();
+            }
+            if (key_hit(KEY_A)) {
+                select_next_cam();
+            } else if (key_hit(KEY_B)) {
+                select_prev_cam();
             }
         } else {
             if (CTRL_OPEN_CAM) {
-                vbaprint("open cam");
                 char buf[16];
-                vbaprint(itoa(rnd_max(10), buf, 16));
                 toggle_cam_display();
             }
         }
 
         /*scroll stage*/
         scroll_cams();
+        oam_copy(oam_mem, OBJ_BUFFER, 128);
     }
 }

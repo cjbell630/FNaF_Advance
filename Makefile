@@ -38,6 +38,7 @@ COBJS := \
 			assets/images/backgrounds/loading/loading.o \
 			assets/images/cams/stage_empty.o assets/images/cams/stage_bcf_s.o \
 			assets/images/sprites/buttons/buttons.o assets/images/sprites/buttons/buttons_apower.o \
+			assets/images/sprites/cam_map/cam_map.o
 
 SOBJS   := include/DWedit/debug.o
 
