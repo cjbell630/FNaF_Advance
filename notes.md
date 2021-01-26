@@ -63,7 +63,7 @@ These values have been converted to frames (assuming 60fps) and tweaked slightly
 
 ### Foxy
 
-Foxy stays locked from the time the camera is opened to a random_max number (0.83 to 16.67) of seconds after the camera is
+Foxy stays locked from the time the camera is opened to a rnd_max number (0.83 to 16.67) of seconds after the camera is
 closed.
 
 **RIGHT WHEN** he reaches phase 4 (starts from 0 or 1?), he will leave after either:

@@ -10,7 +10,7 @@ const int FRAME_MAX = 130881600;
 
 int frame = 0;
 
-void init_clock(){
+void init_clock() {
     frame = 0;
 }
 

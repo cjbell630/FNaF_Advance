@@ -16,6 +16,7 @@
 
 #include "memmap.h"
 #include "memdef.h"
+#include "types.h"
 
 
 INLINE int bit_tribool(u32 x, int plus, int minus);

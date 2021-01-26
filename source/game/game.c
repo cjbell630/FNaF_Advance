@@ -10,6 +10,7 @@
 #include "../../assets/images/backgrounds/newspaper/newspaper.h"
 #include "../../assets/images/backgrounds/loading/loading.h"
 #include <string.h>
+#include <stdlib.h>
 #include "graphics/bg_pal_handler.h"
 #include "control/camera.h"
 #include "control/controls.h"
@@ -154,11 +155,14 @@ void start_game() {
         //TODO: make a cool gate for this
         if (are_cams_up()) { // cams up
             if (CTRL_CLOSE_CAM) {
+                vbaprint("close cam");
                 toggle_cam_display();
             }
         } else {
             if (CTRL_OPEN_CAM) {
-                vbaprint((const char *) rnd());
+                vbaprint("open cam");
+                char buf[16];
+                vbaprint(itoa(rnd_max(10), buf, 16));
                 toggle_cam_display();
             }
         }

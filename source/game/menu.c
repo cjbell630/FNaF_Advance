@@ -104,13 +104,13 @@ void activate_menu() {
 
         if (timer == -1) { // maybe change to less than 0
             //TODO: util function for rand
-            if (random_max(50) == 0) { // 2% chance to change screens every frame
+            if (rnd_max(50) == 0) { // 2% chance to change screens every frame
                 //below line forces it to not choose the top left if it's already there
                 //TODO: make it more likely to change multiple times in a row like the original seems to do
                 int force_offset = !((REG_BG0HOFS % 240) && (REG_BG0VOFS % 160)); //0 if on tl, 1 or 2 otherwise
-                REG_BG0HOFS = (random_max(2) + force_offset) * 240; //
-                REG_BG0VOFS = (random_max(2) + force_offset) * 160;
-                timer = random_max(MAX_FRAMES_FOR_FACE_GLITCH - MIN_FRAMES_FOR_FACE_GLITCH) + MIN_FRAMES_FOR_FACE_GLITCH;
+                REG_BG0HOFS = (rnd_max(2) + force_offset) * 240; //
+                REG_BG0VOFS = (rnd_max(2) + force_offset) * 160;
+                timer = rnd_max(MAX_FRAMES_FOR_FACE_GLITCH - MIN_FRAMES_FOR_FACE_GLITCH) + MIN_FRAMES_FOR_FACE_GLITCH;
             }
         } else if (timer == 0) {
             REG_BG0HOFS = 0;

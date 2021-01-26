@@ -19,15 +19,25 @@ TITLE   := $(PROJ)
 
 ###COBJS  :=  $(CFILES:.c=.o)
 
-COBJS := source/*.c source/**/*.c source/**/**/*.c assets/images/backgrounds/**/*.c assets/images/cams/*.c assets/images/sprites/**/*.c \
+###COBJS := source/*.c source/**/*.c source/**/**/*.c assets/images/backgrounds/**/*.c assets/images/cams/*.c assets/images/sprites/**/*.c \
           			include/tonc/*.c
 
-###source/main.o include/tonc/toolbox.o assets/images/backgrounds/office/office.o \
+
+### this is so fucking stupid
+COBJS := \
+			source/main.o source/init.o \
+			source/game/menu.o source/game/game.o \
+			source/game/control/camera.o source/game/control/game_clock.o \
+			source/game/graphics/bg_pal_handler.o \
+			source/util/random.o \
+			\
+			include/tonc/toolbox.o \
+			\
+			assets/images/backgrounds/office/office.o assets/images/backgrounds/error/error.o \
+			assets/images/backgrounds/menu/menu.o assets/images/backgrounds/newspaper/newspaper.o \
+			assets/images/backgrounds/loading/loading.o \
+			assets/images/cams/stage_empty.o assets/images/cams/stage_bcf_s.o \
 			assets/images/sprites/buttons/buttons.o assets/images/sprites/buttons/buttons_apower.o \
-			source/init.o source/menu.o assets/images/backgrounds/menu/menu.o source/game.o \
-			assets/images/backgrounds/newspaper/newspaper.o source/bg_pal_handler.o \
-			assets/images/backgrounds/loading/loading.o assets/images/backgrounds/error/error.o \
-			source/camera.o assets/images/cams/stage_empty.o assets/images/cams/stage_bcf_s.o
 
 SOBJS   := include/DWedit/debug.o
 
@@ -78,8 +88,7 @@ $(TARGET).gba : $(TARGET).elf
 $(TARGET).elf : $(OBJS)
 	$(LD) $^ $(LDFLAGS) -o $@
 
-###$(COBJS) : %.o : %.c
-$(COBJS) : %.c : %.c
+$(COBJS) : %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule for assembling .s -> .o files
