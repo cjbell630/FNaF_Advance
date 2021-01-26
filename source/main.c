@@ -15,7 +15,7 @@
 #include "../assets/images/sprites/buttons/buttons.h"
 #include "../assets/images/sprites/buttons/buttons_apower.h"
 
-#include "menu.h"
+#include "game/menu.h"
 #include "init.h"
 
 //OBJ_AFFINE *obj_aff_buffer = (OBJ_AFFINE *) obj_buffer;

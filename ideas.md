@@ -5,7 +5,7 @@ FnaF theoretical gameplay loop:
 * BMP background mode
 * Load office and default background menus into memory (so all of the screens will be ready to be displayed)
 	* There are 11 rooms + the office, and they honestly don't look that bad at 4bpp, so theoretically that would be plenty of colors for the backgrounds, and you could divide the office into two screens for 32 colors (possibly, idk)
-* Apply static effect by inserting random greys into pallette (might take a lot of tweaking but should totally be possible)
+* Apply static effect by inserting random_max greys into pallette (might take a lot of tweaking but should totally be possible)
 	* Worst case scenario, you can just make a static sprite thing
 * Ininitialize AI
 * Upon anim location change, boost static to mask, load new image into memory, display new image, unboost static

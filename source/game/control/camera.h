@@ -5,7 +5,7 @@
 #ifndef FNAF_ADVANCE_CAMERA_H
 #define FNAF_ADVANCE_CAMERA_H
 
-#include "bg_pal_handler.h"
+#include "../graphics/bg_pal_handler.h"
 
 typedef struct {
     char cam_num: 4;
@@ -38,8 +38,8 @@ void set_cam_display(int on);
 
 void toggle_cam_display();
 
-int get_cam_status();
+int are_cams_up();
 
-void scroll_stage();
+void scroll_cams();
 
 #endif //FNAF_ADVANCE_CAMERA_H

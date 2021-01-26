@@ -5,8 +5,8 @@
 #ifndef FNAF_ADVANCE_BG_PAL_HANDLER_H
 #define FNAF_ADVANCE_BG_PAL_HANDLER_H
 
-#include "../include/tonc/toolbox.h"
-#include "../include/DWedit/debug.h"
+#include "../../../include/tonc/toolbox.h"
+#include "../../../include/DWedit/debug.h"
 #include <string.h>
 
 

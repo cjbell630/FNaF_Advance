@@ -3,16 +3,18 @@
 //
 
 #include "game.h"
-#include "../include/tonc/toolbox.h"
-#include "init.h"
-#include "../include/DWedit/debug.h"
-#include "../assets/images/backgrounds/office/office.h"
-#include "../assets/images/backgrounds/newspaper/newspaper.h"
-#include "../assets/images/backgrounds/loading/loading.h"
+#include "../../include/tonc/toolbox.h"
+#include "../init.h"
+#include "../../include/DWedit/debug.h"
+#include "../../assets/images/backgrounds/office/office.h"
+#include "../../assets/images/backgrounds/newspaper/newspaper.h"
+#include "../../assets/images/backgrounds/loading/loading.h"
 #include <string.h>
-#include "bg_pal_handler.h"
-#include "camera.h"
-#include "controls.h"
+#include "graphics/bg_pal_handler.h"
+#include "control/camera.h"
+#include "control/controls.h"
+#include "../util/random.h"
+#include "control/game_clock.h"
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 2;
@@ -21,6 +23,7 @@ const int NEWSPAPER_SBB = 30;
 int curr_night;
 
 void init_game(int night) {
+    init_clock();
     curr_night = night;
     //vbaprint("loading now\n");
 
@@ -134,9 +137,10 @@ void start_game() {
     while (1) {
         vid_vsync();
         key_poll();
+        tick(); //TODO: should be at top or bottom?
 
         //BACKGROUND
-        if (!get_cam_status()) {
+        if (!are_cams_up()) {
             x += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
             x = (x > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
                 (x < 0) ? 0 : // if too far left, fix
@@ -148,17 +152,18 @@ void start_game() {
         }
 
         //TODO: make a cool gate for this
-        if (get_cam_status()) { // cams up
+        if (are_cams_up()) { // cams up
             if (CTRL_CLOSE_CAM) {
                 toggle_cam_display();
             }
         } else {
             if (CTRL_OPEN_CAM) {
+                vbaprint((const char *) rnd());
                 toggle_cam_display();
             }
         }
 
         /*scroll stage*/
-        scroll_stage();
+        scroll_cams();
     }
 }

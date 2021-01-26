@@ -3,13 +3,13 @@
 //
 
 #include "camera.h"
-#include "bg_pal_handler.h"
-#include "init.h"
-#include "../include/tonc/toolbox.h"
+#include "../graphics/bg_pal_handler.h"
+#include "../../init.h"
+#include "../../../include/tonc/toolbox.h"
 
-#include "../assets/images/backgrounds/error/error.h"
-#include "../assets/images/cams/stage_empty.h"
-#include "../assets/images/cams/stage_bcf_s.h"
+#include "../../../assets/images/backgrounds/error/error.h"
+#include "../../../assets/images/cams/stage_empty.h"
+#include "../../../assets/images/cams/stage_bcf_s.h"
 
 const int CAM_PB = 2;
 const int CAM_CBB = 2;
@@ -18,13 +18,15 @@ const int CAM_SBB = 30;
 int CAM_STAT = 0;
 int CURR_CAM = 0;
 
-const int STAGE_SCROLL_BUFFER = 100;
-const int STAGE_SCROLL_DISP_RIGHT_CAP = 114;
-const int STAGE_SCROLL_SPEED = 1;
+const int CAM_SCROLL_BUFFER = 100;
+const int CAM_SCROLL_DISP_RIGHT_CAP = 114;
+const int CAM_SCROLL_SPEED = 1;
 
-int internal_stage_scroll = 0;
-int disp_stage_scroll = 0;
-int stage_scroll_dir = -1;
+const int SUPPLY_CLOSET_NUMBER = 5;
+
+int internal_cam_scroll = 0;
+int disp_cam_scroll = 0;
+int cam_scroll_dir = -1;
 
 CAM_DATA CAMS[16] = {
         {0, 1, 0}
@@ -110,34 +112,34 @@ void toggle_cam_display() {
     set_cam_display(!CAM_STAT);
 }
 
-int get_cam_status() {
+int are_cams_up() {
     return CAM_STAT;
 }
 
 
-void update_stage_scroll_display() {
-    REG_BG1HOFS = disp_stage_scroll;
+void update_cam_scroll_display() {
+    REG_BG1HOFS = disp_cam_scroll;
 }
 
-void scroll_stage() {
+void scroll_cams() {
     //TODO: this code looks so cringe
-    if (CAM_STAT && CURR_CAM == 0) {
-        if (stage_scroll_dir == 1) { //moving right
-            if (internal_stage_scroll > STAGE_SCROLL_DISP_RIGHT_CAP + STAGE_SCROLL_BUFFER) { // turning point
-                stage_scroll_dir = -1;
-            } else if (disp_stage_scroll < STAGE_SCROLL_DISP_RIGHT_CAP) { // move display
-                disp_stage_scroll += STAGE_SCROLL_SPEED;
-                update_stage_scroll_display();
+    if (CAM_STAT && CURR_CAM != SUPPLY_CLOSET_NUMBER) {
+        if (cam_scroll_dir == 1) { //moving right
+            if (internal_cam_scroll > CAM_SCROLL_DISP_RIGHT_CAP + CAM_SCROLL_BUFFER) { // turning point
+                cam_scroll_dir = -1;
+            } else if (disp_cam_scroll < CAM_SCROLL_DISP_RIGHT_CAP) { // move display
+                disp_cam_scroll += CAM_SCROLL_SPEED;
+                update_cam_scroll_display();
             }
-            internal_stage_scroll += STAGE_SCROLL_SPEED;
+            internal_cam_scroll += CAM_SCROLL_SPEED;
         } else { //moving left
-            if (internal_stage_scroll < -STAGE_SCROLL_BUFFER) { // turning point
-                stage_scroll_dir = 1;
-            } else if (disp_stage_scroll > 0) {
-                disp_stage_scroll -= STAGE_SCROLL_SPEED;
-                update_stage_scroll_display();
+            if (internal_cam_scroll < -CAM_SCROLL_BUFFER) { // turning point
+                cam_scroll_dir = 1;
+            } else if (disp_cam_scroll > 0) {
+                disp_cam_scroll -= CAM_SCROLL_SPEED;
+                update_cam_scroll_display();
             }
-            internal_stage_scroll -= STAGE_SCROLL_SPEED;
+            internal_cam_scroll -= CAM_SCROLL_SPEED;
         }
     }
 }

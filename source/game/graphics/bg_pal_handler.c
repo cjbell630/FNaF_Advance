@@ -3,8 +3,8 @@
 //
 
 //#include "screen_handler.h"
-#include "../include/tonc/toolbox.h"
-#include "../include/DWedit/debug.h"
+#include "../../../include/tonc/toolbox.h"
+#include "../../../include/DWedit/debug.h"
 #include <string.h>
 
 int curr_bg_palbank = 0;

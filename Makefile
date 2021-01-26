@@ -14,7 +14,15 @@ PATH := $(DEVKITARM)/bin:$(PATH)
 PROJ    := FNaF_Advance
 TITLE   := $(PROJ)
 
-COBJS   := source/main.o include/tonc/toolbox.o assets/images/backgrounds/office/office.o \
+###CFILES := source/*.c source/**/*.c source/**/**/*.c assets/images/backgrounds/**/*.c assets/images/cams/*.c assets/images/sprites/**/*.c \
+          			include/tonc/*.c
+
+###COBJS  :=  $(CFILES:.c=.o)
+
+COBJS := source/*.c source/**/*.c source/**/**/*.c assets/images/backgrounds/**/*.c assets/images/cams/*.c assets/images/sprites/**/*.c \
+          			include/tonc/*.c
+
+###source/main.o include/tonc/toolbox.o assets/images/backgrounds/office/office.o \
 			assets/images/sprites/buttons/buttons.o assets/images/sprites/buttons/buttons_apower.o \
 			source/init.o source/menu.o assets/images/backgrounds/menu/menu.o source/game.o \
 			assets/images/backgrounds/newspaper/newspaper.o source/bg_pal_handler.o \
@@ -70,7 +78,8 @@ $(TARGET).gba : $(TARGET).elf
 $(TARGET).elf : $(OBJS)
 	$(LD) $^ $(LDFLAGS) -o $@
 
-$(COBJS) : %.o : %.c
+###$(COBJS) : %.o : %.c
+$(COBJS) : %.c : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule for assembling .s -> .o files

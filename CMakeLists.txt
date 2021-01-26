@@ -5,5 +5,9 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(FNaF_Advance
         source/main.c
-        source/menu.c
-        source/init.c source/init.c source/init.c source/game.c source/game.h source/bg_pal_handler.c source/bg_pal_handler.h source/camera.c source/camera.h source/controls.h)
+        source/game/menu.c
+        source/init.c source/game/game.c source/game/game.h source/game/graphics/bg_pal_handler.c
+        source/game/graphics/bg_pal_handler.h source/game/control/camera.c source/game/control/camera.h
+        source/game/control/controls.h source/game/control/game_clock.c source/game/control/game_clock.h
+        source/util/random.h
+        )
