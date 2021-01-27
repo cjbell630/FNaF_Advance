@@ -35,6 +35,11 @@ COBJS := \
 			assets/images/backgrounds/menu/menu.o assets/images/backgrounds/newspaper/newspaper.o \
 			assets/images/backgrounds/loading/loading.o assets/images/backgrounds/static/static.o \
 			assets/images/cams/stage_empty.o assets/images/cams/stage_bcf_s.o \
+			assets/images/cams/placeholder/b_placeholder.o assets/images/cams/placeholder/bcf_placeholder.o \
+			assets/images/cams/placeholder/bcff_placeholder.o assets/images/cams/placeholder/bf_placeholder.o \
+			assets/images/cams/placeholder/c_placeholder.o assets/images/cams/placeholder/cf_placeholder.o \
+			assets/images/cams/placeholder/empty_placeholder.o assets/images/cams/placeholder/fo_placeholder.o \
+			assets/images/cams/placeholder/fr_placeholder.o \
 			assets/images/sprites/buttons/buttons.o assets/images/sprites/buttons/buttons_apower.o \
 			assets/images/sprites/cam_map/cam_map.o
 

@@ -13,6 +13,16 @@
 #include "../../../assets/images/cams/stage_empty.h"
 #include "../../../assets/images/cams/stage_bcf_s.h"
 
+#include "../../../assets/images/cams/placeholder/b_placeholder.h"
+#include "../../../assets/images/cams/placeholder/bcf_placeholder.h"
+#include "../../../assets/images/cams/placeholder/bcff_placeholder.h"
+#include "../../../assets/images/cams/placeholder/bf_placeholder.h"
+#include "../../../assets/images/cams/placeholder/c_placeholder.h"
+#include "../../../assets/images/cams/placeholder/cf_placeholder.h"
+#include "../../../assets/images/cams/placeholder/fo_placeholder.h"
+#include "../../../assets/images/cams/placeholder/fr_placeholder.h"
+#include "../../../assets/images/cams/placeholder/empty_placeholder.h"
+
 const int CAM_PB = 2;
 const int CAM_CBB = 1;
 const int CAM_SBB = 22;
@@ -25,6 +35,7 @@ const int CAM_SCROLL_DISP_RIGHT_CAP = 114;
 const int CAM_SCROLL_SPEED = 1;
 
 const int SUPPLY_CLOSET_NUMBER = 5;
+const int KITCHEN_NUMBER = 9;
 
 int CAM_MAP_ATTR0_VISIBLE = ATTR0_SQUARE | ATTR0_4BPP;
 
@@ -38,10 +49,10 @@ CAM_DATA CAMS[11] = {
         {0,      0}, //dining area
         {0,      0}, //pirate's cove
         {0,      0}, //west hall A
-        {0,      0}, //west hall B
+        {0,      0}, //west Hall B (Corner)
         {0,      0}, //supply closet
         {0,      0}, //east hall A
-        {0,      0}, //east hall B
+        {0,      0}, //east Hall B (Corner)
         {0,      0}, //backstage
         {0,      0}, //kitchen
         {0,      0}, //restrooms
@@ -70,26 +81,45 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
         { /* STAGE (0) */
                 { // Empty
                         { // Std
-                                &stage_emptyTiles, stage_emptyTilesLen,
-                                &stage_emptyPal, stage_emptyPalLen,
-                                &stage_emptyMap, stage_emptyMapLen
+                                &stage_emptyTiles,      stage_emptyTilesLen,
+                                &stage_emptyPal,       stage_emptyPalLen,
+                                &stage_emptyMap,      stage_emptyMapLen
                         }
                 },
                 { /*Foxy*/},
-                { /*Freddy*/ },
+                { //Freddy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &fr_placeholderPal, fr_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Freddy Foxy*/},
                 { /*Chica*/},
                 { /*Chica Foxy*/},
-                { /*Chica Freddy*/},
+                { //Chica Freddy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &cf_placeholderPal, cf_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Chica Freddy Foxy*/},
                 { /*Bonnie*/},
                 { /*Bonnie Foxy*/},
-                { /*Bonnie Freddy*/},
+                { // Bonnie Freddy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &bf_placeholderPal, bf_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Bonnie Freddy Foxy*/},
                 { /*Bonnie Chica*/},
                 { /*Bonnie Chica Foxy*/},
                 { // Bonnie Chica Freddy
-                        { /*Std*/},
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &bcf_placeholderPal, bcf_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        },
                         { // Spec
                                 &stage_bcf_sTiles, stage_bcf_sTilesLen,
                                 &stage_bcf_sPal, stage_bcf_sPalLen,
@@ -98,20 +128,35 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 }
         },
         {/*Dining Area (1)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
                 { /*Foxy*/},
-                { /*Freddy*/ },
+                { //Freddy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &fr_placeholderPal, fr_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Freddy Foxy*/},
-                { /*Chica*/},
+                { //Chica
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &c_placeholderPal, c_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Chica Foxy*/},
                 { /*Chica Freddy*/},
                 { /*Chica Freddy Foxy*/},
-                { /*Bonnie*/},
+                { //Bonnie
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &b_placeholderPal, b_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Bonnie Foxy*/},
                 { /*Bonnie Freddy*/},
                 { /*Bonnie Freddy Foxy*/},
@@ -121,13 +166,18 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Freddy Foxy*/}
         },
         {/*Pirate's Cove (2)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
-                { /*Foxy*/},
+                { //Foxy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &fo_placeholderPal, fo_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Freddy*/ },
                 { /*Freddy Foxy*/},
                 { /*Chica*/},
@@ -144,20 +194,30 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Freddy Foxy*/}
         },
         {/*West Hall A (3)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
-                { /*Foxy*/},
+                { //Foxy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &fo_placeholderPal, fo_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Freddy*/ },
                 { /*Freddy Foxy*/},
                 { /*Chica*/},
                 { /*Chica Foxy*/},
                 { /*Chica Freddy*/},
                 { /*Chica Freddy Foxy*/},
-                { /*Bonnie*/},
+                { //Bonnie
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &b_placeholderPal, b_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Bonnie Foxy*/},
                 { /*Bonnie Freddy*/},
                 { /*Bonnie Freddy Foxy*/},
@@ -166,12 +226,12 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Freddy*/},
                 { /*Bonnie Chica Freddy Foxy*/}
         },
-        {/*West Hall B (4)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+        {/*West Hall B (Corner) (4)*/
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
                 { /*Foxy*/},
                 { /*Freddy*/ },
@@ -180,7 +240,12 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Chica Foxy*/},
                 { /*Chica Freddy*/},
                 { /*Chica Freddy Foxy*/},
-                { /*Bonnie*/},
+                { //Bonnie
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &b_placeholderPal, b_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Bonnie Foxy*/},
                 { /*Bonnie Freddy*/},
                 { /*Bonnie Freddy Foxy*/},
@@ -190,11 +255,11 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Freddy Foxy*/}
         },
         {/*Supply Closet (5)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
                 { /*Foxy*/},
                 { /*Freddy*/ },
@@ -203,7 +268,12 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Chica Foxy*/},
                 { /*Chica Freddy*/},
                 { /*Chica Freddy Foxy*/},
-                { /*Bonnie*/},
+                { //Bonnie
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &b_placeholderPal, b_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Bonnie Foxy*/},
                 { /*Bonnie Freddy*/},
                 { /*Bonnie Freddy Foxy*/},
@@ -213,16 +283,26 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Freddy Foxy*/}
         },
         {/*East Hall A (6)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
                 { /*Foxy*/},
-                { /*Freddy*/ },
+                { //Freddy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &fr_placeholderPal, fr_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Freddy Foxy*/},
-                { /*Chica*/},
+                { //Chica
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &c_placeholderPal, c_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Chica Foxy*/},
                 { /*Chica Freddy*/},
                 { /*Chica Freddy Foxy*/},
@@ -235,17 +315,27 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Freddy*/},
                 { /*Bonnie Chica Freddy Foxy*/}
         },
-        {/*East Hall B (7)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+        {/*East Hall B (Corner) (7)*/
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
                 { /*Foxy*/},
-                { /*Freddy*/ },
+                { //Freddy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &fr_placeholderPal, fr_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Freddy Foxy*/},
-                { /*Chica*/},
+                { //Chica
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &c_placeholderPal, c_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Chica Foxy*/},
                 { /*Chica Freddy*/},
                 { /*Chica Freddy Foxy*/},
@@ -259,11 +349,11 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Freddy Foxy*/}
         },
         {/*Backstage (8)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
                 { /*Foxy*/},
                 { /*Freddy*/ },
@@ -272,7 +362,12 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Chica Foxy*/},
                 { /*Chica Freddy*/},
                 { /*Chica Freddy Foxy*/},
-                { /*Bonnie*/},
+                { //Bonnie
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &b_placeholderPal, b_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Bonnie Foxy*/},
                 { /*Bonnie Freddy*/},
                 { /*Bonnie Freddy Foxy*/},
@@ -282,16 +377,26 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Freddy Foxy*/}
         },
         {/*Kitchen (9)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
                 { /*Foxy*/},
-                { /*Freddy*/ },
+                { //Freddy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &fr_placeholderPal, fr_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Freddy Foxy*/},
-                { /*Chica*/},
+                { //Chica
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &c_placeholderPal, c_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Chica Foxy*/},
                 { /*Chica Freddy*/},
                 { /*Chica Freddy Foxy*/},
@@ -305,16 +410,26 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Freddy Foxy*/}
         },
         {/*Restrooms (10)*/
-                { /*Empty*/
-                        { //Std
-                                &errorTiles,       errorTilesLen,
-                                &errorPal,       errorPalLen,
-                                &errorMap,       errorMapLen
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
                         }},
                 { /*Foxy*/},
-                { /*Freddy*/ },
+                { //Freddy
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &fr_placeholderPal, fr_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Freddy Foxy*/},
-                { /*Chica*/},
+                { //Chica
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &c_placeholderPal, c_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }},
                 { /*Chica Foxy*/},
                 { /*Chica Freddy*/},
                 { /*Chica Freddy Foxy*/},
@@ -400,24 +515,25 @@ void update_cam_scroll_display() {
 
 void scroll_cams() {
     //TODO: this code looks so cringe
-    if (CAM_STAT && CURR_CAM == SUPPLY_CLOSET_NUMBER) {
-        REG_BG1HOFS = 0;
-    } else {
-        if (cam_scroll_dir == 1) { //moving right
-            if (internal_cam_scroll > CAM_SCROLL_DISP_RIGHT_CAP + CAM_SCROLL_BUFFER) { // turning point
-                cam_scroll_dir = -1;
-            } else if (disp_cam_scroll < CAM_SCROLL_DISP_RIGHT_CAP) { // move display
-                disp_cam_scroll += CAM_SCROLL_SPEED;
+    if (CAM_STAT) { // if cams are up
+        if (CURR_CAM == SUPPLY_CLOSET_NUMBER || CURR_CAM == KITCHEN_NUMBER) { // if should not scroll
+            REG_BG1HOFS = 0;
+        } else { // if should scroll
+            if (cam_scroll_dir == 1) { // moving right
+                if (internal_cam_scroll > CAM_SCROLL_DISP_RIGHT_CAP + CAM_SCROLL_BUFFER) { // turning point
+                    cam_scroll_dir = -1;
+                } else if (disp_cam_scroll < CAM_SCROLL_DISP_RIGHT_CAP) { // move display
+                    disp_cam_scroll += CAM_SCROLL_SPEED;
+                }
+            } else { //moving left
+                if (internal_cam_scroll < -CAM_SCROLL_BUFFER) { // turning point
+                    cam_scroll_dir = 1;
+                } else if (disp_cam_scroll > 0) {
+                    disp_cam_scroll -= CAM_SCROLL_SPEED;
+                }
             }
-            internal_cam_scroll += CAM_SCROLL_SPEED;
-        } else { //moving left
-            if (internal_cam_scroll < -CAM_SCROLL_BUFFER) { // turning point
-                cam_scroll_dir = 1;
-            } else if (disp_cam_scroll > 0) {
-                disp_cam_scroll -= CAM_SCROLL_SPEED;
-            }
-            internal_cam_scroll -= CAM_SCROLL_SPEED;
+            internal_cam_scroll += cam_scroll_dir * CAM_SCROLL_SPEED;
+            update_cam_scroll_display();
         }
-        update_cam_scroll_display();
     }
 }
