@@ -169,7 +169,6 @@ void start_game() {
             );
         } else {
             if (CTRL_OPEN_CAM) {
-                //char buf[16];
                 toggle_cam_display();
             }
             x += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
