@@ -19,6 +19,7 @@
 #include "../util/random.h"
 #include "control/game_clock.h"
 #include "../../assets/images/sprites/cam_map/cam_map.h"
+#include "control/cam_nav.h"
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 2;
@@ -162,7 +163,7 @@ void start_game() {
             } else if (key_hit(KEY_B)) {
                 select_prev_cam();
             }
-            cam_map_control(
+            navigate_cams(
                     key_hit(KEY_RIGHT)? 1 : key_hit(KEY_LEFT)? -1 : 0,
                     key_hit(KEY_UP)? 1 : key_hit(KEY_DOWN)? -1 : 0
             );

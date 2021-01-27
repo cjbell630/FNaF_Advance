@@ -27,7 +27,7 @@ TITLE   := $(PROJ)
 COBJS := \
 			source/main.o source/init.o \
 			source/game/menu.o source/game/game.o \
-			source/game/control/camera.o source/game/control/game_clock.o \
+			source/game/control/camera.o source/game/control/cam_nav.o source/game/control/game_clock.o \
 			source/game/graphics/bg_pal_handler.o source/game/graphics/static_handler.o \
 			source/util/random.o \
 			\
