@@ -44,18 +44,20 @@ int disp_cam_scroll = 0;
 int cam_scroll_dir = -1;
 OBJ_ATTR *cam_map;
 
+TRIBIT_2D_POINT CURR_CAM_POINT = {1, 0};
+
 CAM_DATA CAMS[11] = {
-        {0b1110, 1}, //stage
-        {0,      0}, //dining area
-        {0,      0}, //pirate's cove
-        {0,      0}, //west hall A
-        {0,      0}, //west Hall B (Corner)
-        {0,      0}, //supply closet
-        {0,      0}, //east hall A
-        {0,      0}, //east Hall B (Corner)
-        {0,      0}, //backstage
-        {0,      0}, //kitchen
-        {0,      0}, //restrooms
+        {CAM_OCC_BONNIE | CAM_OCC_CHICA | CAM_OCC_FREDDY, CAM_SPEC_STD}, //stage
+        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //dining area
+        {CAM_OCC_FOXY,  CAM_SPEC_STD}, //pirate's cove
+        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //west hall A
+        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //west Hall B (Corner)
+        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //supply closet
+        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //east hall A
+        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //east Hall B (Corner)
+        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //backstage
+        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //kitchen
+        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //restrooms
 };
 
 void init_cams() {
@@ -444,7 +446,48 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
         }
 };
 
+//TODO: should put this somewhere else
+const CAM_CTRL_POINT CAM_CTRL_MAP[8][8] = {
+        {
+                CAM_POINT_NOGO,       CAM_POINT_STATIC(CAM_STAGE),       CAM_POINT_NOGO,
+                CAM_POINT_NULL,       CAM_POINT_WARP(1, 1) /*more*/
+        },
+        {
+                CAM_POINT_WARP(4, 1), CAM_POINT_STATIC(CAM_DINING),      CAM_POINT_STATIC(CAM_RESTROOMS),
+                CAM_POINT_NOGO,       CAM_POINT_STATIC(CAM_BACKSTAGE), CAM_POINT_WARP(1, 1),
+                CAM_POINT_WARP(2, 1)
+        },
+        {
+                CAM_POINT_NULL,       CAM_POINT_WARP(5, 4),              CAM_POINT_WARP(6, 2),
+                CAM_POINT_NULL,       CAM_POINT_WARP(4, 5),            CAM_POINT_WARP(4, 5),
+                CAM_POINT_STATIC(CAM_KITCHEN), CAM_POINT_NOGO
+        },
+        {
+                CAM_POINT_WARP(4, 5), CAM_POINT_STATIC(CAM_WEST),        CAM_POINT_STATIC(CAM_EAST),
+                CAM_POINT_WARP(6, 2), CAM_POINT_NULL,                  CAM_POINT_WARP(1, 1),
+                CAM_POINT_WARP(2, 3) /*more*/
+        },
+        {
+                CAM_POINT_NOGO,       CAM_POINT_STATIC(CAM_WEST_CORNER), CAM_POINT_STATIC(CAM_EAST_CORNER),
+                CAM_POINT_NOGO,       CAM_POINT_WARP(4, 1),            CAM_POINT_STATIC(CAM_PIRATE),
+                CAM_POINT_WARP(6, 2) /*more*/
+        },
+        {
+                CAM_POINT_NULL,       CAM_POINT_NOGO,                    CAM_POINT_NOGO,
+                CAM_POINT_NOGO,       CAM_POINT_STATIC(CAM_CLOSET),    CAM_POINT_WARP(1, 3)
+                /*more*/
+        },
+        {
+                CAM_POINT_NULL,       CAM_POINT_NULL,                    CAM_POINT_NULL,
+                CAM_POINT_NULL,       CAM_POINT_WARP(1, 3) /*more*/
+        },
+        {
+                CAM_POINT_NULL,       CAM_POINT_NOGO /*more*/
+        }
+};
+
 void select_cam(int cam_num) {
+    vbaprint("selecting cam\n");
     cam_num = logically_correct_modulus(cam_num, 11); // puts the value between 0 and 10 inclusive
     CAM_IMG_DATA cid = get_cam_img_data(cam_num);
 
@@ -472,14 +515,70 @@ void select_cam(int cam_num) {
     cid.cam_pal_len;*/
 }
 
+//TODO: remove
 void select_next_cam() {
     //TODO: won't work with map
     select_cam(CURR_CAM + 1);
 }
 
+//TODO: remove
 void select_prev_cam() {
     //TODO: won't work with map
     select_cam(CURR_CAM - 1);
+}
+
+void cam_map_control(int horizontal, int vertical) {
+    char buf[16];
+    /*vbaprint("horiz: ");
+    sprintf(buf, "%d", horizontal);
+    vbaprint(buf);
+    vbaprint("\nvert: ");
+    sprintf(buf, "%d", vertical);
+    vbaprint(buf);*/
+    //TODO: better comparisons here
+    TRIBIT_2D_POINT prev = CURR_CAM_POINT;
+    //TODO make 8 a constant
+    CURR_CAM_POINT.x = (CURR_CAM_POINT.x + horizontal) % 8; //TODO: modulo necessary if bitfield length is defined as 3?
+    CURR_CAM_POINT.y = (CURR_CAM_POINT.y - vertical) % 8;
+
+    vbaprint("x: ");
+    sprintf(buf, "%d", CURR_CAM_POINT.x);
+    vbaprint(buf);
+    vbaprint("\ny: ");
+    sprintf(buf, "%d", CURR_CAM_POINT.y);
+    vbaprint(buf);
+    vbaprint("\n");
+    if (!(horizontal == 0 && vertical == 0)) { //if moved
+        CAM_CTRL_POINT point = CAM_CTRL_MAP[CURR_CAM_POINT.y][CURR_CAM_POINT.x]; //reversed on purpose
+        vbaprint("\npoint type: ");
+        sprintf(buf, "%d", point.type);
+        vbaprint(buf);
+        vbaprint("\n");
+        switch (point.type) {
+            case CAM_POINT_TYPE_NOGO: // nogo
+                vbaprint("case 0\n");
+                CURR_CAM_POINT = prev;
+                break;
+            case CAM_POINT_TYPE_WARP: // warp
+                vbaprint("case 1\ncam num: ");
+                CURR_CAM_POINT = point.warp_point;
+                sprintf(buf, "%d", CAM_CTRL_MAP[CURR_CAM_POINT.y][CURR_CAM_POINT.x].cam_num);
+                vbaprint(buf);
+                vbaprint("\n");
+                select_cam(CAM_CTRL_MAP[CURR_CAM_POINT.y][CURR_CAM_POINT.x].cam_num);
+                break;
+            case CAM_POINT_TYPE_STATIC: // static point
+                vbaprint("case 2\ncam num: ");
+                sprintf(buf, "%d", point.cam_num);
+                vbaprint(buf);
+                vbaprint("\n");
+                select_cam(point.cam_num);
+                break;
+            default:
+                vbaprint("default\n");
+                break;
+        }
+    }
 }
 
 //TODO: could be macro

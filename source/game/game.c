@@ -162,9 +162,13 @@ void start_game() {
             } else if (key_hit(KEY_B)) {
                 select_prev_cam();
             }
+            cam_map_control(
+                    key_hit(KEY_RIGHT)? 1 : key_hit(KEY_LEFT)? -1 : 0,
+                    key_hit(KEY_UP)? 1 : key_hit(KEY_DOWN)? -1 : 0
+            );
         } else {
             if (CTRL_OPEN_CAM) {
-                char buf[16];
+                //char buf[16];
                 toggle_cam_display();
             }
             x += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
