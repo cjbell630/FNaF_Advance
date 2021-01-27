@@ -5,7 +5,7 @@
 #ifndef FNAF_ADVANCE_INIT_H
 #define FNAF_ADVANCE_INIT_H
 
-#include "../include/tonc/types.h"
+#include "../include/tonclib/tonc.h"
 
 extern OBJ_ATTR OBJ_BUFFER[128];
 

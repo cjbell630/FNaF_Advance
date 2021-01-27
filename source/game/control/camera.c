@@ -7,15 +7,15 @@
 #include "../graphics/bg_pal_handler.h"
 #include "../../init.h"
 #include "../../util/util.h"
-#include "../../../include/tonc/toolbox.h"
+#include "../../../include/tonclib/tonc.h"
 
 #include "../../../assets/images/backgrounds/error/error.h"
 #include "../../../assets/images/cams/stage_empty.h"
 #include "../../../assets/images/cams/stage_bcf_s.h"
 
 const int CAM_PB = 2;
-const int CAM_CBB = 2;
-const int CAM_SBB = 30;
+const int CAM_CBB = 1;
+const int CAM_SBB = 22;
 
 int CAM_STAT = 0;
 int CURR_CAM = 0;
@@ -48,7 +48,7 @@ CAM_DATA CAMS[11] = {
 };
 
 void init_cams() {
-    REG_BG1CNT = BG_CBB(CAM_CBB) | BG_SBB(CAM_SBB) | BG_4BPP | BG_REG_64x64;
+    REG_BG1CNT = BG_PRIO(1) | BG_CBB(CAM_CBB) | BG_SBB(CAM_SBB) | BG_4BPP | BG_REG_64x64;
     cam_map = &OBJ_BUFFER[0];
     obj_set_attr(cam_map,
                  ATTR0_HIDE,

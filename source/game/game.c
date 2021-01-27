@@ -3,15 +3,17 @@
 //
 
 #include "game.h"
-#include "../../include/tonc/toolbox.h"
+#include "../../include/tonclib/tonc.h"
 #include "../init.h"
 #include "../../include/DWedit/debug.h"
 #include "../../assets/images/backgrounds/office/office.h"
 #include "../../assets/images/backgrounds/newspaper/newspaper.h"
+#include "../../assets/images/backgrounds/static/static.h"
 #include "../../assets/images/backgrounds/loading/loading.h"
 #include <string.h>
 #include <stdlib.h>
 #include "graphics/bg_pal_handler.h"
+#include "graphics/static_handler.h"
 #include "control/camera.h"
 #include "control/controls.h"
 #include "../util/random.h"
@@ -20,13 +22,15 @@
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 2;
-const int NEWSPAPER_SBB = 30;
+const int NEWSPAPER_SBB = 10;
 
 int curr_night;
 
 void init_game(int night) {
     init_clock();
     curr_night = night;
+
+    init_static();
     //vbaprint("loading now\n");
 
     //TODO: write to save on new game
@@ -57,6 +61,7 @@ void init_game(int night) {
 
     // Load tiles into CBB 0
     memcpy(&tile_mem[OFFICE_CBB][0], officeTiles, officeTilesLen);
+
 
     // Load map into SBB 30
     memcpy(&se_mem[OFFICE_SBB][0], officeMap, officeMapLen);
@@ -129,7 +134,9 @@ void start_game() {
     //show office
     set_bg_palbank(OFFICE_PB);
     //vbaprint("office now\n");
-    REG_BG0CNT = BG_CBB(OFFICE_CBB) | BG_SBB(OFFICE_SBB) | BG_4BPP | BG_REG_64x32;
+    REG_BG0CNT = BG_PRIO(2) | BG_CBB(OFFICE_CBB) | BG_SBB(OFFICE_SBB) | BG_4BPP | BG_REG_64x32;
+    //REG_BLDCNT = BLD_BUILD(BLD_BG0, BLD_BG1, BLD_OFF);
+    //REG_BLDALPHA = BLDA_BUILD(0b01000, 0b01000);
     REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
     REG_BG0VOFS = 0;
 
@@ -144,18 +151,6 @@ void start_game() {
         vid_vsync();
         key_poll();
         tick(); //TODO: should be at top or bottom?
-
-        //BACKGROUND
-        if (!are_cams_up()) {
-            x += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
-            x = (x > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
-                (x < 0) ? 0 : // if too far left, fix
-                x; // otherwise, don't change
-            //y += key_tri_vert();
-
-            REG_BG0HOFS = x;
-            //REG_BG0VOFS = y;
-        }
 
         //TODO: make a cool gate for this
         if (are_cams_up()) { // cams up
@@ -172,10 +167,26 @@ void start_game() {
                 char buf[16];
                 toggle_cam_display();
             }
+            x += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
+            x = (x > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
+                (x < 0) ? 0 : // if too far left, fix
+                x; // otherwise, don't change
+            //y += key_tri_vert();
+
+            REG_BG0HOFS = x;
+            //REG_BG0VOFS = y;
+
+            //TODO: remove
+            if (key_hit(KEY_START)) {
+                //TODO: make this be the norm for the whole game
+                REG_BG2CNT = BG_PRIO(0) | BG_CBB(3) | BG_SBB(30) | BG_WRAP | BG_AFF_16x16;
+                REG_DISPCNT = DCNT_BG0 | DCNT_BG2 | DCNT_MODE1;
+                //
+                //set_bg_palbank(3);
+            }
+
         }
 
-        /*scroll stage*/
-        scroll_cams();
         oam_copy(oam_mem, OBJ_BUFFER, 128);
     }
 }

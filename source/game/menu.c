@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "menu.h"
-#include "../../include/tonc/toolbox.h"
+#include "../../include/tonclib/tonc.h"
 #include "../../assets/images/backgrounds/menu/menu.h"
 #include "../../assets/images/backgrounds/office/office.h"
 #include "../init.h"
@@ -68,7 +68,7 @@ void activate_menu() {
                 init_game(0); //Night 0 shows the newspaper
             } else if (menu_choice == 1) { //Continue
                 //TODO: can remove comparison if a controls screen isn't added
-                int saved_night = GAMEPAK_RAM[0];
+                int saved_night = 2;/*GAMEPAK_RAM[0];*/
 
                 /*
                 vbaprint("loaded ");
@@ -98,7 +98,8 @@ void activate_menu() {
 
         //TODO: remove
         if (key_hit(KEY_B)) {
-            GAMEPAK_RAM[0] = 9;
+            int data = 9;
+            memcpy(DMA_GAMEPAK, &data, 4);
             set_bg_palbank(!curr_bg_palbank);
         }
 

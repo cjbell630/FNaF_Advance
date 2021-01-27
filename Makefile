@@ -28,21 +28,19 @@ COBJS := \
 			source/main.o source/init.o \
 			source/game/menu.o source/game/game.o \
 			source/game/control/camera.o source/game/control/game_clock.o \
-			source/game/graphics/bg_pal_handler.o \
+			source/game/graphics/bg_pal_handler.o source/game/graphics/static_handler.o \
 			source/util/random.o \
-			\
-			include/tonc/toolbox.o \
 			\
 			assets/images/backgrounds/office/office.o assets/images/backgrounds/error/error.o \
 			assets/images/backgrounds/menu/menu.o assets/images/backgrounds/newspaper/newspaper.o \
-			assets/images/backgrounds/loading/loading.o \
+			assets/images/backgrounds/loading/loading.o assets/images/backgrounds/static/static.o \
 			assets/images/cams/stage_empty.o assets/images/cams/stage_bcf_s.o \
 			assets/images/sprites/buttons/buttons.o assets/images/sprites/buttons/buttons_apower.o \
 			assets/images/sprites/cam_map/cam_map.o
 
 SOBJS   := include/DWedit/debug.o
 
-OBJS	:= $(COBJS) $(SOBJS)
+OBJS	:= $(COBJS) $(SOBJS) include/tonclib/libtonc.a
 
 # --- boot type (MB=0 : normal. MB=1 : multiboot) ---
 

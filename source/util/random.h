@@ -11,5 +11,7 @@ int rnd();
 
 int rnd_max(int max);
 
+int rnd_exclude(int max, int exclude);
+
 
 #endif //FNAF_ADVANCE_RANDOM_H

@@ -27,3 +27,5 @@ Should I use listeners for events, and have a central timer time everything? Sho
 Here's a resource: https://www.pvv.ntnu.no/~hakonhal/main.cgi/c/classes/
 
 Could use Mode7 to distort the cameras in cool ways, like Earthbound backgrounds
+
+SBB 40 has somethnig

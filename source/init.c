@@ -3,10 +3,10 @@
 //
 
 #include "init.h"
-#include "../include/tonc/toolbox.h"
+#include "../include/tonclib/tonc.h"
 
 OBJ_ATTR OBJ_BUFFER[128];
 
 const int OFFICE_PB = 0;
 const int OFFICE_CBB = 0;
-const int OFFICE_SBB = 8;
+const int OFFICE_SBB = 20;
