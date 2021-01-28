@@ -445,7 +445,7 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
 };
 
 void select_cam(int cam_num) {
-    cam_num = logically_correct_modulus(cam_num, 11); // puts the value between 0 and 10 inclusive
+    cam_num = continuous_modulo(cam_num, 11); // puts the value between 0 and 10 inclusive
     CAM_IMG_DATA cid = get_cam_img_data(cam_num);
 
     load_bg_pal(cid.cam_pal, cid.cam_pal_len, CAM_STAT ? 0 : CAM_PB);

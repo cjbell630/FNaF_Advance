@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.17)
 project(FNaF_Advance C)
 
 set(CMAKE_C_STANDARD 11)
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-bitfields")
 
 add_executable(FNaF_Advance
         source/main.c
