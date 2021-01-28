@@ -14,8 +14,8 @@
  * <pre>
  * Example: <br/>
  *  Standard: <br/>
- *  .  &nbsp x =   -5  -4  -3  -2  -1  0   1   2   3   4   5    <br/>
- * .  &nbsp&#60;<---|---|---|---|---|---0---|---|---|---|---|---> <br/>
+ *  .  &nbsp x =   -5  -4  -3  -2  -1   0   1   2   3   4   5    <br/>
+ * .       &#60;<---|---|---|---|---|---0---|---|---|---|---|---> <br/>
  *  .&nbsp x % 4 = -1   0  -3  -2  -1   0   1   2   3   0   1  <br/>
  *                  (Results are mirrored at 0, where the abs of the results increases in both directions) <br/> <br/>
  *  This version: <br/>
