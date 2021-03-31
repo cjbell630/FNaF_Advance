@@ -19,10 +19,18 @@ int rnd() {
     return (rng_seed >> 16) & 0x7FFF;
 }
 
+/*
+ * TODO: doc
+ * max is exclusive
+ */
 int rnd_max(int max) {
     return rnd() % max;
 }
 
+/*
+ * TODO: doc
+ * max is exclusive
+ */
 int rnd_exclude(int max, int exclude) {
     int random = rnd_max(max);
     while (random == exclude) {

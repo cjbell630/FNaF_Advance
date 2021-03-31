@@ -14,12 +14,13 @@
 #include <stdlib.h>
 #include "graphics/bg_pal_handler.h"
 #include "graphics/static_handler.h"
-#include "control/camera.h"
+#include "control/cameras/camera.h"
 #include "control/controls.h"
+#include "control/ai/ai.h"
 #include "../util/random.h"
 #include "control/game_clock.h"
 #include "../../assets/images/sprites/cam_map/cam_map.h"
-#include "control/cam_nav.h"
+#include "control/cameras/cam_nav.h"
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 2;
@@ -125,7 +126,7 @@ void start_game() {
 
     //show night intro screen
     //TODO
-
+    init_anims(3, 1, 10, 1);
     init_cams();
     //vbaprint("done init cams\n");
     select_cam(0);
@@ -188,7 +189,6 @@ void start_game() {
                 //
                 //set_bg_palbank(3);
             }
-
         }
 
         oam_copy(oam_mem, OBJ_BUFFER, 128);

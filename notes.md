@@ -109,7 +109,7 @@ If blocked by a door, he returns to the hall and tries to get to the corner agai
 
 Once in the office, he will **ONLY** attack when the camera is down. Every second while your camera is down, there is a
 1 in 4 chance Freddy will attack.
-(does this start on lowering the camera? ie. Could you lower the camera for <1 second at a time and still be okay?)
+(does this restart on lowering the camera? ie. Could you lower the camera for <1 second at a time and still be okay?)
 
 ## Power Down
 

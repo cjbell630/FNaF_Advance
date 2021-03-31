@@ -5,7 +5,7 @@
 #ifndef FNAF_ADVANCE_CAMERA_H
 #define FNAF_ADVANCE_CAMERA_H
 
-#include "../graphics/bg_pal_handler.h"
+#include "../../graphics/bg_pal_handler.h"
 
 /*Cam Num Marcos*/
 #define CAM_STAGE 0
@@ -32,6 +32,14 @@ typedef struct {
 #define CAM_OCC_FREDDY 0x02
 #define CAM_OCC_CHICA 0x04
 #define CAM_OCC_BONNIE 0x08
+
+#define IS_FOXY(n) (n & CAM_OCC_FOXY) > 0
+#define IS_FREDDY(n) (n & CAM_OCC_FREDDY) > 0
+#define IS_CHICA(n) n & CAM_OCC_CHICA > 0
+#define IS_BONNIE(n) n & CAM_OCC_BONNIE > 0
+
+//NOTE: to remove CAM_OCC_X from n, use:
+//  n &= ~CAM_OCC_X
 
 /* Cam Spec */
 #define CAM_SPEC_STD 0x0

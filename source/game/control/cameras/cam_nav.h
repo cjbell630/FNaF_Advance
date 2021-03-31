@@ -5,7 +5,7 @@
 #ifndef FNAF_ADVANCE_CAM_NAV_H
 #define FNAF_ADVANCE_CAM_NAV_H
 
-#include "../../../include/tonclib/tonc.h"
+#include "../../../../include/tonclib/tonc.h"
 
 typedef struct {
     unsigned x: 3;
