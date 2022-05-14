@@ -23,7 +23,7 @@
 #include "control/cameras/cam_nav.h"
 
 const int NEWSPAPER_PB = 1;
-const int NEWSPAPER_CBB = 2;
+const int NEWSPAPER_CBB = 3;
 const int NEWSPAPER_SBB = 10;
 
 int curr_night;
