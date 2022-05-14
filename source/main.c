@@ -1,9 +1,3 @@
-//
-// obj_demo.c
-// testing various sprite related things
-//
-// (20031003 - 20060924, Cearn)
-
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/22/2021.
-//
-
 #ifndef FNAF_ADVANCE_CONTROLS_H
 #define FNAF_ADVANCE_CONTROLS_H
 

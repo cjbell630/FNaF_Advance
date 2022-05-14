@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/26/2021.
-//
-
 #ifndef FNAF_ADVANCE_STATIC_HANDLER_H
 #define FNAF_ADVANCE_STATIC_HANDLER_H
 

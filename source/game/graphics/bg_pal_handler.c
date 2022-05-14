@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/22/2021.
-//
-
 //#include "screen_handler.h"
 #include "../../../include/tonclib/tonc.h"
 #include "../../../include/DWedit/debug.h"

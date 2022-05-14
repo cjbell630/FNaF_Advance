@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/22/2021.
-//
-
 #include <stdlib.h>
 #include "camera.h"
 #include "../../graphics/bg_pal_handler.h"
@@ -483,7 +479,6 @@ void select_prev_cam() {
     //TODO: won't work with map
     select_cam(CURR_CAM - 1);
 }
-
 
 
 //TODO: could be macro

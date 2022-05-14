@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/27/2021.
-//
-
 #include "cam_nav.h"
 #include "camera.h"
 

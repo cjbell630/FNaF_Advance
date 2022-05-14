@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/21/2021.
-//
-
 #include "game.h"
 #include "../../include/tonclib/tonc.h"
 #include "../init.h"

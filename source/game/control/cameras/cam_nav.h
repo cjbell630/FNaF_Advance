@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/27/2021.
-//
-
 #ifndef FNAF_ADVANCE_CAM_NAV_H
 #define FNAF_ADVANCE_CAM_NAV_H
 

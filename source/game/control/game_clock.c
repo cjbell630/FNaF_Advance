@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/25/2021.
-//
-
 #include "game_clock.h"
 #include "../../../include/tonclib/tonc.h"
 #include "../../util/random.h"
