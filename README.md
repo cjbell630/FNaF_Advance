@@ -1,9 +1,26 @@
 # Five Nights at Freddy's: Advance
 
-### Note: This is a work in progress. I am using this project to learn about GBA development, so it will likely be very slow.
+### Note: This is a work in progress! 
+
+A Game Boy Advance demake of Five Nights at Freddy's!
 
 You can find the current demo in either [releases][1] (working demo) or [`/out/FNaF_Advance.gba`][2] (possibly
 non-working demo).
+
+#### Controls
+* Main Menu
+  * D-pad/Select: Navigate
+  * A/Start: Start/continue game
+* Office
+  * L/R: Look left/right
+  * Select/Any D-pad key: Open cameras
+  * **(TBA!!)** A: Toggle door
+  * **(TBA!!)** B: Toggle light
+* Cameras
+  * Select/A/B: Close cameras
+  * D-pad: Change cameras (changes camera based on where they appear on the minimap)
+
+### Sources / Credit / Copyright
 
 I'll update this with proper copyright information later, but for now, credit for essentially anything here that is not
 code belongs to Scott Cawthon and respective corporations (ie. game concept, graphics, sound, etc)
