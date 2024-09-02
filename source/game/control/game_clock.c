@@ -1,10 +1,10 @@
 #include "game_clock.h"
 #include "tonc.h"
-#include "../../util/random.h"
-#include "../../util/util.h"
+#include "util/random.h"
+#include "util/util.h"
 #include "cameras/camera.h"
-#include "../graphics/static_handler.h"
-#include "../control/ai/ai.h"
+#include "game/graphics/static_handler.h"
+#include "game/control/ai/ai.h"
 
 const int FRAME_MAX = 130881600; // the LCM of all frame intervals, to avoid massive nums in memory
 /*

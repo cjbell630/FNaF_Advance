@@ -1,11 +1,11 @@
 #include "game.h"
 #include "tonc.h"
-#include "../init.h"
-#include "../../include/DWedit/debug.h"
-#include "../../assets/images/backgrounds/office/office.h"
-#include "../../assets/images/backgrounds/newspaper/newspaper.h"
-#include "../../assets/images/backgrounds/static/static.h"
-#include "../../assets/images/backgrounds/loading/loading.h"
+#include "init.h"
+#include "DWedit/debug.h"
+#include "images/backgrounds/office/office.h"
+#include "images/backgrounds/newspaper/newspaper.h"
+#include "images/backgrounds/static/static.h"
+#include "images/backgrounds/loading/loading.h"
 #include <string.h>
 #include <stdlib.h>
 #include "graphics/bg_pal_handler.h"
@@ -13,9 +13,9 @@
 #include "control/cameras/camera.h"
 #include "control/controls.h"
 #include "control/ai/ai.h"
-#include "../util/random.h"
+#include "util/random.h"
 #include "control/game_clock.h"
-#include "../../assets/images/sprites/cam_map/cam_map.h"
+#include "images/sprites/cam_map/cam_map.h"
 #include "control/cameras/cam_nav.h"
 
 const int NEWSPAPER_PB = 1;

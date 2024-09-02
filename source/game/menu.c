@@ -3,14 +3,14 @@
 #include <stdlib.h>
 #include "menu.h"
 #include "tonc.h"
-#include "../../assets/images/backgrounds/menu/menu.h"
-#include "../../assets/images/backgrounds/office/office.h"
-#include "../init.h"
+#include "images/backgrounds/menu/menu.h"
+#include "images/backgrounds/office/office.h"
+#include "init.h"
 #include "game.h"
-#include "../../include/DWedit/debug.h"
+#include "DWedit/debug.h"
 #include "graphics/bg_pal_handler.h"
 #include "control/controls.h"
-#include "../util/random.h"
+#include "util/random.h"
 
 const int MAX_FRAMES_FOR_FACE_GLITCH = 10;
 const int MIN_FRAMES_FOR_FACE_GLITCH = 2;

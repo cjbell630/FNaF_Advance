@@ -1,7 +1,7 @@
 #ifndef FNAF_ADVANCE_CAMERA_H
 #define FNAF_ADVANCE_CAMERA_H
 
-#include "../../graphics/bg_pal_handler.h"
+#include "game/graphics/bg_pal_handler.h"
 
 /*Cam Num Marcos*/
 #define CAM_STAGE 0

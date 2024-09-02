@@ -3,10 +3,10 @@
 //
 
 #include "ai.h"
-#include "../../../../include/DWedit/debug.h"
-#include "../../../util/random.h"
-#include "../../../util/util.h"
-#include "../cameras/camera.h"
+#include "DWedit/debug.h"
+#include "util/random.h"
+#include "util/util.h"
+#include "game/control/cameras/camera.h"
 #include <stdio.h>
 
 void change_room(struct Animatronic anim, int new_room) {

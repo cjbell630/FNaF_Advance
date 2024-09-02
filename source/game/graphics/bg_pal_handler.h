@@ -2,7 +2,7 @@
 #define FNAF_ADVANCE_BG_PAL_HANDLER_H
 
 #include "tonc.h"
-#include "../../../include/DWedit/debug.h"
+#include "DWedit/debug.h"
 #include <string.h>
 
 

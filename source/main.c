@@ -3,11 +3,11 @@
 #include <stdlib.h>
 
 
-#include "../include/DWedit//debug.h"
+#include "DWedit/debug.h"
 
-#include "../assets/images/backgrounds/office/office.h"
-#include "../assets/images/sprites/buttons/buttons.h"
-#include "../assets/images/sprites/buttons/buttons_apower.h"
+#include "images/backgrounds/office/office.h"
+#include "images/sprites/buttons/buttons.h"
+#include "images/sprites/buttons/buttons_apower.h"
 
 #include "game/menu.h"
 #include "init.h"

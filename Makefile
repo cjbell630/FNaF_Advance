@@ -56,7 +56,7 @@ OBJCOPY	:= $(CROSS)objcopy
 ARCH	:= -mthumb-interwork -mthumb
 
 ASFLAGS	:= -mthumb-interwork
-CFLAGS	:= $(ARCH) -O2 -Wall -fno-strict-aliasing -I$(LIBTONC_INCLUDE)
+CFLAGS	:= $(ARCH) -O2 -Wall -fno-strict-aliasing -I$(LIBTONC_INCLUDE) -Isource -Iassets -Iinclude
 LDFLAGS	:= $(ARCH) $(SPECS)
 
 .PHONY : build clean
@@ -84,6 +84,6 @@ $(SOBJ) : %.o : %.s
 clean : 
 	@rm -fv *.gba
 	@rm -fv *.elf
-	@rm -fv *.o
+	@rm -fv $(COBJS)
 
 #EOF

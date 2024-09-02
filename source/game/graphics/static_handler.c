@@ -5,8 +5,8 @@
 #include <string.h>
 #include "static_handler.h"
 #include "bg_pal_handler.h"
-#include "../../util/random.h"
-#include "../../../assets/images/backgrounds/static/static.h"
+#include "util/random.h"
+#include "images/backgrounds/static/static.h"
 #include "tonc.h"
 
 const int STATIC_OFFSET_MAX = 256;

@@ -1,23 +1,23 @@
 #include <stdlib.h>
 #include "camera.h"
-#include "../../graphics/bg_pal_handler.h"
-#include "../../../init.h"
-#include "../../../util/util.h"
+#include "game/graphics/bg_pal_handler.h"
+#include "init.h"
+#include "util/util.h"
 #include "tonc.h"
 
-#include "../../../../assets/images/backgrounds/error/error.h"
-#include "../../../../assets/images/cams/stage_empty.h"
-#include "../../../../assets/images/cams/stage_bcf_s.h"
+#include "images/backgrounds/error/error.h"
+#include "images/cams/stage_empty.h"
+#include "images/cams/stage_bcf_s.h"
 
-#include "../../../../assets/images/cams/placeholder/b_placeholder.h"
-#include "../../../../assets/images/cams/placeholder/bcf_placeholder.h"
-#include "../../../../assets/images/cams/placeholder/bcff_placeholder.h"
-#include "../../../../assets/images/cams/placeholder/bf_placeholder.h"
-#include "../../../../assets/images/cams/placeholder/c_placeholder.h"
-#include "../../../../assets/images/cams/placeholder/cf_placeholder.h"
-#include "../../../../assets/images/cams/placeholder/fo_placeholder.h"
-#include "../../../../assets/images/cams/placeholder/fr_placeholder.h"
-#include "../../../../assets/images/cams/placeholder/empty_placeholder.h"
+#include "images/cams/placeholder/b_placeholder.h"
+#include "images/cams/placeholder/bcf_placeholder.h"
+#include "images/cams/placeholder/bcff_placeholder.h"
+#include "images/cams/placeholder/bf_placeholder.h"
+#include "images/cams/placeholder/c_placeholder.h"
+#include "images/cams/placeholder/cf_placeholder.h"
+#include "images/cams/placeholder/fo_placeholder.h"
+#include "images/cams/placeholder/fr_placeholder.h"
+#include "images/cams/placeholder/empty_placeholder.h"
 
 const int CAM_PB = 2;
 const int CAM_CBB = 1;
