@@ -29,3 +29,8 @@ Here's a resource: https://www.pvv.ntnu.no/~hakonhal/main.cgi/c/classes/
 Could use Mode7 to distort the cameras in cool ways, like Earthbound backgrounds
 
 SBB 40 has somethnig
+
+# Important Todo
+* Add instructions for downloading devkitPro and where to put stuff for CMakeLists
+* Running with new game causes various visual bugs such as map and status (seems to work fine with continue)
+* pressing B on title screen causes weird pallet bug
