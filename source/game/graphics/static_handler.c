@@ -7,7 +7,7 @@
 #include "bg_pal_handler.h"
 #include "../../util/random.h"
 #include "../../../assets/images/backgrounds/static/static.h"
-#include "../../../include/tonclib/tonc.h"
+#include "tonc.h"
 
 const int STATIC_OFFSET_MAX = 256;
 

@@ -5,7 +5,7 @@
 #ifndef FNAF_ADVANCE_UTIL_H
 #define FNAF_ADVANCE_UTIL_H
 
-#include "../../include/tonclib/tonc.h"
+#include "tonc.h"
 
 //https://stackoverflow.com/a/7919546/12861567
 //generates a number such as 0b11111 where the number of 1s equals n

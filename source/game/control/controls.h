@@ -1,7 +1,7 @@
 #ifndef FNAF_ADVANCE_CONTROLS_H
 #define FNAF_ADVANCE_CONTROLS_H
 
-#include "../../../include/tonclib/tonc.h"
+#include "tonc.h"
 
 
 /* Controls Macros*/

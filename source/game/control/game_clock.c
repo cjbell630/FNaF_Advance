@@ -1,5 +1,5 @@
 #include "game_clock.h"
-#include "../../../include/tonclib/tonc.h"
+#include "tonc.h"
 #include "../../util/random.h"
 #include "../../util/util.h"
 #include "cameras/camera.h"

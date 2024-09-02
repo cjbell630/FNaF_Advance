@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "menu.h"
-#include "../../include/tonclib/tonc.h"
+#include "tonc.h"
 #include "../../assets/images/backgrounds/menu/menu.h"
 #include "../../assets/images/backgrounds/office/office.h"
 #include "../init.h"
@@ -95,7 +95,7 @@ void activate_menu() {
         //TODO: remove
         if (key_hit(KEY_B)) {
             int data = 9;
-            memcpy(DMA_GAMEPAK, &data, 4);
+            memcpy((void *) DMA_GAMEPAK, &data, 4);
             set_bg_palbank(!curr_bg_palbank);
         }
 

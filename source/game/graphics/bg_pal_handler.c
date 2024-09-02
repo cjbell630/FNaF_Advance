@@ -1,5 +1,5 @@
 //#include "screen_handler.h"
-#include "../../../include/tonclib/tonc.h"
+#include "tonc.h"
 #include "../../../include/DWedit/debug.h"
 #include <string.h>
 

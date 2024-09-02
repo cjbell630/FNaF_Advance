@@ -1,5 +1,5 @@
 #include "game.h"
-#include "../../include/tonclib/tonc.h"
+#include "tonc.h"
 #include "../init.h"
 #include "../../include/DWedit/debug.h"
 #include "../../assets/images/backgrounds/office/office.h"

@@ -3,7 +3,7 @@
 #include "../../graphics/bg_pal_handler.h"
 #include "../../../init.h"
 #include "../../../util/util.h"
-#include "../../../../include/tonclib/tonc.h"
+#include "tonc.h"
 
 #include "../../../../assets/images/backgrounds/error/error.h"
 #include "../../../../assets/images/cams/stage_empty.h"

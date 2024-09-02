@@ -1,53 +1,32 @@
 #
-# key_demo.mak
+# Makefile for FNaF Advance
 #
-# Makefile for key demonstration
-#
-# NOTE: for educational purposes only. For real work, use 
-# devkitPro's templates ( $(DEVKITPRO)/examples/gba/template )
-# or tonclib's templates ( $(TONCCODE)/lab/template )
 
 PATH := $(DEVKITARM)/bin:$(PATH)
+LIBTONC_PATH := $(DEVKITARM)/lib/tonclib
+LIBTONC_INCLUDE := $(LIBTONC_PATH)/include
+LIBTONC_A := $(LIBTONC_PATH)/lib/libtonc.a
 
 # --- Project details -------------------------------------------------
 
 PROJ    := FNaF_Advance
 TITLE   := $(PROJ)
 
-###CFILES := source/*.c source/**/*.c source/**/**/*.c assets/images/backgrounds/**/*.c assets/images/cams/*.c assets/images/sprites/**/*.c \
-          			include/tonc/*.c
+# https://stackoverflow.com/a/18258352
+rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
-###COBJS  :=  $(CFILES:.c=.o)
+# get .c files
+SRC_FILES := $(call rwildcard,source,*.c)
+ASSET_FILES := $(call rwildcard,assets,*.c)
+C_FILES := $(SRC_FILES) $(ASSET_FILES)
 
-###COBJS := source/*.c source/**/*.c source/**/**/*.c assets/images/backgrounds/**/*.c assets/images/cams/*.c assets/images/sprites/**/*.c \
-          			include/tonc/*.c
-
-
-### this is so fucking stupid
-COBJS := \
-			source/main.o source/init.o \
-			source/game/menu.o source/game/game.o \
-			source/game/control/game_clock.o \
-			source/game/control/ai/ai.o \
-			source/game/control/cameras/camera.o source/game/control/cameras/cam_nav.o \
-			source/game/graphics/bg_pal_handler.o source/game/graphics/static_handler.o \
-			source/util/random.o \
-			\
-			assets/images/backgrounds/office/office.o assets/images/backgrounds/error/error.o \
-			assets/images/backgrounds/menu/menu.o assets/images/backgrounds/newspaper/newspaper.o \
-			assets/images/backgrounds/loading/loading.o assets/images/backgrounds/static/static.o \
-			assets/images/cams/stage_empty.o assets/images/cams/stage_bcf_s.o \
-			assets/images/cams/placeholder/b_placeholder.o assets/images/cams/placeholder/bcf_placeholder.o \
-			assets/images/cams/placeholder/bcff_placeholder.o assets/images/cams/placeholder/bf_placeholder.o \
-			assets/images/cams/placeholder/c_placeholder.o assets/images/cams/placeholder/cf_placeholder.o \
-			assets/images/cams/placeholder/empty_placeholder.o assets/images/cams/placeholder/fo_placeholder.o \
-			assets/images/cams/placeholder/fr_placeholder.o \
-			assets/images/sprites/buttons/buttons.o assets/images/sprites/buttons/buttons_apower.o \
-			assets/images/sprites/cam_map/cam_map.o
+# .o files to compile
+COBJS := $(patsubst %.c,%.o,$(C_FILES))
 
 SOBJS   := include/DWedit/debug.o
 
-OBJS	:= $(COBJS) $(SOBJS) include/tonclib/libtonc.a
+# targets for .elf (all .o, plus libtonc.a)
+OBJS	:= $(COBJS) $(SOBJS) $(LIBTONC_A)
 
 # --- boot type (MB=0 : normal. MB=1 : multiboot) ---
 
@@ -77,7 +56,7 @@ OBJCOPY	:= $(CROSS)objcopy
 ARCH	:= -mthumb-interwork -mthumb
 
 ASFLAGS	:= -mthumb-interwork
-CFLAGS	:= $(ARCH) -O2 -Wall -fno-strict-aliasing
+CFLAGS	:= $(ARCH) -O2 -Wall -fno-strict-aliasing -I$(LIBTONC_INCLUDE)
 LDFLAGS	:= $(ARCH) $(SPECS)
 
 .PHONY : build clean

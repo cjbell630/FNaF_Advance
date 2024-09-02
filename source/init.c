@@ -1,5 +1,5 @@
 #include "init.h"
-#include "../include/tonclib/tonc.h"
+#include "tonc.h"
 
 OBJ_ATTR OBJ_BUFFER[128];
 
