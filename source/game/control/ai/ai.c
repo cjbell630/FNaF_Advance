@@ -44,11 +44,6 @@ bool try_move(struct Animatronic *anim) {
 
 /*  BONNIE  */
 
-void init_bonnie(int level) {
-    BONNIE.lvl = level;
-    BONNIE.room_num = 0;
-}
-
 void update_bonnie(int frame_num) {
     if (!is_multiple(frame_num, BONNIE_FRAMECOUNT)) {
         return;
@@ -68,23 +63,18 @@ void update_bonnie(int frame_num) {
 }
 
 struct Animatronic BONNIE = {
-        .init = &init_bonnie,
-        .update = &update_bonnie
+        .update = &update_bonnie,
+        .starting_room = ROOM_STAGE
 };
 
 /*  CHICA  */
 
 struct Animatronic CHICA = {
-        .init = &init_bonnie,
-        .update = &update_bonnie //TODO
+        .update = &update_bonnie, //TODO
+        .starting_room = ROOM_STAGE
 };
 
 /*  FREDDY  */
-
-void init_freddy(int level) {
-    FREDDY.lvl = level;
-    FREDDY.room_num = 0;
-}
 
 void update_freddy(int frame_num) {
     if (!is_multiple(frame_num, BONNIE_FRAMECOUNT)) {
@@ -101,22 +91,22 @@ void update_freddy(int frame_num) {
 }
 
 struct Animatronic FREDDY = {
-        .init = &init_freddy,
-        .update = &update_freddy
+        .update = &update_freddy,
+        .starting_room = ROOM_STAGE
 };
 
 /*  FOXY  */
 
 struct Animatronic FOXY = {
-        .init = &init_freddy,
-        .update = &update_freddy // TODO
+        .update = &update_freddy, // TODO
+        .starting_room = ROOM_PIRATE
 };
 
 
 /*  COLLECTIVE  */
-void set_levels(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl) {
-    BONNIE.init(b_lvl);
-    FREDDY.init(fr_lvl);
+void set_levels(int fr_lvl, int b_lvl, int c_lvl, int fo_lvl) { // TODO make these orders consistent or something please
+    BONNIE.lvl = b_lvl;
+    FREDDY.lvl = fr_lvl;
 }
 
 void on_night_start(int night_num) {
@@ -143,6 +133,10 @@ void on_night_start(int night_num) {
         default: // custom night
             break;
     }
+    BONNIE.room_num = BONNIE.starting_room;
+    FOXY.room_num = FOXY.starting_room;
+    FREDDY.room_num = FREDDY.starting_room;
+    CHICA.room_num = CHICA.starting_room;
 }
 
 void update_anims(int frame_num) {

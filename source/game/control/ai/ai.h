@@ -21,8 +21,9 @@
 struct Animatronic {
     int lvl;
     int room_num;
+    const int starting_room;
 
-    void (*init)();
+    //void (*init)();
 
     void (*update)(int frame_num);
 };
