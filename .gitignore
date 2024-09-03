@@ -7,8 +7,6 @@
 /.idea
 /build
 /ignore
-/out/vbalink.ini
+/out
 /cmake-build-*
 *.[oad]
-*.elf
-*.sa[12v]
