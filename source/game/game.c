@@ -93,12 +93,12 @@ void init_game(int night) {
 }
 
 void start_game() {
-    //vbaprint("starting now\n");
+    vbaprint("starting now\n");
     if (curr_night == 0) {
-        //vbaprint("newspaper now\n");
+        vbaprint("newspaper now\n");
         //show newspaper
 
-        //vbaprint("done showing newspaper pallette\n");
+        vbaprint("done showing newspaper pallette\n");
         REG_BG0HOFS = 0;
         REG_BG0VOFS = 0;        // load newspaper into memory
         // Load palette
@@ -124,16 +124,17 @@ void start_game() {
     //TODO
     //init_ai();
     Animatronics.set_levels(3, 1, 10, 1);
+    vbaprint("done init ai\n");
 
     init_cams();
-    //vbaprint("done init cams\n");
+    vbaprint("done init cams\n");
     select_cam(0);
-    //vbaprint("done select cam\n");
+    vbaprint("done select cam\n");
     set_cam_display(0);
 
     //show office
     set_bg_palbank(OFFICE_PB);
-    //vbaprint("office now\n");
+    vbaprint("office now\n");
     REG_BG0CNT = BG_PRIO(2) | BG_CBB(OFFICE_CBB) | BG_SBB(OFFICE_SBB) | BG_4BPP | BG_REG_64x32;
     //REG_BLDCNT = BLD_BUILD(BLD_BG0, BLD_BG1, BLD_OFF);
     //REG_BLDALPHA = BLDA_BUILD(0b01000, 0b01000);
@@ -147,6 +148,7 @@ void start_game() {
     const int RIGHT_CAP = ART_WIDTH - GBA_SCREEN_WIDTH; // 120
     int x = RIGHT_CAP / 2, y = 0;
 
+    vbaprint("starting loop now\n");
     while (1) {
         vid_vsync();
         key_poll();

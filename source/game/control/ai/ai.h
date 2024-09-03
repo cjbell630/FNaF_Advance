@@ -5,8 +5,6 @@ struct Animatronic {
     int lvl;
     int room_num;
 
-    const char cam_occ; //TODO: may need to make unsigned
-
     void (*init)();
 
     void (*move_opp)(int roll);
@@ -19,6 +17,7 @@ struct AnimatronicsWrapper {
     void (*update)();
     void (*reset)();
     void (*set_levels)(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl);
+    char (*get_room_occupants)(int room_num);
 };
 extern struct AnimatronicsWrapper Animatronics;
 

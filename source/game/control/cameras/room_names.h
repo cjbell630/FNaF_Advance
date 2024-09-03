@@ -1,0 +1,17 @@
+#ifndef FNAF_ADVANCE_ROOM_NAMES_H
+#define FNAF_ADVANCE_ROOM_NAMES_H
+
+/*Cam Num Marcos*/
+#define ROOM_STAGE 0
+#define ROOM_DINING 1
+#define ROOM_PIRATE 2
+#define ROOM_WEST 3
+#define ROOM_WEST_CORNER 4
+#define ROOM_CLOSET 5
+#define ROOM_EAST 6
+#define ROOM_EAST_CORNER 7
+#define ROOM_BACKSTAGE 8
+#define ROOM_KITCHEN 9
+#define ROOM_RESTROOMS 10
+
+#endif //FNAF_ADVANCE_ROOM_NAMES_H

@@ -1,36 +1,37 @@
 #include "cam_nav.h"
 #include "camera.h"
+#include "room_names.h"
 
 TRIBIT_2D_POINT CURR_CAM_POINT = {1, 0};
 
 const CAM_NAV_POINT CAM_NAV_MAP[8][8] = {
         {
-                CAM_POINT_NOGO,       CAM_POINT_STATIC(CAM_STAGE),       CAM_POINT_NOGO,
+                CAM_POINT_NOGO,       CAM_POINT_STATIC(ROOM_STAGE),       CAM_POINT_NOGO,
                 CAM_POINT_NULL,       CAM_POINT_WARP(1, 1) /*more*/
         },
         {
-                CAM_POINT_WARP(4, 1), CAM_POINT_STATIC(CAM_DINING),      CAM_POINT_STATIC(CAM_RESTROOMS),
-                CAM_POINT_NOGO,       CAM_POINT_STATIC(CAM_BACKSTAGE), CAM_POINT_WARP(1, 1),
+                CAM_POINT_WARP(4, 1), CAM_POINT_STATIC(ROOM_DINING),      CAM_POINT_STATIC(ROOM_RESTROOMS),
+                CAM_POINT_NOGO,       CAM_POINT_STATIC(ROOM_BACKSTAGE), CAM_POINT_WARP(1, 1),
                 CAM_POINT_WARP(2, 1)
         },
         {
                 CAM_POINT_NULL,       CAM_POINT_WARP(5, 4),              CAM_POINT_WARP(6, 2),
                 CAM_POINT_NULL,       CAM_POINT_WARP(4, 5),            CAM_POINT_WARP(4, 5),
-                CAM_POINT_STATIC(CAM_KITCHEN), CAM_POINT_NOGO
+                CAM_POINT_STATIC(ROOM_KITCHEN), CAM_POINT_NOGO
         },
         {
-                CAM_POINT_WARP(4, 5), CAM_POINT_STATIC(CAM_WEST),        CAM_POINT_STATIC(CAM_EAST),
+                CAM_POINT_WARP(4, 5), CAM_POINT_STATIC(ROOM_WEST),        CAM_POINT_STATIC(ROOM_EAST),
                 CAM_POINT_WARP(6, 2), CAM_POINT_NULL,                  CAM_POINT_WARP(1, 1),
                 CAM_POINT_WARP(2, 3) /*more*/
         },
         {
-                CAM_POINT_NOGO,       CAM_POINT_STATIC(CAM_WEST_CORNER), CAM_POINT_STATIC(CAM_EAST_CORNER),
-                CAM_POINT_NOGO,       CAM_POINT_WARP(4, 1),            CAM_POINT_STATIC(CAM_PIRATE),
+                CAM_POINT_NOGO,       CAM_POINT_STATIC(ROOM_WEST_CORNER), CAM_POINT_STATIC(ROOM_EAST_CORNER),
+                CAM_POINT_NOGO,       CAM_POINT_WARP(4, 1),            CAM_POINT_STATIC(ROOM_PIRATE),
                 CAM_POINT_WARP(6, 2) /*more*/
         },
         {
                 CAM_POINT_NULL,       CAM_POINT_NOGO,                    CAM_POINT_NOGO,
-                CAM_POINT_NOGO,       CAM_POINT_STATIC(CAM_CLOSET),    CAM_POINT_WARP(1, 3)
+                CAM_POINT_NOGO,       CAM_POINT_STATIC(ROOM_CLOSET),    CAM_POINT_WARP(1, 3)
                 /*more*/
         },
         {

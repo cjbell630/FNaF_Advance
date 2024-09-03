@@ -42,7 +42,7 @@ void activate_menu() {
     //   using charblock 0 and screenblock 31
     REG_BG0CNT = BG_CBB(0) | BG_SBB(13) | BG_4BPP | BG_REG_64x64;
     REG_DISPCNT = DCNT_BG0 | DCNT_MODE0; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
-    while (stage != -1) { // -1 means exit menu, start game
+    while (stage != -1) { // -1 means exit menu, start game TODO magic number
         vid_vsync();
         key_poll();
 
@@ -89,7 +89,10 @@ void activate_menu() {
                 init_game(saved_night == 0 ? 1 : saved_night);
             }
             //TODO: prevent starting if init fails
+
+            vbaprint("starting game");
             start_game();
+            vbaprint("start game exited");
         }
 
         //TODO: remove

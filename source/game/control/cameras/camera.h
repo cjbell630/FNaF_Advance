@@ -3,18 +3,6 @@
 
 #include "game/graphics/bg_pal_handler.h"
 
-/*Cam Num Marcos*/
-#define CAM_STAGE 0
-#define CAM_DINING 1
-#define CAM_PIRATE 2
-#define CAM_WEST 3
-#define CAM_WEST_CORNER 4
-#define CAM_CLOSET 5
-#define CAM_EAST 6
-#define CAM_EAST_CORNER 7
-#define CAM_BACKSTAGE 8
-#define CAM_KITCHEN 9
-#define CAM_RESTROOMS 10
 
 //contains information about a camera's status
 typedef struct {
@@ -28,6 +16,8 @@ typedef struct {
 #define CAM_OCC_FREDDY 0x02
 #define CAM_OCC_CHICA 0x04
 #define CAM_OCC_BONNIE 0x08
+
+#define CAM_OCC(b, c, r, o, n) ((l == q) << 3) | ((m == q) << 2) | ((n == q) << 1) | (o == r);
 
 #define IS_FOXY(n) (n & CAM_OCC_FOXY) > 0
 #define IS_FREDDY(n) (n & CAM_OCC_FREDDY) > 0
@@ -43,7 +33,7 @@ typedef struct {
 
 
 /*other macros*/
-#define CURR_IS_STILL CURR_CAM == CAM_CLOSET || CURR_CAM == CAM_KITCHEN
+#define SHOULD_PAN(n) n != ROOM_CLOSET && n != ROOM_KITCHEN
 
 //Points to image data for a camstate
 typedef struct {

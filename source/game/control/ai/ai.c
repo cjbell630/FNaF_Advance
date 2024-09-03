@@ -6,13 +6,12 @@
 #include "DWedit/debug.h"
 #include "util/random.h"
 #include "util/util.h"
-#include "game/control/cameras/camera.h"
+#include "game/control/cameras/room_names.h"
 #include <stdio.h>
 
 void change_room(struct Animatronic anim, int new_room) {
-    CAMS[anim.room_num].occupants &= ~(anim.cam_occ); // remove freddy from old room
-    CAMS[new_room].occupants |= (anim.cam_occ); // add freddy to new room
-
+    //Animatronics.get_room_occupants(anim.room_num) &= ~(anim.cam_occ); // remove freddy from old room
+    //Animatronics.get_room_occupants(new_room) |= (anim.cam_occ); // add freddy to new room
     anim.room_num = new_room;
 }
 
@@ -20,7 +19,7 @@ int get_random_unocc(int room_nums[], int room_numc) { //TODO: should this reall
     uint status = GET_N_SET_BITS(room_numc); // 11 bits, one for each room
     int rand_index;
     while (status > 0) { //TODO: could use rnd_exclude if I made it take more nums
-        if (CAMS[rand_index = rnd_max(room_numc)].occupants == CAM_OCC_EMPTY) { // if the found room is empty
+        if (Animatronics.get_room_occupants(rand_index = rnd_max(room_numc)) == 0/*TODO use macro ROOM_EMPTY*/) { // if the found room is empty
             return room_nums[rand_index];
         }
         status &= ~(1 << rand_index); // turn off the bit corresponding to the random room num
@@ -43,14 +42,14 @@ void move_opp_bonnie(int roll) {
     if (roll <= BONNIE.lvl) {
         vbaprint("bonnie succ\n");
         int room_nums[] = {
-                CAM_STAGE, CAM_DINING, CAM_BACKSTAGE, CAM_WEST, CAM_WEST_CORNER, CAM_CLOSET
+                ROOM_STAGE, ROOM_DINING, ROOM_BACKSTAGE, ROOM_WEST, ROOM_WEST_CORNER, ROOM_CLOSET
         };
         for (int i = 0; i < 10; i++) {
             sprintf(str, "rand unocc room: %d\n", get_random_unocc(room_nums, 6));
             vbaprint(str);
         }
         change_room(BONNIE, get_random_unocc(room_nums, 6));
-        sprintf(str, "stage occ: %d\n", CAMS[0].occupants);
+        sprintf(str, "stage occ: %d\n", Animatronics.get_room_occupants(0));
         vbaprint(str);
     } else {
         vbaprint("bonnie fail\n");
@@ -59,13 +58,16 @@ void move_opp_bonnie(int roll) {
 
 
 struct Animatronic BONNIE = {
-        .cam_occ = (char) CAM_OCC_BONNIE,
         .init = &init_bonnie,
         .move_opp = &move_opp_bonnie
 };
 
 /*  CHICA  */
 
+struct Animatronic CHICA = {
+        .init = &init_bonnie,
+        .move_opp = &move_opp_bonnie
+};
 
 /*  FREDDY  */
 
@@ -81,21 +83,23 @@ void move_opp_freddy(int roll) {
 
     if (roll <= FREDDY.lvl) {
         vbaprint("freddy succ\n");
-        //change_room(FREDDY, CAM_EAST);
+        //change_room(FREDDY, ROOM_EAST);
     } else {
         vbaprint("freddy fail\n");
     }
 }
 
 struct Animatronic FREDDY = {
-        .cam_occ = (char) CAM_OCC_FREDDY,
         .init = &init_freddy,
         .move_opp = &move_opp_freddy
 };
 
 /*  FOXY  */
 
-
+struct Animatronic FOXY = {
+        .init = &init_freddy,
+        .move_opp = &move_opp_freddy
+};
 
 
 /*  COLLECTIVE  */
@@ -112,8 +116,14 @@ void update_anims() {
 
 }
 
+// TODO define this in camera.c?
+char get_room_occupants(int room_num){
+    return  ((BONNIE.room_num == room_num) << 3) | ((CHICA.room_num == room_num) << 2) | ((FREDDY.room_num == room_num) << 1) | (FOXY.room_num == room_num);
+}
+
 struct AnimatronicsWrapper Animatronics = {
         .update = update_anims,
         .reset = reset_anims,
-        .set_levels = set_levels
+        .set_levels = set_levels,
+        .get_room_occupants = get_room_occupants
 };

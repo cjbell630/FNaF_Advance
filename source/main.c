@@ -113,8 +113,11 @@ int main() {
                   */
 
     //scroll_test();
+    vbaprint("entry");
     init_menu();
+    vbaprint("initialized menu");
     activate_menu();
+    vbaprint("activate menu exited");
     while (1);
 
     return 0;

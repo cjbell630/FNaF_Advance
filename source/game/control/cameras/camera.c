@@ -18,6 +18,8 @@
 #include "images/cams/placeholder/fo_placeholder.h"
 #include "images/cams/placeholder/fr_placeholder.h"
 #include "images/cams/placeholder/empty_placeholder.h"
+#include "game/control/ai/ai.h"
+#include "game/control/cameras/room_names.h"
 
 const int CAM_PB = 2;
 const int CAM_CBB = 1;
@@ -70,7 +72,7 @@ CAM_DATA get_cam_data(int cam_num) {
 
 CAM_IMG_DATA get_cam_img_data(int cam_num) {
     CAM_DATA cd = get_cam_data(cam_num);
-    return CAM_IMG_MAP[cam_num][cd.occupants][cd.special];
+    return CAM_IMG_MAP[cam_num][Animatronics.get_room_occupants(cam_num)][cd.special];
 }
 
 const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
@@ -515,9 +517,7 @@ void update_cam_scroll_display() {
 void scroll_cams() {
     //TODO: this code looks so cringe
     if (CAM_STAT) { // if cams are up
-        if (CURR_IS_STILL) { // if should not scroll
-            REG_BG1HOFS = 0;
-        } else { // if should scroll
+        if (SHOULD_PAN(CURR_CAM)) { // if should scroll
             if (cam_scroll_dir == 1) { // moving right
                 if (internal_cam_scroll > CAM_SCROLL_DISP_RIGHT_CAP + CAM_SCROLL_BUFFER) { // turning point
                     cam_scroll_dir = -1;
@@ -533,6 +533,8 @@ void scroll_cams() {
             }
             internal_cam_scroll += cam_scroll_dir * CAM_SCROLL_SPEED;
             update_cam_scroll_display();
+        } else { // if should not scroll
+            REG_BG1HOFS = 0;
         }
     }
 }
