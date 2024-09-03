@@ -4,8 +4,7 @@
 
 A Game Boy Advance demake of Five Nights at Freddy's!
 
-You can find the current demo in either [releases][1] (working demo) or [`/out/FNaF_Advance.gba`][2] (possibly
-non-working demo).
+You can find the current demo in [releases][1]!
 
 #### Controls
 * Main Menu
