@@ -119,8 +119,30 @@ void set_levels(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl) {
     FREDDY.init(fr_lvl);
 }
 
-void reset_anims() {
-
+void on_night_start(int night_num) {
+    // TODO a little cringe, maybe there's a better way to write this
+    switch (night_num) {
+        case 1:
+            set_levels(NIGHT_1_START_LEVELS);
+            break;
+        case 2:
+            set_levels(NIGHT_2_START_LEVELS);
+            break;
+        case 3:
+            set_levels(NIGHT_3_START_LEVELS);
+            break;
+        case 4:
+            set_levels(NIGHT_4_START_LEVELS);
+            break;
+        case 5:
+            set_levels(NIGHT_5_START_LEVELS);
+            break;
+        case 6:
+            set_levels(NIGHT_6_START_LEVELS);
+            break;
+        default: // custom night
+            break;
+    }
 }
 
 void update_anims(int frame_num) {
@@ -137,7 +159,7 @@ char get_room_occupants(int room_num) {
 
 struct AnimatronicsWrapper Animatronics = {
         .update = update_anims,
-        .reset = reset_anims,
+        .on_night_start = on_night_start,
         .set_levels = set_levels,
         .get_room_occupants = get_room_occupants
 };

@@ -120,10 +120,10 @@ void start_game() {
         curr_night++;
     }
 
-    //show night intro screen
-    //TODO
+    //TODO show night intro screen
+
     //init_ai();
-    Animatronics.set_levels(3, 1, 10, 1);
+    Animatronics.on_night_start(curr_night);
     vbaprint("done init ai\n");
 
     init_cams();
@@ -165,8 +165,8 @@ void start_game() {
                 select_prev_cam();
             }
             navigate_cams(
-                    key_hit(KEY_RIGHT)? 1 : key_hit(KEY_LEFT)? -1 : 0,
-                    key_hit(KEY_UP)? 1 : key_hit(KEY_DOWN)? -1 : 0
+                    key_hit(KEY_RIGHT) ? 1 : key_hit(KEY_LEFT) ? -1 : 0,
+                    key_hit(KEY_UP) ? 1 : key_hit(KEY_DOWN) ? -1 : 0
             );
         } else {
             if (CTRL_OPEN_CAM) {
