@@ -15,6 +15,11 @@ struct Animatronic {
 extern struct Animatronic FREDDY;
 extern struct Animatronic BONNIE;
 
-extern void init_anims(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl);
+struct AnimatronicsWrapper {
+    void (*update)();
+    void (*reset)();
+    void (*set_levels)(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl);
+};
+extern struct AnimatronicsWrapper Animatronics;
 
 #endif //FNAF_ADVANCE_AI_H

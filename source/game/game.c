@@ -122,7 +122,9 @@ void start_game() {
 
     //show night intro screen
     //TODO
-    init_anims(3, 1, 10, 1);
+    //init_ai();
+    Animatronics.set_levels(3, 1, 10, 1);
+
     init_cams();
     //vbaprint("done init cams\n");
     select_cam(0);

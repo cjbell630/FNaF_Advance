@@ -98,8 +98,22 @@ struct Animatronic FREDDY = {
 
 
 
-/*  INIT  */
-void init_anims(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl) {
+/*  COLLECTIVE  */
+void set_levels(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl) {
     BONNIE.init(b_lvl);
     FREDDY.init(fr_lvl);
 }
+
+void reset_anims() {
+
+}
+
+void update_anims() {
+
+}
+
+struct AnimatronicsWrapper Animatronics = {
+        .update = update_anims,
+        .reset = reset_anims,
+        .set_levels = set_levels
+};
