@@ -145,6 +145,27 @@ void update_anims(int frame_num) {
     FREDDY.update(frame_num);
 }
 
+/**
+ * To be called when the hour changes ex. 1->2 3->4
+ *
+ * @param hour the CURRENT hour
+ */
+void on_hour(int hour) {
+    switch (hour) {
+        case 2:
+            BONNIE.lvl++;
+            break;
+        case 3:
+        case 4:
+            BONNIE.lvl++;
+            FOXY.lvl++;
+            CHICA.lvl++;
+            break;
+        default:
+            break;
+    }
+}
+
 // TODO define this in camera.c?
 char get_room_occupants(int room_num) {
     return ((BONNIE.room_num == room_num) << 3) | ((CHICA.room_num == room_num) << 2) |
@@ -155,5 +176,6 @@ struct AnimatronicsWrapper Animatronics = {
         .update = update_anims,
         .on_night_start = on_night_start,
         .set_levels = set_levels,
-        .get_room_occupants = get_room_occupants
+        .get_room_occupants = get_room_occupants,
+        .on_hour = on_hour
 };

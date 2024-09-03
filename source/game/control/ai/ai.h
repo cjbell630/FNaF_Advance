@@ -18,6 +18,8 @@
 
 #define MAX_LEVEL 20
 
+
+
 struct Animatronic {
     int lvl;
     int room_num;
@@ -35,6 +37,7 @@ struct AnimatronicsWrapper {
     void (*update)(int frame_num);
     void (*reset)();
     void (*on_night_start)(int night_num);
+    void (*on_hour)(int hour);
     void (*set_levels)(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl); // NOTE keep for custom night
     char (*get_room_occupants)(int room_num);
 };

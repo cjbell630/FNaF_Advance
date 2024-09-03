@@ -6,6 +6,7 @@
 #include "game/graphics/static_handler.h"
 #include "game/control/ai/ai.h"
 
+// TODO couldn't this be the length of a night 32400 frames which would fit in 2 bytes?
 const int FRAME_MAX = 130881600; // the LCM of all frame intervals, to avoid massive nums in memory
 
 
@@ -44,6 +45,8 @@ void tick() {
     if (is_multiple(frame, 130881601/*current night power decrease interval*/)) { // every 360 frames
         //TODO: decrease power by 1%
     }
+
+    // TODO call hour increase
 
     frame++;
 }
