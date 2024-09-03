@@ -22,6 +22,8 @@ C_FILES := $(SRC_FILES) $(ASSET_FILES)
 
 # .o files to compile
 COBJS := $(patsubst %.c,%.o,$(C_FILES))
+DEPS := $(patsubst %.o,%.d,$(COBJS))
+-include $(DEPS)
 
 SOBJS   := include/DWedit/debug.o
 
@@ -74,7 +76,7 @@ $(TARGET).elf : $(OBJS)
 	$(LD) $^ $(LDFLAGS) -o $@
 
 $(COBJS) : %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c -MM -MF $(patsubst %.o,%.d,$@) $< -o $@
 
 # Rule for assembling .s -> .o files
 $(SOBJ) : %.o : %.s
@@ -85,5 +87,6 @@ clean :
 	@rm -fv *.gba
 	@rm -fv *.elf
 	@rm -fv $(COBJS)
+	@rm -fv $(DEPS)
 
 #EOF
