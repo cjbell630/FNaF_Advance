@@ -7,12 +7,6 @@
 #include "game/control/ai/ai.h"
 
 const int FRAME_MAX = 130881600; // the LCM of all frame intervals, to avoid massive nums in memory
-/*
- * TODO: doc
- * rolls for a random number
- * can get anything from 1 -> 20
- */
-#define RAND_ROLL rnd_max(20) + 1
 
 
 //TODO: could be smaller num if necessary
@@ -26,6 +20,7 @@ void tick() {
     frame %= FRAME_MAX;
     scroll_cams();
     update_static();
+    Animatronics.update(frame);
     //TODO: reduce these to reduce comparisons run every frame
 
     if (is_multiple(frame, 2)) { // every other frame
@@ -37,22 +32,6 @@ void tick() {
     /*penalty drain (applied each second starting on night 2)*/
     if (is_multiple(frame, 60)) { // every 60 frames
         //TODO: decrease power by some%
-    }
-
-    if (is_multiple(frame, 180)) { // every 180 frames
-        FREDDY.move_opp(RAND_ROLL);
-    }
-
-    if (is_multiple(frame, 298)) { // every 298 frames
-        BONNIE.move_opp(RAND_ROLL);
-    }
-
-    if (is_multiple(frame, 300)) { // every 300 frames
-        //TODO: chica movement opportunity
-    }
-
-    if (is_multiple(frame, 305)) { // every 305 frames
-        //TODO: foxy movement opportunity
     }
 
     if (is_multiple(frame, 360)) { // every 360 frames
