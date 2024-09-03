@@ -8,7 +8,7 @@
 /build
 /ignore
 /out/vbalink.ini
-/cmake-build-debug
-*.[oa]
+/cmake-build-*
+*.[oad]
 *.elf
-*.sa[12]
+*.sa[12v]
