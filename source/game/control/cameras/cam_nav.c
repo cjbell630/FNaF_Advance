@@ -20,37 +20,46 @@ TRIBIT_2D_POINT CURR_CAM_POINT = {1, 0};
  */
 const CAM_NAV_POINT CAM_NAV_MAP[8][8] = {
         {
-                CAM_POINT_NOGO,                          CAM_POINT_STATIC(ROOM_STAGE),            CAM_POINT_NOGO,
-                CAM_POINT_NULL,                          CAM_POINT_WARP(1, 1) /* TO DINING */         /*more*/
+                CAM_POINT_NOGO,                          CAM_POINT_STATIC(ROOM_STAGE),         CAM_POINT_NOGO,
+                CAM_POINT_NULL,                        CAM_POINT_WARP(1, 1) /* TO DINING */         /*more*/
         },
         {
-                CAM_POINT_WARP(4, 1) /* TO BACKSTAGE */, CAM_POINT_STATIC(ROOM_DINING),           CAM_POINT_STATIC(ROOM_RESTROOMS),
-                CAM_POINT_NOGO,                          CAM_POINT_STATIC(ROOM_BACKSTAGE),        CAM_POINT_WARP(1, 1) /* TO DINING */,
+                CAM_POINT_WARP(4, 1) /* TO BACKSTAGE */, CAM_POINT_STATIC(ROOM_DINING),        CAM_POINT_STATIC(
+                                                                                                       ROOM_RESTROOMS),
+                CAM_POINT_NOGO,                        CAM_POINT_STATIC(ROOM_BACKSTAGE),        CAM_POINT_WARP(1,
+                                                                                                               1) /* TO DINING */,
                 CAM_POINT_WARP(2, 1) /* TO RESTROOMS */
         },
         {
-                CAM_POINT_NULL,                          CAM_POINT_WARP(5, 4) /* TO PIRATE */,    CAM_POINT_WARP(6, 2) /* TO KITCHEN */,
-                CAM_POINT_NULL,                          CAM_POINT_WARP(4, 5) /* TO CLOSET */,    CAM_POINT_WARP(2, 3) /* TO EAST */,
-                CAM_POINT_STATIC(ROOM_KITCHEN),          CAM_POINT_NOGO
+                CAM_POINT_NULL,                          CAM_POINT_WARP(5, 4) /* TO PIRATE */, CAM_POINT_WARP(6,
+                                                                                                              2) /* TO KITCHEN */,
+                CAM_POINT_NULL,                        CAM_POINT_WARP(4, 5) /* TO CLOSET */,    CAM_POINT_WARP(2,
+                                                                                                               3) /* TO EAST */,
+                CAM_POINT_STATIC(ROOM_KITCHEN), CAM_POINT_NOGO
         },
         {
-                CAM_POINT_WARP(4, 5) /* TO CLOSET */,    CAM_POINT_STATIC(ROOM_WEST),             CAM_POINT_STATIC(ROOM_EAST),
-                CAM_POINT_WARP(6, 2) /* TO KITCHEN */,   CAM_POINT_NULL,                          CAM_POINT_WARP(1, 1) /* TO DINING */,
+                CAM_POINT_WARP(4, 5) /* TO CLOSET */,    CAM_POINT_STATIC(ROOM_WEST),          CAM_POINT_STATIC(
+                                                                                                       ROOM_EAST),
+                CAM_POINT_WARP(6, 2) /* TO KITCHEN */, CAM_POINT_NULL,                          CAM_POINT_WARP(1,
+                                                                                                               1) /* TO DINING */,
                 CAM_POINT_WARP(2, 3) /* TO EAST */ /*more*/
         },
         {
-                CAM_POINT_NOGO,                          CAM_POINT_STATIC(ROOM_WEST_CORNER),      CAM_POINT_STATIC(ROOM_EAST_CORNER),
-                CAM_POINT_NOGO,                          CAM_POINT_WARP(4, 1) /* TO BACKSTAGE */, CAM_POINT_STATIC(ROOM_PIRATE),
+                CAM_POINT_NOGO,                          CAM_POINT_STATIC(ROOM_WEST_CORNER),   CAM_POINT_STATIC(
+                                                                                                       ROOM_EAST_CORNER),
+                CAM_POINT_NOGO,                        CAM_POINT_WARP(4, 1) /* TO BACKSTAGE */, CAM_POINT_STATIC(
+                                                                                                        ROOM_PIRATE),
                 CAM_POINT_WARP(6, 2) /* TO KITCHEN */ /*more*/
         },
         {
-                CAM_POINT_NULL,                          CAM_POINT_NOGO,                          CAM_POINT_NOGO,
-                CAM_POINT_NOGO,                          CAM_POINT_STATIC(ROOM_CLOSET),           CAM_POINT_WARP(1, 3) /* TO WEST */
+                CAM_POINT_NULL,                          CAM_POINT_NOGO,                       CAM_POINT_NOGO,
+                CAM_POINT_NOGO,                        CAM_POINT_STATIC(ROOM_CLOSET),           CAM_POINT_WARP(1,
+                                                                                                               3) /* TO WEST */
                 /*more*/
         },
         {
-                CAM_POINT_NULL,                          CAM_POINT_NULL,                          CAM_POINT_NULL,
-                CAM_POINT_NULL,                          CAM_POINT_WARP(1, 3) /* TO WEST */           /*more*/
+                CAM_POINT_NULL,                          CAM_POINT_NULL,                       CAM_POINT_NULL,
+                CAM_POINT_NULL,                        CAM_POINT_WARP(1, 3) /* TO WEST */           /*more*/
         },
         {
                 CAM_POINT_NULL,                          CAM_POINT_NOGO                               /*more*/
@@ -58,13 +67,6 @@ const CAM_NAV_POINT CAM_NAV_MAP[8][8] = {
 };
 
 void navigate_cams(int horizontal, int vertical) {
-    char buf[16];
-    /*vbaprint("horiz: ");
-    sprintf(buf, "%d", horizontal);
-    vbaprint(buf);
-    vbaprint("\nvert: ");
-    sprintf(buf, "%d", vertical);
-    vbaprint(buf);*/
     //TODO: better comparisons here
     TRIBIT_2D_POINT prev = CURR_CAM_POINT;
     //TODO make 8 a constant
