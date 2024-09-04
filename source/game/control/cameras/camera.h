@@ -4,16 +4,16 @@
 #include "game/graphics/bg_pal_handler.h"
 #include "game/control/cameras/room_names.h"
 
+struct CameraWrapper {
+    void (*update)(int frame_num);
 
-/*other macros*/
-#define SHOULD_PAN(n) n != ROOM_CLOSET && n != ROOM_KITCHEN
+    void (*on_night_start)(int night_num);
 
-void init_cams();
+    void (*set_visible)(bool on);
 
-void select_cam(enum RoomNames room);
+    void (*select_room)(enum RoomNames room)
+};
 
-void set_cam_display(bool on);
-
-void update_cam_pan();
+extern struct CameraWrapper Cameras;
 
 #endif //FNAF_ADVANCE_CAMERA_H

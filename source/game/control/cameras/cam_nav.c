@@ -64,10 +64,10 @@ void navigate_cams(int horizontal, int vertical) {
                 break;
             case CAM_POINT_TYPE_WARP: // warp
                 CURR_CAM_POINT = point.warp_point;
-                select_cam(CAM_NAV_MAP[CURR_CAM_POINT.y][CURR_CAM_POINT.x].cam_num);
+                cam_select_room(CAM_NAV_MAP[CURR_CAM_POINT.y][CURR_CAM_POINT.x].cam_num);
                 break;
             case CAM_POINT_TYPE_STATIC: // static point
-                select_cam(point.cam_num);
+                cam_select_room(point.cam_num);
                 break;
             default:
                 break;

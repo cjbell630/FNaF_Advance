@@ -5,10 +5,10 @@
 #include "util/util.h"
 #include "tonc.h"
 
-#include "game/control/ai/ai.h"
 #include "game/control/cameras/room_names.h"
 #include "game/graphics/cam_img_map.h"
-#include "spooky_effects.h"
+
+#define SHOULD_PAN(n) n != ROOM_CLOSET && n != ROOM_KITCHEN
 
 const int CAM_PB = 2;
 const int CAM_CBB = 1;
@@ -20,9 +20,6 @@ const int CAM_SCROLL_BUFFER = 100;
 const int CAM_SCROLL_DISP_RIGHT_CAP = 114;
 const int CAM_SCROLL_SPEED = 1;
 
-const int SUPPLY_CLOSET_NUMBER = 5;
-const int KITCHEN_NUMBER = 9;
-
 int CAM_MAP_ATTR0_VISIBLE = ATTR0_SQUARE | ATTR0_4BPP;
 
 int internal_cam_scroll = 0;
@@ -31,7 +28,7 @@ int cam_scroll_dir = -1;
 OBJ_ATTR *cam_map;
 
 /**
- * Using this bc for some select_cam(0) this has to be called on init or everything breaks
+ * Using this bc for some cam_select_room(0) this has to be called on init or everything breaks
  * TODO investigate later
  * but for now just making this
  * @param cam_num
@@ -76,25 +73,8 @@ void internal_select_cam(enum RoomNames room, bool cam_is_up) {
 }
 
 
-void init_cams() {
-    REG_BG1CNT = BG_PRIO(1) | BG_CBB(CAM_CBB) | BG_SBB(CAM_SBB) | BG_4BPP | BG_REG_64x64;
-    cam_map = &OBJ_BUFFER[0];
-    obj_set_attr(cam_map,
-                 ATTR0_HIDE,
-                 ATTR1_SIZE_64x64,                    // 16x16p,
-                 ATTR2_PALBANK(0) | 0);        // palbank 0, tile 0
-    //CAMS[0]->occupants = 0b1110;
-    internal_select_cam(ROOM_STAGE, false); // TODO remove (see internalselectcam)
-    set_cam_display(false);
-}
-
-void select_cam(enum RoomNames room) {
-    internal_select_cam(room, true);
-}
-
-
 //TODO: could be macro
-void set_cam_display(bool on) {
+void set_cam_display_visible(bool on) {
     if (on) {
         set_bg_palbank(CAM_PB);
         REG_DISPCNT = DCNT_OBJ | DCNT_BG1 | DCNT_OBJ_1D |
@@ -110,6 +90,23 @@ void set_cam_display(bool on) {
         cam_map->attr0 |= ATTR0_HIDE;
     }
 }
+
+void camera_on_night_start(int night_num) {
+    REG_BG1CNT = BG_PRIO(1) | BG_CBB(CAM_CBB) | BG_SBB(CAM_SBB) | BG_4BPP | BG_REG_64x64;
+    cam_map = &OBJ_BUFFER[0];
+    obj_set_attr(cam_map,
+                 ATTR0_HIDE,
+                 ATTR1_SIZE_64x64,                    // 16x16p,
+                 ATTR2_PALBANK(0) | 0);        // palbank 0, tile 0
+    //CAMS[0]->occupants = 0b1110;
+    internal_select_cam(ROOM_STAGE, false); // TODO remove (see internalselectcam)
+    set_cam_display_visible(false);
+}
+
+void cam_select_room(enum RoomNames room) {
+    internal_select_cam(room, true);
+}
+
 
 /**
  *
@@ -135,3 +132,15 @@ void update_cam_pan() {
         REG_BG1HOFS = 0;
     }
 }
+
+void update_camera(int frame_num) {
+    update_cam_pan();
+}
+
+
+struct CameraWrapper Cameras = {
+        .update = update_camera,
+        .on_night_start = camera_on_night_start,
+        .set_visible = set_cam_display_visible,
+        .select_room = cam_select_room
+};

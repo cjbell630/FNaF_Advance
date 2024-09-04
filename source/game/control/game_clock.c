@@ -22,7 +22,7 @@ void init_clock() {
 void tick() {
     frame %= FRAME_MAX;
     if (Equipment.is_on(CAMERA)) {
-        update_cam_pan(); // pan cameras if they are open
+        Cameras.update(frame);
     }
 
     update_static();

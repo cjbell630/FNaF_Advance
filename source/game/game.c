@@ -130,7 +130,7 @@ void start_game() {
     Power.on_night_start(curr_night);
     Equipment.on_night_start(curr_night);
     SpookyEffects.on_night_start(curr_night);
-    init_cams();
+    Cameras.on_night_start(curr_night);
     /* END INIT COMPONENTS */
 
 
