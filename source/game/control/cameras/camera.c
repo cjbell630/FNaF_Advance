@@ -8,6 +8,7 @@
 #include "game/control/ai/ai.h"
 #include "game/control/cameras/room_names.h"
 #include "game/graphics/cam_img_map.h"
+#include "spooky_effects.h"
 
 const int CAM_PB = 2;
 const int CAM_CBB = 1;
@@ -29,24 +30,6 @@ int disp_cam_scroll = 0;
 int cam_scroll_dir = -1;
 OBJ_ATTR *cam_map;
 
-CAM_DATA CAMS[11] = {
-        {CAM_OCC_BONNIE | CAM_OCC_CHICA | CAM_OCC_FREDDY, CAM_SPEC_STD}, //stage
-        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //dining area
-        {CAM_OCC_FOXY,  CAM_SPEC_STD}, //pirate's cove
-        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //west hall A
-        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //west Hall B (Corner)
-        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //supply closet
-        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //east hall A
-        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //east Hall B (Corner)
-        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //backstage
-        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //kitchen
-        {CAM_OCC_EMPTY, CAM_SPEC_STD}, //restrooms
-};
-
-CAM_DATA get_cam_data(enum RoomNames room) {
-    return CAMS[room];
-}
-
 /**
  * Using this bc for some select_cam(0) this has to be called on init or everything breaks
  * TODO investigate later
@@ -56,9 +39,8 @@ CAM_DATA get_cam_data(enum RoomNames room) {
  */
 void internal_select_cam(enum RoomNames room, bool cam_is_up) {
 
-    room = continuous_modulo(room, 11); // puts the value between 0 and 10 inclusive
-    CAM_DATA cd = get_cam_data(room);
-    CAM_IMG_DATA cid = get_cam_img_data(room, Animatronics.get_room_occupants(room), cd.special);
+    room = continuous_modulo(room, NUM_ROOMS); // puts the value between 0 and 10 inclusive
+    CAM_IMG_DATA cid = get_cam_img_data(room);
 
     // TODO previously this was
     // load_bg_pal(cid.cam_pal, cid.cam_pal_len, CAM_STAT ? 0 : CAM_PB);

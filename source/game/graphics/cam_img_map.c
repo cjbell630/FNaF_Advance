@@ -13,10 +13,13 @@
 #include "images/cams/placeholder/fo_placeholder.h"
 #include "images/cams/placeholder/fr_placeholder.h"
 #include "images/cams/placeholder/empty_placeholder.h"
+#include "game/control/cameras/room_names.h"
+#include "game/control/cameras/spooky_effects.h"
+#include "game/control/ai/ai.h"
 
 
-CAM_IMG_DATA get_cam_img_data(int cam_num, char occupants, char special) {
-    return CAM_IMG_MAP[cam_num][occupants][special];
+CAM_IMG_DATA get_cam_img_data(enum RoomNames room) {
+    return CAM_IMG_MAP[room][Animatronics.get_room_occupants(room)][SpookyEffects.get_effects(room)];
 }
 
 const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {

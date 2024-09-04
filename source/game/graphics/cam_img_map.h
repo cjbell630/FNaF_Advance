@@ -1,6 +1,7 @@
 #ifndef FNAF_ADVANCE_CAM_IMG_MAP_H
 #define FNAF_ADVANCE_CAM_IMG_MAP_H
 
+#include "game/control/cameras/room_names.h"
 
 //Points to image data for a camstate
 typedef struct {
@@ -14,6 +15,6 @@ typedef struct {
 
 extern const CAM_IMG_DATA CAM_IMG_MAP[12][16][2];
 
-CAM_IMG_DATA get_cam_img_data(int cam_num, char occupants, char special);
+CAM_IMG_DATA get_cam_img_data(enum RoomNames room);
 
 #endif //FNAF_ADVANCE_CAM_IMG_MAP_H
