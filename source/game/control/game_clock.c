@@ -1,11 +1,11 @@
 #include "game_clock.h"
-#include "tonc.h"
 #include "util/random.h"
 #include "util/util.h"
 #include "cameras/camera.h"
 #include "game/graphics/static_handler.h"
 #include "game/control/ai/ai.h"
 #include "power.h"
+#include "equipment.h"
 
 // TODO couldn't this be the length of a night 32400 frames which would fit in 2 bytes?
 const int FRAME_MAX = 130881600; // the LCM of all frame intervals, to avoid massive nums in memory
@@ -23,7 +23,7 @@ void tick() {
     scroll_cams();
     update_static();
     Animatronics.update(frame);
-    Power.update(frame);
+    Power.update(frame, Equipment.get_usage());
     //TODO: reduce these to reduce comparisons run every frame
 
     if (is_multiple(frame, 2)) { // every other frame
