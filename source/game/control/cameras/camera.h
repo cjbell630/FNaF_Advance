@@ -2,6 +2,7 @@
 #define FNAF_ADVANCE_CAMERA_H
 
 #include "game/graphics/bg_pal_handler.h"
+#include "game/control/cameras/room_names.h"
 
 
 //contains information about a camera's status
@@ -41,9 +42,9 @@ extern CAM_DATA CAMS[11];
 
 void init_cams();
 
-CAM_DATA get_cam_data(int cam_num);
+CAM_DATA get_cam_data(enum RoomNames room);
 
-void select_cam(int cam_num);
+void select_cam(enum RoomNames room);
 
 void set_cam_display(bool on);
 

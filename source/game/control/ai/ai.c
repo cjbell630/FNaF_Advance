@@ -15,7 +15,7 @@
  * @param num_rooms the length of said list
  * @return a randomly selected empty room from the list, or -1 if they are all full
  */
-int get_random_empty_room_from(int rooms[], int num_rooms) { //TODO: should this really be an array?
+int get_random_empty_room_from(enum RoomNames rooms[], int num_rooms) { //TODO: should this really be an array?
     uint status = GET_N_SET_BITS(num_rooms); // 11 bits, one for each room
     int rand_index;
     while (status > 0) { //TODO: could use rnd_exclude if I made it take more nums
@@ -52,11 +52,11 @@ void update_bonnie(int frame_num) {
 
     if (try_move(&BONNIE)) {
         vbaprint("bonnie success\n");
-        int room_nums[] = {
+        enum RoomNames rooms[] = {
                 // TODO macro or something
                 ROOM_STAGE, ROOM_DINING, ROOM_BACKSTAGE, ROOM_WEST, ROOM_WEST_CORNER, ROOM_CLOSET
         };
-        BONNIE.room_num = get_random_empty_room_from(room_nums, 6);
+        BONNIE.room_num = get_random_empty_room_from(rooms, 6);
     } else {
         vbaprint("bonnie fail\n"); // TODO debug, remove
     }
@@ -167,9 +167,9 @@ void on_hour(int hour) {
 }
 
 // TODO define this in camera.c?
-char get_room_occupants(int room_num) {
-    return ((BONNIE.room_num == room_num) << 3) | ((CHICA.room_num == room_num) << 2) |
-           ((FREDDY.room_num == room_num) << 1) | (FOXY.room_num == room_num);
+char get_room_occupants(enum RoomNames room) {
+    return ((BONNIE.room_num == room) << 3) | ((CHICA.room_num == room) << 2) |
+           ((FREDDY.room_num == room) << 1) | (FOXY.room_num == room);
 }
 
 struct AnimatronicsWrapper Animatronics = {

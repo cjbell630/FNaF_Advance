@@ -13,7 +13,7 @@ const int CAM_PB = 2;
 const int CAM_CBB = 1;
 const int CAM_SBB = 22;
 
-int CURR_CAM = 0;
+enum RoomNames CURR_CAM = ROOM_STAGE;
 
 const int CAM_SCROLL_BUFFER = 100;
 const int CAM_SCROLL_DISP_RIGHT_CAP = 114;
@@ -43,8 +43,8 @@ CAM_DATA CAMS[11] = {
         {CAM_OCC_EMPTY, CAM_SPEC_STD}, //restrooms
 };
 
-CAM_DATA get_cam_data(int cam_num) {
-    return CAMS[cam_num];
+CAM_DATA get_cam_data(enum RoomNames room) {
+    return CAMS[room];
 }
 
 /**
@@ -54,11 +54,11 @@ CAM_DATA get_cam_data(int cam_num) {
  * @param cam_num
  * @param cam_is_up
  */
-void internal_select_cam(int cam_num, bool cam_is_up) {
+void internal_select_cam(enum RoomNames room, bool cam_is_up) {
 
-    cam_num = continuous_modulo(cam_num, 11); // puts the value between 0 and 10 inclusive
-    CAM_DATA cd = get_cam_data(cam_num);
-    CAM_IMG_DATA cid = get_cam_img_data(cam_num, Animatronics.get_room_occupants(cam_num), cd.special);
+    room = continuous_modulo(room, 11); // puts the value between 0 and 10 inclusive
+    CAM_DATA cd = get_cam_data(room);
+    CAM_IMG_DATA cid = get_cam_img_data(room, Animatronics.get_room_occupants(room), cd.special);
 
     // TODO previously this was
     // load_bg_pal(cid.cam_pal, cid.cam_pal_len, CAM_STAT ? 0 : CAM_PB);
@@ -79,10 +79,10 @@ void internal_select_cam(int cam_num, bool cam_is_up) {
 
     //Swap pal of curr cam with new cam (green marker)
     COLOR temp = pal_obj_mem[CURR_CAM + 3];
-    pal_obj_mem[CURR_CAM + 3] = pal_obj_mem[cam_num + 3];
-    pal_obj_mem[cam_num + 3] = temp;
+    pal_obj_mem[CURR_CAM + 3] = pal_obj_mem[room + 3];
+    pal_obj_mem[room + 3] = temp;
 
-    CURR_CAM = cam_num;
+    CURR_CAM = room;
 
     /*display funcs using:
     cid.cam_tiles;
@@ -102,12 +102,12 @@ void init_cams() {
                  ATTR1_SIZE_64x64,                    // 16x16p,
                  ATTR2_PALBANK(0) | 0);        // palbank 0, tile 0
     //CAMS[0]->occupants = 0b1110;
-    internal_select_cam(0, false); // TODO remove (see internalselectcam)
+    internal_select_cam(ROOM_STAGE, false); // TODO remove (see internalselectcam)
     set_cam_display(false);
 }
 
-void select_cam(int cam_num) {
-    internal_select_cam(cam_num, true);
+void select_cam(enum RoomNames room) {
+    internal_select_cam(room, true);
 }
 
 

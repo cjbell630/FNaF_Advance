@@ -1,6 +1,8 @@
 #ifndef FNAF_ADVANCE_AI_H
 #define FNAF_ADVANCE_AI_H
 
+#include "game/control/cameras/room_names.h"
+
 //TODO move these to another file about anim identities
 // or make it an attribute of Animatronic?
 #define FREDDY_FRAMECOUNT 180
@@ -23,7 +25,7 @@
 struct Animatronic {
     int lvl;
     int room_num;
-    const int starting_room;
+    const enum RoomNames starting_room;
 
     //void (*init)();
 
@@ -39,7 +41,7 @@ struct AnimatronicsWrapper {
     void (*on_night_start)(int night_num);
     void (*on_hour)(int hour);
     void (*set_levels)(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl); // NOTE keep for custom night
-    char (*get_room_occupants)(int room_num);
+    char (*get_room_occupants)(enum RoomNames room);
 };
 extern struct AnimatronicsWrapper Animatronics;
 
