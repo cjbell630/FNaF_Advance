@@ -131,8 +131,6 @@ void start_game() {
     Equipment.on_night_start(curr_night);
     SpookyEffects.on_night_start(curr_night);
     init_cams();
-    //select_cam(0);
-    //set_cam_display(0);
     /* END INIT COMPONENTS */
 
 
@@ -161,7 +159,8 @@ void start_game() {
         //TODO: make a cool gate for this
         if (Equipment.is_on(CAMERA)) { // cams up
             if (CTRL_CLOSE_CAM) {
-                Equipment.toggle(CAMERA); // TODO this doesn't really need to be toggle tho, esp since there are no side effects of disabling camera
+                Equipment.toggle(
+                        CAMERA); // TODO this doesn't really need to be toggle tho, esp since there are no side effects of disabling camera
             }
             navigate_cams(
                     key_hit(KEY_RIGHT) ? 1 : key_hit(KEY_LEFT) ? -1 : 0,

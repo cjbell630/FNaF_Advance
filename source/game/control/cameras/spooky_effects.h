@@ -10,7 +10,9 @@ enum EffectNames {
 
 struct SpookyEffectsWrapper {
     void (*update)(int frame_num);
+
     void (*on_night_start)(int night_num);
+
     enum EffectNames (*get_effects)(enum RoomNames room);
 };
 

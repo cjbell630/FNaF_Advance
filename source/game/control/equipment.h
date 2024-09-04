@@ -10,8 +10,11 @@ enum EquipmentNames {
 struct EquipmentWrapper {
     //void (*update)(int frame_num);
     void (*on_night_start)(int night_num);
+
     byte (*get_usage)();
+
     bool (*is_on)(enum EquipmentNames target);
+
     bool (*toggle)(enum EquipmentNames target);
 };
 

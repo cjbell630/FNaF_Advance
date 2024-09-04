@@ -4,7 +4,7 @@
 static enum EffectNames room_effects[NUM_ROOMS];
 
 void spooky_effects_on_night_start(int night_num) {
-    for(int i=0; i<NUM_ROOMS; i++){
+    for (int i = 0; i < NUM_ROOMS; i++) {
         room_effects[i] = NORMAL; // TODO is there a more efficient way to do this
     }
 }

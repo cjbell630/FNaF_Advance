@@ -10,5 +10,4 @@ enum RoomNames {
 };
 
 
-
 #endif //FNAF_ADVANCE_ROOM_NAMES_H
