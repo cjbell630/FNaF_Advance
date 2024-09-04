@@ -16,12 +16,14 @@
  * @return a randomly selected empty room from the list, or -1 if they are all full
  */
 
-bool try_move_to_empty_room_from(struct Animatronic *anim, const enum RoomNames rooms[], int num_rooms) { //TODO: should this really be an array?
+bool try_move_to_empty_room_from(struct Animatronic *anim, const enum RoomNames rooms[],
+                                 int num_rooms) { //TODO: should this really be an array?
     uint status = GET_N_SET_BITS(num_rooms); // 11 bits, one for each room
     int rand_index;
     while (status > 0) { //TODO: could use rnd_exclude if I made it take more nums
         rand_index = rnd_max(num_rooms);
-        if (Animatronics.get_room_occupants(rooms[rand_index]) == 0/*TODO use macro ROOM_EMPTY*/) { // if the found room is empty
+        if (Animatronics.get_room_occupants(rooms[rand_index]) ==
+            0/*TODO use macro ROOM_EMPTY*/) { // if the found room is empty
             anim->room_num = rooms[rand_index]; // TODO if bonnie or chica stun camera
             return true;
         }
@@ -51,9 +53,8 @@ void update_bonnie(int frame_num) {
     if (!is_multiple(frame_num, BONNIE_FRAMECOUNT)) {
         return;
     }
-    vbaprint("Bonnie movement opp\n");
+    vbaprint("Bonnie movement opp\n"); // TODO debug merge into one if statement
     if (!try_move(&BONNIE)) {
-        vbaprint("bonnie fail\n"); // TODO debug, remove
         return;
     }
     vbaprint("bonnie success\n");
@@ -100,16 +101,68 @@ void update_bonnie(int frame_num) {
 }
 
 struct Animatronic BONNIE = {
-        .update = &update_bonnie,
+        .update = update_bonnie,
         .starting_room = ROOM_STAGE
 };
 
 /*  CHICA  */
 
+// TODO this and chicas code are so similar, combine them somehow
+void update_chica(int frame_num) {
+    if (!is_multiple(frame_num, CHICA_FRAMECOUNT)) {
+        return;
+    }
+    vbaprint("Chica movement opp\n");
+    if (!try_move(&CHICA)) { // TODO debug merge into one if statement
+        return;
+    }
+    vbaprint("chica success\n");
+    bool waiting = true;
+    enum RoomNames rooms[2];
+
+    switch (CHICA.room_num) {
+        case ROOM_STAGE:
+            rooms[0] = rooms[1] = ROOM_DINING;
+            break;
+        case ROOM_DINING:
+            rooms[0] = ROOM_KITCHEN;
+            rooms[1] = ROOM_RESTROOMS;
+            break;
+        case ROOM_RESTROOMS:
+            rooms[0] = ROOM_KITCHEN;
+            rooms[1] = ROOM_EAST;
+            break;
+        case ROOM_KITCHEN:
+            rooms[0] = ROOM_RESTROOMS;
+            rooms[1] = ROOM_EAST;
+            break;
+        case ROOM_EAST:
+            rooms[0] = ROOM_DINING;
+            rooms[1] = ROOM_EAST_CORNER;
+            break;
+        case ROOM_EAST_CORNER:
+            rooms[0] = ROOM_EAST;
+            rooms[1] = ROOM_RIGHT_DOOR;
+            break;
+        case ROOM_RIGHT_DOOR:
+            CHICA.room_num = /* TODO DOOR IS UP */true ? ROOM_OFFICE : ROOM_DINING;
+            // TODO stun camera
+            waiting = false;
+            break;
+        default:
+            waiting = false;
+            break;
+    }
+    if (waiting) {
+        try_move_to_empty_room_from(&CHICA, rooms, 2);
+    }
+}
+
 struct Animatronic CHICA = {
-        .update = &update_bonnie, //TODO
+        .update = update_chica,
         .starting_room = ROOM_STAGE
 };
+
 
 /*  FREDDY  */
 
@@ -122,8 +175,6 @@ void update_freddy(int frame_num) {
     if (try_move(&FREDDY)) {
         vbaprint("freddy succ\n");
         //change_room(FREDDY, ROOM_EAST);
-    } else {
-        vbaprint("freddy fail\n");// TODO debug, remove
     }
 }
 
@@ -144,6 +195,8 @@ struct Animatronic FOXY = {
 void set_levels(int fr_lvl, int b_lvl, int c_lvl, int fo_lvl) { // TODO make these orders consistent or something please
     BONNIE.lvl = b_lvl;
     FREDDY.lvl = fr_lvl;
+    CHICA.lvl = c_lvl;
+    FOXY.lvl = fo_lvl;
 }
 
 void on_night_start(int night_num) {
@@ -180,6 +233,7 @@ void update_anims(int frame_num) {
     // TODO can I put them in a list or something and do for each, and then say if frame mult of internal attribute
     BONNIE.update(frame_num);
     FREDDY.update(frame_num);
+    CHICA.update(frame_num);
 }
 
 /**

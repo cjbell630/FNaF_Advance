@@ -34,6 +34,8 @@ struct Animatronic {
 
 extern struct Animatronic FREDDY;
 extern struct Animatronic BONNIE;
+extern struct Animatronic CHICA;
+extern struct Animatronic FOXY;
 
 struct AnimatronicsWrapper {
     void (*update)(int frame_num);
