@@ -17,6 +17,8 @@
 #include "control/game_clock.h"
 #include "images/sprites/cam_map/cam_map.h"
 #include "control/cameras/cam_nav.h"
+#include "game/control/equipment.h"
+#include "game/control/power.h"
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 3;
@@ -124,6 +126,8 @@ void start_game() {
 
     //init_ai();
     Animatronics.on_night_start(curr_night);
+    Power.on_night_start(curr_night);
+    Equipment.on_night_start(curr_night);
     vbaprint("done init ai\n");
 
     init_cams();
