@@ -13,7 +13,6 @@ const int CAM_PB = 2;
 const int CAM_CBB = 1;
 const int CAM_SBB = 22;
 
-int CAM_STAT = 0;
 int CURR_CAM = 0;
 
 const int CAM_SCROLL_BUFFER = 100;
@@ -44,26 +43,33 @@ CAM_DATA CAMS[11] = {
         {CAM_OCC_EMPTY, CAM_SPEC_STD}, //restrooms
 };
 
-void init_cams() {
-    REG_BG1CNT = BG_PRIO(1) | BG_CBB(CAM_CBB) | BG_SBB(CAM_SBB) | BG_4BPP | BG_REG_64x64;
-    cam_map = &OBJ_BUFFER[0];
-    obj_set_attr(cam_map,
-                 ATTR0_HIDE,
-                 ATTR1_SIZE_64x64,                    // 16x16p,
-                 ATTR2_PALBANK(0) | 0);        // palbank 0, tile 0
-    //CAMS[0]->occupants = 0b1110;
-}
-
 CAM_DATA get_cam_data(int cam_num) {
     return CAMS[cam_num];
 }
 
-void select_cam(int cam_num) {
+/**
+ * Using this bc for some select_cam(0) this has to be called on init or everything breaks
+ * TODO investigate later
+ * but for now just making this
+ * @param cam_num
+ * @param cam_is_up
+ */
+void internal_select_cam(int cam_num, bool cam_is_up) {
+
     cam_num = continuous_modulo(cam_num, 11); // puts the value between 0 and 10 inclusive
     CAM_DATA cd = get_cam_data(cam_num);
     CAM_IMG_DATA cid = get_cam_img_data(cam_num, Animatronics.get_room_occupants(cam_num), cd.special);
 
-    load_bg_pal(cid.cam_pal, cid.cam_pal_len, CAM_STAT ? 0 : CAM_PB);
+    // TODO previously this was
+    // load_bg_pal(cid.cam_pal, cid.cam_pal_len, CAM_STAT ? 0 : CAM_PB);
+    // implying calling it when the camera is not up could cause issues
+    // so make sure this is ONLY called if the camera is up
+    // also TODO wtf even is this 0 supposed to mean anyway
+    // maybe it was meant to be used to like preload cams?
+    // okay this is called at init with camnum=0
+    // and for some reason if palbank is always 0 then the office pal is messed up, and
+    // if palbank is always CAM_PB then the cam pals are messed up
+    load_bg_pal(cid.cam_pal, cid.cam_pal_len, cam_is_up ? 0 : CAM_PB);
 
     // Load tiles into CBB 0
     memcpy(&tile_mem[CAM_CBB][0], cid.cam_tiles, cid.cam_tiles_len);
@@ -87,26 +93,31 @@ void select_cam(int cam_num) {
     cid.cam_pal_len;*/
 }
 
-//TODO: remove
-void select_next_cam() {
-    //TODO: won't work with map
-    select_cam(CURR_CAM + 1);
+
+void init_cams() {
+    REG_BG1CNT = BG_PRIO(1) | BG_CBB(CAM_CBB) | BG_SBB(CAM_SBB) | BG_4BPP | BG_REG_64x64;
+    cam_map = &OBJ_BUFFER[0];
+    obj_set_attr(cam_map,
+                 ATTR0_HIDE,
+                 ATTR1_SIZE_64x64,                    // 16x16p,
+                 ATTR2_PALBANK(0) | 0);        // palbank 0, tile 0
+    //CAMS[0]->occupants = 0b1110;
+    internal_select_cam(0, false); // TODO remove (see internalselectcam)
+    set_cam_display(false);
 }
 
-//TODO: remove
-void select_prev_cam() {
-    //TODO: won't work with map
-    select_cam(CURR_CAM - 1);
+void select_cam(int cam_num) {
+    internal_select_cam(cam_num, true);
 }
 
 
 //TODO: could be macro
-void set_cam_display(int on) {
-    CAM_STAT = on;
+void set_cam_display(bool on) {
     if (on) {
         set_bg_palbank(CAM_PB);
         REG_DISPCNT = DCNT_OBJ | DCNT_BG1 | DCNT_OBJ_1D |
                       DCNT_MODE0; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
+
         cam_map->attr0 = CAM_MAP_ATTR0_VISIBLE;
         obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
         //TODO: shouldn't have to do this every time, but setting
@@ -118,40 +129,27 @@ void set_cam_display(int on) {
     }
 }
 
-void toggle_cam_display() {
-    set_cam_display(!CAM_STAT);
-}
-
-int are_cams_up() {
-    return CAM_STAT;
-}
-
-
-void update_cam_scroll_display() {
-    REG_BG1HOFS = disp_cam_scroll;
-}
-
-void scroll_cams() {
-    //TODO: this code looks so cringe
-    if (CAM_STAT) { // if cams are up
-        if (SHOULD_PAN(CURR_CAM)) { // if should scroll
-            if (cam_scroll_dir == 1) { // moving right
-                if (internal_cam_scroll > CAM_SCROLL_DISP_RIGHT_CAP + CAM_SCROLL_BUFFER) { // turning point
-                    cam_scroll_dir = -1;
-                } else if (disp_cam_scroll < CAM_SCROLL_DISP_RIGHT_CAP) { // move display
-                    disp_cam_scroll += CAM_SCROLL_SPEED;
-                }
-            } else { //moving left
-                if (internal_cam_scroll < -CAM_SCROLL_BUFFER) { // turning point
-                    cam_scroll_dir = 1;
-                } else if (disp_cam_scroll > 0) {
-                    disp_cam_scroll -= CAM_SCROLL_SPEED;
-                }
+/**
+ *
+ */
+void update_cam_pan() {
+    if (SHOULD_PAN(CURR_CAM)) { // if should scroll
+        if (cam_scroll_dir == 1) { // moving right
+            if (internal_cam_scroll > CAM_SCROLL_DISP_RIGHT_CAP + CAM_SCROLL_BUFFER) { // turning point
+                cam_scroll_dir = -1;
+            } else if (disp_cam_scroll < CAM_SCROLL_DISP_RIGHT_CAP) { // move display
+                disp_cam_scroll += CAM_SCROLL_SPEED;
             }
-            internal_cam_scroll += cam_scroll_dir * CAM_SCROLL_SPEED;
-            update_cam_scroll_display();
-        } else { // if should not scroll
-            REG_BG1HOFS = 0;
+        } else { //moving left
+            if (internal_cam_scroll < -CAM_SCROLL_BUFFER) { // turning point
+                cam_scroll_dir = 1;
+            } else if (disp_cam_scroll > 0) {
+                disp_cam_scroll -= CAM_SCROLL_SPEED;
+            }
         }
+        internal_cam_scroll += cam_scroll_dir * CAM_SCROLL_SPEED;
+        REG_BG1HOFS = disp_cam_scroll;
+    } else { // if should not scroll
+        REG_BG1HOFS = 0;
     }
 }

@@ -45,16 +45,8 @@ CAM_DATA get_cam_data(int cam_num);
 
 void select_cam(int cam_num);
 
-void select_next_cam();
+void set_cam_display(bool on);
 
-void select_prev_cam();
-
-void set_cam_display(int on);
-
-void toggle_cam_display();
-
-int are_cams_up();
-
-void scroll_cams();
+void update_cam_pan();
 
 #endif //FNAF_ADVANCE_CAMERA_H

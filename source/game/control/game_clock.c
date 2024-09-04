@@ -20,7 +20,10 @@ void init_clock() {
 
 void tick() {
     frame %= FRAME_MAX;
-    scroll_cams();
+    if (Equipment.is_on(CAMERA)) {
+        update_cam_pan(); // pan cameras if they are open
+    }
+
     update_static();
     Animatronics.update(frame);
     Power.update(frame, Equipment.get_usage());

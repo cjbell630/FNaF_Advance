@@ -124,17 +124,15 @@ void start_game() {
 
     //TODO show night intro screen
 
-    //init_ai();
+    /* INIT COMPONENTS */
     Animatronics.on_night_start(curr_night);
     Power.on_night_start(curr_night);
     Equipment.on_night_start(curr_night);
-    vbaprint("done init ai\n");
-
     init_cams();
-    vbaprint("done init cams\n");
-    select_cam(0);
-    vbaprint("done select cam\n");
-    set_cam_display(0);
+    //select_cam(0);
+    //set_cam_display(0);
+    /* END INIT COMPONENTS */
+
 
     //show office
     set_bg_palbank(OFFICE_PB);
@@ -159,14 +157,9 @@ void start_game() {
         tick(); //TODO: should be at top or bottom?
 
         //TODO: make a cool gate for this
-        if (are_cams_up()) { // cams up
+        if (Equipment.is_on(CAMERA)) { // cams up
             if (CTRL_CLOSE_CAM) {
-                toggle_cam_display();
-            }
-            if (key_hit(KEY_A)) {
-                select_next_cam();
-            } else if (key_hit(KEY_B)) {
-                select_prev_cam();
+                Equipment.toggle(CAMERA); // TODO this doesn't really need to be toggle tho, esp since there are no side effects of disabling camera
             }
             navigate_cams(
                     key_hit(KEY_RIGHT) ? 1 : key_hit(KEY_LEFT) ? -1 : 0,
@@ -174,7 +167,7 @@ void start_game() {
             );
         } else {
             if (CTRL_OPEN_CAM) {
-                toggle_cam_display();
+                Equipment.toggle(CAMERA);
             }
             x += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
             x = (x > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
