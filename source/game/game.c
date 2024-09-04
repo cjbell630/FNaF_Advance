@@ -19,6 +19,7 @@
 #include "control/cameras/cam_nav.h"
 #include "game/control/equipment.h"
 #include "game/control/power.h"
+#include "game/control/cameras/spooky_effects.h"
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 3;
@@ -128,6 +129,7 @@ void start_game() {
     Animatronics.on_night_start(curr_night);
     Power.on_night_start(curr_night);
     Equipment.on_night_start(curr_night);
+    SpookyEffects.on_night_start(curr_night);
     init_cams();
     //select_cam(0);
     //set_cam_display(0);
