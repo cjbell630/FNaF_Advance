@@ -15,17 +15,19 @@
  * @param num_rooms the length of said list
  * @return a randomly selected empty room from the list, or -1 if they are all full
  */
-int get_random_empty_room_from(enum RoomNames rooms[], int num_rooms) { //TODO: should this really be an array?
+
+bool try_move_to_empty_room_from(struct Animatronic *anim, const enum RoomNames rooms[], int num_rooms) { //TODO: should this really be an array?
     uint status = GET_N_SET_BITS(num_rooms); // 11 bits, one for each room
     int rand_index;
     while (status > 0) { //TODO: could use rnd_exclude if I made it take more nums
-        if (Animatronics.get_room_occupants(rand_index = rnd_max(num_rooms)) ==
-            0/*TODO use macro ROOM_EMPTY*/) { // if the found room is empty
-            return rooms[rand_index];
+        rand_index = rnd_max(num_rooms);
+        if (Animatronics.get_room_occupants(rooms[rand_index]) == 0/*TODO use macro ROOM_EMPTY*/) { // if the found room is empty
+            anim->room_num = rooms[rand_index]; // TODO if bonnie or chica stun camera
+            return true;
         }
         status &= ~(1 << rand_index); // turn off the bit corresponding to the random room num
     }
-    return -1;
+    return false;
 }
 
 /**
@@ -44,21 +46,56 @@ bool try_move(struct Animatronic *anim) {
 
 /*  BONNIE  */
 
+// TODO this and chicas code are so similar, combine them somehow
 void update_bonnie(int frame_num) {
     if (!is_multiple(frame_num, BONNIE_FRAMECOUNT)) {
         return;
     }
     vbaprint("Bonnie movement opp\n");
-
-    if (try_move(&BONNIE)) {
-        vbaprint("bonnie success\n");
-        enum RoomNames rooms[] = {
-                // TODO macro or something
-                ROOM_STAGE, ROOM_DINING, ROOM_BACKSTAGE, ROOM_WEST, ROOM_WEST_CORNER, ROOM_CLOSET
-        };
-        BONNIE.room_num = get_random_empty_room_from(rooms, 6);
-    } else {
+    if (!try_move(&BONNIE)) {
         vbaprint("bonnie fail\n"); // TODO debug, remove
+        return;
+    }
+    vbaprint("bonnie success\n");
+    bool waiting = true;
+    enum RoomNames rooms[2];
+
+    switch (BONNIE.room_num) {
+        case ROOM_STAGE:
+            rooms[0] = ROOM_BACKSTAGE;
+            rooms[1] = ROOM_DINING;
+            break;
+        case ROOM_DINING:
+            rooms[0] = ROOM_BACKSTAGE;
+            rooms[1] = ROOM_WEST;
+            break;
+        case ROOM_BACKSTAGE:
+            rooms[0] = ROOM_DINING;
+            rooms[1] = ROOM_WEST;
+            break;
+        case ROOM_WEST:
+            rooms[0] = ROOM_CLOSET;
+            rooms[1] = ROOM_WEST_CORNER;
+            break;
+        case ROOM_CLOSET:
+            rooms[0] = ROOM_LEFT_DOOR;
+            rooms[1] = ROOM_WEST;
+            break;
+        case ROOM_WEST_CORNER:
+            rooms[0] = ROOM_CLOSET;
+            rooms[1] = ROOM_LEFT_DOOR;
+            break;
+        case ROOM_LEFT_DOOR:
+            BONNIE.room_num = /* TODO DOOR IS UP */true ? ROOM_OFFICE : ROOM_DINING;
+            // TODO stun camera
+            waiting = false;
+            break;
+        default:
+            waiting = false;
+            break;
+    }
+    if (waiting) {
+        try_move_to_empty_room_from(&BONNIE, rooms, 2);
     }
 }
 
@@ -77,7 +114,7 @@ struct Animatronic CHICA = {
 /*  FREDDY  */
 
 void update_freddy(int frame_num) {
-    if (!is_multiple(frame_num, BONNIE_FRAMECOUNT)) {
+    if (!is_multiple(frame_num, FREDDY_FRAMECOUNT)) {
         return;
     }
     vbaprint("Freddy movement opp\n");
