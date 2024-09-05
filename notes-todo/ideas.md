@@ -34,3 +34,12 @@ SBB 40 has somethnig
 * Add instructions for downloading devkitPro and where to put stuff for CMakeLists
 * Running with new game causes various visual bugs such as map and status (seems to work fine with continue)
 * pressing B on title screen causes weird pallet bug
+* add 2 control options: one that more mimics the feel of keyboard and mouse, and another that's more comfortable
+  * k/m: the flick motion is a little difficult, so match that with reaching to hit select
+  * comfort: the player will always have their ha
+* wait no keyboard and mouse also control looking left and right soooo uhhhhhhh idk ig it doesn't really matter
+* change macros to enums and constants where applicable, and remove them from headers
+* fix mapping on right bottom cam left button
+* replace types with tonc types
+* fix compiler warnings
+* fix passing a ton of raw data to functions (replace with addresses unless the data is supposed to change)
