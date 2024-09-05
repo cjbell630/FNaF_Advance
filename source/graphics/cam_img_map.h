@@ -1,7 +1,7 @@
 #ifndef FNAF_ADVANCE_CAM_IMG_MAP_H
 #define FNAF_ADVANCE_CAM_IMG_MAP_H
 
-#include "game/control/cameras/room_names.h"
+#include "game/room_names.h"
 
 //Points to image data for a camstate
 typedef struct {

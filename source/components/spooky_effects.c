@@ -1,5 +1,5 @@
 #include "spooky_effects.h"
-#include "game/control/cameras/room_names.h"
+#include "game/room_names.h"
 
 static enum EffectNames room_effects[NUM_ROOMS];
 

@@ -1,12 +1,12 @@
 #include "game_clock.h"
 #include "util/random.h"
 #include "util/util.h"
-#include "cameras/camera.h"
+#include "components/camera.h"
 #include "graphics/static_handler.h"
 #include "components/ai.h"
 #include "components/power.h"
 #include "components/equipment.h"
-#include "game/control/cameras/spooky_effects.h"
+#include "components/spooky_effects.h"
 
 // TODO couldn't this be the length of a night 32400 frames which would fit in 2 bytes?
 const int FRAME_MAX = 130881600; // the LCM of all frame intervals, to avoid massive nums in memory

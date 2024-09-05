@@ -13,8 +13,8 @@
 #include "images/cams/placeholder/fo_placeholder.h"
 #include "images/cams/placeholder/fr_placeholder.h"
 #include "images/cams/placeholder/empty_placeholder.h"
-#include "game/control/cameras/room_names.h"
-#include "game/control/cameras/spooky_effects.h"
+#include "game/room_names.h"
+#include "components/spooky_effects.h"
 #include "components/ai.h"
 
 

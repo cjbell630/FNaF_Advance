@@ -1,7 +1,7 @@
 #ifndef FNAF_ADVANCE_SPOOKY_EFFECTS_H
 #define FNAF_ADVANCE_SPOOKY_EFFECTS_H
 
-#include "game/control/cameras/room_names.h"
+#include "game/room_names.h"
 
 enum EffectNames {
     NORMAL, ITS_ME, SNAP, STARE

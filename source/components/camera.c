@@ -5,7 +5,7 @@
 #include "util/util.h"
 #include "tonc.h"
 
-#include "game/control/cameras/room_names.h"
+#include "game/room_names.h"
 #include "graphics/cam_img_map.h"
 
 #define SHOULD_PAN(n) n != ROOM_CLOSET && n != ROOM_KITCHEN

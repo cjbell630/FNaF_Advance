@@ -6,7 +6,7 @@
 #include "DWedit/debug.h"
 #include "util/random.h"
 #include "util/util.h"
-#include "game/control/cameras/room_names.h"
+#include "game/room_names.h"
 #include <stdio.h>
 
 /**

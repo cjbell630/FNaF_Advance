@@ -1,7 +1,7 @@
 #ifndef FNAF_ADVANCE_AI_H
 #define FNAF_ADVANCE_AI_H
 
-#include "game/control/cameras/room_names.h"
+#include "game/room_names.h"
 
 //TODO move these to another file about anim identities
 // or make it an attribute of Animatronic?

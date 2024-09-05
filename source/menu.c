@@ -9,7 +9,7 @@
 #include "game/game.h"
 #include "DWedit/debug.h"
 #include "graphics/bg_pal_handler.h"
-#include "game/control/controls.h"
+#include "controls.h"
 #include "util/random.h"
 
 const int MAX_FRAMES_FOR_FACE_GLITCH = 10;

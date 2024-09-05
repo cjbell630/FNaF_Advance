@@ -1,5 +1,5 @@
 #include "cam_nav.h"
-#include "camera.h"
+#include "components/camera.h"
 #include "room_names.h"
 
 TRIBIT_2D_POINT CURR_CAM_POINT = {1, 0};

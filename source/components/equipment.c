@@ -1,6 +1,6 @@
 #include "equipment.h"
 #include "tonc_types.h"
-#include "game/control/cameras/camera.h"
+#include "camera.h"
 
 /* EQUIPMENT VARS */
 bool statuses[5];
