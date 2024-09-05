@@ -137,10 +137,15 @@ void update_camera(int frame_num) {
     update_cam_pan();
 }
 
+enum RoomNames get_selected_room(){
+    return CURR_CAM;
+}
+
 
 struct CameraWrapper Cameras = {
         .update = update_camera,
         .on_night_start = camera_on_night_start,
         .set_visible = set_cam_display_visible,
-        .select_room = cam_select_room
+        .select_room = cam_select_room,
+        .get_selected_room = get_selected_room
 };
