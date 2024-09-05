@@ -14,6 +14,8 @@ const int FRAME_MAX = 130881600; // the LCM of all frame intervals, to avoid mas
 
 //TODO: could be smaller num if necessary
 int frame = 0;
+bool cam_is_up;
+enum RoomNames selected_cam;
 
 void init_clock() {
     frame = 0;
@@ -21,12 +23,14 @@ void init_clock() {
 
 void tick() {
     frame %= FRAME_MAX;
-    if (Equipment.is_on(CAMERA)) {
+    cam_is_up = Equipment.is_on(CAMERA);
+    selected_cam = Cameras.get_selected_room();
+    if (cam_is_up) {
         Cameras.update(frame);
     }
 
     update_static();
-    Animatronics.update(frame);
+    Animatronics.update(frame, cam_is_up, selected_cam);
     Power.update(frame, Equipment.get_usage());
     SpookyEffects.update(frame);
     //TODO: reduce these to reduce comparisons run every frame

@@ -22,7 +22,7 @@ bool try_move(struct Animatronic *anim) {
 /*  BONNIE  */
 
 // TODO this and chicas code are so similar, combine them somehow
-void update_bonnie(int frame_num) {
+void update_bonnie(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
     if (!is_multiple(frame_num, BONNIE_FRAMECOUNT)) {
         return;
     }
@@ -68,7 +68,7 @@ struct Animatronic BONNIE = {
 /*  CHICA  */
 
 // TODO this and chicas code are so similar, combine them somehow
-void update_chica(int frame_num) {
+void update_chica(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
     if (!is_multiple(frame_num, CHICA_FRAMECOUNT)) {
         return;
     }
@@ -114,14 +114,14 @@ struct Animatronic CHICA = {
 
 /*  FREDDY  */
 
-void update_freddy(int frame_num) {
+void update_freddy(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
     if (!is_multiple(frame_num, FREDDY_FRAMECOUNT)) {
         return;
     }
     vbaprint("Freddy movement opp\n");
 
     if (try_move(&FREDDY)) {
-        vbaprint("freddy succ\n");
+        vbaprint("freddy success\n");
         //change_room(FREDDY, ROOM_EAST);
     }
 }
@@ -133,8 +133,69 @@ struct Animatronic FREDDY = {
 
 /*  FOXY  */
 
+bool foxy_at_cove(int frame_num, bool cams_are_up) {
+    /* HANDLE STUN TIMER */
+    if (cams_are_up) {
+        if (is_multiple(frame_num, 6/*TODO magic num*/)) {
+            FOXY.timer = rnd_max(1000) + 50; // TODO this could just be called when the camera is closed
+        }
+    } else {
+        FOXY.timer--; // TODO theoretically could overflow but shouldn't
+    }
+    /* END HANDLE STUN TIMER */
+    if (FOXY.timer < 1 && is_multiple(frame_num, FOXY_FRAMECOUNT)) {
+        vbaprint("foxy success\n");
+        FOXY.phase++;
+        return true;
+    }
+    return false;
+}
+
+void update_foxy(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
+    switch (FOXY.phase) {
+        case FOXY_CLOSED:
+        case FOXY_PEEK:
+            foxy_at_cove(frame_num, cams_are_up);
+            break;
+        case FOXY_STAND:
+            if (foxy_at_cove(frame_num, cams_are_up)) {
+                // TODO external stuff for transitioning to GONE
+                FOXY.timer = 1500/* TODO magic num*/;
+            }
+            break;
+        case FOXY_GONE:
+            FOXY.timer--;
+            if (FOXY.timer < 1) {
+                FOXY.phase = FOXY_ATTACK;
+                FOXY.room_num = ROOM_LEFT_DOOR;
+                break; // TODO external stuff for jumpscare
+            }
+            if (selected_cam == ROOM_WEST) {
+                FOXY.phase = FOXY_RUN;// TODO external stuff for foxy running
+                FOXY.room_num = ROOM_WEST;
+                FOXY.timer = 100 /* TODO magic num, can be used to show run animation*/;
+            }
+            break;
+        case FOXY_RUN:
+            FOXY.timer--;
+            if (FOXY.timer < 1) {
+                FOXY.phase = FOXY_ATTACK;// TODO external stuff for jumpscare
+                FOXY.room_num = ROOM_LEFT_DOOR;
+            }
+            break;
+        case FOXY_ATTACK:
+            vbaprint("foxy is attacking\n");// TODO steal power or jumpscare
+            if (/* TODO game does not end */true) {
+                FOXY.phase = rnd_max(2) ? FOXY_PEEK : FOXY_STAND; // TODO is this correct?
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 struct Animatronic FOXY = {
-        .update = &update_freddy, // TODO
+        .update = &update_foxy,
         .starting_room = ROOM_PIRATE
 };
 
@@ -175,13 +236,16 @@ void on_night_start(int night_num) {
     FOXY.room_num = FOXY.starting_room;
     FREDDY.room_num = FREDDY.starting_room;
     CHICA.room_num = CHICA.starting_room;
+    FOXY.phase = FREDDY.phase = 0;
+    FOXY.timer = FREDDY.timer = 0;
 }
 
-void update_anims(int frame_num) {
+void update_anims(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
     // TODO can I put them in a list or something and do for each, and then say if frame mult of internal attribute
-    BONNIE.update(frame_num);
-    FREDDY.update(frame_num);
-    CHICA.update(frame_num);
+    BONNIE.update(frame_num, cams_are_up, selected_cam);
+    FREDDY.update(frame_num, cams_are_up, selected_cam);
+    CHICA.update(frame_num, cams_are_up, selected_cam);
+    FOXY.update(frame_num, cams_are_up, selected_cam);
 }
 
 /**

@@ -1,6 +1,7 @@
 #ifndef FNAF_ADVANCE_ANIMATRONICS_H
 #define FNAF_ADVANCE_ANIMATRONICS_H
 
+#include <tonc_types.h>
 #include "game/room_names.h"
 
 //TODO move these to another file about anim identities
@@ -20,16 +21,20 @@
 
 #define MAX_LEVEL 20
 
-
+enum FoxyPhases {
+    FOXY_CLOSED, FOXY_PEEK, FOXY_STAND, FOXY_GONE, FOXY_RUN, FOXY_ATTACK
+};
 
 struct Animatronic {
     int lvl;
     int room_num;
+    int phase;
+    int timer;
     const enum RoomNames starting_room;
 
     //void (*init)();
 
-    void (*update)(int frame_num);
+    void (*update)(int frame_num, bool cams_are_up, enum RoomNames selected_cam);
 };
 
 extern struct Animatronic FREDDY;
@@ -38,7 +43,7 @@ extern struct Animatronic CHICA;
 extern struct Animatronic FOXY;
 
 struct AnimatronicsWrapper {
-    void (*update)(int frame_num);
+    void (*update)(int frame_num, bool cams_are_up, enum RoomNames selected_cam);
     void (*reset)();
     void (*on_night_start)(int night_num);
     void (*on_hour)(int hour);
