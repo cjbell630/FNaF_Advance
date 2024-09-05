@@ -163,7 +163,8 @@ When phase 5 starts:
 
 #### Freddy
 
-This section does not cover the Power Down phase. For that information, please see the [Power Down section](#Power-Down).
+This section does not cover the Power Down phase. For that information, please see
+the [Power Down section](#Power-Down).
 
 Most of this information comes from [here][3].
 
@@ -236,14 +237,48 @@ there is an extra, super small drain applied each second that adds up to:
 * Night 4: 2.25/hour = 0.0375%/s
 * Night 5+: 3/hour = 0.05%/s
 
-## Power Down
+### Power Down
 
-All animatronics stop everything when the power goes out. Every 5 seconds, there's a 1 in 4 chance Freddy will start
-playing his music. If he hasn't shown up after 20 seconds, he will do it then no matter what. After he starts playing,
-the exact same routine is run to determine when the lights flicker out (1 in 4 every 5 for 20)
-After that, the same routine can be run every 2 seconds to determine when he attacks.
+All animatronics stop everything when the power goes out.
 
-## Misc
+Power down phases:
+
+| Number | Description |
+|:------:|:-----------:|
+|   0    |   Waiting   |
+|   1    |  Music box  |
+|   2    |  Blackout   |
+|   3    |  Jumpscare  |
+
+At the start of each phase, a timer is set for 20s/1200f. When that timer hits 0, the next phase will be triggered.
+
+#### Phase 0
+
+Every 5s/300f, there is a 20% chance of advancing to phase 1.
+
+#### Phase 1
+
+A timer is set for 20s/1200f. The music box sound is played. Every 0.05s/3f there is a 25% chance of Freddy's face being
+visible in the doorway and 75% chance of it being invisible.
+
+Every 5s/300f, there is a 20% chance of advancing to phase 2.
+
+#### Phase 2
+
+A timer is set for 20f. While this timer is greater than 0, every frame there is a 50% chance of seeing the blackout
+screen and 50% chance of seeing the powered-down office.
+
+Once that timer hits 0, the blackout screen is shown.
+
+Every 2s/120f, there is a 20% chance of advancing to phase 3.
+
+#### Phase 3
+
+Freddy jumpscares the player, and the game ends.
+
+## Misc Effects
+
+see line 219 in pastebin for some jumpscare timings
 
 After a game over, there's a 1 in 10,000 chance instead of going to the title screen, you get a golden freddy jumpscare.
 
