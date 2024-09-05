@@ -50,7 +50,7 @@ bool equipment_toggle(enum EquipmentNames target) {
             break;
         case CAMERA: // activating the camera disables both lights
             statuses[RIGHT_LIGHT] = statuses[LEFT_LIGHT] = false;
-            set_cam_display_visible(newStatus);
+            Cameras.set_visible(newStatus);
             break;
         default:
             break;

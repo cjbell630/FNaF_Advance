@@ -11,7 +11,7 @@ struct CameraWrapper {
 
     void (*set_visible)(bool on);
 
-    void (*select_room)(enum RoomNames room)
+    void (*select_room)(enum RoomNames room);
 };
 
 extern struct CameraWrapper Cameras;
