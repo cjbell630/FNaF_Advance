@@ -21,10 +21,6 @@
 
 #define MAX_LEVEL 20
 
-enum FoxyPhases {
-    FOXY_CLOSED, FOXY_PEEK, FOXY_STAND, FOXY_GONE, FOXY_RUN, FOXY_ATTACK
-};
-
 struct Animatronic {
     int lvl;
     int room_num;

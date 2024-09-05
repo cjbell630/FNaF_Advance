@@ -5,6 +5,24 @@
 #include "game/room_names.h"
 #include <stdio.h>
 
+/* CONSTANTS */
+
+enum FoxyPhases {
+    FOXY_CLOSED, FOXY_PEEK, FOXY_STAND, FOXY_GONE, FOXY_RUN, FOXY_ATTACK
+};
+enum FreddyPhases {
+    FREDDY_SLEEPING, FREDDY_WONT_MOVE, FREDDY_MIGHT_MOVE, FREDDY_WILL_MOVE, FREDDY_EAST_CORNER, FREDDY_READY_TO_ATTACK
+};
+
+/* END CONSTANTS */
+
+/**
+ * The value that Freddy's timer will start at. To be set at the start of each night.
+ * Equal to `1000-(lvl*100)`
+ */
+int FREDDY_TIMER_START;
+
+
 /**
  * Rolls to see if an animatronic can move.
  * The odds of moving at each opportunity (opportunity frequency differs for each anim) are
@@ -114,15 +132,97 @@ struct Animatronic CHICA = {
 
 /*  FREDDY  */
 
+void move_freddy() {
+    switch (FREDDY.room_num) {
+        case ROOM_STAGE:
+            FREDDY.room_num = ROOM_DINING;
+            break;
+        case ROOM_DINING:
+            FREDDY.room_num = ROOM_RESTROOMS;
+            break;
+        case ROOM_RESTROOMS:
+            FREDDY.room_num = ROOM_KITCHEN;
+            break;
+        case ROOM_KITCHEN:
+            FREDDY.room_num = ROOM_EAST;
+            break;
+        case ROOM_EAST:
+            FREDDY.room_num = ROOM_EAST_CORNER;
+            FREDDY.phase = FREDDY_EAST_CORNER;
+            vbaprint("Freddy in the east corner\n");
+            break;
+        default:
+            break;
+    }
+}
+
 void update_freddy(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
-    if (!is_multiple(frame_num, FREDDY_FRAMECOUNT)) {
+    if (cams_are_up) { // if cams are up and not a movement opportunity
+        switch (FREDDY.phase) {
+            case FREDDY_MIGHT_MOVE:
+                // reset timer if he is being looked at
+                if (selected_cam == FREDDY.room_num) {
+                    FREDDY.timer = FREDDY_TIMER_START; // TODO same as Foxy this could just be set when cams are closed
+                } else {
+                    FREDDY.timer--;
+                }
+                break;
+            case FREDDY_READY_TO_ATTACK:
+                if (selected_cam != ROOM_EAST_CORNER) {
+                    vbaprint("Freddy attacking\n");
+                    FREDDY.room_num = /* TODO DOOR IS UP */true ? ROOM_OFFICE : ROOM_EAST;
+                    FREDDY.phase = FREDDY_WONT_MOVE;
+                }
+                break;
+            default:
+                break;
+        }
+        return;
+    } else if (
+            !is_multiple(frame_num, FREDDY_FRAMECOUNT) ||
+            !try_move(&FREDDY)
+            ) { // if cams are down and not a successful movement opportunity
+        if (FREDDY.phase == FREDDY_MIGHT_MOVE) {
+            FREDDY.timer--;
+        }
         return;
     }
-    vbaprint("Freddy movement opp\n");
 
-    if (try_move(&FREDDY)) {
-        vbaprint("freddy success\n");
-        //change_room(FREDDY, ROOM_EAST);
+
+    // if cams are down and successful movement opportunity
+    vbaprint("Freddy success\n");
+
+
+    switch (FREDDY.phase) {
+        case FREDDY_SLEEPING: // TODO confirm this logic
+            if (BONNIE.room_num != ROOM_STAGE && CHICA.room_num != ROOM_STAGE) {
+                FREDDY.phase = FREDDY_MIGHT_MOVE;
+                FREDDY.timer = FREDDY_TIMER_START;
+                vbaprint("Freddy is awake\n");
+            }
+            break;
+        case FREDDY_WONT_MOVE:
+            FREDDY.phase = FREDDY_MIGHT_MOVE;
+            FREDDY.timer = FREDDY_TIMER_START;
+            vbaprint("Freddy might move\n");
+            break;
+        case FREDDY_MIGHT_MOVE:
+            FREDDY.timer--;
+            if (FREDDY.timer < 1) {
+                FREDDY.phase = FREDDY_WILL_MOVE;
+                vbaprint("Freddy will move\n");
+            }
+            break;
+        case FREDDY_WILL_MOVE:
+            vbaprint("Freddy moved\n");
+            FREDDY.phase = FREDDY_WONT_MOVE; // do this before moving bc moving to east corner overwrites his phase
+            move_freddy();
+            break;
+        case FREDDY_EAST_CORNER:
+            vbaprint("Freddy ready to attack\n");
+            FREDDY.phase = FREDDY_READY_TO_ATTACK;
+        default:
+            break;
     }
 }
 
@@ -143,7 +243,7 @@ bool foxy_at_cove(int frame_num, bool cams_are_up) {
         FOXY.timer--; // TODO theoretically could overflow but shouldn't
     }
     /* END HANDLE STUN TIMER */
-    if (FOXY.timer < 1 && is_multiple(frame_num, FOXY_FRAMECOUNT)) {
+    if (FOXY.timer < 1 && is_multiple(frame_num, FOXY_FRAMECOUNT) && try_move(&FOXY)) {
         vbaprint("foxy success\n");
         FOXY.phase++;
         return true;
@@ -152,6 +252,7 @@ bool foxy_at_cove(int frame_num, bool cams_are_up) {
 }
 
 void update_foxy(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
+    // TODO do the later phases really not need a move check?
     switch (FOXY.phase) {
         case FOXY_CLOSED:
         case FOXY_PEEK:
@@ -238,6 +339,7 @@ void on_night_start(int night_num) {
     CHICA.room_num = CHICA.starting_room;
     FOXY.phase = FREDDY.phase = 0;
     FOXY.timer = FREDDY.timer = 0;
+    FREDDY_TIMER_START = 1000 - (100 * FREDDY.lvl);
 }
 
 void update_anims(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {

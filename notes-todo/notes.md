@@ -199,6 +199,8 @@ Freddy moves in this pattern:
 
 **Stage ... -> Dining -> Restrooms -> Kitchen -> East Hall -> East Hall Corner**
 
+Then, he goes back to Phase 0 (?)
+
 Freddy will not leave the stage until Bonnie and Chica have left.
 
 > NOTE: I am not sure how this interacts with his phases and timers. Does he fail his movement opportunity if they are
@@ -207,8 +209,8 @@ Freddy will not leave the stage until Bonnie and Chica have left.
 ##### East Hall Corner
 
 When Freddy is in the **East Hall Corner**, he follows a slightly different set of rules. On his next successful
-movement opportunity (as usual the cameras must be down to succeed), he will wait until the camera is up and you are
-looking at any camera that is NOT the **East Hall Corner**. Then, he will attempt to enter the office.
+movement opportunity (as usual the cameras must be down to succeed), he will begin waiting until the camera is up and
+you are looking at any camera that is NOT the **East Hall Corner**. Then, he will attempt to enter the office.
 
 * If the door is closed, he returns to **East Hall**
 * If the door is open, he will enter the office
