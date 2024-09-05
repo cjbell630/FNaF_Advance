@@ -2,7 +2,7 @@
 // https://www.pvv.ntnu.no/~hakonhal/main.cgi/c/classes/
 //
 
-#include "ai.h"
+#include "animatronics.h"
 #include "DWedit/debug.h"
 #include "util/random.h"
 #include "util/util.h"

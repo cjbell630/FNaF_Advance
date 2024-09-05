@@ -12,7 +12,7 @@
 #include "graphics/static_handler.h"
 #include "components/camera.h"
 #include "controls.h"
-#include "components/ai.h"
+#include "components/animatronics.h"
 #include "util/random.h"
 #include "game_clock.h"
 #include "images/sprites/cam_map/cam_map.h"

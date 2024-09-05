@@ -1,5 +1,5 @@
-#ifndef FNAF_ADVANCE_AI_H
-#define FNAF_ADVANCE_AI_H
+#ifndef FNAF_ADVANCE_ANIMATRONICS_H
+#define FNAF_ADVANCE_ANIMATRONICS_H
 
 #include "game/room_names.h"
 
@@ -47,4 +47,4 @@ struct AnimatronicsWrapper {
 };
 extern struct AnimatronicsWrapper Animatronics;
 
-#endif //FNAF_ADVANCE_AI_H
+#endif //FNAF_ADVANCE_ANIMATRONICS_H
