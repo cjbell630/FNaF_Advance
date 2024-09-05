@@ -76,14 +76,15 @@ $(TARGET).elf : $(OBJS)
 	$(LD) $^ $(LDFLAGS) -o $@
 
 $(COBJS) : %.o : %.c
-	$(CC) $(CFLAGS) -c -MM -MF $(patsubst %.o,%.d,$@) $< -o $@
+	# $(CC) $(CFLAGS) -c -MM -MF $(patsubst %.o,%.d,$@) $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule for assembling .s -> .o files
 $(SOBJ) : %.o : %.s
 	$(AS) $(ASFLAGS) -c $< -o $@
 # --- Clean -----------------------------------------------------------
 
-clean : 
+clean :
 	@rm -fv *.gba
 	@rm -fv *.elf
 	@rm -fv $(COBJS)
