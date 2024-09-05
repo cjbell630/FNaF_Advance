@@ -15,7 +15,7 @@
 #include "images/cams/placeholder/empty_placeholder.h"
 #include "game/control/cameras/room_names.h"
 #include "game/control/cameras/spooky_effects.h"
-#include "game/control/ai/ai.h"
+#include "components/ai.h"
 
 
 CAM_IMG_DATA get_cam_img_data(enum RoomNames room) {

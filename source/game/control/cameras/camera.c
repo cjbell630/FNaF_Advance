@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include "camera.h"
-#include "game/graphics/bg_pal_handler.h"
+#include "graphics/bg_pal_handler.h"
 #include "init.h"
 #include "util/util.h"
 #include "tonc.h"
 
 #include "game/control/cameras/room_names.h"
-#include "game/graphics/cam_img_map.h"
+#include "graphics/cam_img_map.h"
 
 #define SHOULD_PAN(n) n != ROOM_CLOSET && n != ROOM_KITCHEN
 

@@ -9,7 +9,7 @@
 #include "images/sprites/buttons/buttons.h"
 #include "images/sprites/buttons/buttons_apower.h"
 
-#include "game/menu.h"
+#include "menu.h"
 #include "init.h"
 
 //OBJ_AFFINE *obj_aff_buffer = (OBJ_AFFINE *) obj_buffer;

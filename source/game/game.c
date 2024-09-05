@@ -12,13 +12,13 @@
 #include "graphics/static_handler.h"
 #include "control/cameras/camera.h"
 #include "control/controls.h"
-#include "control/ai/ai.h"
+#include "components/ai.h"
 #include "util/random.h"
 #include "control/game_clock.h"
 #include "images/sprites/cam_map/cam_map.h"
 #include "control/cameras/cam_nav.h"
-#include "game/control/equipment.h"
-#include "game/control/power.h"
+#include "components/equipment.h"
+#include "components/power.h"
 #include "game/control/cameras/spooky_effects.h"
 
 const int NEWSPAPER_PB = 1;

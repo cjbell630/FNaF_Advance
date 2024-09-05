@@ -6,10 +6,10 @@
 #include "images/backgrounds/menu/menu.h"
 #include "images/backgrounds/office/office.h"
 #include "init.h"
-#include "game.h"
+#include "game/game.h"
 #include "DWedit/debug.h"
 #include "graphics/bg_pal_handler.h"
-#include "control/controls.h"
+#include "game/control/controls.h"
 #include "util/random.h"
 
 const int MAX_FRAMES_FOR_FACE_GLITCH = 10;
@@ -64,13 +64,11 @@ void activate_menu() {
                 init_game(0); //Night 0 shows the newspaper
             } else if (menu_choice == 1) { //Continue
                 //TODO: can remove comparison if a controls screen isn't added
-                int saved_night = 2;/*GAMEPAK_RAM[0];*/
+                int saved_night = 5;/* TODO GAMEPAK_RAM[0];*/
 
-                /*
                 vbaprint("loaded ");
                 vbaprint(saved_night == 0 ? "0" : saved_night == 9 ? "9" : "something else");
                 vbaprint("\n");
-                */
 
                 // for verification on real hardware
                 //TODO: remove
