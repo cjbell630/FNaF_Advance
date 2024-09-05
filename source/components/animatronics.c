@@ -1,36 +1,9 @@
-//
-// https://www.pvv.ntnu.no/~hakonhal/main.cgi/c/classes/
-//
-
 #include "animatronics.h"
 #include "DWedit/debug.h"
 #include "util/random.h"
 #include "util/util.h"
 #include "game/room_names.h"
 #include <stdio.h>
-
-/**
- * Gets a random empty room from the provided list and returns it
- * @param rooms the list of rooms to choose from
- * @param num_rooms the length of said list
- * @return a randomly selected empty room from the list, or -1 if they are all full
- */
-
-bool try_move_to_empty_room_from(struct Animatronic *anim, const enum RoomNames rooms[],
-                                 int num_rooms) { //TODO: should this really be an array?
-    uint status = GET_N_SET_BITS(num_rooms); // 11 bits, one for each room
-    int rand_index;
-    while (status > 0) { //TODO: could use rnd_exclude if I made it take more nums
-        rand_index = rnd_max(num_rooms);
-        if (Animatronics.get_room_occupants(rooms[rand_index]) ==
-            0/*TODO use macro ROOM_EMPTY*/) { // if the found room is empty
-            anim->room_num = rooms[rand_index]; // TODO if bonnie or chica stun camera
-            return true;
-        }
-        status &= ~(1 << rand_index); // turn off the bit corresponding to the random room num
-    }
-    return false;
-}
 
 /**
  * Rolls to see if an animatronic can move.
@@ -58,46 +31,33 @@ void update_bonnie(int frame_num) {
         return;
     }
     vbaprint("bonnie success\n");
-    bool waiting = true;
-    enum RoomNames rooms[2];
 
     switch (BONNIE.room_num) {
         case ROOM_STAGE:
-            rooms[0] = ROOM_BACKSTAGE;
-            rooms[1] = ROOM_DINING;
+            BONNIE.room_num = rnd_max(2) ? ROOM_BACKSTAGE : ROOM_DINING;
             break;
         case ROOM_DINING:
-            rooms[0] = ROOM_BACKSTAGE;
-            rooms[1] = ROOM_WEST;
+            BONNIE.room_num = rnd_max(2) ? ROOM_BACKSTAGE : ROOM_WEST;
             break;
         case ROOM_BACKSTAGE:
-            rooms[0] = ROOM_DINING;
-            rooms[1] = ROOM_WEST;
+            BONNIE.room_num = rnd_max(2) ? ROOM_DINING : ROOM_WEST;
             break;
         case ROOM_WEST:
-            rooms[0] = ROOM_CLOSET;
-            rooms[1] = ROOM_WEST_CORNER;
+            BONNIE.room_num = rnd_max(2) ? ROOM_CLOSET : ROOM_WEST_CORNER;
             break;
         case ROOM_CLOSET:
-            rooms[0] = ROOM_LEFT_DOOR;
-            rooms[1] = ROOM_WEST;
+            BONNIE.room_num = rnd_max(2) ? ROOM_LEFT_DOOR : ROOM_WEST;
             break;
         case ROOM_WEST_CORNER:
-            rooms[0] = ROOM_CLOSET;
-            rooms[1] = ROOM_LEFT_DOOR;
+            BONNIE.room_num = rnd_max(2) ? ROOM_CLOSET : ROOM_LEFT_DOOR;
             break;
         case ROOM_LEFT_DOOR:
             BONNIE.room_num = /* TODO DOOR IS UP */true ? ROOM_OFFICE : ROOM_DINING;
-            // TODO stun camera
-            waiting = false;
             break;
         default:
-            waiting = false;
             break;
     }
-    if (waiting) {
-        try_move_to_empty_room_from(&BONNIE, rooms, 2);
-    }
+    // TODO stun camera
 }
 
 struct Animatronic BONNIE = {
@@ -117,45 +77,33 @@ void update_chica(int frame_num) {
         return;
     }
     vbaprint("chica success\n");
-    bool waiting = true;
-    enum RoomNames rooms[2];
 
     switch (CHICA.room_num) {
         case ROOM_STAGE:
-            rooms[0] = rooms[1] = ROOM_DINING;
+            CHICA.room_num = ROOM_DINING;
             break;
         case ROOM_DINING:
-            rooms[0] = ROOM_KITCHEN;
-            rooms[1] = ROOM_RESTROOMS;
+            CHICA.room_num = rnd_max(2) ? ROOM_KITCHEN : ROOM_RESTROOMS;
             break;
         case ROOM_RESTROOMS:
-            rooms[0] = ROOM_KITCHEN;
-            rooms[1] = ROOM_EAST;
+            CHICA.room_num = rnd_max(2) ? ROOM_KITCHEN : ROOM_EAST;
             break;
         case ROOM_KITCHEN:
-            rooms[0] = ROOM_RESTROOMS;
-            rooms[1] = ROOM_EAST;
+            CHICA.room_num = rnd_max(2) ? ROOM_RESTROOMS : ROOM_EAST;
             break;
         case ROOM_EAST:
-            rooms[0] = ROOM_DINING;
-            rooms[1] = ROOM_EAST_CORNER;
+            CHICA.room_num = rnd_max(2) ? ROOM_DINING : ROOM_EAST_CORNER;
             break;
         case ROOM_EAST_CORNER:
-            rooms[0] = ROOM_EAST;
-            rooms[1] = ROOM_RIGHT_DOOR;
+            CHICA.room_num = rnd_max(2) ? ROOM_EAST : ROOM_RIGHT_DOOR;
             break;
         case ROOM_RIGHT_DOOR:
             CHICA.room_num = /* TODO DOOR IS UP */true ? ROOM_OFFICE : ROOM_DINING;
-            // TODO stun camera
-            waiting = false;
             break;
         default:
-            waiting = false;
             break;
     }
-    if (waiting) {
-        try_move_to_empty_room_from(&CHICA, rooms, 2);
-    }
+    // TODO stun camera
 }
 
 struct Animatronic CHICA = {
