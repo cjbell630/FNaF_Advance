@@ -7,6 +7,7 @@
 
 #include "game/room_names.h"
 #include "graphics/cam_img_map.h"
+#include "graphics.h"
 
 #define SHOULD_PAN(n) n != ROOM_CLOSET && n != ROOM_KITCHEN
 
@@ -20,12 +21,10 @@ const int CAM_SCROLL_BUFFER = 100;
 const int CAM_SCROLL_DISP_RIGHT_CAP = 114;
 const int CAM_SCROLL_SPEED = 1;
 
-int CAM_MAP_ATTR0_VISIBLE = ATTR0_SQUARE | ATTR0_4BPP;
 
 int internal_cam_scroll = 0;
 int disp_cam_scroll = 0;
 int cam_scroll_dir = -1;
-OBJ_ATTR *cam_map;
 
 /**
  * Using this bc for some cam_select_room(0) this has to be called on init or everything breaks
@@ -56,10 +55,7 @@ void internal_select_cam(enum RoomNames room, bool cam_is_up) {
     // Load map into SBB 30
     memcpy(&se_mem[CAM_SBB][0], cid.cam_map, cid.cam_map_len);
 
-    //Swap pal of curr cam with new cam (green marker)
-    COLOR temp = pal_obj_mem[CURR_CAM + 3];
-    pal_obj_mem[CURR_CAM + 3] = pal_obj_mem[room + 3];
-    pal_obj_mem[room + 3] = temp;
+    Graphics.select_cam(CURR_CAM, room);
 
     CURR_CAM = room;
 
@@ -77,27 +73,19 @@ void internal_select_cam(enum RoomNames room, bool cam_is_up) {
 void set_cam_display_visible(bool on) {
     if (on) {
         set_bg_palbank(CAM_PB);
-        REG_DISPCNT = DCNT_OBJ | DCNT_BG1 | DCNT_OBJ_1D |
-                      DCNT_MODE0; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
-
-        cam_map->attr0 = CAM_MAP_ATTR0_VISIBLE;
-        obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
-        //TODO: shouldn't have to do this every time, but setting
+        //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
+        REG_DISPCNT = DCNT_OBJ | DCNT_BG1 | DCNT_OBJ_1D | DCNT_MODE0;
+        Graphics.show_cams();
     } else {
         set_bg_palbank(OFFICE_PB);
-        REG_DISPCNT = DCNT_OBJ | DCNT_BG0 | DCNT_OBJ_1D |
-                      DCNT_MODE0; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
-        cam_map->attr0 |= ATTR0_HIDE;
+        //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
+        REG_DISPCNT = DCNT_OBJ | DCNT_BG0 | DCNT_OBJ_1D | DCNT_MODE0;
+        Graphics.hide_cams();
     }
 }
 
 void camera_on_night_start(int night_num) {
     REG_BG1CNT = BG_PRIO(1) | BG_CBB(CAM_CBB) | BG_SBB(CAM_SBB) | BG_4BPP | BG_REG_64x64;
-    cam_map = &OBJ_BUFFER[0];
-    obj_set_attr(cam_map,
-                 ATTR0_HIDE,
-                 ATTR1_SIZE_64x64,                    // 16x16p,
-                 ATTR2_PALBANK(0) | 0);        // palbank 0, tile 0
     //CAMS[0]->occupants = 0b1110;
     internal_select_cam(ROOM_STAGE, false); // TODO remove (see internalselectcam)
     set_cam_display_visible(false);
@@ -137,7 +125,7 @@ void update_camera(int frame_num) {
     update_cam_pan();
 }
 
-enum RoomNames get_selected_room(){
+enum RoomNames get_selected_room() {
     return CURR_CAM;
 }
 

@@ -21,6 +21,7 @@
 #include "components/power.h"
 #include "components/spooky_effects.h"
 #include "game_state.h"
+#include "components/graphics.h"
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 3;
@@ -33,8 +34,6 @@ void init_game() {
     //vbaprint("loading now\n");
 
     //TODO: write to save on new game
-
-    //TODO: should load this into a buffer so it doesn't mess up
     /*
     // Load palette
 
@@ -44,15 +43,6 @@ void init_game() {
     // Load map into SBB 30
     memcpy(&se_mem[13][0], loadingMap, loadingMapLen);
     load_bg_pal(loadingPal, loadingPalLen, 0);
-
-    vid_vsync();
-    int timer = 0;
-    while (timer < 60) {
-        vid_vsync();
-        timer++;
-    }
-
-
     //TODO: should load this into a buffer so it doesn't mess up
      */
     // Load palette
@@ -68,7 +58,6 @@ void init_game() {
     memcpy(&tile_mem[4][0], cam_mapTiles, cam_mapTilesLen);
     memcpy(&pal_obj_mem[0], cam_mapPal, cam_mapPalLen);
 
-    oam_init(OBJ_BUFFER, 128);
 
     //load night intro screen
 
@@ -128,6 +117,8 @@ void run_night_intro() {
     SpookyEffects.on_night_start(NIGHT_NUM);
     Cameras.on_night_start(NIGHT_NUM);
     /* END INIT COMPONENTS */
+
+    Graphics.init_objects(); // TODO where should this go?
 
 
     //show office
@@ -189,8 +180,6 @@ void run_power_on() {
                 //set_bg_palbank(3);
             }
         }
-
-        oam_copy(oam_mem, OBJ_BUFFER, 128);
     }
 }
 
