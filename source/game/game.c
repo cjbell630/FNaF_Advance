@@ -20,16 +20,14 @@
 #include "components/equipment.h"
 #include "components/power.h"
 #include "components/spooky_effects.h"
+#include "game_state.h"
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 3;
 const int NEWSPAPER_SBB = 10;
 
-int curr_night;
-
-void init_game(int night) {
+void init_game() {
     init_clock();
-    curr_night = night;
 
     init_static();
     //vbaprint("loading now\n");
@@ -72,12 +70,6 @@ void init_game(int night) {
 
     oam_init(OBJ_BUFFER, 128);
 
-
-    int calc_night = night == 0 ? 1 : night; // ensures start positions and audio is loaded in for new game
-    if (night == 0) {
-
-    }
-
     //load night intro screen
 
     //load everything else
@@ -95,42 +87,46 @@ void init_game(int night) {
     //vbaprint("done loading\n");
 }
 
-void start_game() {
-    vbaprint("starting now\n");
-    if (curr_night == 0) {
-        vbaprint("newspaper now\n");
-        //show newspaper
+void run_newspaper() {
+    vbaprint("newspaper now\n");
+    //show newspaper
 
-        vbaprint("done showing newspaper pallette\n");
-        REG_BG0HOFS = 0;
-        REG_BG0VOFS = 0;        // load newspaper into memory
-        // Load palette
-        load_bg_pal(newspaperPal, newspaperPalLen, NEWSPAPER_PB);
-        set_bg_palbank(NEWSPAPER_PB);
+    vbaprint("done showing newspaper pallette\n");
+    REG_BG0HOFS = 0;
+    REG_BG0VOFS = 0;        // load newspaper into memory
+    // Load palette
+    load_bg_pal(newspaperPal, newspaperPalLen, NEWSPAPER_PB);
+    set_bg_palbank(NEWSPAPER_PB);
 
-        // Load tiles into CBB 0
-        memcpy(&tile_mem[NEWSPAPER_CBB][0], newspaperTiles, newspaperTilesLen);
+    // Load tiles into CBB 0
+    memcpy(&tile_mem[NEWSPAPER_CBB][0], newspaperTiles, newspaperTilesLen);
 
-        // Load map into SBB 30
-        memcpy(&se_mem[NEWSPAPER_SBB][0], newspaperMap, newspaperMapLen);
-        REG_BG0CNT = BG_CBB(NEWSPAPER_CBB) | BG_SBB(NEWSPAPER_SBB) | BG_4BPP | BG_REG_32x32;
-        REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
-        int timer = 120;
-        while (timer >= 0) {
-            vid_vsync();
-            timer--;
-        }
-        curr_night++;
+    // Load map into SBB 30
+    memcpy(&se_mem[NEWSPAPER_SBB][0], newspaperMap, newspaperMapLen);
+    REG_BG0CNT = BG_CBB(NEWSPAPER_CBB) | BG_SBB(NEWSPAPER_SBB) | BG_4BPP | BG_REG_32x32;
+    REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
+    int timer = 120;
+    while (timer >= 0) {
+        vid_vsync();
+        timer--;
     }
+    GAME_PHASE = NIGHT_INTRO;
+}
+
+/**
+ * Shows the "Night #\n12AM" screen while loading and initializing the night
+ */
+void run_night_intro() {
+    vbaprint("starting now\n");
 
     //TODO show night intro screen
 
     /* INIT COMPONENTS */
-    Animatronics.on_night_start(curr_night);
-    Power.on_night_start(curr_night);
-    Equipment.on_night_start(curr_night);
-    SpookyEffects.on_night_start(curr_night);
-    Cameras.on_night_start(curr_night);
+    Animatronics.on_night_start(NIGHT_NUM);
+    Power.on_night_start(NIGHT_NUM);
+    Equipment.on_night_start(NIGHT_NUM);
+    SpookyEffects.on_night_start(NIGHT_NUM);
+    Cameras.on_night_start(NIGHT_NUM);
     /* END INIT COMPONENTS */
 
 
@@ -142,16 +138,21 @@ void start_game() {
     //REG_BLDALPHA = BLDA_BUILD(0b01000, 0b01000);
     REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
     REG_BG0VOFS = 0;
+    GAME_PHASE = NIGHT_POWER_ON;
+}
 
-
+/**
+ * Runs the gameplay loop for when the power is on
+ */
+void run_power_on() {
     const int SPEED_SCALE = 3;
     const int ART_WIDTH = 360;
     const int GBA_SCREEN_WIDTH = 240;
     const int RIGHT_CAP = ART_WIDTH - GBA_SCREEN_WIDTH; // 120
-    int x = RIGHT_CAP / 2, y = 0;
+    int office_horiz_scroll = RIGHT_CAP / 2, y = 0;
 
     vbaprint("starting loop now\n");
-    while (1) {
+    while (GAME_PHASE == NIGHT_POWER_ON) {
         vid_vsync();
         key_poll();
         tick(); //TODO: should be at top or bottom?
@@ -159,8 +160,8 @@ void start_game() {
         //TODO: make a cool gate for this
         if (Equipment.is_on(CAMERA)) { // cams up
             if (CTRL_CLOSE_CAM) {
-                Equipment.toggle(
-                        CAMERA); // TODO this doesn't really need to be toggle tho, esp since there are no side effects of disabling camera
+                // TODO this doesn't really need to be toggle tho, esp since there are no side effects of disabling camera
+                Equipment.toggle(CAMERA);
             }
             navigate_cams(
                     key_hit(KEY_RIGHT) ? 1 : key_hit(KEY_LEFT) ? -1 : 0,
@@ -170,13 +171,13 @@ void start_game() {
             if (CTRL_OPEN_CAM) {
                 Equipment.toggle(CAMERA);
             }
-            x += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
-            x = (x > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
-                (x < 0) ? 0 : // if too far left, fix
-                x; // otherwise, don't change
+            office_horiz_scroll += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
+            office_horiz_scroll = (office_horiz_scroll > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
+                (office_horiz_scroll < 0) ? 0 : // if too far left, fix
+                office_horiz_scroll; // otherwise, don't change
             //y += key_tri_vert();
 
-            REG_BG0HOFS = x;
+            REG_BG0HOFS = office_horiz_scroll;
             //REG_BG0VOFS = y;
 
             //TODO: remove
@@ -191,4 +192,77 @@ void start_game() {
 
         oam_copy(oam_mem, OBJ_BUFFER, 128);
     }
+}
+
+/**
+ * Transitions to power outage, then runs the game loop for power out
+ */
+void run_power_off() {
+
+}
+
+/**
+ * Shows a jumpscare
+ */
+void run_jumpscare() {
+
+}
+
+/**
+ * Shows the death screen and returns to menu
+ */
+void run_death() {
+
+}
+
+/**
+ * Shows the "5->6am screen", plays audio, then:
+ *
+ * * Starts the next night, OR
+ * * Shows the victory paycheck screen and return to menu
+ */
+void run_victory() {
+    // TODO show 6am screen
+    if (NIGHT_NUM < 5) {
+        NIGHT_NUM++; // set next night
+        GAME_PHASE = NIGHT_INTRO; // set the game to show the intro
+        return;
+    }
+
+    switch (NIGHT_NUM) {
+        // TODO show paycheck screens
+    }
+    GAME_PHASE = MENU_HOME;
+}
+
+/**
+ * Shows the newspaper if necessary, then runs the game loop like this:
+ *
+ * While intro; -> power on
+ * While power on; -> power off, jumpscare, survived
+ * While power off; -> jumpscare, survived
+ * While jumpscare; -> death // will this work with cam moving down
+ * While death; -> menu
+ * While survived;
+ */
+void run_game_loop() {
+    if (GAME_PHASE == NIGHT_NEWSPAPER) {
+        run_newspaper();
+    }
+    while (GAME_PHASE > NIGHT_NEWSPAPER) { // while player has not been kicked back to menu
+        run_night_intro(); // show "Night #/n12AM" screen (and do loading in background)
+        run_power_on(); // run the game loop with the power on
+        if (GAME_PHASE == NIGHT_POWER_OFF) { // if the power goes out
+            run_power_off(); // run the game loop for when the power is out
+        }
+        if (GAME_PHASE == NIGHT_JUMPSCARE) { // if the player gets jumpscared
+            run_jumpscare();
+        }
+        if (GAME_PHASE == NIGHT_DEATH) { // I think Death iff Jumpscare so can combine
+            run_death();
+        }
+        if (GAME_PHASE == NIGHT_VICTORY) { // at 6am
+            run_victory();
+        }
+    } // return to menu when exit loop
 }

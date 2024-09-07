@@ -11,6 +11,8 @@
 
 #include "menu.h"
 #include "init.h"
+#include "game_state.h"
+#include "game/game.h"
 
 //OBJ_AFFINE *obj_aff_buffer = (OBJ_AFFINE *) obj_buffer;
 
@@ -113,12 +115,16 @@ int main() {
                   */
 
     //scroll_test();
-    vbaprint("entry");
-    init_menu();
-    vbaprint("initialized menu");
-    activate_menu();
-    vbaprint("activate menu exited");
-    while (1);
-
+    vbaprint("entry\n");
+    GAME_PHASE = MENU_HOME;
+    NIGHT_NUM = 0;
+    while(1){
+        init_menu();
+        vbaprint("initialized menu\n");
+        activate_menu();
+        vbaprint("activate menu exited\n");
+        init_game();
+        run_game_loop();
+    }
     return 0;
 }

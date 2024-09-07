@@ -11,9 +11,18 @@
 #include "graphics/bg_pal_handler.h"
 #include "controls.h"
 #include "util/random.h"
+#include "game_state.h"
 
+/* CONSTANTS */
 const int MAX_FRAMES_FOR_FACE_GLITCH = 10;
 const int MIN_FRAMES_FOR_FACE_GLITCH = 2;
+enum MenuChoices {
+    CHOICE_NEW_GAME, CHOICE_CONTINUE, CHOICE_NIGHT_6, CHOICE_CUSTOM_NIGHT, CHOICE_OPTIONS
+};
+/* END CONSTANTS */
+
+enum MenuChoices menu_choice = CHOICE_NEW_GAME;
+u8 saved_night;
 
 void init_menu() {
     // Load palette
@@ -27,12 +36,19 @@ void init_menu() {
 
     // TODO remove
     memcpy(&pal_bg_mem[16], officePal, officePalLen);
+
+
+    saved_night = 6;/* TODO GAMEPAK_RAM[0];*/
+
+    vbaprint("loaded ");
+    vbaprint(saved_night == 0 ? "0" : saved_night == 9 ? "9" : "something else");
+    vbaprint("\n");
 }
 
 void activate_menu() {
     //switch backgrounds etc
-    int stage = 0;
-    int menu_choice = 0;
+    //int stage = 0;
+    //int menu_choice = 0;
     int timer = -1;
 
     REG_BG0HOFS = 0;
@@ -42,63 +58,11 @@ void activate_menu() {
     //   using charblock 0 and screenblock 31
     REG_BG0CNT = BG_CBB(0) | BG_SBB(13) | BG_4BPP | BG_REG_64x64;
     REG_DISPCNT = DCNT_BG0 | DCNT_MODE0; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
-    while (stage != -1) { // -1 means exit menu, start game TODO magic number
+
+
+    while (GAME_PHASE == MENU_HOME) { // -1 means exit menu, start game TODO magic number
         vid_vsync();
         key_poll();
-
-        // Selection Keys
-        //if (key_hit(KEY_UP) || key_hit(KEY_DOWN) || key_hit(KEY_SELECT)) {
-        if (CTRL_MENU_SELECT) {
-            // swap palette color for cursors
-            COLOR temp = pal_bg_mem[15];
-            pal_bg_mem[15] = pal_bg_mem[14];
-            pal_bg_mem[14] = temp;
-
-            // update menu choice
-            menu_choice = !menu_choice;
-        }
-
-        // Start keys
-        if (CTRL_MENU_START) {
-            if (menu_choice == 0) { // New Game
-                init_game(0); //Night 0 shows the newspaper
-            } else if (menu_choice == 1) { //Continue
-                //TODO: can remove comparison if a controls screen isn't added
-                int saved_night = 5;/* TODO GAMEPAK_RAM[0];*/
-
-                vbaprint("loaded ");
-                vbaprint(saved_night == 0 ? "0" : saved_night == 9 ? "9" : "something else");
-                vbaprint("\n");
-
-                // for verification on real hardware
-                //TODO: remove
-                switch (saved_night) {
-                    case 0:
-                        pal_bg_mem[15] = CLR_RED;
-                        break;
-                    case 9:
-                        pal_bg_mem[15] = CLR_BLUE;
-                        break;
-                    default:
-                        pal_bg_mem[15] = CLR_LIME;
-                        break;
-                }
-
-                init_game(saved_night == 0 ? 1 : saved_night);
-            }
-            //TODO: prevent starting if init fails
-
-            vbaprint("starting game");
-            start_game();
-            vbaprint("start game exited");
-        }
-
-        //TODO: remove
-        if (key_hit(KEY_B)) {
-            int data = 9;
-            memcpy((void *) DMA_GAMEPAK, &data, 4);
-            set_bg_palbank(!curr_bg_palbank);
-        }
 
         if (timer == -1) { // maybe change to less than 0
             //TODO: util function for rand
@@ -117,6 +81,50 @@ void activate_menu() {
         } else {
             timer--;
         }
+
+        // Selection Keys
+        //if (key_hit(KEY_UP) || key_hit(KEY_DOWN) || key_hit(KEY_SELECT)) {
+        if (CTRL_MENU_SELECT) {
+            // swap palette color for cursors
+            COLOR temp = pal_bg_mem[15];
+            pal_bg_mem[15] = pal_bg_mem[14];
+            pal_bg_mem[14] = temp;
+
+            // update menu choice
+            menu_choice = !menu_choice; // TODO
+        }
+
+        // Start keys
+        if (CTRL_MENU_START) {
+            switch (menu_choice) {
+                case CHOICE_NEW_GAME:
+                    GAME_PHASE = NIGHT_NEWSPAPER;
+                    NIGHT_NUM = 1;
+                    break;
+                case CHOICE_CONTINUE:
+                    GAME_PHASE = NIGHT_INTRO;
+                    NIGHT_NUM = saved_night;
+                    break;
+                case CHOICE_NIGHT_6:
+                    GAME_PHASE = NIGHT_INTRO;
+                    NIGHT_NUM = 6;
+                    break;
+                case CHOICE_OPTIONS:
+                case CHOICE_CUSTOM_NIGHT:
+                    // TODO
+                    break;
+                default:
+                    break;
+            }
+            //return;
+        }
+
+        /*
+        if (key_hit(KEY_B)) {
+            int data = 9;
+            memcpy((void *) DMA_GAMEPAK, &data, 4);
+            set_bg_palbank(!curr_bg_palbank);
+        }*/
 
         //TODO: random flickering
     }
