@@ -10,70 +10,10 @@
 #include "images/sprites/buttons/buttons_apower.h"
 
 #include "menu.h"
-#include "init.h"
 #include "game_state.h"
 #include "game/game.h"
 
 //OBJ_AFFINE *obj_aff_buffer = (OBJ_AFFINE *) obj_buffer;
-
-
-int scroll_test() {
-
-    //BACKGROUND
-    //office screen is 45 tiles wide (360px)
-    //so it should start right around 1/3 (120px)
-    /*
-    const int SPEED_SCALE = 3;
-    const int ART_WIDTH = 360;
-    const int GBA_SCREEN_WIDTH = 240;
-    const int RIGHT_CAP = ART_WIDTH - GBA_SCREEN_WIDTH; //120
-    int x = RIGHT_CAP / 2, y = 0;
-
-
-    //SPRITES
-    u32 tid = 0, pb = 0;        // tile id, pal-bank
-
-    OBJ_ATTR *l_button = &OBJ_BUFFER[0];
-    obj_set_attr(l_button,
-                 ATTR0_TALL | ATTR0_4BPP,
-                 ATTR1_SIZE_32x64,                    // 16x16p,
-                 ATTR2_PALBANK(pb) | tid);        // palbank 0, tile 0
-
-    // position sprite (redundant here; the _real_ position
-    // is set further down
-    const int BUTTON_HORIZ_OFFSET = 2;
-    const int BUTTON_VERT_OFFSET = 62;
-    obj_set_pos(l_button, BUTTON_HORIZ_OFFSET - x, y + BUTTON_VERT_OFFSET);
-
-    while (1) {
-        vid_vsync();
-        key_poll();
-
-        //BACKGROUND
-        x += SPEED_SCALE * key_tri_shoulder(); //move
-        x = (x > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
-            (x < 0) ? 0 : // if too far left, fix
-            x; // otherwise, don't change
-        //y += key_tri_vert();
-
-        REG_BG0HOFS = x;
-        //REG_BG0VOFS = y;
-
-
-        //SPRITES
-        if (key_is_down(KEY_A)) {
-            pb = 1;
-        } else {
-            pb = 0;
-        }
-
-        obj_set_pos(l_button, BUTTON_HORIZ_OFFSET - x, y + BUTTON_VERT_OFFSET);
-        l_button->attr2 = ATTR2_BUILD(tid, pb, 0);
-        oam_copy(oam_mem, OBJ_BUFFER, 128);
-    }*/
-
-    return 0;
-}
 
 int main() {
     /**

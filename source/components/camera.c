@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include "camera.h"
 #include "graphics/bg_pal_handler.h"
-#include "init.h"
 #include "util/util.h"
 #include "tonc.h"
 
@@ -77,7 +76,7 @@ void set_cam_display_visible(bool on) {
         REG_DISPCNT = DCNT_OBJ | DCNT_BG1 | DCNT_OBJ_1D | DCNT_MODE0;
         Graphics.show_cams();
     } else {
-        set_bg_palbank(OFFICE_PB);
+        set_bg_palbank(0); // TODO 0 is office PB
         //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
         REG_DISPCNT = DCNT_OBJ | DCNT_BG0 | DCNT_OBJ_1D | DCNT_MODE0;
         Graphics.hide_cams();

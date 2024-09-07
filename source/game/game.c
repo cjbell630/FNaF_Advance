@@ -1,6 +1,5 @@
 #include "game.h"
 #include "tonc.h"
-#include "init.h"
 #include "DWedit/debug.h"
 #include "images/backgrounds/office/office.h"
 #include "images/backgrounds/newspaper/newspaper.h"
@@ -26,6 +25,10 @@
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 3;
 const int NEWSPAPER_SBB = 10;
+
+const int OFFICE_PB = 0;
+const int OFFICE_CBB = 0;
+const int OFFICE_SBB = 20;
 
 void init_game() {
     init_clock();

@@ -5,7 +5,6 @@
 #include "tonc.h"
 #include "images/backgrounds/menu/menu.h"
 #include "images/backgrounds/office/office.h"
-#include "init.h"
 #include "game/game.h"
 #include "DWedit/debug.h"
 #include "graphics/bg_pal_handler.h"
