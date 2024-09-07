@@ -2,6 +2,12 @@
 # Makefile for FNaF Advance
 #
 
+.PHONY : release
+
+ifeq ($(MAKECMDGOALS),rom)
+$(error Please do not directly call the "rom" target! Instead, use "debug", "release", or "rebuild-assets")
+endif
+
 PATH := $(DEVKITARM)/bin:$(PATH)
 LIBTONC_PATH := $(DEVKITARM)/lib/tonclib
 LIBTONC_INCLUDE := $(LIBTONC_PATH)/include
@@ -21,11 +27,19 @@ ASSET_FILES := $(call rwildcard,assets,*.c)
 C_FILES := $(SRC_FILES) $(ASSET_FILES)
 
 # .o files to compile
+DEBUG_OBJ := include/DWedit/debug.o
 COBJS := $(patsubst %.c,%.o,$(C_FILES))
-DEPS := $(patsubst %.o,%.d,$(COBJS))
--include $(DEPS)
 
-SOBJS   := include/DWedit/debug.o
+ifeq ($(MAKECMDGOALS),debug)
+	SOBJS := $(DEBUG_OBJ)
+endif
+
+ifeq ($(MAKECMDGOALS),release)
+	COBJS += $(DEBUG_OBJ)
+endif
+
+#DEPS := $(patsubst %.o,%.d,$(COBJS))
+#-include $(DEPS)
 
 # targets for .elf (all .o, plus libtonc.a)
 OBJS	:= $(COBJS) $(SOBJS) $(LIBTONC_A)
@@ -61,12 +75,16 @@ ASFLAGS	:= -mthumb-interwork
 CFLAGS	:= $(ARCH) -O2 -Wall -fno-strict-aliasing -I$(LIBTONC_INCLUDE) -Isource -Iassets -Iinclude
 LDFLAGS	:= $(ARCH) $(SPECS)
 
-.PHONY : build clean
 
 # --- Build -----------------------------------------------------------
 
-build : $(TARGET).gba
+debug: clean-deps clean-code rom
 
+rebuild-assets: clean-assets rom
+
+release: clean rom
+
+rom : $(TARGET).gba
 
 $(TARGET).gba : $(TARGET).elf
 	$(OBJCOPY) -v -O binary $< $@
@@ -80,14 +98,25 @@ $(COBJS) : %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule for assembling .s -> .o files
-$(SOBJ) : %.o : %.s
+$(SOBJS) : %.o : %.s
 	$(AS) $(ASFLAGS) -c $< -o $@
+
 # --- Clean -----------------------------------------------------------
 
-clean :
-	@rm -fv *.gba
-	@rm -fv *.elf
-	@rm -fv $(COBJS)
-	@rm -fv $(DEPS)
+clean-assets:
+	@rm -fv $(patsubst %.c,%.o,$(ASSET_FILES))
+
+clean-code:
+	@rm -fv $(patsubst %.c,%.o,$(SRC_FILES))
+
+clean-deps:
+	@rm -fv $(DEBUG_OBJ)
+
+clean-build:
+	@rm -fv $(TARGET).gba
+	@rm -fv $(TARGET).elf
+
+clean : clean-assets clean-code clean-deps clean-build
+#@rm -fv $(DEPS)
 
 #EOF
