@@ -43,3 +43,4 @@ SBB 40 has somethnig
 * replace types with tonc types
 * fix compiler warnings
 * fix passing a ton of raw data to functions (replace with addresses unless the data is supposed to change)
+* I don't think Bonnie and chica can jumpscare the player when the camera is down, and I think their timer is only started when the camera goes up

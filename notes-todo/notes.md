@@ -215,6 +215,12 @@ you are looking at any camera that is NOT the **East Hall Corner**. Then, he wil
 * If the door is closed, he returns to **East Hall**
 * If the door is open, he will enter the office
 
+##### Office
+
+Every 1s/60f Freddy is in the office, if the camera is down, he has a 1 in 5 chance of jumpscaring you.
+
+> NOTE: I'm not 100% sure about this order. Is it "is cam down -> wait 1s -> try jumpscare" or "wait 1s -> is cam down -> try jumpscare"?
+
 ## Power
 
 ### Power decrease interval per night:
