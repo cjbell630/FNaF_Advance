@@ -82,7 +82,7 @@ debug: clean-deps clean-code rom
 
 rebuild-assets: clean-assets rom
 
-release: clean rom
+release: clean rom clean-assets clean-code clean-deps
 
 rom : $(TARGET).gba
 
@@ -94,8 +94,9 @@ $(TARGET).elf : $(OBJS)
 	$(LD) $^ $(LDFLAGS) -o $@
 
 $(COBJS) : %.o : %.c
-	# $(CC) $(CFLAGS) -c -MM -MF $(patsubst %.o,%.d,$@) $< -o $@
 	$(CC) $(CFLAGS) -c $< -o $@
+
+# $(CC) $(CFLAGS) -c -MM -MF $(patsubst %.o,%.d,$@) $< -o $@
 
 # Rule for assembling .s -> .o files
 $(SOBJS) : %.o : %.s
