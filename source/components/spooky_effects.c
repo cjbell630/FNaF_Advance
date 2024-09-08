@@ -3,13 +3,13 @@
 
 static enum EffectNames room_effects[NUM_ROOMS];
 
-void spooky_effects_on_night_start(int night_num) {
+void spooky_effects_on_night_start() {
     for (int i = 0; i < NUM_ROOMS; i++) {
         room_effects[i] = NORMAL; // TODO is there a more efficient way to do this
     }
 }
 
-void update_spooky_effects(int frame_num) {
+void update_spooky_effects() {
 
 }
 

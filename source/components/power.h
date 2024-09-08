@@ -4,9 +4,9 @@
 #include "tonc_types.h"
 
 struct PowerWrapper {
-    void (*update)(int frame_num, byte usage);
+    void (*update)(byte usage);
 
-    void (*on_night_start)(int night_num);
+    void (*on_night_start)();
 
     void (*on_foxy_attack)();
 };

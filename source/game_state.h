@@ -13,4 +13,10 @@ extern enum GamePhases GAME_PHASE;
 
 extern u8 NIGHT_NUM;
 
+//TODO: could be smaller num if necessary
+extern int FRAME_NUM;
+
+bool frame_multiple(int factor);
+void increment_frame();
+
 #endif //FNAF_ADVANCE_GAME_STATE_H

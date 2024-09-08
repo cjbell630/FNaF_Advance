@@ -5,9 +5,9 @@
 #include "game/room_names.h"
 
 struct CameraWrapper {
-    void (*update)(int frame_num);
+    void (*update)();
 
-    void (*on_night_start)(int night_num);
+    void (*on_night_start)();
 
     void (*set_visible)(bool on);
 

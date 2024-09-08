@@ -9,7 +9,7 @@ enum EquipmentNames {
 
 struct EquipmentWrapper {
     //void (*update)(int frame_num);
-    void (*on_night_start)(int night_num);
+    void (*on_night_start)();
 
     byte (*get_usage)();
 

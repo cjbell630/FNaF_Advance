@@ -13,7 +13,7 @@ byte equipment_get_usage() {
     return statuses[RIGHT_DOOR] + statuses[LEFT_DOOR] + statuses[RIGHT_LIGHT] + statuses[LEFT_LIGHT] + statuses[CAMERA];
 }
 
-void equipment_on_night_start(int night_num) {
+void equipment_on_night_start() {
     /* INIT EQUIPMENT VARS */
     statuses[RIGHT_DOOR] = statuses[LEFT_DOOR] = statuses[RIGHT_LIGHT] = statuses[LEFT_LIGHT] = statuses[CAMERA] = false;
 }

@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/25/2021.
-//
-
 #ifndef FNAF_ADVANCE_UTIL_H
 #define FNAF_ADVANCE_UTIL_H
 
@@ -38,7 +34,7 @@ INLINE int continuous_modulo(int number, int modulus) {
 }
 
 //TODO: could return a single bit
-INLINE int is_multiple(int number, int factor) {
+INLINE bool is_multiple(int number, int factor) {
     return number % factor == 0;
 }
 

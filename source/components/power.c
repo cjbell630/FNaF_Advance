@@ -1,6 +1,10 @@
 #include "power.h"
 #include "util/util.h"
 #include "tonc_types.h"
+#include "game_state.h"
+
+/* PREREQS */
+// some functions in this file use the frame_multiple and NIGHT_NUM globals
 
 /* CONSTANTS */
 
@@ -29,17 +33,17 @@ int intervals[5];
 int bonus_drain_per_second;
 int foxy_drain_counter;
 
-void update_power(int frame_num, byte usage) {
+void update_power(byte usage) {
     /* TODO is this correct? when does the timer reset in the original game?*/
-    if (is_multiple(frame_num, intervals[usage])) {
+    if (frame_multiple( intervals[usage])) {
         power -= 10000; /* TODO magic number, drains 1% each time */
     }
-    if (is_multiple(frame_num, 60/*TODO magic num: 1 second*/)) {
+    if (frame_multiple( 60/*TODO magic num: 1 second*/)) {
         power -= bonus_drain_per_second;
     }
 }
 
-void power_on_night_start(int night_num) {
+void power_on_night_start() {
     /* CALC INTERVALS */
     // NOTE skips 0 so we can just use usage
     intervals[0] = 0; // this is just the base rate per night
@@ -49,7 +53,7 @@ void power_on_night_start(int night_num) {
     intervals[4] = 0; // 1u/5
 
     /* BONUS DRAIN */
-    bonus_drain_per_second = DRAIN_LEVELS_PER_SECOND[night_num];
+    bonus_drain_per_second = DRAIN_LEVELS_PER_SECOND[NIGHT_NUM];
 
     /* FOXY COUNTER */
     foxy_drain_counter = 0;

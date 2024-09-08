@@ -3,7 +3,11 @@
 #include "util/random.h"
 #include "util/util.h"
 #include "game/room_names.h"
+#include "game_state.h"
 #include <stdio.h>
+
+/* PREREQS */
+// some functions in this file use the frame_multiple and NIGHT_NUM globals
 
 /* CONSTANTS */
 
@@ -40,8 +44,8 @@ bool try_move(struct Animatronic *anim) {
 /*  BONNIE  */
 
 // TODO this and chicas code are so similar, combine them somehow
-void update_bonnie(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
-    if (!is_multiple(frame_num, BONNIE_FRAMECOUNT)) {
+void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
+    if (!frame_multiple(BONNIE_FRAMECOUNT)) {
         return;
     }
     vbaprint("Bonnie movement opp\n"); // TODO debug merge into one if statement
@@ -86,8 +90,8 @@ struct Animatronic BONNIE = {
 /*  CHICA  */
 
 // TODO this and chicas code are so similar, combine them somehow
-void update_chica(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
-    if (!is_multiple(frame_num, CHICA_FRAMECOUNT)) {
+void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
+    if (!frame_multiple( CHICA_FRAMECOUNT)) {
         return;
     }
     vbaprint("Chica movement opp\n");
@@ -156,7 +160,7 @@ void move_freddy() {
     }
 }
 
-void update_freddy(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
+void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
     if (cams_are_up) { // if cams are up and not a movement opportunity
         switch (FREDDY.phase) {
             case FREDDY_MIGHT_MOVE:
@@ -179,7 +183,7 @@ void update_freddy(int frame_num, bool cams_are_up, enum RoomNames selected_cam)
         }
         return;
     } else if (
-            !is_multiple(frame_num, FREDDY_FRAMECOUNT) ||
+            !frame_multiple( FREDDY_FRAMECOUNT) ||
             !try_move(&FREDDY)
             ) { // if cams are down and not a successful movement opportunity
         if (FREDDY.phase == FREDDY_MIGHT_MOVE) {
@@ -233,17 +237,17 @@ struct Animatronic FREDDY = {
 
 /*  FOXY  */
 
-bool foxy_at_cove(int frame_num, bool cams_are_up) {
+bool foxy_at_cove(bool cams_are_up) {
     /* HANDLE STUN TIMER */
     if (cams_are_up) {
-        if (is_multiple(frame_num, 6/*TODO magic num*/)) {
+        if (frame_multiple( 6/*TODO magic num*/)) {
             FOXY.timer = rnd_max(1000) + 50; // TODO this could just be called when the camera is closed
         }
     } else {
         FOXY.timer--; // TODO theoretically could overflow but shouldn't
     }
     /* END HANDLE STUN TIMER */
-    if (FOXY.timer < 1 && is_multiple(frame_num, FOXY_FRAMECOUNT) && try_move(&FOXY)) {
+    if (FOXY.timer < 1 && frame_multiple( FOXY_FRAMECOUNT) && try_move(&FOXY)) {
         vbaprint("foxy success\n");
         FOXY.phase++;
         return true;
@@ -251,15 +255,15 @@ bool foxy_at_cove(int frame_num, bool cams_are_up) {
     return false;
 }
 
-void update_foxy(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
+void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
     // TODO do the later phases really not need a move check?
     switch (FOXY.phase) {
         case FOXY_CLOSED:
         case FOXY_PEEK:
-            foxy_at_cove(frame_num, cams_are_up);
+            foxy_at_cove(cams_are_up);
             break;
         case FOXY_STAND:
-            if (foxy_at_cove(frame_num, cams_are_up)) {
+            if (foxy_at_cove(cams_are_up)) {
                 // TODO external stuff for transitioning to GONE
                 FOXY.timer = 1500/* TODO magic num*/;
             }
@@ -309,9 +313,9 @@ void set_levels(int fr_lvl, int b_lvl, int c_lvl, int fo_lvl) { // TODO make the
     FOXY.lvl = fo_lvl;
 }
 
-void on_night_start(int night_num) {
+void on_night_start() {
     // TODO a little cringe, maybe there's a better way to write this
-    switch (night_num) {
+    switch (NIGHT_NUM) {
         case 1:
             set_levels(NIGHT_1_START_LEVELS);
             break;
@@ -342,12 +346,12 @@ void on_night_start(int night_num) {
     FREDDY_TIMER_START = 1000 - (100 * FREDDY.lvl);
 }
 
-void update_anims(int frame_num, bool cams_are_up, enum RoomNames selected_cam) {
+void update_anims(bool cams_are_up, enum RoomNames selected_cam) {
     // TODO can I put them in a list or something and do for each, and then say if frame mult of internal attribute
-    BONNIE.update(frame_num, cams_are_up, selected_cam);
-    FREDDY.update(frame_num, cams_are_up, selected_cam);
-    CHICA.update(frame_num, cams_are_up, selected_cam);
-    FOXY.update(frame_num, cams_are_up, selected_cam);
+    BONNIE.update(cams_are_up, selected_cam);
+    FREDDY.update(cams_are_up, selected_cam);
+    CHICA.update(cams_are_up, selected_cam);
+    FOXY.update(cams_are_up, selected_cam);
 }
 
 /**

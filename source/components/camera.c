@@ -83,7 +83,7 @@ void set_cam_display_visible(bool on) {
     }
 }
 
-void camera_on_night_start(int night_num) {
+void camera_on_night_start() {
     REG_BG1CNT = BG_PRIO(1) | BG_CBB(CAM_CBB) | BG_SBB(CAM_SBB) | BG_4BPP | BG_REG_64x64;
     //CAMS[0]->occupants = 0b1110;
     internal_select_cam(ROOM_STAGE, false); // TODO remove (see internalselectcam)
@@ -120,7 +120,7 @@ void update_cam_pan() {
     }
 }
 
-void update_camera(int frame_num) {
+void update_camera() {
     update_cam_pan();
 }
 
