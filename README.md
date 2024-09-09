@@ -38,17 +38,6 @@ That will have the source for the corresponding file and an explanation of which
 * [Spriter's Resource][8]
 * [How to use save-data][9]
 
-### Other
-
-Reminders: (for myself mostly)
-
-* Once all images are working in the game, check if any should be brightened or compressed
-
-GitHub todo: (things to do that really only affect the GitHub page)
-
-* Copyright info in README
-* Download instructions for people who don't know GitHub
-
 [1]: https://github.com/cjbell630/FNaF_Advance/releases/latest
 
 [2]: /out/FNaF_Advance.gba
