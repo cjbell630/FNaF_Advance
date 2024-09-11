@@ -21,10 +21,9 @@ You can find the current demo in [releases][1]!
 
 ### Sources / Credit / Copyright
 
-I'll update this with proper copyright information later, but for now, credit for essentially anything here that is not
-code belongs to Scott Cawthon and respective corporations (ie. game concept, graphics, sound, etc)
+Credit for essentially anything here other than the actual implementation belongs to Scott Cawthon and respective corporations (ie. game concept, graphics, sound, etc).
 
-Before playing this game, please support the original developers by buying the original game [here][3].
+Before playing this game, please support Scott and his team by buying the original game [here][3]!
 
 Any files not containing any code written by me should have a file called `.SOURCE.md` in the same directory as them.
 That will have the source for the corresponding file and an explanation of which file(s) this applies to.
@@ -33,7 +32,6 @@ That will have the source for the corresponding file and an explanation of which
 
 * [Scott Cawthon][4] / [Five Night's at Freddy's (PC)][3]
 * J Vijn ([excellent and extrememly helful GBA tutorial][5]
-* JetBrains ([CLion][6] is awesome)
 * Tech Rules (This would've been immensely difficult and confusing without his [animatronic AI explanation][7])
 * [Spriter's Resource][8]
 * [How to use save-data][9]
