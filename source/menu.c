@@ -4,7 +4,6 @@
 #include "menu.h"
 #include "tonc.h"
 #include "images/backgrounds/menu/menu.h"
-#include "images/backgrounds/office/office.h"
 #include "DWedit/debug.h"
 #include "graphics/bg_pal_handler.h"
 #include "controls.h"
@@ -33,7 +32,7 @@ void init_menu() {
     memcpy(&se_mem[13][0], menuMap, menuMapLen);
 
     // TODO remove
-    memcpy(&pal_bg_mem[16], officePal, officePalLen);
+    //memcpy(&pal_bg_mem[16], officePal, officePalLen);
 
 
     saved_night = 6;/* TODO GAMEPAK_RAM[0];*/

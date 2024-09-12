@@ -10,10 +10,6 @@
 
 #define SHOULD_PAN(n) n != ROOM_CLOSET && n != ROOM_KITCHEN
 
-const int CAM_PB = 2;
-const int CAM_CBB = 1;
-const int CAM_SBB = 22;
-
 enum RoomNames CURR_CAM = ROOM_STAGE;
 
 const int CAM_SCROLL_BUFFER = 100;
@@ -33,58 +29,24 @@ int cam_scroll_dir = -1;
  * @param cam_is_up
  */
 void internal_select_cam(enum RoomNames room, bool cam_is_up) {
-
     room = continuous_modulo(room, NUM_ROOMS); // puts the value between 0 and 10 inclusive
-    CAM_IMG_DATA cid = get_cam_img_data(room);
-
-    // TODO previously this was
-    // load_bg_pal(cid.cam_pal, cid.cam_pal_len, CAM_STAT ? 0 : CAM_PB);
-    // implying calling it when the camera is not up could cause issues
-    // so make sure this is ONLY called if the camera is up
-    // also TODO wtf even is this 0 supposed to mean anyway
-    // maybe it was meant to be used to like preload cams?
-    // okay this is called at init with camnum=0
-    // and for some reason if palbank is always 0 then the office pal is messed up, and
-    // if palbank is always CAM_PB then the cam pals are messed up
-    load_bg_pal(cid.cam_pal, cid.cam_pal_len, cam_is_up ? 0 : CAM_PB);
-
-    // Load tiles into CBB 0
-    memcpy(&tile_mem[CAM_CBB][0], cid.cam_tiles, cid.cam_tiles_len);
-
-    // Load map into SBB 30
-    memcpy(&se_mem[CAM_SBB][0], cid.cam_map, cid.cam_map_len);
-
     Graphics.select_cam(CURR_CAM, room);
-
     CURR_CAM = room;
-
-    /*display funcs using:
-    cid.cam_tiles;
-    cid.cam_tiles_len;
-    cid.cam_map;
-    cid.cam_map_len;
-    cid.cam_pal;
-    cid.cam_pal_len;*/
 }
 
 
 //TODO: could be macro
 void set_cam_display_visible(bool on) {
     if (on) {
-        set_bg_palbank(CAM_PB);
-        //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
-        REG_DISPCNT = DCNT_OBJ | DCNT_BG1 | DCNT_OBJ_1D | DCNT_MODE0;
-        Graphics.show_cams();
+        // TODO order
+        Graphics.game_display_cams();
+        internal_select_cam(CURR_CAM, true);
     } else {
-        set_bg_palbank(0); // TODO 0 is office PB
-        //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
-        REG_DISPCNT = DCNT_OBJ | DCNT_BG0 | DCNT_OBJ_1D | DCNT_MODE0;
-        Graphics.hide_cams();
+        Graphics.game_display_office();
     }
 }
 
 void camera_on_night_start() {
-    REG_BG1CNT = BG_PRIO(1) | BG_CBB(CAM_CBB) | BG_SBB(CAM_SBB) | BG_4BPP | BG_REG_64x64;
     //CAMS[0]->occupants = 0b1110;
     internal_select_cam(ROOM_STAGE, false); // TODO remove (see internalselectcam)
     set_cam_display_visible(false);

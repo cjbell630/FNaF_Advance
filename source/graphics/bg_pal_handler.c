@@ -10,6 +10,7 @@ int curr_bg_palbank = 0;
     memcpy(&tile_mem[charblock][cell * 600], tiles, tilesLen);
 }*/
 
+// TODO remove
 void load_bg_pal(COLOR *pal, int palLen, int palbank) {
     memcpy(&pal_bg_mem[16 * palbank], pal, palLen);
 }

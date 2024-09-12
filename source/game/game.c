@@ -1,7 +1,8 @@
 #include "game.h"
 #include "tonc.h"
 #include "DWedit/debug.h"
-#include "images/backgrounds/office/office.h"
+#include "images/office/office.h"
+#include "images/office/office_pal.h"
 #include "images/backgrounds/newspaper/newspaper.h"
 #include "images/backgrounds/static/static.h"
 #include "images/backgrounds/loading/loading.h"
@@ -26,14 +27,11 @@ const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 3;
 const int NEWSPAPER_SBB = 10;
 
-const int OFFICE_PB = 0;
-const int OFFICE_CBB = 0;
-const int OFFICE_SBB = 20;
 
 void init_game() {
     init_clock();
 
-    init_static();
+    //init_static();
     //vbaprint("loading now\n");
 
     //TODO: write to save on new game
@@ -48,35 +46,8 @@ void init_game() {
     load_bg_pal(loadingPal, loadingPalLen, 0);
     //TODO: should load this into a buffer so it doesn't mess up
      */
-    // Load palette
-    load_bg_pal(officePal, officePalLen, OFFICE_PB);
-
-    // Load tiles into CBB 0
-    memcpy(&tile_mem[OFFICE_CBB][0], officeTiles, officeTilesLen);
-
-
-    // Load map into SBB 30
-    memcpy(&se_mem[OFFICE_SBB][0], officeMap, officeMapLen);
-
-    memcpy(&tile_mem[4][0], cam_mapTiles, cam_mapTilesLen);
-    memcpy(&pal_obj_mem[0], cam_mapPal, cam_mapPalLen);
-
-
+    Graphics.init_backgrounds();
     //load night intro screen
-
-    //load everything else
-    /*
-    int timer = 0;
-    while (timer < 60) {
-        vid_vsync();
-        timer++;
-    }*/
-
-    //vbaprint("start cams\n");
-
-    //vbaprint("done set cam display\n");
-
-    //vbaprint("done loading\n");
 }
 
 void run_newspaper() {
@@ -114,24 +85,16 @@ void run_night_intro() {
     //TODO show night intro screen
 
     /* INIT COMPONENTS */
-    Animatronics.on_night_start(NIGHT_NUM);
-    Power.on_night_start(NIGHT_NUM);
-    Equipment.on_night_start(NIGHT_NUM);
-    SpookyEffects.on_night_start(NIGHT_NUM);
-    Cameras.on_night_start(NIGHT_NUM);
+    Animatronics.on_night_start();
+    Power.on_night_start();
+    Equipment.on_night_start();
+    SpookyEffects.on_night_start();
+    Cameras.on_night_start();
     /* END INIT COMPONENTS */
 
     Graphics.init_objects(); // TODO where should this go?
 
 
-    //show office
-    set_bg_palbank(OFFICE_PB);
-    vbaprint("office now\n");
-    REG_BG0CNT = BG_PRIO(2) | BG_CBB(OFFICE_CBB) | BG_SBB(OFFICE_SBB) | BG_4BPP | BG_REG_64x32;
-    //REG_BLDCNT = BLD_BUILD(BLD_BG0, BLD_BG1, BLD_OFF);
-    //REG_BLDALPHA = BLDA_BUILD(0b01000, 0b01000);
-    REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
-    REG_BG0VOFS = 0;
     GAME_PHASE = NIGHT_POWER_ON;
 }
 
@@ -139,6 +102,10 @@ void run_night_intro() {
  * Runs the gameplay loop for when the power is on
  */
 void run_power_on() {
+    //REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
+    //REG_DISPCNT = DCNT_BG0 | DCNT_BG3 | DCNT_MODE0;
+    Graphics.game_display_office();
+    REG_BG0VOFS = 0;
     const int SPEED_SCALE = 3;
     const int ART_WIDTH = 360;
     const int GBA_SCREEN_WIDTH = 240;
@@ -167,8 +134,8 @@ void run_power_on() {
             }
             office_horiz_scroll += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
             office_horiz_scroll = (office_horiz_scroll > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
-                (office_horiz_scroll < 0) ? 0 : // if too far left, fix
-                office_horiz_scroll; // otherwise, don't change
+                                  (office_horiz_scroll < 0) ? 0 : // if too far left, fix
+                                  office_horiz_scroll; // otherwise, don't change
             //y += key_tri_vert();
 
             REG_BG0HOFS = office_horiz_scroll;
@@ -177,8 +144,9 @@ void run_power_on() {
             //TODO: remove
             if (key_hit(KEY_START)) {
                 //TODO: make this be the norm for the whole game
-                REG_BG2CNT = BG_PRIO(0) | BG_CBB(3) | BG_SBB(30) | BG_WRAP | BG_AFF_16x16;
-                REG_DISPCNT = DCNT_BG0 | DCNT_BG2 | DCNT_MODE1;
+                //REG_BG2CNT = BG_PRIO(0) | BG_CBB(3) | BG_SBB(30) | BG_WRAP | BG_AFF_16x16;
+                //REG_DISPCNT = DCNT_BG0 | DCNT_BG2 | DCNT_MODE1;
+                Graphics.init_blip_test();
                 //
                 //set_bg_palbank(3);
             }

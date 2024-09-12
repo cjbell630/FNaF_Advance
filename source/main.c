@@ -1,14 +1,4 @@
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-
 #include "DWedit/debug.h"
-
-#include "images/backgrounds/office/office.h"
-#include "images/sprites/buttons/buttons.h"
-#include "images/sprites/buttons/buttons_apower.h"
-
 #include "menu.h"
 #include "game_state.h"
 #include "game/game.h"

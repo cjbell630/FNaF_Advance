@@ -23,7 +23,7 @@ void tick() {
         Cameras.update();
     }
 
-    update_static();
+    //update_static();
     Animatronics.update(cam_is_up, selected_cam);
     Power.update(Equipment.get_usage());
     SpookyEffects.update();
