@@ -36,9 +36,10 @@ const int CAM_PB = 2;
 const int CAM_CBB = 1;
 const int CAM_SBB = 22;*/
 const int MAIN_CBB = 0;
-const int MAIN_SBB = 20;
+const int MAIN_SBB = 30;
 const int BLIP_CBB = 3;
 const int BLIP_SBB = 25;
+const int MAP_TILE_START = 50;
 #define LAYER_0 3
 #define LAYER_1 2
 #define LAYER_2 1
@@ -60,9 +61,9 @@ void init_objects() {
             cam_map,
             ATTR0_HIDE,
             ATTR1_SIZE_64x64,                    // 16x16p,
-            ATTR2_PALBANK(0) | ATTR2_PRIO(LAYER_1)
+            ATTR2_PALBANK(0) | ATTR2_ID(MAP_TILE_START) | ATTR2_PRIO(LAYER_1)
     ); // palbank 0, tile 0
-    memcpy(&tile_mem[4][0], cam_mapTiles, cam_mapTilesLen);
+    memcpy(&tile_mem[4][MAP_TILE_START], cam_mapTiles, cam_mapTilesLen);
     memcpy(&pal_obj_mem[0], cam_mapPal, cam_mapPalLen);
     /* END FROM cams on night start */
 
@@ -150,7 +151,7 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
 void graphics_update_cam_blip() {
     if (BLIP_TIMER >= 0) {
         Frame *frame = blip_frames[BLIP_TIMER];
-        memcpy(&se_mem[BLIP_SBB], empty_screen.screen_entry, 1280);
+        //memcpy(&se_mem[BLIP_SBB], empty_screen.screen_entry, 1280);
         memcpy(&se_mem[BLIP_SBB], frame->screen_entry, 1280);
         REG_BG3VOFS = frame->vertical_offset;
         BLIP_TIMER--;

@@ -3,6 +3,7 @@
 #include "images/backgrounds/error/error.h"
 #include "images/cams/stage_empty.h"
 #include "images/cams/stage_bcf_s.h"
+#include "images/cams/stage_bcf.h"
 
 #include "images/cams/placeholder/bcff_placeholder.h"
 #include "game/room_names.h"
@@ -53,9 +54,9 @@ const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
                 { /*Bonnie Chica Foxy*/},
                 { // Bonnie Chica Freddy
                         { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &bcf_placeholderPal, bcf_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                                &stage_bcfTiles, stage_bcfTilesLen,
+                                &stage_bcfPal, stage_bcfPalLen,
+                                &stage_bcfMap, stage_bcfMapLen
                         },
                         { // Spec
                                 &stage_bcf_sTiles, stage_bcf_sTilesLen,
