@@ -26,7 +26,7 @@ extern const unsigned short bcff_placeholderMap[2048];
 
 // NOTE: something with memcpy means these MUST be 32 or greater (?)
 #define bcff_placeholderPalLen 32
-extern const unsigned short bcff_placeholderPal[6];
+extern const unsigned short bcff_placeholderPal[8];
 
 //{{BLOCK(empty_placeholder)
 
@@ -43,7 +43,7 @@ extern const unsigned short bcff_placeholderPal[6];
 //======================================================================
 
 #define empty_placeholderPalLen 32
-extern const unsigned short empty_placeholderPal[6];
+extern const unsigned short empty_placeholderPal[8];
 
 //}}BLOCK(empty_placeholder)
 
@@ -62,7 +62,7 @@ extern const unsigned short empty_placeholderPal[6];
 //======================================================================
 
 #define bcf_placeholderPalLen 32
-extern const unsigned short bcf_placeholderPal[4];
+extern const unsigned short bcf_placeholderPal[8];
 
 //}}BLOCK(bcf_placeholder)
 
@@ -81,7 +81,7 @@ extern const unsigned short bcf_placeholderPal[4];
 //======================================================================
 
 #define cf_placeholderPalLen 32
-extern const unsigned short cf_placeholderPal[6];
+extern const unsigned short cf_placeholderPal[8];
 
 //}}BLOCK(cf_placeholder)
 
@@ -100,7 +100,7 @@ extern const unsigned short cf_placeholderPal[6];
 //======================================================================
 
 #define fr_placeholderPalLen 32
-extern const unsigned short fr_placeholderPal[6];
+extern const unsigned short fr_placeholderPal[8];
 
 //}}BLOCK(fr_placeholder)
 
@@ -119,7 +119,7 @@ extern const unsigned short fr_placeholderPal[6];
 //======================================================================
 
 #define bf_placeholderPalLen 32
-extern const unsigned short bf_placeholderPal[6];
+extern const unsigned short bf_placeholderPal[8];
 
 //}}BLOCK(bf_placeholder)
 
@@ -138,7 +138,7 @@ extern const unsigned short bf_placeholderPal[6];
 //======================================================================
 
 #define bc_placeholderPalLen 32
-extern const unsigned short bc_placeholderPal[6];
+extern const unsigned short bc_placeholderPal[8];
 
 //}}BLOCK(bc_placeholder)
 
@@ -157,7 +157,7 @@ extern const unsigned short bc_placeholderPal[6];
 //======================================================================
 
 #define fo_placeholderPalLen 32
-extern const unsigned short fo_placeholderPal[6];
+extern const unsigned short fo_placeholderPal[8];
 
 //}}BLOCK(fo_placeholder)
 
@@ -176,7 +176,7 @@ extern const unsigned short fo_placeholderPal[6];
 //======================================================================
 
 #define c_placeholderPalLen 32
-extern const unsigned short c_placeholderPal[6];
+extern const unsigned short c_placeholderPal[8];
 
 //}}BLOCK(c_placeholder)
 
@@ -195,7 +195,7 @@ extern const unsigned short c_placeholderPal[6];
 //======================================================================
 
 #define b_placeholderPalLen 32
-extern const unsigned short b_placeholderPal[6];
+extern const unsigned short b_placeholderPal[8];
 
 //}}BLOCK(b_placeholder)
 

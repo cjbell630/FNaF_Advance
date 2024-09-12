@@ -3,12 +3,14 @@
 #include "graphics.h"
 #include "game/room_names.h"
 #include "images/sprites/cam_map/cam_map.h"
-#include "images/effects/cam_blip_test.h"
 #include "DWedit/debug.h"
-#include "images/effects/cam_blip_maps.h"
 #include "images/office/office_pal.h"
 #include "images/office/office.h"
 #include "graphics/cam_img_map.h"
+#include "images/effects/cam_blip_test.h"
+#include "graphics/frames.h"
+
+int BLIP_TIMER;
 
 /* BUFFERS */
 // OBJ_ATTR OBJ_BUFFER[128];
@@ -35,11 +37,17 @@ const int CAM_CBB = 1;
 const int CAM_SBB = 22;*/
 const int MAIN_CBB = 0;
 const int MAIN_SBB = 20;
+const int BLIP_CBB = 3;
+const int BLIP_SBB = 25;
+#define LAYER_0 3
+#define LAYER_1 2
+#define LAYER_2 1
+#define LAYER_3 0
 
 /* END CONSTANTS / DEFINITIONS */
 
 void show_static() {
-    REG_BG2CNT = BG_PRIO(0) | BG_CBB(3) | BG_SBB(30) | BG_WRAP | BG_AFF_16x16;
+    REG_BG2CNT = BG_PRIO(LAYER_3) | BG_CBB(3) | BG_SBB(30) | BG_WRAP | BG_AFF_16x16;
     REG_DISPCNT = DCNT_BG0 | DCNT_BG2 | DCNT_MODE1;
 }
 
@@ -52,7 +60,7 @@ void init_objects() {
             cam_map,
             ATTR0_HIDE,
             ATTR1_SIZE_64x64,                    // 16x16p,
-            ATTR2_PALBANK(0) | ATTR2_PRIO(2)
+            ATTR2_PALBANK(0) | ATTR2_PRIO(LAYER_1)
     ); // palbank 0, tile 0
     memcpy(&tile_mem[4][0], cam_mapTiles, cam_mapTilesLen);
     memcpy(&pal_obj_mem[0], cam_mapPal, cam_mapPalLen);
@@ -66,17 +74,23 @@ void init_objects() {
 }
 
 void init_backgrounds() {
+    //unsigned short colors[2] = {0x0000, 0x7FFF,};
+    memcpy(&tile_mem[BLIP_CBB], &cam_blip_testTiles, cam_blip_testTilesLen);
+    //memcpy(&pal_bg_mem[0], &colors, 4);
+    REG_BG3CNT = BG_PRIO(LAYER_2) | BG_CBB(BLIP_CBB) | BG_SBB(BLIP_SBB) | BG_8BPP | BG_REG_32x32;
+    REG_BG3HOFS = 0;
+
     // TODO might need to reaffirm this in switching functions
-    REG_BG0CNT = BG_PRIO(3) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x32;
-    REG_BG1CNT = BG_PRIO(2) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x64;
+    REG_BG0CNT = BG_PRIO(LAYER_0) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x32;
+    REG_BG1CNT = BG_PRIO(LAYER_1) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x64;
 }
 
 void graphics_switch_to_cams() {
     cam_map->attr0 = ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE;
     obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
     //TODO: shouldn't have to do this every time, but setting
-    REG_DISPCNT = DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_OBJ_1D | DCNT_MODE0;
-    // TODO select curr cam
+    REG_DISPCNT = DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0;
+    BLIP_TIMER = 0;
 }
 
 void graphics_switch_to_office() {
@@ -93,7 +107,7 @@ void graphics_switch_to_office() {
     //show office
     //set_bg_palbank(OFFICE_PB);
     vbaprint("office now\n");
-    REG_DISPCNT = DCNT_OBJ | DCNT_BG0 /*| DCNT_BG1*/ | DCNT_OBJ_1D | DCNT_MODE0;
+    REG_DISPCNT = DCNT_OBJ | DCNT_BG0 /*| DCNT_BG1*/ | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0;
     // copy pallette
     // Load palette
     memcpy(&pal_bg_mem[0], &officePal, officePalLen);
@@ -130,45 +144,17 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
 
     // Load map into SBB 30
     memcpy(&se_mem[MAIN_SBB][0], cid.cam_map, cid.cam_map_len);
+    BLIP_TIMER = blip_frames_len;
 }
 
-void graphics_init_blip_test() {
-    // TODO I cannot for the life of me figure out why the cam_blip_testPal becomes pink even tho they have the
-    // EXACT SAME VALUES when printed
-    unsigned short colors[2] = {0x0000, 0x7FFF,};
-    memcpy(&tile_mem[3], &cam_blip_testTiles, cam_blip_testTilesLen);
-    memcpy(&pal_bg_mem[0], &colors, 4);
-    REG_BG3CNT = BG_CBB(3) | BG_SBB(26) | BG_4BPP | BG_REG_32x32;
-    REG_BG3HOFS = 10;
-    unsigned short empty_frame[32 * 20];
-    for (u16 i = 0; i < 32 * 20; i++) {
-        empty_frame[i] = 0x0000;
+void graphics_update_cam_blip() {
+    if (BLIP_TIMER >= 0) {
+        Frame *frame = blip_frames[BLIP_TIMER];
+        memcpy(&se_mem[BLIP_SBB], empty_screen.screen_entry, 1280);
+        memcpy(&se_mem[BLIP_SBB], frame->screen_entry, 1280);
+        REG_BG3VOFS = frame->vertical_offset;
+        BLIP_TIMER--;
     }
-    const u8 num_frames = 10;
-    u16 lengths[] = {
-            cam_blip_0_len, cam_blip_1_len, cam_blip_2_len, cam_blip_3_len,
-            cam_blip_4_len, cam_blip_5_len, cam_blip_6_len, cam_blip_7_len, cam_blip_8_len, 1280
-    };
-    u8 offsets[] = {
-            cam_blip_0_vert_offset, cam_blip_1_vert_offset, cam_blip_2_vert_offset, cam_blip_3_vert_offset,
-            cam_blip_4_vert_offset, cam_blip_5_vert_offset, cam_blip_6_vert_offset, cam_blip_7_vert_offset,
-            cam_blip_8_vert_offset, 0
-    };
-    SE *frames[] = {
-            &cam_blip_0, &cam_blip_1, &cam_blip_2, &cam_blip_3,
-            &cam_blip_4, &cam_blip_5, &cam_blip_6, &cam_blip_7, &cam_blip_8, &empty_frame
-    };
-    for (u8 i = 0; i < num_frames; i++) {
-        memcpy(&se_mem[26], &empty_frame, 1280);
-        memcpy(&se_mem[26], frames[i], lengths[i]);
-        REG_BG3VOFS = offsets[i];
-        vid_vsync();
-    }
-    memcpy(&pal_bg_mem[0], &cam_blip_testPal, 4);
-}
-
-void graphics_blip_test() {
-
 }
 
 struct GraphicsWrapper Graphics = {
@@ -177,7 +163,6 @@ struct GraphicsWrapper Graphics = {
         .game_display_cams = &graphics_switch_to_cams,
         .game_display_office = &graphics_switch_to_office,
         .select_cam = &graphics_select_cam,
-        .init_blip_test= &graphics_init_blip_test,
-        .blip_test = &graphics_blip_test,
+        .update_cam_blip= &graphics_update_cam_blip,
         .init_backgrounds = &init_backgrounds
 };

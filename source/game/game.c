@@ -146,7 +146,6 @@ void run_power_on() {
                 //TODO: make this be the norm for the whole game
                 //REG_BG2CNT = BG_PRIO(0) | BG_CBB(3) | BG_SBB(30) | BG_WRAP | BG_AFF_16x16;
                 //REG_DISPCNT = DCNT_BG0 | DCNT_BG2 | DCNT_MODE1;
-                Graphics.init_blip_test();
                 //
                 //set_bg_palbank(3);
             }

@@ -15,9 +15,7 @@ struct GraphicsWrapper {
 
     void (*game_display_office)();
 
-    void (*init_blip_test)();
-
-    void (*blip_test)();
+    void (*update_cam_blip)();
 
     void (*select_cam)(enum RoomNames prev_room, enum RoomNames new_room);
 };
