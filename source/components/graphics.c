@@ -34,8 +34,7 @@ const int CAM_PB = 2;
 const int CAM_CBB = 1;
 const int CAM_SBB = 22;*/
 const int MAIN_CBB = 0;
-const int OFFICE_SBB = 20;
-const int CAM_SBB = 31;
+const int MAIN_SBB = 20;
 
 /* END CONSTANTS / DEFINITIONS */
 
@@ -47,13 +46,16 @@ void show_static() {
 void init_objects() {
     /* FROM cams on night start */
     // TODO cam_map = &OBJ_BUFFER[0];
+    //oam_init(oam_mem, 128);
     cam_map = &oam_mem[0];
     obj_set_attr(
             cam_map,
             ATTR0_HIDE,
             ATTR1_SIZE_64x64,                    // 16x16p,
-            ATTR2_PALBANK(0) | 0
+            ATTR2_PALBANK(0) | ATTR2_PRIO(2)
     ); // palbank 0, tile 0
+    memcpy(&tile_mem[4][0], cam_mapTiles, cam_mapTilesLen);
+    memcpy(&pal_obj_mem[0], cam_mapPal, cam_mapPalLen);
     /* END FROM cams on night start */
 
     /* EXTRA STUFF
@@ -65,15 +67,12 @@ void init_objects() {
 
 void init_backgrounds() {
     // TODO might need to reaffirm this in switching functions
-    REG_BG0CNT = BG_PRIO(3) | BG_CBB(MAIN_CBB) | BG_SBB(OFFICE_SBB) | BG_8BPP | BG_REG_64x32;
-    REG_BG1CNT = BG_PRIO(2) | BG_CBB(MAIN_CBB) | BG_SBB(CAM_SBB) | BG_8BPP | BG_REG_64x64;
-
-    //memcpy(&tile_mem[4][0], cam_mapTiles, cam_mapTilesLen);
-    //memcpy(&pal_obj_mem[0], cam_mapPal, cam_mapPalLen);
+    REG_BG0CNT = BG_PRIO(3) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x32;
+    REG_BG1CNT = BG_PRIO(2) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x64;
 }
 
 void graphics_switch_to_cams() {
-    cam_map->attr0 = CAM_MAP_ATTR0_VISIBLE;
+    cam_map->attr0 = ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE;
     obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
     //TODO: shouldn't have to do this every time, but setting
     REG_DISPCNT = DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_OBJ_1D | DCNT_MODE0;
@@ -83,13 +82,13 @@ void graphics_switch_to_cams() {
 void graphics_switch_to_office() {
     /* HIDE OBJECTS */
     // TODO can I not just do this by hiding layers?
-    cam_map->attr0 |= ATTR0_HIDE;
+    cam_map->attr0 = ATTR0_HIDE;
     /* END HIDE OBJECTS */
 
     // Load tiles into CBB 0
     memcpy(&tile_mem[MAIN_CBB][0], &officeTiles, officeTilesLen);
     // Load map into SBB 30
-    memcpy(&se_mem[OFFICE_SBB][0], &officeMap, officeMapLen);
+    memcpy(&se_mem[MAIN_SBB][0], &officeMap, officeMapLen);
 
     //show office
     //set_bg_palbank(OFFICE_PB);
@@ -130,7 +129,7 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
     memcpy(&tile_mem[MAIN_CBB][0], cid.cam_tiles, cid.cam_tiles_len);
 
     // Load map into SBB 30
-    memcpy(&se_mem[CAM_SBB][0], cid.cam_map, cid.cam_map_len);
+    memcpy(&se_mem[MAIN_SBB][0], cid.cam_map, cid.cam_map_len);
 }
 
 void graphics_init_blip_test() {
