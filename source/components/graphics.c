@@ -87,13 +87,14 @@ void init_backgrounds() {
 }
 
 void load_frame(Frame *frame, u16 cbb, u16 sbb) {
-    memcpy(&pal_bg_mem[0], frame->palette, frame->palette_length);
+    dma3_cpy(&pal_bg_mem[0], frame->palette, frame->palette_length);
 
     // Load tiles into CBB 0
-    memcpy(&tile_mem[cbb][0], frame->tiles, frame->tiles_length);
+    dma3_cpy(&tile_mem[cbb][0], frame->tiles, frame->tiles_length);
+
 
     // Load map into SBB 30
-    memcpy(&se_mem[sbb][0], frame->screen_entry, frame->screen_entry_length);
+    dma3_cpy(&se_mem[sbb][0], frame->screen_entry, frame->screen_entry_length);
 }
 
 void graphics_switch_to_cams() {
