@@ -2,11 +2,27 @@
 #include "controls.h"
 #include "equipment.h"
 #include "game/cam_nav.h"
+#include "DWedit/debug.h"
+
+// TODO move this to graphics
+const u8 SPEED_SCALE = 3;
+const u16 ART_WIDTH = 354;
+const u16 GBA_SCREEN_WIDTH = 240;
+const u16 RIGHT_CAP = ART_WIDTH - GBA_SCREEN_WIDTH; // 114
+const u8 BUTTONS_WIDTH = 16;
+const u8 L_BUTTONS_CAP = BUTTONS_WIDTH + 1;
+const u16 R_BUTTONS_CAP = ART_WIDTH - BUTTONS_WIDTH - 1;
+s16 office_horiz_scroll = 57/*RIGHT_CAP/2*/, y = 0;
 
 /* CONTROL MACROS */
 
 /* Office */
 #define CTRL_OFFICE_SCROLL key_tri_shoulder() // L scrolls left, R scrolls right
+#define CTRL_DOOR key_hit(KEY_A)
+#define CTRL_LIGHT key_hit(KEY_B)
+#define can_press_left_buttons office_horiz_scroll < L_BUTTONS_CAP
+#define can_press_right_buttons office_horiz_scroll > R_BUTTONS_CAP
+#define CTRL_HONK key_hit(KEY_A) && key_hit(KEY_B)
 
 /* Cams */
 #define CTRL_OPEN_CAM key_hit(KEY_SELECT | KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT) //D-Pad or Select
@@ -26,13 +42,6 @@ void controls_menu() {
 }
 
 
-// TODO move this to graphics
-const int SPEED_SCALE = 3;
-const int ART_WIDTH = 360;
-const int GBA_SCREEN_WIDTH = 240;
-const int RIGHT_CAP = ART_WIDTH - GBA_SCREEN_WIDTH; // 120
-int office_horiz_scroll = RIGHT_CAP / 2, y = 0;
-
 void controls_office() {
     controls_universal();
     if (CTRL_OPEN_CAM) {
@@ -48,7 +57,24 @@ void controls_office() {
 
     REG_BG0HOFS = office_horiz_scroll;
     //REG_BG0VOFS = y;
-
+    if (can_press_left_buttons) {
+        if (CTRL_LIGHT) {
+            Equipment.toggle(LEFT_LIGHT);
+        }
+        if (CTRL_DOOR) {
+            Equipment.toggle(LEFT_DOOR);
+        }
+    } else if (can_press_right_buttons) {
+        if (CTRL_LIGHT) {
+            Equipment.toggle(RIGHT_LIGHT);
+        }
+        if (CTRL_DOOR) {
+            Equipment.toggle(RIGHT_DOOR);
+        }
+    } else if (CTRL_HONK) {
+        // TODO
+        vbaprint("nose honked :)\n");
+    }
     //TODO: remove
     if (key_hit(KEY_START)) {
         //TODO: make this be the norm for the whole game
