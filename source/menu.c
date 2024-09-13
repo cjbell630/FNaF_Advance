@@ -6,9 +6,9 @@
 #include "images/backgrounds/menu/menu.h"
 #include "DWedit/debug.h"
 #include "graphics/bg_pal_handler.h"
-#include "controls.h"
 #include "util/random.h"
 #include "game_state.h"
+#include "components/controls.h"
 
 /* CONSTANTS */
 const int MAX_FRAMES_FOR_FACE_GLITCH = 10;
@@ -17,6 +17,10 @@ enum MenuChoices {
     CHOICE_NEW_GAME, CHOICE_CONTINUE, CHOICE_NIGHT_6, CHOICE_CUSTOM_NIGHT, CHOICE_OPTIONS
 };
 /* END CONSTANTS */
+
+/* Menu */
+#define CTRL_MENU_SELECT key_hit(KEY_UP | KEY_DOWN | KEY_SELECT) // Change selected option
+#define CTRL_MENU_START key_hit(KEY_START | KEY_A) // Choose option
 
 enum MenuChoices menu_choice = CHOICE_NEW_GAME;
 u8 saved_night;
@@ -58,8 +62,7 @@ void activate_menu() {
 
 
     while (GAME_PHASE == MENU_HOME) { // -1 means exit menu, start game TODO magic number
-        vid_vsync();
-        key_poll();
+        Controls.update_menu();
 
         if (timer == -1) { // maybe change to less than 0
             //TODO: util function for rand
@@ -79,8 +82,10 @@ void activate_menu() {
             timer--;
         }
 
+
+
+
         // Selection Keys
-        //if (key_hit(KEY_UP) || key_hit(KEY_DOWN) || key_hit(KEY_SELECT)) {
         if (CTRL_MENU_SELECT) {
             // swap palette color for cursors
             COLOR temp = pal_bg_mem[15];
@@ -124,5 +129,6 @@ void activate_menu() {
         }*/
 
         //TODO: random flickering
+        vid_vsync();
     }
 }

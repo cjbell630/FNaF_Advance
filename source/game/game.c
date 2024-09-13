@@ -11,7 +11,6 @@
 #include "graphics/bg_pal_handler.h"
 #include "graphics/static_handler.h"
 #include "components/camera.h"
-#include "controls.h"
 #include "components/animatronics.h"
 #include "util/random.h"
 #include "game_clock.h"
@@ -106,50 +105,11 @@ void run_power_on() {
     //REG_DISPCNT = DCNT_BG0 | DCNT_BG3 | DCNT_MODE0;
     Graphics.game_display_office();
     REG_BG0VOFS = 0;
-    const int SPEED_SCALE = 3;
-    const int ART_WIDTH = 360;
-    const int GBA_SCREEN_WIDTH = 240;
-    const int RIGHT_CAP = ART_WIDTH - GBA_SCREEN_WIDTH; // 120
-    int office_horiz_scroll = RIGHT_CAP / 2, y = 0;
 
     vbaprint("starting loop now\n");
     while (GAME_PHASE == NIGHT_POWER_ON) {
-        vid_vsync();
-        key_poll();
         tick(); //TODO: should be at top or bottom?
-
-        //TODO: make a cool gate for this
-        if (Equipment.is_on(CAMERA)) { // cams up
-            if (CTRL_CLOSE_CAM) {
-                // TODO this doesn't really need to be toggle tho, esp since there are no side effects of disabling camera
-                Equipment.toggle(CAMERA);
-            }
-            navigate_cams(
-                    key_hit(KEY_RIGHT) ? 1 : key_hit(KEY_LEFT) ? -1 : 0,
-                    key_hit(KEY_UP) ? 1 : key_hit(KEY_DOWN) ? -1 : 0
-            );
-        } else {
-            if (CTRL_OPEN_CAM) {
-                Equipment.toggle(CAMERA);
-            }
-            office_horiz_scroll += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
-            office_horiz_scroll = (office_horiz_scroll > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
-                                  (office_horiz_scroll < 0) ? 0 : // if too far left, fix
-                                  office_horiz_scroll; // otherwise, don't change
-            //y += key_tri_vert();
-
-            REG_BG0HOFS = office_horiz_scroll;
-            //REG_BG0VOFS = y;
-
-            //TODO: remove
-            if (key_hit(KEY_START)) {
-                //TODO: make this be the norm for the whole game
-                //REG_BG2CNT = BG_PRIO(0) | BG_CBB(3) | BG_SBB(30) | BG_WRAP | BG_AFF_16x16;
-                //REG_DISPCNT = DCNT_BG0 | DCNT_BG2 | DCNT_MODE1;
-                //
-                //set_bg_palbank(3);
-            }
-        }
+        vid_vsync();
     }
 }
 
