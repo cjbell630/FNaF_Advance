@@ -376,7 +376,7 @@ void on_hour(int hour) {
 }
 
 // TODO define this in camera.c?
-char get_room_occupants(enum RoomNames room) {
+u8 get_room_occupants(enum RoomNames room) {
     return ((BONNIE.room_num == room) << 3) | ((CHICA.room_num == room) << 2) |
            ((FREDDY.room_num == room) << 1) | (FOXY.room_num == room);
 }

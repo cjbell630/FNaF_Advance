@@ -35,7 +35,7 @@ void tick() {
 
     Animatronics.update(cam_is_up, selected_cam);
     Power.update(Equipment.get_usage());
-    SpookyEffects.update();
+    SpookyEffects.update(cam_is_up, selected_cam);
     //TODO: reduce these to reduce comparisons run every frame
 
     if (frame_multiple(2)) { // every other frame

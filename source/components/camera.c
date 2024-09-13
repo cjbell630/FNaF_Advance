@@ -84,7 +84,7 @@ void update_cam_pan() {
 
 void update_camera() {
     update_cam_pan();
-    Graphics.update_cam_blip();
+    Graphics.update_cam();
 }
 
 enum RoomNames get_selected_room() {

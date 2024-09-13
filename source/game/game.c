@@ -53,7 +53,7 @@ void run_newspaper() {
     vbaprint("newspaper now\n");
     //show newspaper
 
-    vbaprint("done showing newspaper pallette\n");
+    vbaprint("done showing newspaper palette\n");
     REG_BG0HOFS = 0;
     REG_BG0VOFS = 0;        // load newspaper into memory
     // Load palette

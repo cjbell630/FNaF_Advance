@@ -6,7 +6,7 @@ enum GamePhases GAME_PHASE;
 u8 NIGHT_NUM;
 int FRAME_NUM;
 
-// TODO couldn't this be the length of a night 32400 frames which would fit in 2 bytes?
+// TODO couldn't this be the screen_entry_length of a night 32400 frames which would fit in 2 bytes?
 const int FRAME_MAX = 130881600; // the LCM of all frame intervals, to avoid massive nums in memory
 
 

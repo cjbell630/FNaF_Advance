@@ -11,11 +11,11 @@
 #include "components/animatronics.h"
 
 
-CAM_IMG_DATA get_cam_img_data(enum RoomNames room) {
+Frame get_cam_img_data(enum RoomNames room) {
     return CAM_IMG_MAP[room][Animatronics.get_room_occupants(room)][SpookyEffects.get_effects(room)];
 }
 
-const CAM_IMG_DATA CAM_IMG_MAP[12][16][2] = {
+const Frame CAM_IMG_MAP[12][16][32] = {
         { /* STAGE (0) */
                 { // Empty
                         { // Std

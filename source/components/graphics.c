@@ -86,6 +86,16 @@ void init_backgrounds() {
     REG_BG1CNT = BG_PRIO(LAYER_1) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x64;
 }
 
+void load_frame(Frame *frame, u16 cbb, u16 sbb) {
+    memcpy(&pal_bg_mem[0], frame->palette, frame->palette_length);
+
+    // Load tiles into CBB 0
+    memcpy(&tile_mem[cbb][0], frame->tiles, frame->tiles_length);
+
+    // Load map into SBB 30
+    memcpy(&se_mem[sbb][0], frame->screen_entry, frame->screen_entry_length);
+}
+
 void graphics_switch_to_cams() {
     cam_map->attr0 = ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE;
     obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
@@ -100,18 +110,12 @@ void graphics_switch_to_office() {
     cam_map->attr0 = ATTR0_HIDE;
     /* END HIDE OBJECTS */
 
-    // Load tiles into CBB 0
-    memcpy(&tile_mem[MAIN_CBB][0], &officeTiles, officeTilesLen);
-    // Load map into SBB 30
-    memcpy(&se_mem[MAIN_SBB][0], &officeMap, officeMapLen);
-
     //show office
     //set_bg_palbank(OFFICE_PB);
     vbaprint("office now\n");
+    load_frame(&office_frames[0][0], MAIN_CBB, MAIN_SBB);
     REG_DISPCNT = DCNT_OBJ | DCNT_BG0 /*| DCNT_BG1*/ | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0;
-    // copy pallette
-    // Load palette
-    memcpy(&pal_bg_mem[0], &officePal, officePalLen);
+
 
     //REG_BLDCNT = BLD_BUILD(BLD_BG0, BLD_BG1, BLD_OFF);
     //REG_BLDALPHA = BLDA_BUILD(0b01000, 0b01000);
@@ -127,7 +131,7 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
     pal_obj_mem[new_room + 3] = CAM_MAP_SELECTED;
 
 
-    CAM_IMG_DATA cid = get_cam_img_data(new_room);
+    Frame cid = get_cam_img_data(new_room);
 
     // TODO previously this was
     // load_bg_pal(cid.cam_pal, cid.cam_pal_len, CAM_STAT ? 0 : CAM_PB);
@@ -138,17 +142,15 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
     // okay this is called at init with camnum=0
     // and for some reason if palbank is always 0 then the office pal is messed up, and
     // if palbank is always CAM_PB then the cam pals are messed up
-    memcpy(&pal_bg_mem[0], cid.cam_pal, cid.cam_pal_len);
-
-    // Load tiles into CBB 0
-    memcpy(&tile_mem[MAIN_CBB][0], cid.cam_tiles, cid.cam_tiles_len);
-
-    // Load map into SBB 30
-    memcpy(&se_mem[MAIN_SBB][0], cid.cam_map, cid.cam_map_len);
+    load_frame(&cid, MAIN_CBB, MAIN_SBB);
     BLIP_TIMER = blip_frames_len;
 }
 
-void graphics_update_cam_blip() {
+void graphics_on_room_visual_change(Frame *new_frame) {
+    load_frame(new_frame, MAIN_CBB, MAIN_SBB);
+}
+
+void graphics_update_cam() {
     if (BLIP_TIMER >= 0) {
         Frame *frame = blip_frames[BLIP_TIMER];
         //memcpy(&se_mem[BLIP_SBB], empty_screen.screen_entry, 1280);
@@ -164,6 +166,7 @@ struct GraphicsWrapper Graphics = {
         .game_display_cams = &graphics_switch_to_cams,
         .game_display_office = &graphics_switch_to_office,
         .select_cam = &graphics_select_cam,
-        .update_cam_blip= &graphics_update_cam_blip,
-        .init_backgrounds = &init_backgrounds
+        .update_cam= &graphics_update_cam,
+        .init_backgrounds = &init_backgrounds,
+        .on_room_visual_change = &graphics_on_room_visual_change
 };

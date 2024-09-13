@@ -2,6 +2,7 @@
 #define FNAF_ADVANCE_GRAPHICS_H
 
 #include "game/room_names.h"
+#include "graphics/cam_img_map.h"
 
 
 struct GraphicsWrapper {
@@ -15,7 +16,9 @@ struct GraphicsWrapper {
 
     void (*game_display_office)();
 
-    void (*update_cam_blip)();
+    void (*update_cam)();
+
+    void (*on_room_visual_change)(Frame *new_frame);
 
     void (*select_cam)(enum RoomNames prev_room, enum RoomNames new_room);
 };

@@ -70,7 +70,7 @@ void navigate_cams(int horizontal, int vertical) {
     //TODO: better comparisons here
     TRIBIT_2D_POINT prev = CURR_CAM_POINT;
     //TODO make 8 a constant
-    CURR_CAM_POINT.x = (CURR_CAM_POINT.x + horizontal) % 8; //TODO: modulo necessary if bitfield length is defined as 3?
+    CURR_CAM_POINT.x = (CURR_CAM_POINT.x + horizontal) % 8; //TODO: modulo necessary if bitfield screen_entry_length is defined as 3?
     CURR_CAM_POINT.y = (CURR_CAM_POINT.y - vertical) % 8;
     if (!(horizontal == 0 && vertical == 0)) { //if moved
         CAM_NAV_POINT point = CAM_NAV_MAP[CURR_CAM_POINT.y][CURR_CAM_POINT.x]; //reversed on purpose

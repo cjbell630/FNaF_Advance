@@ -44,7 +44,7 @@ struct AnimatronicsWrapper {
     void (*on_night_start)();
     void (*on_hour)(int hour);
     void (*set_levels)(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl); // NOTE keep for custom night
-    char (*get_room_occupants)(enum RoomNames room);
+    u8 (*get_room_occupants)(enum RoomNames room);
 };
 extern struct AnimatronicsWrapper Animatronics;
 
