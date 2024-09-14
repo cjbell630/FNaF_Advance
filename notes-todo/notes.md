@@ -79,7 +79,9 @@ Once they reach your **door** (separate area from any of the cameras), they will
 next successful movement opportunity:
 
 * If the door is shut, they reset to the **Dining Area**.
-* If the door is open, they "enter the room" and disable the door.
+* If the door is open, they "enter the room" and disable the door and lights on their respective side.
+
+They CAN enter when the lights are on, and because they disable the lights, the hall light shuts off when they enter.
 
 Once in the room, they start a timer for 30 seconds. Once that timer runs out:
 
@@ -219,7 +221,8 @@ you are looking at any camera that is NOT the **East Hall Corner**. Then, he wil
 
 Every 1s/60f Freddy is in the office, if the camera is down, he has a 1 in 5 chance of jumpscaring you.
 
-> NOTE: I'm not 100% sure about this order. Is it "is cam down -> wait 1s -> try jumpscare" or "wait 1s -> is cam down -> try jumpscare"?
+> NOTE: I'm not 100% sure about this order. Is it "is cam down -> wait 1s -> try jumpscare" or "wait 1s -> is cam
+> down -> try jumpscare"?
 
 ## Power
 
@@ -312,8 +315,6 @@ minutes.
 ALTHOUGH if one night is `6 hours = 6*60*90 = 32400 frames` then isn't the 130881600 thing pointless?
 
 ## Questions
-
-* What does the light do to Chica and Bonnie
 
 [1]: https://youtu.be/ujg0Y5IziiY
 

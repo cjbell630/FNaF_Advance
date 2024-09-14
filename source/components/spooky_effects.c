@@ -10,8 +10,8 @@
 static enum EffectNames room_effects[NUM_ROOMS];
 bool FLICKER = false;
 
-bool update_flicker() {
-    return FLICKER = rnd_max(2);
+bool office_flicker() {
+    return rnd_max(10); // 9/10 chance it's on TODO find original value
 }
 
 void spooky_effects_on_night_start() {
@@ -29,12 +29,12 @@ void update_spooky_effects(bool cams_are_up, enum RoomNames selected_cam) {
         u8 light_index = 0;
         bool occupant_index = false;
         if (Equipment.is_on(LEFT_LIGHT)) {
-            if (update_flicker()) {
+            if (office_flicker()) {
                 light_index = 1;
                 occupant_index = Animatronics.get_room_occupants(ROOM_RIGHT_DOOR) >> 3;
             }
         } else if (Equipment.is_on(RIGHT_LIGHT)) {
-            if (update_flicker()) {
+            if (office_flicker()) {
                 light_index = 2;
                 occupant_index = Animatronics.get_room_occupants(ROOM_RIGHT_DOOR) >> 2;
             }
