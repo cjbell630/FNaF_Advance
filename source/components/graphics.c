@@ -9,6 +9,7 @@
 #include "graphics/cam_img_map.h"
 #include "images/effects/cam_blip_test.h"
 #include "graphics/frames.h"
+#include "images/office/door/door_test.h"
 
 int BLIP_TIMER;
 
@@ -18,6 +19,9 @@ int BLIP_TIMER;
 
 /* OBJECTS */
 OBJ_ATTR *cam_map;
+OBJ_ATTR *l_door0;
+OBJ_ATTR *l_door1;
+OBJ_ATTR *l_door2;
 
 /* END OBJECTS */
 
@@ -40,6 +44,11 @@ const int MAIN_SBB = 30;
 const int BLIP_CBB = 3;
 const int BLIP_SBB = 25;
 const int MAP_TILE_START = 50;
+const int LDOOR_TILE_START = 256;
+const int RDOOR_TILE_START = 50;
+const int DOOR_PALBANK = 1;
+#define DOOR_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE
+#define DOOR2_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_WIDE
 #define LAYER_0 3
 #define LAYER_1 2
 #define LAYER_2 1
@@ -64,7 +73,36 @@ void init_objects() {
             ATTR2_PALBANK(0) | ATTR2_ID(MAP_TILE_START) | ATTR2_PRIO(LAYER_1)
     ); // palbank 0, tile 0
     memcpy(&tile_mem[4][MAP_TILE_START], cam_mapTiles, cam_mapTilesLen);
-    memcpy(&pal_obj_mem[0], cam_mapPal, cam_mapPalLen);
+    memcpy(&pal_obj_bank[0], cam_mapPal, cam_mapPalLen);
+
+
+    l_door0 = &oam_mem[1];
+    obj_set_attr(
+            l_door0,
+            ATTR0_HIDE,
+            ATTR1_SIZE_64x64,
+            ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
+    ); // palbank 0, tile 0
+    memcpy(&tile_mem[4][LDOOR_TILE_START], &door_testTiles[1024*0], 32*64);
+    l_door1 = &oam_mem[2];
+    obj_set_attr(
+            l_door1,
+            ATTR0_HIDE,
+            ATTR1_SIZE_64x64,
+            ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START+64) | ATTR2_PRIO(LAYER_0)
+    ); // palbank 0, tile 0
+    memcpy(&tile_mem[4][LDOOR_TILE_START+64], &door_testTiles[1024*1], 32*64);
+    l_door2 = &oam_mem[3];
+    obj_set_attr(
+            l_door2,
+            ATTR0_HIDE,
+            ATTR1_SIZE_64x32,
+            ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START+64+64) | ATTR2_PRIO(LAYER_0)
+    ); // palbank 0, tile 0
+    memcpy(&tile_mem[4][LDOOR_TILE_START+64+64], &door_testTiles[1024*2], 32*32);
+
+
+    memcpy(&pal_obj_bank[DOOR_PALBANK], door_testPal, door_testPalLen);
     /* END FROM cams on night start */
 
     /* EXTRA STUFF
@@ -100,6 +138,7 @@ void load_frame(Frame *frame, u16 cbb, u16 sbb) {
 void graphics_switch_to_cams() {
     cam_map->attr0 = ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE;
     obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
+    l_door0->attr0 = l_door1->attr0 = l_door2->attr0 =  ATTR0_HIDE;
     //TODO: shouldn't have to do this every time, but setting
     REG_DISPCNT = DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0;
     BLIP_TIMER = 0;
@@ -108,6 +147,11 @@ void graphics_switch_to_cams() {
 void graphics_switch_to_office() {
     /* HIDE OBJECTS */
     // TODO can I not just do this by hiding layers?
+    l_door0->attr0 = l_door1->attr0 = DOOR_ATTR0;
+    l_door2->attr0 =  DOOR2_ATTR0;
+    obj_set_pos(l_door0, 16, 0);
+    obj_set_pos(l_door1, 16 , 64);
+    obj_set_pos(l_door2, 16 , 128);
     cam_map->attr0 = ATTR0_HIDE;
     /* END HIDE OBJECTS */
 
@@ -154,8 +198,9 @@ void graphics_on_room_visual_change(Frame *new_frame) {
 void graphics_update_cam() {
     if (BLIP_TIMER >= 0) {
         Frame *frame = blip_frames[BLIP_TIMER];
-        //memcpy(&se_mem[BLIP_SBB], empty_screen.screen_entry, 1280);
-        memcpy(&se_mem[BLIP_SBB], frame->screen_entry, 1280);
+        //memset(&se_mem[BLIP_SBB], 0, 1280*8);
+        //memset((SE *)0x0600CCC0, 0, 1280*8);
+        dma3_cpy(&se_mem[BLIP_SBB], frame->screen_entry, 1280);
         REG_BG3VOFS = frame->vertical_offset;
         BLIP_TIMER--;
     }
