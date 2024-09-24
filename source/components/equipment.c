@@ -87,7 +87,7 @@ bool equipment_is_animating_cam() {
             vbaprint("cam anim timer is 0\n");
             if (cam_device_anim_offset==0) { // if cams are now up
                 vbaprint("cams are now up\n");
-                Cameras.set_visible(true);
+                Cameras.set_visible();
                 statuses[CAMERA] = true;
             }
         }

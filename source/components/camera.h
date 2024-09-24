@@ -9,7 +9,7 @@ struct CameraWrapper {
 
     void (*on_night_start)();
 
-    void (*set_visible)(bool on);
+    void (*set_visible)();
 
     void (*select_room)(enum RoomNames room);
 

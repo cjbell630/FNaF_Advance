@@ -35,15 +35,9 @@ void internal_select_cam(enum RoomNames room, bool cam_is_up) {
 }
 
 
-//TODO: could be macro
-void set_cam_display_visible(bool on) {
-    if (on) {
-        // TODO order
-        Graphics.game_display_cams();
-        internal_select_cam(CURR_CAM, true);
-    } else {
-        Graphics.game_display_office();
-    }
+void set_cam_display_visible() {
+    Graphics.game_display_cams();
+    internal_select_cam(CURR_CAM, true);
 }
 
 void camera_on_night_start() {
