@@ -12,7 +12,7 @@ const u16 GBA_SCREEN_WIDTH = 240;
 const u16 RIGHT_CAP = ART_WIDTH - GBA_SCREEN_WIDTH; // 114
 const u8 BUTTONS_WIDTH = 16;
 const u8 L_BUTTONS_CAP = BUTTONS_WIDTH + 1;
-const u16 R_BUTTONS_CAP = ART_WIDTH - BUTTONS_WIDTH - 1;
+const u16 R_BUTTONS_CAP = RIGHT_CAP - BUTTONS_WIDTH - 1;
 s16 office_horiz_scroll = 57/*RIGHT_CAP/2*/, y = 0;
 
 /* CONTROL MACROS */
@@ -96,6 +96,7 @@ void controls_cam() {
     if (CTRL_CLOSE_CAM) {
         // TODO this doesn't really need to be toggle tho, esp since there are no side effects of disabling camera
         Equipment.toggle(CAMERA);
+        Graphics.game_display_office();
         return;
     }
     navigate_cams(

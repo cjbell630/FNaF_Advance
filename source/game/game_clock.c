@@ -21,21 +21,22 @@ void tick() {
     // Apply controls based on state of previous frame
     if (cam_is_up) {
         Controls.update_cam();
-    } else {
+    } else if (!Equipment.is_animating_cam()) {
         Controls.update_office();
+        Equipment.update();
     }
 
     // cam_is_up could have changed based on controller input
 
     cam_is_up = Equipment.is_on(CAMERA);
     selected_cam = Cameras.get_selected_room();
+    SpookyEffects.update(cam_is_up, selected_cam);
     if (cam_is_up) {
         Cameras.update();
     }
 
     Animatronics.update(cam_is_up, selected_cam);
     Power.update(Equipment.get_usage());
-    SpookyEffects.update(cam_is_up, selected_cam);
     //TODO: reduce these to reduce comparisons run every frame
 
     if (frame_multiple(2)) { // every other frame

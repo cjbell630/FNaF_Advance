@@ -8,14 +8,16 @@ enum EquipmentNames {
 };
 
 struct EquipmentWrapper {
-    //void (*update)(int frame_num);
+    void (*update)();
     void (*on_night_start)();
 
     byte (*get_usage)();
 
     bool (*is_on)(enum EquipmentNames target);
 
-    bool (*toggle)(enum EquipmentNames target);
+    void (*toggle)(enum EquipmentNames target);
+
+    bool (*is_animating_cam)();
 };
 
 extern struct EquipmentWrapper Equipment;
