@@ -61,6 +61,14 @@ void show_static() {
     REG_DISPCNT = DCNT_BG0 | DCNT_BG2 | DCNT_MODE1;
 }
 
+void graphics_set_office_scroll(s16 value){
+    REG_BG0HOFS = value;
+    s16 l_door_x = 16-value;
+    obj_set_pos(l_door0, l_door_x, 0);
+    obj_set_pos(l_door1, l_door_x, 64);
+    obj_set_pos(l_door2, l_door_x, 128);
+}
+
 void init_objects() {
     /* FROM cams on night start */
     // TODO cam_map = &OBJ_BUFFER[0];
@@ -84,7 +92,7 @@ void init_objects() {
             ATTR1_SIZE_64x64,
             ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
-    obj_set_pos(l_door0, 16, 0);
+    //obj_set_pos(l_door0, 16, 0);
     memcpy(&tile_mem[4][LDOOR_TILE_START], &door_testTiles[1024*0], 32*64);
     l_door1 = &oam_mem[2];
     obj_set_attr(
@@ -93,7 +101,7 @@ void init_objects() {
             ATTR1_SIZE_64x64,
             ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START+64) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
-    obj_set_pos(l_door1, 16, 64);
+    //obj_set_pos(l_door1, 16, 64);
     memcpy(&tile_mem[4][LDOOR_TILE_START+64], &door_testTiles[1024*1], 32*64);
     l_door2 = &oam_mem[3];
     obj_set_attr(
@@ -103,7 +111,11 @@ void init_objects() {
             ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START+64+64) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     memcpy(&tile_mem[4][LDOOR_TILE_START+64+64], &door_testTiles[1024*2], 32*32);
-    obj_set_pos(l_door2, 16, 128);
+    //obj_set_pos(l_door2, 16, 128);
+
+    // TODO magic number also used in controls.c as the default value for office_horiz_scroll
+    // TODO also should this even be here
+    graphics_set_office_scroll(57);
 
 
     memcpy(&pal_obj_bank[DOOR_PALBANK], door_testPal, door_testPalLen);
@@ -200,14 +212,6 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
 
 void graphics_on_room_visual_change(Frame *new_frame) {
     load_frame(new_frame, MAIN_CBB, MAIN_SBB);
-}
-
-void graphics_set_office_scroll(s16 value){
-    REG_BG0HOFS = value;
-    s16 l_door_x = 16-value;
-    obj_set_pos(l_door0, l_door_x, 0);
-    obj_set_pos(l_door1, l_door_x, 64);
-    obj_set_pos(l_door2, l_door_x, 128);
 }
 
 void graphics_update_cam() {
