@@ -18,6 +18,8 @@ struct GraphicsWrapper {
 
     void (*update_cam)();
 
+    void (*set_office_scroll)(s16 value);
+
     void (*on_room_visual_change)(Frame *new_frame);
 
     void (*select_cam)(enum RoomNames prev_room, enum RoomNames new_room);

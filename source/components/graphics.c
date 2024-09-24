@@ -147,11 +147,13 @@ void graphics_switch_to_cams() {
 void graphics_switch_to_office() {
     /* HIDE OBJECTS */
     // TODO can I not just do this by hiding layers?
-    l_door0->attr0 = l_door1->attr0 = DOOR_ATTR0;
+    l_door0->attr0 = l_door1->attr0 = DOOR_ATTR0; // TODO set individual bits to hide and show
     l_door2->attr0 =  DOOR2_ATTR0;
     obj_set_pos(l_door0, 16, 0);
-    obj_set_pos(l_door1, 16 , 64);
-    obj_set_pos(l_door2, 16 , 128);
+    obj_set_pos(l_door1, 16, 64);
+    obj_set_pos(l_door2, 16, 128);
+    //obj_hide();
+    //obj_unhide()
     cam_map->attr0 = ATTR0_HIDE;
     /* END HIDE OBJECTS */
 
@@ -195,6 +197,14 @@ void graphics_on_room_visual_change(Frame *new_frame) {
     load_frame(new_frame, MAIN_CBB, MAIN_SBB);
 }
 
+void graphics_set_office_scroll(s16 value){
+    REG_BG0HOFS = value;
+    s16 l_door_x = 16-value;
+    obj_set_pos(l_door0, l_door_x, 0);
+    obj_set_pos(l_door1, l_door_x, 64);
+    obj_set_pos(l_door2, l_door_x, 128);
+}
+
 void graphics_update_cam() {
     if (BLIP_TIMER >= 0) {
         Frame *frame = blip_frames[BLIP_TIMER];
@@ -214,5 +224,6 @@ struct GraphicsWrapper Graphics = {
         .select_cam = &graphics_select_cam,
         .update_cam= &graphics_update_cam,
         .init_backgrounds = &init_backgrounds,
-        .on_room_visual_change = &graphics_on_room_visual_change
+        .on_room_visual_change = &graphics_on_room_visual_change,
+        .set_office_scroll = &graphics_set_office_scroll
 };

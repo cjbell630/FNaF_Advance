@@ -3,6 +3,7 @@
 #include "equipment.h"
 #include "game/cam_nav.h"
 #include "DWedit/debug.h"
+#include "graphics.h"
 
 // TODO move this to graphics
 const u8 SPEED_SCALE = 3;
@@ -48,14 +49,19 @@ void controls_office() {
         Equipment.toggle(CAMERA);
         return;
     }
-
-    office_horiz_scroll += SPEED_SCALE * CTRL_OFFICE_SCROLL; //move
-    office_horiz_scroll = (office_horiz_scroll > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
-                          (office_horiz_scroll < 0) ? 0 : // if too far left, fix
-                          office_horiz_scroll; // otherwise, don't change
+    int shoulder_input = CTRL_OFFICE_SCROLL;
+    if (shoulder_input != 0) {
+        s16 new_scroll = office_horiz_scroll + (SPEED_SCALE * shoulder_input);
+        new_scroll = (new_scroll > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
+                     (new_scroll < 0) ? 0 : // if too far left, fix
+                     new_scroll; // otherwise, don't change
+        if (office_horiz_scroll != new_scroll) {
+            office_horiz_scroll = new_scroll;
+            Graphics.set_office_scroll(office_horiz_scroll);
+        }
+    }
     //y += key_tri_vert();
 
-    REG_BG0HOFS = office_horiz_scroll;
     //REG_BG0VOFS = y;
     if (can_press_left_buttons) {
         if (CTRL_LIGHT) {
