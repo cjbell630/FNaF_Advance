@@ -28,7 +28,7 @@ int cam_scroll_dir = -1;
  * @param cam_num
  * @param cam_is_up
  */
-void internal_select_cam(enum RoomNames room, bool cam_is_up) {
+void internal_select_cam(enum RoomNames room) {
     room = continuous_modulo(room, NUM_ROOMS); // puts the value between 0 and 10 inclusive
     Graphics.select_cam(CURR_CAM, room);
     CURR_CAM = room;
@@ -37,17 +37,15 @@ void internal_select_cam(enum RoomNames room, bool cam_is_up) {
 
 void set_cam_display_visible() {
     Graphics.game_display_cams();
-    internal_select_cam(CURR_CAM, true);
+    internal_select_cam(CURR_CAM);
 }
 
 void camera_on_night_start() {
-    //CAMS[0]->occupants = 0b1110;
-    internal_select_cam(ROOM_STAGE, false); // TODO remove (see internalselectcam)
-    set_cam_display_visible(false);
+    CURR_CAM = ROOM_STAGE;
 }
 
 void cam_select_room(enum RoomNames room) {
-    internal_select_cam(room, true);
+    internal_select_cam(room);
 }
 
 
