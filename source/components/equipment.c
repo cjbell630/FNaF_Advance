@@ -1,6 +1,9 @@
 #include "equipment.h"
 #include "tonc_types.h"
 #include "camera.h"
+#include "graphics.h"
+
+const u8 NUM_DOOR_FRAMES = 15; // TODO move
 
 /* EQUIPMENT VARS */
 bool statuses[5];
@@ -64,13 +67,13 @@ void equipment_toggle(enum EquipmentNames target) {
             break;
         case LEFT_DOOR:
             if (l_door_anim_frame == 0) { // TODO check if bonnie is in room
-                l_door_anim_frame = 15; // TODO use stored num frames
+                l_door_anim_frame = NUM_DOOR_FRAMES;
                 statuses[LEFT_DOOR] = !statuses[LEFT_DOOR];
             }
             break;
         case RIGHT_DOOR:
             if (r_door_anim_frame == 0) { // TODO check if freddy or chica is in room
-                r_door_anim_frame = 15; // TODO use stored num frames
+                r_door_anim_frame = NUM_DOOR_FRAMES;
                 statuses[RIGHT_DOOR] = !statuses[RIGHT_DOOR];
             }
             break;
@@ -85,7 +88,7 @@ bool equipment_is_animating_cam() {
         // TODO graphics get frame timer+offset
         if (cam_device_anim_timer == 0) {
             vbaprint("cam anim timer is 0\n");
-            if (cam_device_anim_offset==0) { // if cams are now up
+            if (cam_device_anim_offset == 0) { // if cams are now up
                 vbaprint("cams are now up\n");
                 Cameras.set_visible();
                 statuses[CAMERA] = true;
@@ -101,7 +104,7 @@ void equipment_update() {
     if (l_door_anim_frame) {
         l_door_anim_frame--;
         vbaprint("l door frame\n");
-        // TODO graphics
+        Graphics.load_left_door_frame(statuses[LEFT_DOOR] ? NUM_DOOR_FRAMES - l_door_anim_frame - 1 : l_door_anim_frame);
     }
     if (r_door_anim_frame) {
         r_door_anim_frame--;
