@@ -74,6 +74,7 @@ void init_objects() {
     ); // palbank 0, tile 0
     memcpy(&tile_mem[4][MAP_TILE_START], cam_mapTiles, cam_mapTilesLen);
     memcpy(&pal_obj_bank[0], cam_mapPal, cam_mapPalLen);
+    obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
 
 
     l_door0 = &oam_mem[1];
@@ -83,6 +84,7 @@ void init_objects() {
             ATTR1_SIZE_64x64,
             ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
+    obj_set_pos(l_door0, 16, 0);
     memcpy(&tile_mem[4][LDOOR_TILE_START], &door_testTiles[1024*0], 32*64);
     l_door1 = &oam_mem[2];
     obj_set_attr(
@@ -91,6 +93,7 @@ void init_objects() {
             ATTR1_SIZE_64x64,
             ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START+64) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
+    obj_set_pos(l_door1, 16, 64);
     memcpy(&tile_mem[4][LDOOR_TILE_START+64], &door_testTiles[1024*1], 32*64);
     l_door2 = &oam_mem[3];
     obj_set_attr(
@@ -100,6 +103,7 @@ void init_objects() {
             ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START+64+64) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     memcpy(&tile_mem[4][LDOOR_TILE_START+64+64], &door_testTiles[1024*2], 32*32);
+    obj_set_pos(l_door2, 16, 128);
 
 
     memcpy(&pal_obj_bank[DOOR_PALBANK], door_testPal, door_testPalLen);
@@ -136,9 +140,12 @@ void load_frame(Frame *frame, u16 cbb, u16 sbb) {
 }
 
 void graphics_switch_to_cams() {
-    cam_map->attr0 = ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE;
-    obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
-    l_door0->attr0 = l_door1->attr0 = l_door2->attr0 =  ATTR0_HIDE;
+    obj_unhide(cam_map, ATTR0_REG);
+    //cam_map->attr0 = ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE;
+    obj_hide(l_door0);
+    obj_hide(l_door1);
+    obj_hide(l_door2);
+    //l_door0->attr0 = l_door1->attr0 = l_door2->attr0 =  ATTR0_HIDE;
     //TODO: shouldn't have to do this every time, but setting
     REG_DISPCNT = DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0;
     BLIP_TIMER = 0;
@@ -146,15 +153,13 @@ void graphics_switch_to_cams() {
 
 void graphics_switch_to_office() {
     /* HIDE OBJECTS */
-    // TODO can I not just do this by hiding layers?
-    l_door0->attr0 = l_door1->attr0 = DOOR_ATTR0; // TODO set individual bits to hide and show
-    l_door2->attr0 =  DOOR2_ATTR0;
-    obj_set_pos(l_door0, 16, 0);
-    obj_set_pos(l_door1, 16, 64);
-    obj_set_pos(l_door2, 16, 128);
-    //obj_hide();
-    //obj_unhide()
-    cam_map->attr0 = ATTR0_HIDE;
+    //l_door0->attr0 = l_door1->attr0 = DOOR_ATTR0; // TODO set individual bits to hide and show
+    //l_door2->attr0 =  DOOR2_ATTR0;
+    obj_unhide(l_door0, ATTR0_REG);
+    obj_unhide(l_door1, ATTR0_REG);
+    obj_unhide(l_door2, ATTR0_REG);
+    obj_hide(cam_map);
+    //cam_map->attr0 = ATTR0_HIDE;
     /* END HIDE OBJECTS */
 
     //show office
