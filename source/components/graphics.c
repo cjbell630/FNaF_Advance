@@ -80,8 +80,8 @@ void init_objects() {
             ATTR1_SIZE_64x64,                    // 16x16p,
             ATTR2_PALBANK(0) | ATTR2_ID(MAP_TILE_START) | ATTR2_PRIO(LAYER_1)
     ); // palbank 0, tile 0
-    memcpy(&tile_mem[4][MAP_TILE_START], cam_mapTiles, cam_mapTilesLen);
-    memcpy(&pal_obj_bank[0], cam_mapPal, cam_mapPalLen);
+    memcpy(&tile_mem[4][MAP_TILE_START], &cam_mapTiles, cam_mapTilesLen);
+    memcpy(&pal_obj_bank[0], &cam_mapPal, cam_mapPalLen);
     obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
 
 
@@ -118,7 +118,7 @@ void init_objects() {
     graphics_set_office_scroll(57);
 
 
-    memcpy(&pal_obj_bank[DOOR_PALBANK], door_testPal, door_testPalLen);
+    memcpy(&pal_obj_bank[DOOR_PALBANK], &door_testPal, door_testPalLen);
     /* END FROM cams on night start */
 
     /* EXTRA STUFF
