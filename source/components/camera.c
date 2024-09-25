@@ -7,29 +7,33 @@
 #include "game/room_names.h"
 #include "graphics/cam_img_map.h"
 #include "graphics.h"
+#include "game_state.h"
 
-#define SHOULD_PAN(n) n != ROOM_CLOSET && n != ROOM_KITCHEN
+#define SHOULD_PAN(n) (n != ROOM_CLOSET && n != ROOM_KITCHEN)
 
 enum RoomNames CURR_CAM = ROOM_STAGE;
 
-const int CAM_SCROLL_BUFFER = 100;
-const int CAM_SCROLL_DISP_RIGHT_CAP = 114;
-const int CAM_SCROLL_SPEED = 1;
+const u8 TURNAROUND_TIMER_LENGTH = 60;
+const u8 CAM_SCROLL_DISP_RIGHT_CAP = 114;
+const u8 CAM_SCROLL_FRAME_INTERVAL = 2;
+const s8 CAM_SCROLL_POS_INC = 1;
+const s8 CAM_SCROLL_NEG_INC = 0 - CAM_SCROLL_POS_INC;
+// NOTE real scroll speed is 300 frames to 114 pixels = 38px/100f = 19px/50f ~=~ 2px/5f
+// and the pause is 120 frames
+// but that scroll speed looks choppy bc of the pixel density, so I had to play around with it.
+// Also, the aspect ratio in the original is wider so more of the image is shown at once.
+// It still doesn't really look like the original, but it fits better I think.
 
+// TODO init on night start
+s16 cam_scroll = 0;
+u8 turnaround_timer = 0; // TODO set to max when cam opened
+s8 cam_scroll_dir = 1;
 
-int internal_cam_scroll = 0;
-int disp_cam_scroll = 0;
-int cam_scroll_dir = -1;
-
-/**
- * Using this bc for some cam_select_room(0) this has to be called on init or everything breaks
- * TODO investigate later
- * but for now just making this
- * @param cam_num
- * @param cam_is_up
- */
 void internal_select_cam(enum RoomNames room) {
     room = continuous_modulo(room, NUM_ROOMS); // puts the value between 0 and 10 inclusive
+    if (!SHOULD_PAN(room)) {
+        REG_BG1HOFS = 0; // TODO move this to graphics?
+    }
     Graphics.select_cam(CURR_CAM, room);
     CURR_CAM = room;
 }
@@ -52,30 +56,29 @@ void cam_select_room(enum RoomNames room) {
 /**
  *
  */
-void update_cam_pan() {
-    if (SHOULD_PAN(CURR_CAM)) { // if should scroll
-        if (cam_scroll_dir == 1) { // moving right
-            if (internal_cam_scroll > CAM_SCROLL_DISP_RIGHT_CAP + CAM_SCROLL_BUFFER) { // turning point
-                cam_scroll_dir = -1;
-            } else if (disp_cam_scroll < CAM_SCROLL_DISP_RIGHT_CAP) { // move display
-                disp_cam_scroll += CAM_SCROLL_SPEED;
-            }
-        } else { //moving left
-            if (internal_cam_scroll < -CAM_SCROLL_BUFFER) { // turning point
-                cam_scroll_dir = 1;
-            } else if (disp_cam_scroll > 0) {
-                disp_cam_scroll -= CAM_SCROLL_SPEED;
-            }
+void pan_cam() {
+    if (turnaround_timer) {
+        turnaround_timer--;
+        if (turnaround_timer == 0) {
+            cam_scroll_dir = cam_scroll_dir == CAM_SCROLL_POS_INC ? CAM_SCROLL_NEG_INC : CAM_SCROLL_POS_INC;
         }
-        internal_cam_scroll += cam_scroll_dir * CAM_SCROLL_SPEED;
-        REG_BG1HOFS = disp_cam_scroll;
-    } else { // if should not scroll
-        REG_BG1HOFS = 0;
+        return;
     }
+    cam_scroll += cam_scroll_dir;
+    if (cam_scroll <= 0) {
+        cam_scroll = 0;
+        turnaround_timer = TURNAROUND_TIMER_LENGTH;
+    } else if (cam_scroll >= CAM_SCROLL_DISP_RIGHT_CAP) {
+        cam_scroll = CAM_SCROLL_DISP_RIGHT_CAP;
+        turnaround_timer = TURNAROUND_TIMER_LENGTH;
+    }
+    REG_BG1HOFS = cam_scroll;
 }
 
 void update_camera() {
-    update_cam_pan();
+    if (SHOULD_PAN(CURR_CAM) && frame_multiple(CAM_SCROLL_FRAME_INTERVAL)) { // TODO move to graphics?
+        pan_cam();
+    }
     Graphics.update_cam();
 }
 
