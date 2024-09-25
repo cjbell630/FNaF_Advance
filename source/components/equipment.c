@@ -109,7 +109,7 @@ void equipment_update() {
     if (r_door_anim_frame) {
         r_door_anim_frame--;
         vbaprint("r door frame\n");
-        // TODO graphics
+        Graphics.load_right_door_frame(statuses[RIGHT_DOOR] ? NUM_DOOR_FRAMES - r_door_anim_frame - 1 : r_door_anim_frame);
     }
 }
 

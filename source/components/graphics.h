@@ -25,6 +25,7 @@ struct GraphicsWrapper {
     void (*select_cam)(enum RoomNames prev_room, enum RoomNames new_room);
 
     void (*load_left_door_frame)(u8 frame_num);
+    void (*load_right_door_frame)(u8 frame_num);
 };
 
 extern struct GraphicsWrapper Graphics;

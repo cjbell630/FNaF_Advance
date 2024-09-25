@@ -11,6 +11,7 @@
 #include "graphics/frames.h"
 #include "images/office/door/door_test.h"
 #include "images/office/door/l_door.h"
+#include "images/office/door/r_door.h"
 
 int BLIP_TIMER;
 
@@ -23,6 +24,9 @@ OBJ_ATTR *cam_map;
 OBJ_ATTR *l_door0;
 OBJ_ATTR *l_door1;
 OBJ_ATTR *l_door2;
+OBJ_ATTR *r_door0;
+OBJ_ATTR *r_door1;
+OBJ_ATTR *r_door2;
 
 /* END OBJECTS */
 
@@ -45,9 +49,10 @@ const int MAIN_SBB = 30;
 const int BLIP_CBB = 3;
 const int BLIP_SBB = 25;
 const int MAP_TILE_START = 50;
-const int LDOOR_TILE_START = 256;
-const int RDOOR_TILE_START = 50;
-const int DOOR_PALBANK = 1;
+const u16 LDOOR_TILE_START = 128;
+const u16 RDOOR_TILE_START = LDOOR_TILE_START + 160;
+const u8 L_DOOR_PALBANK = 1;
+const u8 R_DOOR_PALBANK = 2; // TODO make them use the same pallette
 #define DOOR_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE
 #define DOOR2_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_WIDE
 #define LAYER_0 3
@@ -68,13 +73,25 @@ void graphics_set_office_scroll(s16 value) {
     obj_set_pos(l_door0, l_door_x, 0);
     obj_set_pos(l_door1, l_door_x, 64);
     obj_set_pos(l_door2, l_door_x, 128);
+    s16 r_door_x = 280 - value;
+    obj_set_pos(r_door0, r_door_x, 0);
+    obj_set_pos(r_door1, r_door_x, 64);
+    obj_set_pos(r_door2, r_door_x, 128);
+}
+
+void load_door_frame(u8 frame_num, u16 tile_start, u16 *tiles) {
+    u16 offset = frame_num * 2560;//(1024+1024+512)
+    memcpy(&tile_mem[4][tile_start], &tiles[offset], 2048/*32 * 64*/);
+    memcpy(&tile_mem[4][tile_start + 64], &tiles[offset + 1024], 2048/*32 * 64*/);
+    memcpy(&tile_mem[4][tile_start + 128/*64*2*/], &tiles[offset + 2048/*1024*2*/], 1024/*32 * 32*/);
 }
 
 void load_left_door_frame(u8 frame_num) {
-    u16 offset = frame_num * 2560;//(1024+1024+512)
-    memcpy(&tile_mem[4][LDOOR_TILE_START], &l_doorTiles[offset], 2048/*32 * 64*/);
-    memcpy(&tile_mem[4][LDOOR_TILE_START + 64], &l_doorTiles[offset + 1024], 2048/*32 * 64*/);
-    memcpy(&tile_mem[4][LDOOR_TILE_START + 128/*64*2*/], &l_doorTiles[offset + 2048/*1024*2*/], 1024/*32 * 32*/);
+    load_door_frame(frame_num, LDOOR_TILE_START, &l_doorTiles);
+}
+
+void load_right_door_frame(u8 frame_num) {
+    load_door_frame(frame_num, RDOOR_TILE_START, &r_doorTiles);
 }
 
 void init_objects() {
@@ -92,13 +109,14 @@ void init_objects() {
     memcpy(&pal_obj_bank[0], &cam_mapPal, cam_mapPalLen);
     obj_set_pos(cam_map, 176 /*screen width - map width*/, 96 /*screen height - map height*/);
 
-
+    /* DOOR CODE */
+    // TODO clean
     l_door0 = &oam_mem[1];
     obj_set_attr(
             l_door0,
             ATTR0_HIDE,
             ATTR1_SIZE_64x64,
-            ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
+            ATTR2_PALBANK(L_DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     //obj_set_pos(l_door0, 16, 0);
     l_door1 = &oam_mem[2];
@@ -106,7 +124,7 @@ void init_objects() {
             l_door1,
             ATTR0_HIDE,
             ATTR1_SIZE_64x64,
-            ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START + 64) | ATTR2_PRIO(LAYER_0)
+            ATTR2_PALBANK(L_DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START + 64) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     //obj_set_pos(l_door1, 16, 64);
     l_door2 = &oam_mem[3];
@@ -114,17 +132,44 @@ void init_objects() {
             l_door2,
             ATTR0_HIDE,
             ATTR1_SIZE_64x32,
-            ATTR2_PALBANK(DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START + 64 + 64) | ATTR2_PRIO(LAYER_0)
+            ATTR2_PALBANK(L_DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START + 128) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
-    //obj_set_pos(l_door2, 16, 128);
+    r_door0 = &oam_mem[4];
+    obj_set_attr(
+            r_door0,
+            ATTR0_HIDE,
+            ATTR1_SIZE_64x64,
+            ATTR2_PALBANK(R_DOOR_PALBANK) | ATTR2_ID(RDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
+    ); // palbank 0, tile 0
+    //obj_set_pos(l_door0, 16, 0);
+    r_door1 = &oam_mem[5];
+    obj_set_attr(
+            r_door1,
+            ATTR0_HIDE,
+            ATTR1_SIZE_64x64,
+            ATTR2_PALBANK(R_DOOR_PALBANK) | ATTR2_ID(RDOOR_TILE_START + 64) | ATTR2_PRIO(LAYER_0)
+    ); // palbank 0, tile 0
+    r_door2 = &oam_mem[6];
+    obj_set_attr(
+            r_door2,
+            ATTR0_HIDE,
+            ATTR1_SIZE_64x32,
+            ATTR2_PALBANK(R_DOOR_PALBANK) | ATTR2_ID(RDOOR_TILE_START + 128) | ATTR2_PRIO(LAYER_0)
+    ); // palbank 0, tile 0
     load_left_door_frame(0);
+    load_right_door_frame(0);
+    // TODO load right door frame
+
+    // TODO make use same pal
+    memcpy(&pal_obj_bank[L_DOOR_PALBANK], &l_doorPal, l_doorPalLen);
+    memcpy(&pal_obj_bank[R_DOOR_PALBANK], &r_doorPal, r_doorPalLen);
+    /* END DOOR CODE */
 
     // TODO magic number also used in controls.c as the default value for office_horiz_scroll
     // TODO also should this even be here
     graphics_set_office_scroll(57);
 
 
-    memcpy(&pal_obj_bank[DOOR_PALBANK], &l_doorPal, l_doorPalLen);
     /* END FROM cams on night start */
 
     /* EXTRA STUFF
@@ -159,11 +204,13 @@ void load_frame(Frame *frame, u16 cbb, u16 sbb) {
 
 void graphics_switch_to_cams() {
     obj_unhide(cam_map, ATTR0_REG);
-    //cam_map->attr0 = ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE;
+    // TODO clean
     obj_hide(l_door0);
     obj_hide(l_door1);
     obj_hide(l_door2);
-    //l_door0->attr0 = l_door1->attr0 = l_door2->attr0 =  ATTR0_HIDE;
+    obj_hide(r_door0);
+    obj_hide(r_door1);
+    obj_hide(r_door2);
     //TODO: shouldn't have to do this every time, but setting
     REG_DISPCNT = DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0;
     BLIP_TIMER = 0;
@@ -173,9 +220,13 @@ void graphics_switch_to_office() {
     /* HIDE OBJECTS */
     //l_door0->attr0 = l_door1->attr0 = DOOR_ATTR0; // TODO set individual bits to hide and show
     //l_door2->attr0 =  DOOR2_ATTR0;
+    // TODO clean
     obj_unhide(l_door0, ATTR0_REG);
     obj_unhide(l_door1, ATTR0_REG);
     obj_unhide(l_door2, ATTR0_REG);
+    obj_unhide(r_door0, ATTR0_REG);
+    obj_unhide(r_door1, ATTR0_REG);
+    obj_unhide(r_door2, ATTR0_REG);
     obj_hide(cam_map);
     //cam_map->attr0 = ATTR0_HIDE;
     /* END HIDE OBJECTS */
@@ -241,5 +292,6 @@ struct GraphicsWrapper Graphics = {
         .init_backgrounds = &init_backgrounds,
         .on_room_visual_change = &graphics_on_room_visual_change,
         .set_office_scroll = &graphics_set_office_scroll,
-        .load_left_door_frame = &load_left_door_frame
+        .load_left_door_frame = &load_left_door_frame,
+        .load_right_door_frame = &load_right_door_frame
 };
