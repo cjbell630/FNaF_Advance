@@ -4,6 +4,8 @@ import sys
 from PIL import Image
 from sympy import ceiling
 
+from gba_exporter import get_screenblock_index, get_pixels_from_tile, convert_palette, write_to_c_files, convert_tiles
+
 TOLERANCE = 1720
 AVG_TOLERANCE = 27
 NUM_DIFF_TOLERANCE = 9
@@ -107,15 +109,30 @@ def process_image(filename):
                     row.append(tile)
             frames[frame].append(row)
 
+    num_frames = 1
+
     # export image
     new_img = Image.new("P", (width, height))
     new_img.putpalette(palette)
+
+    converted_pal =convert_palette(palette)
+
     for frame in range(num_frames):
+        tilemap=[0 for i in range(64*32)]
+        tiles = []
         for y in range(frame_height_in_tiles):
             y_coord = y * 8
             for x in range(frame_width_in_tiles):
                 x_coord = x * 8
+
+                tilemap[get_screenblock_index(x, y, frame_width_in_tiles)] = x + y * frame_width_in_tiles
+                tiles = get_pixels_from_tile(tiles, frames[frame][y][x])
+
                 new_img.paste(frames[frame][y][x], (x_coord, y_coord + frame * 160))
+        print(tilemap)
+        print(tiles)
+        write_to_c_files(converted_pal, convert_tiles(tiles), tilemap)
+
     new_img.save("output_binary.bmp")
 
 
