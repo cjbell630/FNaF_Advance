@@ -3,7 +3,8 @@
 ##### Sources
 
 * [Fnaf 1 Decompiled: Frame by Frame (imgur, pastebin, pastebin)][2]
-* [Tech Rules YT Video][1]
+* [Easter Egg Chances][4]
+* [Tech Rules YT Video][1] (contains a lot of inaccurate information)
 
 Table of Contents
 =================
@@ -23,14 +24,14 @@ Table of Contents
     * [Power Down](#Power-Down)
 * [Misc Effects](#Misc-Effects)
     * [Title screen twitching (title Active 2)](#Title-screen-twitching-title-Active-2)
-    * [Static overlay (title )](#Static-overlay-title)
+    * [Static overlay (title )](#Static-overlay)
     * [Flickering (Random number 3C)](#Flickering-Random-number-3C)
     * [Night 4+ 2b/4b effects (Random number 3F)](#Night-4-2b4b-effects-Random-number-3F)
-    * [Hallucinations (Active 21)](#Hallucinations-Active-21)
+    * [Fullscreen Hallucinations (Active 21)](#Fullscreen-Hallucinations-Active-21)
+    * [Cam Hallucinations](#cam-hallucinations)
     * [Bonnie/Chica close/far](#BonnieChica-closefar)
     * [Window jumpscare sound](#Window-jumpscare-sound)
     * [Phone call mute button](#Phone-call-mute-button)
-    * ["random for pic"](#random-for-pic)
     * [Clock](#Clock)
     * [Golden Freddy](#Golden-Freddy)
     * [Game Over Golden Freddy Jumpscare](#Game-Over-Golden-Freddy-Jumpscare)
@@ -325,6 +326,7 @@ Every 0.08s/4.8f there is a 97% chance the normal Freddy head is shown, and a 1%
 TODO it also seems like the alpha is randomized? How often?
 
 ### Static overlay
+
 TODO different rules for title
 
 Every 1s/60f, value B is set to random # 1-3 inclusive.
@@ -353,7 +355,7 @@ Set to random 1-30 inclusive every 0.05s/3f
 * 4/30 = 2/15 chance for Twitch
 * 2/30 = 1/15 chance for Open Mouth
 
-### Hallucinations (Active 21)
+### Fullscreen Hallucinations (Active 21)
 
 Every 1s/60f, there is a 1/1000 chance hallucinations will begin.
 
@@ -361,12 +363,26 @@ When hallucinations begin, they will last for 99f
 
 Each frame hallucinations are active, there is a 1/10 chance they are visible (meaning, they flicker off and on)
 
-
-> NOTE: TODO there seem to be different rules for when the cams are up. 
-
 > NOTE: I'm not 100% sure but I believe the hallucinations cycle between
 > *Freddy, It's me (bottom right), Bonnie, It's me (upper left)* each frame no matter what,
 > and is simply shown and hidden, which gives the illusion of randomizing frames
+
+### Cam hallucinations
+
+All cam hallucinations except for Golden Freddy are controlled by the same random value,
+set to 1-100 inclusive when the cams are down. I am not sure how often this value is set.
+[Source][4]
+
+* Backstage masks looking at camera (unsure, possibly 5/100)
+* East Hall Corner missing kids posters: 97,98,99,100
+  * Order is likely Kids missing, shutdown sanitation, suspect convicted, years end
+* East Hall crying child poster: 99
+* East Hall it's me poster: 100
+* West Hall Corner Freddy ripping head off: 1
+* All of these are 1-10 inclusive (<=10)
+  * Pirate's cove it's me
+  * Stage Freddy staring at camera
+  * Backstage Bonnie staring at camera
 
 ### Bonnie/Chica close/far
 
@@ -380,21 +396,15 @@ TODO
 
 Stays on screen for 40 seconds
 
-### "random for pic"
-
-TODO
-
-* counter
-* controls hallucinations on cams
-* set to random # 1-100 when not viewing cams
-
 ### Clock
 
 Starts at 12, incremented 1 every 90s/5400f
 
 ### Golden Freddy
 
-Every 1s/60f, pick random number 0-99999 inclusive. If 1, golden freddy is set to appear
+Every 1s/60f, pick random number 0-34464 inclusive. If 1, golden freddy is set to appear.
+> NOTE: intended behavior from Scott was 1 in 100000, but due to Clickteam 2.5 random function integer max value, the
+> true odds are 1 in 34464
 
 Whenever cam 2b is viewed, if Bonnie is not there and Golden freddy is set to appear (above value=1),
 the poster will be shown, and Golden Freddy will be in the office when the cam is closed.
@@ -405,12 +415,13 @@ Golden Freddy jumpscares the player. If the camera is opened while Golden Freddy
 
 ### Game Over Golden Freddy Jumpscare
 
-On the game over screen, after 10 seconds, there is a 1 in 10000 chance Golden Freddy will jumpscare the player.
+On the game over screen, after 10 seconds, every second there is a 1 in 10000 chance Golden Freddy will jumpscare the player.
 > NOTE: When does "10s" start? Is it at the static, at the game over text, Mike's death screen?
 
 ### Rare Bonnie Jumpscare
 
-TODO what triggers it?
+1/1000 chance on title after warning displayed.
+TODO potential trigger on game over?
 
 When triggered, the image is shown for 9.5s/570f, then for 0.5s/30f seconds the eyes are shown, then the player is taken
 to the title screen.
@@ -445,3 +456,5 @@ ALTHOUGH if one night is `6 hours = 6*60*90 = 32400 frames` then isn't the 13088
 [2]: https://www.reddit.com/r/fivenightsatfreddys/comments/2x6rw8/fnaf_1_decompiled_frame_by_frame/
 
 [3]: https://www.reddit.com/r/technicalFNaF/comments/17zsw8e/comment/ka73aln/
+
+[4]: https://youtu.be/shAkfUracYA
