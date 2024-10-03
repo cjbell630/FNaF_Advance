@@ -2,10 +2,45 @@
 
 ##### Sources
 
+* [Fnaf 1 Decompiled: Frame by Frame (imgur, pastebin, pastebin)][2]
 * [Tech Rules YT Video][1]
-* [Fnaf 1 Decompiled: Frame by Frame (imgur, pastebin, pasebin)][2]
 
-## Overview ##
+Table of Contents
+=================
+
+* [Overview](#Overview)
+* [Animatronics](#Animatronics)
+    * [Levels at the beginning of each night](#Levels-at-the-beginning-of-each-night)
+    * [AI Level Increases by time](#AI-Level-Increases-by-time)
+    * [Movement](#Movement)
+        * [Chica and Bonnie](#Chica-and-Bonnie)
+            * [Bonnie movement scheme](#Bonnie-movement-scheme)
+            * [Chica movement scheme](#Chica-movement-scheme)
+        * [Foxy](#Foxy)
+        * [Freddy](#Freddy)
+* [Power](#Power)
+    * [Power drain rate](#Power-drain-rate)
+    * [Power Down](#Power-Down)
+* [Misc Effects](#Misc-Effects)
+    * [Title screen twitching (title Active 2)](#Title-screen-twitching-title-Active-2)
+    * [Static overlay (title )](#Static-overlay-title)
+    * [Flickering (Random number 3C)](#Flickering-Random-number-3C)
+    * [Night 4+ 2b/4b effects (Random number 3F)](#Night-4-2b4b-effects-Random-number-3F)
+    * [Hallucinations (Active 21)](#Hallucinations-Active-21)
+    * [Bonnie/Chica close/far](#BonnieChica-closefar)
+    * [Window jumpscare sound](#Window-jumpscare-sound)
+    * [Phone call mute button](#Phone-call-mute-button)
+    * ["random for pic"](#random-for-pic)
+    * [Clock](#Clock)
+    * [Golden Freddy](#Golden-Freddy)
+    * [Game Over Golden Freddy Jumpscare](#Game-Over-Golden-Freddy-Jumpscare)
+    * [Rare Bonnie Jumpscare](#Rare-Bonnie-Jumpscare)
+    * [Office breath (Active 2E)](#Office-breath-Active-2E)
+* [Office Controls](#Office-Controls)
+* [Intervals](#Intervals)
+* [Questions](#Questions)
+
+## Overview
 
 The game was originally coded in Clickteam Fusion. Most timers and countdowns are hard-coded as minutes and seconds,
 but some are coded as "ticks". There are 60 ticks per second.
@@ -35,11 +70,11 @@ Each of the main 4 animatronics have a level, from 0-20 (same as custom night)
 
 At the respective time each night, the animatronics levels increase according to this chart:
 
-| ↓Time &#124; Animatronic→ | Freddy | Bonnie | Chica | Foxy |
-|---------------------------|:------:|:------:|:-----:|:----:|
-| 2 AM                      |        |   +1   |       |      |
-| 3 AM                      |        |   +1   |  +1   |  +1  |
-| 4 AM                      |        |   +1   |  +1   |  +1  |
+| ↓Time &#124; Animatronic→ | Bonnie | Chica | Foxy |
+|---------------------------|:------:|:-----:|:----:|
+| 2 AM                      |   +1   |       |      |
+| 3 AM                      |   +1   |  +1   |  +1  |
+| 4 AM                      |   +1   |  +1   |  +1  |
 
 As indicated, Freddy's level does not increase.
 
@@ -55,12 +90,9 @@ The resulting number is then compared to each animatronic's AI level. Movement w
 |---------------|:---------------------:|:---------------------:|:--------------------:|:-------------------:|
 | **Frequency** |     3.02s/181.2f      |     4.97s/298.2f      |     4.98s/298.8f     |    5.01s/300.6f     |
 
-These values have been converted to frames (assuming 60fps) and tweaked slightly to allow for an lcm the size of an int.
-
 > NOTE: Multiple animatronics CAN be in the same room at the same time. From what I can find, as well as from testing,
 > Freddy can never be seen if other animatronics are in the same room as him. However, I'm not definitively sure which
-> of
-> Bonnie or Chica overrides the display.
+> of Bonnie or Chica overrides the display.
 
 #### Chica and Bonnie
 
@@ -69,7 +101,7 @@ the flowcharts seen below. If there are multiple choices, there's a 50/50 chance
 
 For both of them, when they move, if the camera is displaying the camera *they were previously in* or the one *they're
 moving to*, the cameras will be stunned and replaced with static. During this time, static is shown instead. This lasts
-for 5 seconds. HOWEVER: this does not affect any in-game processes that depend on the camera being up or a specific
+for 5s/300f. HOWEVER: this does not affect any in-game processes that depend on the camera being up or a specific
 camera being viewed. This means that if the camera is stunned and Bonnie/Chica enter/leave the camera you have open, the
 static timer will reset (even though you can't technically see them). However, when the timer is reset, the camera
 flicker transition does not happen as it normally would when the camera is stunned. (QUESTION: how does the static
@@ -83,7 +115,7 @@ next successful movement opportunity:
 
 They CAN enter when the lights are on, and because they disable the lights, the hall light shuts off when they enter.
 
-Once in the room, they start a timer for 30 seconds. Once that timer runs out:
+Once in the room, they start a timer for 30s/1800f. Once that timer runs out:
 
 * If the camera is up, they will force it down and jumpscare you
 * If the camera is not up, they will jumpscare you
@@ -226,27 +258,18 @@ Every 1s/60f Freddy is in the office, if the camera is down, he has a 1 in 5 cha
 
 ## Power
 
-### Power decrease interval per night:
+### Power drain rate
 
-| <ins>Night</ins>           | -1% every ___ seconds |
-|----------------------------|:---------------------:|
-| **Night 1**                |      9.6 (576f)       |
-| **Night 2**                |       6 (360f)        |
-| **Night 3**                |       5 (300f)        |
-| **Night 4**                |       4 (240f)        |
-| **Night 5, 6, and Custom** |       3 (180f)        |
+Every second, 0.1% power is drained per bar on the usage meter.
 
-Each of these are divided by the power level to get the current rate. (so in increments of x/3 and x/4)
+Additionally, starting on Night 2, an additional 0.1% is drained at an interval dependent on the night number:
 
-### Extra Drain
-
-According to https://freddy-fazbears-pizza.fandom.com/wiki/Power_Indicator#What_Drains_Power
-there is an extra, super small drain applied each second that adds up to:
-
-* Night 2: 1.5/hour = 0.025%/s
-* Night 3: 1.8/hour = 0.03%/s
-* Night 4: 2.25/hour = 0.0375%/s
-* Night 5+: 3/hour = 0.05%/s
+| <ins>Night</ins>           | -0.1% every ___ |
+|----------------------------|:---------------:|
+| **Night 2**                |     6s/360f     |
+| **Night 3**                |     5s/300f     |
+| **Night 4**                |     4s/240f     |
+| **Night 5, 6, and Custom** |     3s/180f     |
 
 ### Power Down
 
@@ -291,16 +314,117 @@ Freddy jumpscares the player, and the game ends.
 
 see line 219 in pastebin for some jumpscare timings
 
-After a game over, there's a 1 in 10,000 chance instead of going to the title screen, you get a golden freddy jumpscare.
+### Title screen twitching (title Active 2)
 
-Every time cam 2B is checked, there is a 1 in 100,000 chance the golden freddy poster will appear (summons him)
+Every 0.08s/4.8f there is a 97% chance the normal Freddy head is shown, and a 1% chance each of the following is shown:
 
-*there is a 1 second buffer for the poster in between checks
+* Open mouth
+* Twitch
+* Endoskeleton exposed
+
+TODO it also seems like the alpha is randomized? How often?
+
+### Static overlay
+TODO different rules for title
+
+Every 1s/60f, value B is set to random # 1-3 inclusive.
+
+Every tick, the alpha of the static overlay is set to:
+
+`150 + (random # 0-49) + (B*15)`
+
+### Flickering (Random number 3C)
+
+Set to a random number 1-10 inclusive every tick
+
+* Office light has 1/10 chance of being off, else on
+* West Hall light has 7/10 chance of being off, else on
+
+> NOTE: I'm not completely sure if the two lights are independent (ie. if it's `if/else, if/else` or
+`if/elseif/elseif/else`)
+
+### Night 4+ 2b/4b effects (Random number 3F)
+
+Determines the twitch effects on Bonnie/Chica in West/East Corners starting on Night 4
+Set to random 1-30 inclusive every 0.05s/3f
+> !!! Effects only apply starting on Night 4!
+
+* 24/30 = 12/15 chance for Normal
+* 4/30 = 2/15 chance for Twitch
+* 2/30 = 1/15 chance for Open Mouth
+
+### Hallucinations (Active 21)
+
+Every 1s/60f, there is a 1/1000 chance hallucinations will begin.
+
+When hallucinations begin, they will last for 99f
+
+Each frame hallucinations are active, there is a 1/10 chance they are visible (meaning, they flicker off and on)
+
+
+> NOTE: TODO there seem to be different rules for when the cams are up. 
+
+> NOTE: I'm not 100% sure but I believe the hallucinations cycle between
+> *Freddy, It's me (bottom right), Bonnie, It's me (upper left)* each frame no matter what,
+> and is simply shown and hidden, which gives the illusion of randomizing frames
+
+### Bonnie/Chica close/far
+
+50% chance of each when entering room
+
+### Window jumpscare sound
+
+TODO
+
+### Phone call mute button
+
+Stays on screen for 40 seconds
+
+### "random for pic"
+
+TODO
+
+* counter
+* controls hallucinations on cams
+* set to random # 1-100 when not viewing cams
+
+### Clock
+
+Starts at 12, incremented 1 every 90s/5400f
+
+### Golden Freddy
+
+Every 1s/60f, pick random number 0-99999 inclusive. If 1, golden freddy is set to appear
+
+Whenever cam 2b is viewed, if Bonnie is not there and Golden freddy is set to appear (above value=1),
+the poster will be shown, and Golden Freddy will be in the office when the cam is closed.
+
+When the cam is closed and Golden Freddy is in the office, a timer is incremented. If that timer reaches 300,
+Golden Freddy jumpscares the player. If the camera is opened while Golden Freddy is onscreen, he will disappear.
+> NOTE: Does the timer get reset, or does it persist through the whole night?
+
+### Game Over Golden Freddy Jumpscare
+
+On the game over screen, after 10 seconds, there is a 1 in 10000 chance Golden Freddy will jumpscare the player.
+> NOTE: When does "10s" start? Is it at the static, at the game over text, Mike's death screen?
+
+### Rare Bonnie Jumpscare
+
+TODO what triggers it?
+
+When triggered, the image is shown for 9.5s/570f, then for 0.5s/30f seconds the eyes are shown, then the player is taken
+to the title screen.
+
+### Office breath (Active 2E)
+
+Every 5s/300f, if the player is looking at the cams and Bonnie/Chica is in office,
+there is a 1/3 chance a (random?) raspy breath sound plays
 
 ## Office Controls
 
 * Only one light can be activated at a time. Activating one deactivates the other.
-* Lifting the camera deactivates both lights
+* Lifting the camera deactivates both lights.
+* Buttons have a cooldown of 10f between clicks.
 
 ## Intervals
 
