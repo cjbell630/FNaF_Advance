@@ -50,8 +50,10 @@ def write_to_c_files(palette: list[int], tiles: list[str], tilemap: list[int], a
         for frame_num, frame_append in enumerate(appendices):
             frame_name = get_lambda(f"Enter the name of frame {frame_num+1}: ", lambda x: " " not in x) if name_frames else f"frame_{frame_num+1}"
 
-            do_string = f"void do_{frame_name}(){{\n"
-            undo_string = f"void undo_{frame_name}(){{\n"
+            do_func_name = f"do_{img_name}_{frame_name}"
+
+            do_string = f"void {do_func_name}(){{\n"
+            undo_string = f"void un{do_func_name}(){{\n"
             num_blocks = 0
             for block_num, block in enumerate(block for block in frame_append if len(block) != 0):
                 #print(block)
@@ -66,7 +68,7 @@ def write_to_c_files(palette: list[int], tiles: list[str], tilemap: list[int], a
             undo_string += "}\n"
             f.write(do_string)
             f.write(undo_string)
-            append_h += f"void do_{frame_name}();\nvoid undo_{frame_name}();\n"
+            append_h += f"void {do_func_name}();\nvoid un{do_func_name}();\n"
 
     with open(f"{img_name}.h", "w") as f:
         f.write(f"#ifndef {img_name.upper()}_H\n")
