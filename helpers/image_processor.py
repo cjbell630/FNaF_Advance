@@ -104,12 +104,10 @@ def process_image(filename):
                 if images_are_basically_same(tile, frames[0][y][x], palette,
                                              # (x==13 and y==12) or (x == 20 and y == 8)or (x == 6 and y == 19)
                                              ):  # tile is the same as the first frame
-                    row.append(frames[0][y][x] if REPLACE_SKIPPED_WITH_ORIGINAL else blank_tile)
+                    row.append(frames[0][y][x] if REPLACE_SKIPPED_WITH_ORIGINAL else None)
                 else:
                     row.append(tile)
             frames[frame].append(row)
-
-    num_frames = 1
 
     # export image
     new_img = Image.new("P", (width, height))
@@ -117,22 +115,50 @@ def process_image(filename):
 
     converted_pal =convert_palette(palette)
 
-    for frame in range(num_frames):
-        tilemap=[0 for i in range(64*32)]
+
+    tilemap=[0 for i in range(64*32)]
+    base_tiles = []
+    for y in range(frame_height_in_tiles):
+        y_coord = y * 8
+        for x in range(frame_width_in_tiles):
+            x_coord = x * 8
+
+            tilemap[get_screenblock_index(x, y, frame_width_in_tiles)] = x + y * frame_width_in_tiles
+            base_tiles = get_pixels_from_tile(base_tiles, frames[0][y][x])
+
+            new_img.paste(blank_tile if frames[0][y][x] is None else frames[0][y][x], (x_coord, y_coord))
+    print(tilemap)
+    print(base_tiles)
+
+    appendices = []
+
+    for frame in range(1, num_frames):
+        #tilemap = [0 for i in range(64*32)]
         tiles = []
+        appendices.append([{}]) # appendix for frame is a list of dicts
         for y in range(frame_height_in_tiles):
             y_coord = y * 8
+            if len(appendices[frame-1][-1]) != 0:
+                appendices[frame-1].append({})
             for x in range(frame_width_in_tiles):
                 x_coord = x * 8
+                curr_tile = frames[frame][y][x]
+                if curr_tile is None:
+                    if len(appendices[frame-1][-1]) != 0:
+                        appendices[frame-1].append({})
+                else:
+                    if len(appendices[frame-1][-1]) == 0:
+                        #appendices[frame-1].append({"start": get_screenblock_index(x, y, frame_width_in_tiles), "pixels": []})
+                        appendices[frame-1].append({"start":  2*(x + y * frame_width_in_tiles), "pixels": []})
+                    #tilemap[get_screenblock_index(x, y, frame_width_in_tiles)] = x + y * frame_width_in_tiles
+                    appendices[frame-1][-1]["pixels"] = get_pixels_from_tile(appendices[frame-1][-1]["pixels"], frames[frame][y][x])
 
-                tilemap[get_screenblock_index(x, y, frame_width_in_tiles)] = x + y * frame_width_in_tiles
-                tiles = get_pixels_from_tile(tiles, frames[frame][y][x])
-
-                new_img.paste(frames[frame][y][x], (x_coord, y_coord + frame * 160))
-        print(tilemap)
+                new_img.paste(blank_tile if curr_tile is None else curr_tile, (x_coord, y_coord + frame * 160))
+        #print(tilemap)
         print(tiles)
-        write_to_c_files(converted_pal, convert_tiles(tiles), tilemap)
-
+        #write_to_c_files(converted_pal, convert_tiles(tiles), tilemap)
+    print(appendices)
+    write_to_c_files(converted_pal, convert_tiles(base_tiles), tilemap, appendices)
     new_img.save("output_binary.bmp")
 
 
