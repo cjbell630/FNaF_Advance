@@ -4,9 +4,14 @@
 # exclude patterns (uncomment them if you want to use them):
 # *.[oa]
 # *~
-/.idea
+.idea
 /build
 /ignore
 /out
 /cmake-build-*
 *.[oad]
+__pycache__
+/helpers/*.[ch]
+/helpers/*.bmp
+/helpers/*.pal
+/helpers/old
