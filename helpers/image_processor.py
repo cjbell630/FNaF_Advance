@@ -89,7 +89,7 @@ def process_image(filename):
             x_coord = x * 8
             row.append(img.crop((x_coord, y_coord, x_coord + 8, y_coord + 8)))
         frames[0].append(row)
-    print(len(frames[0][0]))
+    #print(len(frames[0][0]))
 
     blank_tile = Image.new("P", (8, 8))
 
@@ -127,8 +127,8 @@ def process_image(filename):
             base_tiles = get_pixels_from_tile(base_tiles, frames[0][y][x])
 
             new_img.paste(blank_tile if frames[0][y][x] is None else frames[0][y][x], (x_coord, y_coord))
-    print(tilemap)
-    print(base_tiles)
+    #print(tilemap)
+    #print(base_tiles)
 
     appendices = []
 
@@ -155,11 +155,13 @@ def process_image(filename):
 
                 new_img.paste(blank_tile if curr_tile is None else curr_tile, (x_coord, y_coord + frame * 160))
         #print(tilemap)
-        print(tiles)
+        #print(tiles)
         #write_to_c_files(converted_pal, convert_tiles(tiles), tilemap)
-    print(appendices)
+    #print(appendices)
+    print("Finished processing! Saving image as output.bmp...")
+    new_img.save("output.bmp")
+    print("Image saved! Writing to C files...")
     write_to_c_files(converted_pal, convert_tiles(base_tiles), tilemap, appendices)
-    new_img.save("output_binary.bmp")
 
 
 if __name__ == "__main__":
