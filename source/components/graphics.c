@@ -179,7 +179,6 @@ void init_objects() {
 
 void init_backgrounds() {
     //unsigned short colors[2] = {0x0000, 0x7FFF,};
-    memcpy(&tile_mem[BLIP_CBB], &cam_blip_testTiles, cam_blip_testTilesLen);
     //memcpy(&pal_bg_mem[0], &colors, 4);
     REG_BG3CNT = BG_PRIO(LAYER_2) | BG_CBB(BLIP_CBB) | BG_SBB(BLIP_SBB) | BG_8BPP | BG_REG_32x32;
     REG_BG3HOFS = 0;
@@ -204,6 +203,7 @@ void graphics_switch_to_cams() {
     obj_hide(r_door0);
     obj_hide(r_door1);
     obj_hide(r_door2);
+    memcpy(&tile_mem[BLIP_CBB], &cam_blip_testTiles, cam_blip_testTilesLen);
     //TODO: shouldn't have to do this every time, but setting
     REG_DISPCNT = DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0;
     BLIP_TIMER = 0;
