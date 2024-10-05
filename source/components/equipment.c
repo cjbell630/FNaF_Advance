@@ -68,10 +68,10 @@ void equipment_toggle(enum EquipmentNames target) {
     // but in all cases the equipment that would be disabled cannot be activated when on->off anyway.
     // maybe putting an if statement could save comparisons tho?
     switch (target) {
-        case RIGHT_LIGHT: // activating the right light disables the left light
+        case RIGHT_LIGHT:
             toggle_right_light();
             break;
-        case LEFT_LIGHT: // activating the left light disables the right light
+        case LEFT_LIGHT:
             toggle_left_light();
             break;
         case CAMERA: // activating the camera disables both lights

@@ -40,10 +40,11 @@ void update_spooky_effects(bool cams_are_up, enum RoomNames selected_cam) {
         }
         if (flicker != room_effects[ROOM_OFFICE]) {
             room_effects[ROOM_OFFICE] = flicker;
-            if(flicker){
-                bool occupied = side ? Animatronics.get_room_occupants(ROOM_RIGHT_DOOR) >> 2 : Animatronics.get_room_occupants(ROOM_LEFT_DOOR) >> 3;
+            if (flicker) {
+                bool occupied = side ? Animatronics.get_room_occupants(ROOM_RIGHT_DOOR) >> 2 :
+                                Animatronics.get_room_occupants(ROOM_LEFT_DOOR) >> 3;
                 Graphics.enable_office_light(side, occupied);
-            }else{
+            } else {
                 Graphics.clear_office_lights();
             }
         }
