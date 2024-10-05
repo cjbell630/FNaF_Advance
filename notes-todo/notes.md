@@ -250,6 +250,8 @@ you are looking at any camera that is NOT the **East Hall Corner**. Then, he wil
 * If the door is closed, he returns to **East Hall**
 * If the door is open, he will enter the office
 
+> NOTE: unlike Bonnie and Chica, Freddy does not disable the doors and lights when he enters the office.
+
 ##### Office
 
 Every 1s/60f Freddy is in the office, if the camera is down, he has a 1 in 5 chance of jumpscaring you.
