@@ -4,12 +4,9 @@
 #include "game/room_names.h"
 #include "images/sprites/cam_map/cam_map.h"
 #include "DWedit/debug.h"
-#include "images/office/office_pal.h"
-#include "images/office/office.h"
 #include "graphics/cam_img_map.h"
 #include "images/effects/cam_blip_test.h"
 #include "graphics/frames.h"
-#include "images/office/door/door_test.h"
 #include "images/office/door/l_door.h"
 #include "images/office/door/r_door.h"
 
@@ -193,12 +190,7 @@ void init_backgrounds() {
 
 void load_frame(Frame *frame, u16 cbb, u16 sbb) {
     dma3_cpy(&pal_bg_mem[0], frame->palette, frame->palette_length);
-
-    // Load tiles into CBB 0
     dma3_cpy(&tile_mem[cbb][0], frame->tiles, frame->tiles_length);
-
-
-    // Load map into SBB 30
     dma3_cpy(&se_mem[sbb][0], frame->screen_entry, frame->screen_entry_length);
 }
 
@@ -234,8 +226,8 @@ void graphics_switch_to_office() {
     //show office
     //set_bg_palbank(OFFICE_PB);
     vbaprint("office now\n");
-    load_frame(&office_frames[0][0], MAIN_CBB, MAIN_SBB);
-    REG_DISPCNT = DCNT_OBJ | DCNT_BG0 /*| DCNT_BG1*/ | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0;
+    load_frame(&office_base_frame, MAIN_CBB, MAIN_SBB);
+    REG_DISPCNT = DCNT_OBJ | DCNT_BG0 /*| DCNT_BG1*/ | DCNT_OBJ_1D | DCNT_MODE0;
 
 
     //REG_BLDCNT = BLD_BUILD(BLD_BG0, BLD_BG1, BLD_OFF);

@@ -2,7 +2,6 @@
 #include "images/effects/cam_blip_test.h"
 #include "images/effects/cam_blip_maps.h"
 #include "images/office/office.h"
-#include "images/office/office_pal.h"
 
 unsigned short empty_frame[32 * 20] = {0};
 Frame blip_frame_0 = {
@@ -60,36 +59,8 @@ struct Frame *blip_frames[10] = {
         &blip_frame_4, &blip_frame_3, &blip_frame_2, &blip_frame_1, &blip_frame_0
 };
 
-const Frame office_frames[3][2] = {
-        { // both off
-                {
-                        &officeTiles, officeTilesLen,
-                        &officePal, officePalLen,
-                        &officeMap, officeMapLen
-                }
-        },
-        { // left on
-                { // empty
-                        &officeTiles, officeTilesLen,
-                        &officePal, officePalLen,
-                        &officeMap, officeMapLen
-                },
-                { // bonnie
-                        &officeTiles, officeTilesLen,
-                        &officePal, officePalLen,
-                        &officeMap, officeMapLen
-                }
-        },
-        { // right on
-                { // empty
-                        &officeTiles, officeTilesLen,
-                        &officePal, officePalLen,
-                        &officeMap, officeMapLen
-                },
-                { // chica
-                        &officeTiles, officeTilesLen,
-                        &officePal, officePalLen,
-                        &officeMap, officeMapLen
-                }
-        }
+const Frame office_base_frame = {
+        &office_tiles, office_tiles_size,
+        &office_palette, office_palette_size,
+        &office_tilemap, office_tilemap_size
 };

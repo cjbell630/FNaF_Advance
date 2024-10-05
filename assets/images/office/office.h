@@ -1,29 +1,19 @@
+#ifndef OFFICE_H
+#define OFFICE_H
 
-//{{BLOCK(office)
+#define office_palette_size 496
+extern const unsigned short office_palette[248];
+#define office_tiles_size 57600
+extern const unsigned short office_tiles[28800];
+#define office_tilemap_size 4096
+extern const unsigned short office_tilemap[2048];
 
-//======================================================================
-//
-//	office, 512x256@8, 
-//	+ palette 256 entries, not compressed
-//	+ 620 tiles (t|f|p reduced) not compressed
-//	+ regular map (in SBBs), not compressed, 64x32 
-//	Total size: 512 + 39680 + 4096 = 44288
-//
-//	Time-stamp: 2024-09-11, 21:51:40
-//	Exported by Cearn's GBA Image Transmogrifier, v0.8.3
-//	( http://www.coranac.com/projects/#grit )
-//
-//======================================================================
-
-#ifndef GRIT_OFFICE_H
-#define GRIT_OFFICE_H
-
-#define officeTilesLen 39680
-extern const unsigned short officeTiles[19840];
-
-#define officeMapLen 4096
-extern const unsigned short officeMap[2048];
-
-#endif // GRIT_OFFICE_H
-
-//}}BLOCK(office)
+void do_office_llight_empty();
+void undo_office_llight_empty();
+void do_office_llight_bonnie();
+void undo_office_llight_bonnie();
+void do_office_rlight_empty();
+void undo_office_rlight_empty();
+void do_office_rlight_chica();
+void undo_office_rlight_chica();
+#endif
