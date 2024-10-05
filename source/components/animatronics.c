@@ -4,6 +4,7 @@
 #include "util/util.h"
 #include "game/room_names.h"
 #include "game_state.h"
+#include "equipment.h"
 #include <stdio.h>
 
 /* PREREQS */
@@ -71,10 +72,21 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
             BONNIE.room_num = rnd_max(2) ? ROOM_LEFT_DOOR : ROOM_WEST;
             break;
         case ROOM_WEST_CORNER:
-            BONNIE.room_num = rnd_max(2) ? ROOM_CLOSET : ROOM_LEFT_DOOR;
+            if (rnd_max(2)) {
+                BONNIE.room_num = ROOM_CLOSET;
+            } else {
+                BONNIE.room_num = ROOM_LEFT_DOOR;
+                // TODO turn off light, set windowscare to play
+            }
             break;
         case ROOM_LEFT_DOOR:
-            BONNIE.room_num = /* TODO DOOR IS UP */true ? ROOM_OFFICE : ROOM_DINING;
+            if (Equipment.is_on(LEFT_DOOR)) { // if left door is closed
+                BONNIE.room_num = ROOM_DINING;
+                // TODO turn off light
+            } else {
+                BONNIE.room_num = ROOM_OFFICE;
+                // TODO disable light, initiate in office phase
+            }
             break;
         default:
             break;
@@ -91,7 +103,7 @@ struct Animatronic BONNIE = {
 
 // TODO this and chicas code are so similar, combine them somehow
 void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
-    if (!frame_multiple( CHICA_FRAMECOUNT)) {
+    if (!frame_multiple(CHICA_FRAMECOUNT)) {
         return;
     }
     vbaprint("Chica movement opp\n");
@@ -117,10 +129,21 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
             CHICA.room_num = rnd_max(2) ? ROOM_DINING : ROOM_EAST_CORNER;
             break;
         case ROOM_EAST_CORNER:
-            CHICA.room_num = rnd_max(2) ? ROOM_EAST : ROOM_RIGHT_DOOR;
+            if (rnd_max(2)) {
+                CHICA.room_num = ROOM_EAST;
+            } else {
+                CHICA.room_num = ROOM_RIGHT_DOOR;
+                // TODO turn off light, set windowscare to play
+            }
             break;
         case ROOM_RIGHT_DOOR:
-            CHICA.room_num = /* TODO DOOR IS UP */true ? ROOM_OFFICE : ROOM_DINING;
+            if (Equipment.is_on(RIGHT_DOOR)) { // if door is closed
+                CHICA.room_num = ROOM_DINING;
+                // TODO turn off light
+            } else {
+                CHICA.room_num = ROOM_OFFICE;
+                // TODO disable light, initiate in office phase
+            }
             break;
         default:
             break;
@@ -174,7 +197,12 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
             case FREDDY_READY_TO_ATTACK:
                 if (selected_cam != ROOM_EAST_CORNER) {
                     vbaprint("Freddy attacking\n");
-                    FREDDY.room_num = /* TODO DOOR IS UP */true ? ROOM_OFFICE : ROOM_EAST;
+                    if (Equipment.is_on(RIGHT_DOOR)) { // if door is closed
+                        FREDDY.room_num = ROOM_EAST;
+                    } else {
+                        FREDDY.room_num = ROOM_OFFICE;
+                        // TODO initiate in-room phase
+                    }
                     FREDDY.phase = FREDDY_WONT_MOVE;
                 }
                 break;
@@ -183,7 +211,7 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
         }
         return;
     } else if (
-            !frame_multiple( FREDDY_FRAMECOUNT) ||
+            !frame_multiple(FREDDY_FRAMECOUNT) ||
             !try_move(&FREDDY)
             ) { // if cams are down and not a successful movement opportunity
         if (FREDDY.phase == FREDDY_MIGHT_MOVE) {
@@ -240,14 +268,14 @@ struct Animatronic FREDDY = {
 bool foxy_at_cove(bool cams_are_up) {
     /* HANDLE STUN TIMER */
     if (cams_are_up) {
-        if (frame_multiple( 6/*TODO magic num*/)) {
+        if (frame_multiple(6/*TODO magic num*/)) {
             FOXY.timer = rnd_max(1000) + 50; // TODO this could just be called when the camera is closed
         }
     } else {
         FOXY.timer--; // TODO theoretically could overflow but shouldn't
     }
     /* END HANDLE STUN TIMER */
-    if (FOXY.timer < 1 && frame_multiple( FOXY_FRAMECOUNT) && try_move(&FOXY)) {
+    if (FOXY.timer < 1 && frame_multiple(FOXY_FRAMECOUNT) && try_move(&FOXY)) {
         vbaprint("foxy success\n");
         FOXY.phase++;
         return true;
@@ -290,8 +318,10 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
             break;
         case FOXY_ATTACK:
             vbaprint("foxy is attacking\n");// TODO steal power or jumpscare
-            if (/* TODO game does not end */true) {
+            if (Equipment.is_on(LEFT_DOOR)) { // if door is closed
                 FOXY.phase = rnd_max(2) ? FOXY_PEEK : FOXY_STAND; // TODO is this correct?
+            } else {
+                // TODO jumpscare
             }
             break;
         default:
