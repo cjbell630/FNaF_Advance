@@ -1,9 +1,9 @@
-# AI Notes #
+# FNaF 1 Breakdown #
 
 ##### Sources
 
 * [Fnaf 1 Decompiled: Frame by Frame (imgur, pastebin, pastebin)][2]
-* [Easter Egg Chances][4]
+* [Easter Egg Chances Video][4]
 * [Tech Rules YT Video][1] (contains a lot of inaccurate information)
 
 Table of Contents
