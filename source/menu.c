@@ -39,7 +39,7 @@ void init_menu() {
     //memcpy(&pal_bg_mem[16], officePal, officePalLen);
 
 
-    saved_night = 1;/* TODO GAMEPAK_RAM[0];*/
+    saved_night = 5;/* TODO GAMEPAK_RAM[0];*/
 
     vbaprint("loaded ");
     vbaprint(saved_night == 0 ? "0" : saved_night == 9 ? "9" : "something else");
@@ -129,6 +129,6 @@ void activate_menu() {
         }*/
 
         //TODO: random flickering
-        vid_vsync();
+        VBlankIntrWait();
     }
 }

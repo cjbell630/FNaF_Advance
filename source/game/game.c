@@ -68,7 +68,7 @@ void run_newspaper() {
     REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
     int timer = 120;
     while (timer >= 0) {
-        vid_vsync();
+        VBlankIntrWait();
         timer--;
     }
     GAME_PHASE = NIGHT_INTRO;
@@ -108,7 +108,7 @@ void run_power_on() {
     vbaprint("starting loop now\n");
     while (GAME_PHASE == NIGHT_POWER_ON) {
         tick(); //TODO: should be at top or bottom?
-        vid_vsync();
+        VBlankIntrWait();
     }
 }
 

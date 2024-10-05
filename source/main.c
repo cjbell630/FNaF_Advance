@@ -1,3 +1,4 @@
+#include <tonc_irq.h>
 #include "DWedit/debug.h"
 #include "menu.h"
 #include "game_state.h"
@@ -46,6 +47,8 @@ int main() {
 
     //scroll_test();
     vbaprint("entry\n");
+    irq_init(NULL);
+    irq_add(II_VBLANK, NULL);
     GAME_PHASE = MENU_HOME;
     NIGHT_NUM = 0;
     while(1){
