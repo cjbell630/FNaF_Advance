@@ -23,9 +23,9 @@ def get_pixels_from_tile(tiles:list[int], tile:Image):
             tiles.append(tile.getpixel((x, y)))
     return tiles
 
-def convert_palette(palette: list[int]):
+def convert_palette(palette: list[int], num_colors:int):
     new_palette = []
-    for i in range(0, len(palette), 3):
+    for i in range(0, num_colors*3, 3):
         # convert each r g b to 0,32 then combine them like this: xrrrrrgggggbbbbb
         r = palette[i] >> 3
         g = palette[i + 1] >> 3
@@ -42,7 +42,7 @@ def write_to_c_files(palette: list[int], tiles: list[str], tilemap: list[int], a
     name_frames = input("Would you like to name the frames? (y/n): ").lower() == "y"
     append_h = ""
     with open(f"{img_name}.c", "w") as f:
-        f.write(f"#include \"{img_name}.h\"\n#include \"tonc.h\"\n#include <string.h>")
+        f.write(f"#include \"{img_name}.h\"\n#include \"tonc.h\"\n#include <string.h>\n")
 
         f.write(f"const unsigned short {img_name}_palette[{len(palette)}] __attribute__((aligned(4))) = {{{str(palette)[1:-1]}}};\n")
         f.write(f"const unsigned short {img_name}_tiles[{len(tiles)}] __attribute__((aligned(4))) = {{{str(tiles)[1:-1].replace("'","")}}};\n")

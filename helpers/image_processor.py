@@ -5,6 +5,7 @@ from PIL import Image
 from sympy import ceiling
 
 from gba_exporter import get_screenblock_index, get_pixels_from_tile, convert_palette, write_to_c_files, convert_tiles
+from io_util import get_lambda
 
 TOLERANCE = 1720
 AVG_TOLERANCE = 27
@@ -72,7 +73,7 @@ def process_image(filename):
     # print(f"R: {r:05b} G: {g:05b} B: {b:05b}")
     # print(f"Palette: {palette}")
     print(f"Image mode: {img.mode}")
-    print(f"length of pallette: {len(palette)}")
+    num_colors = int(get_lambda("How many colors? ", lambda response: response.isnumeric()))
 
     num_frames = int(height / 160)
     frame_width_in_tiles = int(ceiling(width / 8))
@@ -113,7 +114,7 @@ def process_image(filename):
     new_img = Image.new("P", (width, height))
     new_img.putpalette(palette)
 
-    converted_pal =convert_palette(palette)
+    converted_pal = convert_palette(palette, num_colors)
 
 
     tilemap=[0 for i in range(64*32)]
