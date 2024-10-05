@@ -34,20 +34,26 @@ bool equipment_is_on(enum EquipmentNames target) {
     return statuses[target];
 }
 
-void toggle_light(bool right_side){
-    bool turned_on;
-    if(right_side){
-        statuses[LEFT_LIGHT] = false;
-        statuses[RIGHT_LIGHT] = turned_on = !statuses[RIGHT_LIGHT];
-    }else{
-        statuses[RIGHT_LIGHT] = false;
-        statuses[LEFT_LIGHT] = turned_on = !statuses[LEFT_LIGHT];
-    }
-    if(!turned_on){
-        vbaprint("clearing office lights\n");
+/**
+ * Toggles light. Side effects: clears lights if toggled off.
+ * Weird code but it's like this for maximum efficiency! Use defines below!
+ * @param toggled the enum of the light to toggle
+ * @param other the enum of the other light
+ */
+void toggle_light(enum EquipmentNames toggled, enum EquipmentNames other) {
+    if (statuses[toggled]) {
+        statuses[toggled] = false;
         Graphics.clear_office_lights();
+        return;
     }
+    // TODO force enable lights
+    // TODO play windowscare sound
+    statuses[toggled] = true;
+    statuses[other] = false;
 }
+
+#define toggle_left_light() toggle_light(LEFT_LIGHT, RIGHT_LIGHT)
+#define toggle_right_light() toggle_light(RIGHT_LIGHT, LEFT_LIGHT)
 
 /**
  * Toggles the specified equipment
@@ -63,10 +69,10 @@ void equipment_toggle(enum EquipmentNames target) {
     // maybe putting an if statement could save comparisons tho?
     switch (target) {
         case RIGHT_LIGHT: // activating the right light disables the left light
-            toggle_light(true);
+            toggle_right_light();
             break;
         case LEFT_LIGHT: // activating the left light disables the right light
-            toggle_light(false);
+            toggle_left_light();
             break;
         case CAMERA: // activating the camera disables both lights
             if (statuses[CAMERA]) { // if this will close the cam
@@ -117,12 +123,14 @@ void equipment_update() {
     if (l_door_anim_frame) {
         l_door_anim_frame--;
         vbaprint("l door frame\n");
-        Graphics.load_left_door_frame(statuses[LEFT_DOOR] ? NUM_DOOR_FRAMES - l_door_anim_frame - 1 : l_door_anim_frame);
+        Graphics.load_left_door_frame(
+                statuses[LEFT_DOOR] ? NUM_DOOR_FRAMES - l_door_anim_frame - 1 : l_door_anim_frame);
     }
     if (r_door_anim_frame) {
         r_door_anim_frame--;
         vbaprint("r door frame\n");
-        Graphics.load_right_door_frame(statuses[RIGHT_DOOR] ? NUM_DOOR_FRAMES - r_door_anim_frame - 1 : r_door_anim_frame);
+        Graphics.load_right_door_frame(
+                statuses[RIGHT_DOOR] ? NUM_DOOR_FRAMES - r_door_anim_frame - 1 : r_door_anim_frame);
     }
 }
 

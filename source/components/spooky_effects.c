@@ -32,8 +32,6 @@ void update_spooky_effects(bool cams_are_up, enum RoomNames selected_cam) {
         //bool occupant_index = false;
         enum EffectNames flicker = room_effects[ROOM_OFFICE];
         bool side = false;
-        // TODO add windowscare
-        // TODO when light disabled, if flicker was on previously, unload
         if (Equipment.is_on(LEFT_LIGHT)) {
             flicker = office_flicker();
         } else if (Equipment.is_on(RIGHT_LIGHT)) {
@@ -44,7 +42,7 @@ void update_spooky_effects(bool cams_are_up, enum RoomNames selected_cam) {
             room_effects[ROOM_OFFICE] = flicker;
             if(flicker){
                 bool occupied = side ? Animatronics.get_room_occupants(ROOM_RIGHT_DOOR) >> 2 : Animatronics.get_room_occupants(ROOM_LEFT_DOOR) >> 3;
-                Graphics.update_office_light(flicker, side, occupied);
+                Graphics.enable_office_light(side, occupied);
             }else{
                 Graphics.clear_office_lights();
             }

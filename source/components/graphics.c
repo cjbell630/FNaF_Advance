@@ -268,24 +268,24 @@ void (*office_funcs[8])() = {
         &undo_office_rlight_chica, &do_office_rlight_chica // r chica
 };
 
-void do_nothing(){
+void do_nothing() {
     return;
 }
 
 void (*undo_office)() = &do_nothing;
 
-void graphics_update_office_light(bool on, bool right_side, bool occupied) {
-    u8 offset = (4*right_side) + (2 * occupied);
-    if(on){
-        undo_office = office_funcs[offset];
-        office_funcs[offset+1]();
-    }else{
+void graphics_enable_office_light(bool right_side, bool occupied) {
+    u8 offset = (4 * right_side) + (2 * occupied);
+    undo_office = office_funcs[offset];
+    office_funcs[offset + 1]();
+    /*
+    } else {
         undo_office = &do_nothing;
         office_funcs[offset]();
-    }
+    }*/
 }
 
-void graphics_clear_office_lights(){
+void graphics_clear_office_lights() {
     undo_office();
 }
 
@@ -316,6 +316,6 @@ struct GraphicsWrapper Graphics = {
         .set_office_scroll = &graphics_set_office_scroll,
         .load_left_door_frame = &load_left_door_frame,
         .load_right_door_frame = &load_right_door_frame,
-        .update_office_light = &graphics_update_office_light,
+        .enable_office_light = &graphics_enable_office_light,
         .clear_office_lights = &graphics_clear_office_lights
 };

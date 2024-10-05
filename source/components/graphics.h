@@ -20,7 +20,7 @@ struct GraphicsWrapper {
 
     void (*set_office_scroll)(s16 value);
 
-    void (*update_office_light)(bool on, bool right_side, bool occupied);
+    void (*enable_office_light)(bool right_side, bool occupied);
 
     void (*clear_office_lights)();
 
