@@ -9,6 +9,7 @@
 #include "graphics/frames.h"
 #include "images/office/door/l_door.h"
 #include "images/office/door/r_door.h"
+#include "images/office/office.h"
 
 int BLIP_TIMER;
 
@@ -259,6 +260,35 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
     BLIP_TIMER = blip_frames_len;
 }
 
+
+void (*office_funcs[8])() = {
+        &undo_office_llight_empty, &do_office_llight_empty, // l empty
+        &undo_office_llight_bonnie, &do_office_llight_bonnie, // l bonnie
+        &undo_office_rlight_empty, &do_office_rlight_empty, // r empty
+        &undo_office_rlight_chica, &do_office_rlight_chica // r chica
+};
+
+void do_nothing(){
+    return;
+}
+
+void (*undo_office)() = &do_nothing;
+
+void graphics_update_office_light(bool on, bool right_side, bool occupied) {
+    u8 offset = (4*right_side) + (2 * occupied);
+    if(on){
+        undo_office = office_funcs[offset];
+        office_funcs[offset+1]();
+    }else{
+        undo_office = &do_nothing;
+        office_funcs[offset]();
+    }
+}
+
+void graphics_clear_office_lights(){
+    undo_office();
+}
+
 void graphics_on_room_visual_change(Frame *new_frame) {
     load_frame(new_frame, MAIN_CBB, MAIN_SBB);
 }
@@ -285,5 +315,7 @@ struct GraphicsWrapper Graphics = {
         .on_room_visual_change = &graphics_on_room_visual_change,
         .set_office_scroll = &graphics_set_office_scroll,
         .load_left_door_frame = &load_left_door_frame,
-        .load_right_door_frame = &load_right_door_frame
+        .load_right_door_frame = &load_right_door_frame,
+        .update_office_light = &graphics_update_office_light,
+        .clear_office_lights = &graphics_clear_office_lights
 };

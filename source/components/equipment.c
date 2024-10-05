@@ -34,6 +34,21 @@ bool equipment_is_on(enum EquipmentNames target) {
     return statuses[target];
 }
 
+void toggle_light(bool right_side){
+    bool turned_on;
+    if(right_side){
+        statuses[LEFT_LIGHT] = false;
+        statuses[RIGHT_LIGHT] = turned_on = !statuses[RIGHT_LIGHT];
+    }else{
+        statuses[RIGHT_LIGHT] = false;
+        statuses[LEFT_LIGHT] = turned_on = !statuses[LEFT_LIGHT];
+    }
+    if(!turned_on){
+        vbaprint("clearing office lights\n");
+        Graphics.clear_office_lights();
+    }
+}
+
 /**
  * Toggles the specified equipment
  *
@@ -48,12 +63,10 @@ void equipment_toggle(enum EquipmentNames target) {
     // maybe putting an if statement could save comparisons tho?
     switch (target) {
         case RIGHT_LIGHT: // activating the right light disables the left light
-            statuses[LEFT_LIGHT] = false;
-            statuses[RIGHT_LIGHT] = !statuses[RIGHT_LIGHT];
+            toggle_light(true);
             break;
         case LEFT_LIGHT: // activating the left light disables the right light
-            statuses[RIGHT_LIGHT] = false;
-            statuses[LEFT_LIGHT] = !statuses[LEFT_LIGHT];
+            toggle_light(false);
             break;
         case CAMERA: // activating the camera disables both lights
             if (statuses[CAMERA]) { // if this will close the cam
