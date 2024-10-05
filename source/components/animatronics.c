@@ -76,16 +76,19 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
                 BONNIE.room_num = ROOM_CLOSET;
             } else {
                 BONNIE.room_num = ROOM_LEFT_DOOR;
-                // TODO turn off light, set windowscare to play
+                Equipment.force_light_off(LEFT_LIGHT);
+                // TODO set windowscare to play
             }
             break;
         case ROOM_LEFT_DOOR:
             if (Equipment.is_on(LEFT_DOOR)) { // if left door is closed
                 BONNIE.room_num = ROOM_DINING;
-                // TODO turn off light
+                Equipment.force_light_off(LEFT_LIGHT);
             } else {
                 BONNIE.room_num = ROOM_OFFICE;
-                // TODO disable light, initiate in office phase
+                Equipment.disable(LEFT_LIGHT);
+                Equipment.disable(LEFT_DOOR);
+                // TODO initiate in office phase
             }
             break;
         default:
@@ -133,16 +136,19 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
                 CHICA.room_num = ROOM_EAST;
             } else {
                 CHICA.room_num = ROOM_RIGHT_DOOR;
-                // TODO turn off light, set windowscare to play
+                Equipment.force_light_off(RIGHT_LIGHT);
+                // TODO set windowscare to play
             }
             break;
         case ROOM_RIGHT_DOOR:
             if (Equipment.is_on(RIGHT_DOOR)) { // if door is closed
                 CHICA.room_num = ROOM_DINING;
-                // TODO turn off light
+                Equipment.force_light_off(RIGHT_LIGHT);
             } else {
                 CHICA.room_num = ROOM_OFFICE;
-                // TODO disable light, initiate in office phase
+                Equipment.disable(RIGHT_LIGHT);
+                Equipment.disable(RIGHT_DOOR);
+                // TODO initiate in office phase
             }
             break;
         default:

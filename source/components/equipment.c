@@ -7,6 +7,7 @@ const u8 NUM_DOOR_FRAMES = 15; // TODO move
 
 /* EQUIPMENT VARS */
 bool statuses[5];
+bool disabled[5];
 u8 l_door_anim_frame;
 u8 r_door_anim_frame;
 u8 cam_device_anim_timer;
@@ -23,6 +24,7 @@ byte equipment_get_usage() {
 void equipment_on_night_start() {
     /* INIT EQUIPMENT VARS */
     statuses[RIGHT_DOOR] = statuses[LEFT_DOOR] = statuses[RIGHT_LIGHT] = statuses[LEFT_LIGHT] = statuses[CAMERA] = false;
+    disabled[RIGHT_DOOR] = disabled[LEFT_DOOR] = disabled[RIGHT_LIGHT] = disabled[LEFT_LIGHT] = disabled[CAMERA] = false;
 }
 
 /**
@@ -34,6 +36,20 @@ bool equipment_is_on(enum EquipmentNames target) {
     return statuses[target];
 }
 
+bool equipment_force_light_off(enum EquipmentNames light) {
+    if (statuses[light]) {
+        statuses[light] = false;
+        Graphics.clear_office_lights();
+        return true;
+    }
+    return false;
+}
+
+void equipment_disable(enum EquipmentNames target) {
+    disabled[target] = true;
+    equipment_force_light_off(target); // TODO could theoretically cause issues when disabling doors
+}
+
 /**
  * Toggles light. Side effects: clears lights if toggled off.
  * Weird code but it's like this for maximum efficiency! Use defines below!
@@ -41,15 +57,12 @@ bool equipment_is_on(enum EquipmentNames target) {
  * @param other the enum of the other light
  */
 void toggle_light(enum EquipmentNames toggled, enum EquipmentNames other) {
-    if (statuses[toggled]) {
-        statuses[toggled] = false;
-        Graphics.clear_office_lights();
-        return;
+    if (!equipment_force_light_off(toggled)) { // turn off if on. if the light was already off, then
+        // TODO force enable lights
+        // TODO play windowscare sound
+        statuses[toggled] = true;
+        statuses[other] = false;
     }
-    // TODO force enable lights
-    // TODO play windowscare sound
-    statuses[toggled] = true;
-    statuses[other] = false;
 }
 
 #define toggle_left_light() toggle_light(LEFT_LIGHT, RIGHT_LIGHT)
@@ -61,6 +74,10 @@ void toggle_light(enum EquipmentNames toggled, enum EquipmentNames other) {
  * @param target enum EquipmentNames, the target to toggle
  */
 void equipment_toggle(enum EquipmentNames target) {
+    if (disabled[target]) {
+        // TODO play disabled sound
+        return;
+    }
     // TODO visual effects
 
     // side effects
@@ -140,5 +157,7 @@ struct EquipmentWrapper Equipment = {
         .toggle = equipment_toggle,
         .is_on = equipment_is_on,
         .is_animating_cam = equipment_is_animating_cam,
-        .update = equipment_update
+        .update = equipment_update,
+        .disable = &equipment_disable,
+        .force_light_off = &equipment_force_light_off
 };

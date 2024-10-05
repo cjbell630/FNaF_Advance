@@ -9,6 +9,7 @@ enum EquipmentNames {
 
 struct EquipmentWrapper {
     void (*update)();
+
     void (*on_night_start)();
 
     byte (*get_usage)();
@@ -16,6 +17,10 @@ struct EquipmentWrapper {
     bool (*is_on)(enum EquipmentNames target);
 
     void (*toggle)(enum EquipmentNames target);
+
+    bool (*force_light_off)(enum EquipmentNames light);
+
+    void (*disable)(enum EquipmentNames target);
 
     bool (*is_animating_cam)();
 };
