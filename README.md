@@ -6,18 +6,20 @@ A Game Boy Advance demake of Five Nights at Freddy's!
 
 You can find the current demo in [releases][1]!
 
+(also, I made a breakdown of the original game in order to make this port, which you can find [here][7])
+
 #### Controls
 * Main Menu
-  * D-pad/Select: Navigate
-  * A/Start: Start/continue game
+  * D-pad/Select: Navigate menu
+  * A/Start: Select menu option
 * Office
   * L/R: Look left/right
   * Select/Any D-pad key: Open cameras
-  * **(TBA!!)** A: Toggle door
-  * **(TBA!!)** B: Toggle light
+  * A: Toggle door
+  * B: Toggle light
 * Cameras
   * Select/A/B: Close cameras
-  * D-pad: Change cameras (changes camera based on where they appear on the minimap)
+  * D-pad: Navigate cam minimap
 
 ### Sources / Credit / Copyright
 
@@ -32,13 +34,11 @@ That will have the source for the corresponding file and an explanation of which
 
 * [Scott Cawthon][4] / [Five Night's at Freddy's (PC)][3]
 * J Vijn ([excellent and extrememly helful GBA tutorial][5]
-* Tech Rules (This would've been immensely difficult and confusing without his [animatronic AI explanation][7])
+* The sources listed in [my notes][7]!
 * [Spriter's Resource][8]
 * [How to use save-data][9]
 
 [1]: https://github.com/cjbell630/FNaF_Advance/releases/latest
-
-[2]: /out/FNaF_Advance.gba
 
 [3]: https://store.steampowered.com/app/319510/Five_Nights_at_Freddys/
 
@@ -48,7 +48,7 @@ That will have the source for the corresponding file and an explanation of which
 
 [6]: https://www.jetbrains.com/clion/
 
-[7]: https://youtu.be/ujg0Y5IziiY
+[7]: /notes-todo/notes.md
 
 [8]: https://www.spriters-resource.com/pc_computer/fivenightsatfreddys/
 
