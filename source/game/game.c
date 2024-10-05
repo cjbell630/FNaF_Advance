@@ -22,31 +22,8 @@
 #include "components/graphics.h"
 
 const int NEWSPAPER_PB = 1;
-const int NEWSPAPER_CBB = 3;
-const int NEWSPAPER_SBB = 10;
-
-
-void init_game() {
-    init_clock();
-
-    //init_static();
-    //vbaprint("loading now\n");
-
-    //TODO: write to save on new game
-    /*
-    // Load palette
-
-    // Load tiles into CBB 0
-    memcpy(&tile_mem[0][0], loadingTiles, loadingTilesLen);
-
-    // Load map into SBB 30
-    memcpy(&se_mem[13][0], loadingMap, loadingMapLen);
-    load_bg_pal(loadingPal, loadingPalLen, 0);
-    //TODO: should load this into a buffer so it doesn't mess up
-     */
-    Graphics.init_backgrounds();
-    //load night intro screen
-}
+const int NEWSPAPER_CBB = 0;
+const int NEWSPAPER_SBB = 28;
 
 void run_newspaper() {
     vbaprint("newspaper now\n");
@@ -164,10 +141,12 @@ void run_victory() {
  * While survived;
  */
 void run_game_loop() {
+    init_clock();
     if (GAME_PHASE == NIGHT_NEWSPAPER) {
         run_newspaper();
     }
     while (GAME_PHASE > NIGHT_NEWSPAPER) { // while player has not been kicked back to menu
+        Graphics.init_backgrounds();
         run_night_intro(); // show "Night #/n12AM" screen (and do loading in background)
         run_power_on(); // run the game loop with the power on
         if (GAME_PHASE == NIGHT_POWER_OFF) { // if the power goes out

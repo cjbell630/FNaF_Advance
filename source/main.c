@@ -56,7 +56,6 @@ int main() {
         vbaprint("initialized menu\n");
         activate_menu();
         vbaprint("activate menu exited\n");
-        init_game();
         run_game_loop();
     }
     return 0;
