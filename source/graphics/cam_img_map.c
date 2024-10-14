@@ -11,6 +11,12 @@
 #include "images/cams/stage/stage_f.h"
 #include "images/cams/stage/stage_f_s.h"
 
+/* BACKSTAGE IMG DATA */
+#include "images/cams/backstage/backstage_empty.h"
+#include "images/cams/backstage/backstage_empty_s.h"
+#include "images/cams/backstage/backstage_bonnie.h"
+#include "images/cams/backstage/backstage_bonnie_s.h"
+
 
 #include "game/room_names.h"
 #include "components/spooky_effects.h"
@@ -227,19 +233,29 @@ const Frame CAM_IMG_MAP[12][16][5] = {
         },
         {/*Backstage (8)*/
                 { //Empty
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &empty_placeholderPal, empty_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &backstage_emptyTiles, backstage_emptyTilesLen,
+                                &backstage_emptyPal, backstage_emptyPalLen,
+                                &backstage_emptyMap, backstage_emptyMapLen
+                        },
+                        { // Suits facing camera
+                                &backstage_empty_sTiles, backstage_empty_sTilesLen,
+                                &backstage_empty_sPal, backstage_empty_sPalLen,
+                                &backstage_empty_sMap, backstage_empty_sMapLen
                         }
                 },
                 { /*Foxy*/}, { /*Freddy*/ }, { /*Freddy Foxy*/}, { /*Chica*/}, { /*Chica Foxy*/},
                 { /*Chica Freddy*/}, { /*Chica Freddy Foxy*/},
                 { //Bonnie
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &b_placeholderPal, b_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &backstage_bonnieTiles, backstage_bonnieTilesLen,
+                                &backstage_bonniePal, backstage_bonniePalLen,
+                                &backstage_bonnieMap, backstage_bonnieMapLen
+                        },
+                        { // Bonnie staring into camera
+                                &backstage_bonnie_sTiles, backstage_bonnie_sTilesLen,
+                                &backstage_bonnie_sPal, backstage_bonnie_sPalLen,
+                                &backstage_bonnie_sMap, backstage_bonnie_sMapLen
                         }
                 }
         },
