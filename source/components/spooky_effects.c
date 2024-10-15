@@ -39,10 +39,12 @@ void spooky_effects_on_cam_up() {
 }
 
 void spooky_effects_on_select_cam(enum RoomNames room_name) {
+    u8 occupants; // why can't you declare a variable in the first line of a switch statement ugh
+    // TODO is setting to 0 redundant?
     switch (room_name) {
         case ROOM_STAGE:
             room_effects[room_name] = Animatronics.get_room_occupants(room_name) == OCCUPANTS_ONLY_FREDDY ?
-                    roll_stage_freddy : 0;
+                                      roll_stage_freddy : 0;
             break;
         case ROOM_DINING:
             break;
@@ -59,6 +61,10 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
         case ROOM_EAST_CORNER:
             break;
         case ROOM_BACKSTAGE:
+            occupants = Animatronics.get_room_occupants(room_name);
+            room_effects[room_name] = occupants == OCCUPANTS_EMPTY ? roll_backstage_empty :
+                                      occupants == OCCUPANTS_ONLY_BONNIE ? roll_backstage_bonnie :
+                                      0;
             break;
         case ROOM_KITCHEN:
             break;

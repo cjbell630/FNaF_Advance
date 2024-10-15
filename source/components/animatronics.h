@@ -38,6 +38,7 @@ extern struct Animatronic BONNIE;
 extern struct Animatronic CHICA;
 extern struct Animatronic FOXY;
 
+#define OCCUPANTS_EMPTY 0
 #define OCCUPANTS_ONLY_FOXY 0b1000
 #define OCCUPANTS_ONLY_CHICA 0b0100
 #define OCCUPANTS_ONLY_BONNIE 0b0010
