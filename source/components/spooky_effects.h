@@ -5,7 +5,7 @@
 #include "game/room_names.h"
 
 enum EffectNames {
-    NORMAL=0, LIGHTS_OFF=1, SNAP1, SNAP2, STARE, ITS_ME
+    NORMAL = 0, LIGHTS_OFF = 1, SNAP1, SNAP2, STARE, ITS_ME
 };
 
 // far (normal) -> close (look) / normal -> look
@@ -29,6 +29,10 @@ struct SpookyEffectsWrapper {
     void (*update)(bool cams_are_up, enum RoomNames selected_cam);
 
     void (*on_night_start)();
+
+    void (*on_cam_up)();
+
+    void (*on_select_cam)(enum RoomNames selected_cam);
 
     enum EffectNames (*get_effects)(enum RoomNames room);
 };

@@ -12,13 +12,69 @@
 
 static enum EffectNames room_effects[NUM_ROOMS];
 bool FLICKER = false;
+/**
+ * Randomized to 1-100 every time the cams are opened.
+ */
+u8 general_cam_hallucination_rng = 0;
 
+/* MACROS FOR EFFECT ODDS */
 #define office_flicker() (rnd_max(10)>0)
+#define roll_stage_freddy (general_cam_hallucination_rng < 10)
+#define roll_backstage_bonnie (general_cam_hallucination_rng < 10)
+#define roll_backstage_empty (general_cam_hallucination_rng < 5)
+#define roll_pirate_empty (general_cam_hallucination_rng < 10)
+#define roll_east_empty (general_cam_hallucination_rng == 99 ? 2 : general_cam_hallucination_rng == 98)
+#define roll_east_corner_empty (general_cam_hallucination_rng > 95 ? general_cam_hallucination_rng-95 : 0)
+// TODO west hall corner freddy poster
+
 
 void spooky_effects_on_night_start() {
     for (int i = 0; i < NUM_ROOMS; i++) {
         room_effects[i] = NORMAL; // TODO is there a more efficient way to do this
     }
+}
+
+void spooky_effects_on_cam_up() {
+    general_cam_hallucination_rng = rnd_max(100);
+}
+
+void spooky_effects_on_select_cam(enum RoomNames room_name) {
+    switch (room_name) {
+        case ROOM_STAGE:
+            room_effects[room_name] = Animatronics.get_room_occupants(room_name) == OCCUPANTS_ONLY_FREDDY ?
+                    roll_stage_freddy : 0;
+            break;
+        case ROOM_DINING:
+            break;
+        case ROOM_PIRATE:
+            break;
+        case ROOM_WEST:
+            break;
+        case ROOM_WEST_CORNER:
+            break;
+        case ROOM_CLOSET:
+            break;
+        case ROOM_EAST:
+            break;
+        case ROOM_EAST_CORNER:
+            break;
+        case ROOM_BACKSTAGE:
+            break;
+        case ROOM_KITCHEN:
+            break;
+        case ROOM_RESTROOMS:
+            break;
+        case ROOM_OFFICE:
+            break;
+        case ROOM_LEFT_DOOR:
+            break;
+        case ROOM_RIGHT_DOOR:
+            break;
+    }
+}
+
+void spooky_effects_on_room_change() {
+
 }
 
 
@@ -56,8 +112,10 @@ enum EffectNames get_effects(enum RoomNames room) {
 }
 
 struct SpookyEffectsWrapper SpookyEffects = {
-        .update = update_spooky_effects,
-        .on_night_start = spooky_effects_on_night_start,
-        .get_effects = get_effects
+        .update = &update_spooky_effects,
+        .on_night_start = &spooky_effects_on_night_start,
+        .get_effects = &get_effects,
+        .on_cam_up = &spooky_effects_on_cam_up,
+        .on_select_cam = &spooky_effects_on_select_cam
 };
 

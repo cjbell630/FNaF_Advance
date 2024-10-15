@@ -8,6 +8,7 @@
 #include "graphics/cam_img_map.h"
 #include "graphics.h"
 #include "game_state.h"
+#include "spooky_effects.h"
 
 #define SHOULD_PAN(n) (n != ROOM_CLOSET && n != ROOM_KITCHEN)
 
@@ -29,27 +30,25 @@ s16 cam_scroll = 0;
 u8 turnaround_timer = 0; // TODO set to max when cam opened
 s8 cam_scroll_dir = 1;
 
-void internal_select_cam(enum RoomNames room) {
+
+void cam_select_room(enum RoomNames room) {
     room = continuous_modulo(room, NUM_ROOMS); // puts the value between 0 and 10 inclusive
     if (!SHOULD_PAN(room)) {
         REG_BG1HOFS = 0; // TODO move this to graphics?
     }
+    SpookyEffects.on_select_cam(room);
     Graphics.select_cam(CURR_CAM, room);
     CURR_CAM = room;
 }
 
-
 void set_cam_display_visible() {
+    SpookyEffects.on_cam_up();
     Graphics.game_display_cams();
-    internal_select_cam(CURR_CAM);
+    cam_select_room(CURR_CAM);
 }
 
 void camera_on_night_start() {
     CURR_CAM = ROOM_STAGE;
-}
-
-void cam_select_room(enum RoomNames room) {
-    internal_select_cam(room);
 }
 
 
