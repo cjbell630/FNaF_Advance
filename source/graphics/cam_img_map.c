@@ -22,6 +22,9 @@
 #include "components/spooky_effects.h"
 #include "components/animatronics.h"
 
+// 0  0  0  0
+// Fo C  B  Fr
+
 const Frame CAM_IMG_MAP[12][16][5] = {
         { /* STAGE (0) */
                 { // Empty
@@ -31,7 +34,6 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &stage_emptyMap, stage_emptyMapLen
                         }
                 },
-                { /* Foxy */ },
                 { // Freddy
                         { // Std
                                 &stage_fTiles, stage_fTilesLen,
@@ -44,15 +46,7 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &stage_f_sMap, stage_f_sMapLen
                         }
                 },
-                { /* Freddy Foxy */ }, { /* Chica */ }, { /* Chica Foxy */ },
-                { // Chica Freddy
-                        { // Std
-                                &stage_cfTiles, stage_cfTilesLen,
-                                &stage_cfPal, stage_cfPalLen,
-                                &stage_cfMap, stage_cfMapLen
-                        }
-                },
-                { /* Chica Freddy Foxy */ }, { /* Bonnie */ }, { /* Bonnie Foxy */ },
+                { /* Bonnie */ },
                 { // Bonnie Freddy
                         { // Std
                                 &stage_bfTiles, stage_bfTilesLen,
@@ -60,8 +54,16 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &stage_bfMap, stage_bfMapLen
                         }
                 },
-                { /* Bonnie Freddy Foxy */ }, { /* Bonnie Chica */ }, { /* Bonnie Chica Foxy */ },
-                { // Bonnie Chica Freddy
+                { /* Chica */ },
+                { // Chica Freddy
+                        { // Std
+                                &stage_cfTiles, stage_cfTilesLen,
+                                &stage_cfPal, stage_cfPalLen,
+                                &stage_cfMap, stage_cfMapLen
+                        }
+                },
+                { /* Chica Bonnie */ },
+                { // Chica Bonnie Freddy
                         { // Std
                                 &stage_bcfTiles, stage_bcfTilesLen,
                                 &stage_bcfPal, stage_bcfPalLen,
@@ -77,7 +79,6 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /* Foxy */ },
                 { // Freddy
                         { // Std // TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
@@ -85,34 +86,33 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /* Freddy Foxy */ },
-                { // Chica
-                        { // Std // TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &c_placeholderPal, c_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
-                        }
-                },
-                { /* Chica Foxy */ },
-                { /* Chica Freddy */ },
-                { /* Chica Freddy Foxy */ },
                 { // Bonnie
                         { // Std // TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &b_placeholderPal, b_placeholderPalLen,
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
+                },
+                { /* Freddy Bonnie */ },
+                { // Chica
+                        { // Std // TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &c_placeholderPal, c_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }
                 }
         },
-        {/*Pirate's Cove (2)*/
-                { //Empty
+        { /* Pirate's Cove (2) */
+                { // Empty
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &empty_placeholderPal, empty_placeholderPalLen,
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { //Foxy
+                { /* Freddy */ },{ /* Bonnie */ },{ /* Freddy Bonnie */ },{ /* Chica */ },
+                { /* Chica Freddy */ },{ /* Chica Bonnie */ },{ /* Chica Bonnie Freddy */ },
+                { // Foxy
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &fo_placeholderPal, fo_placeholderPalLen,
@@ -120,23 +120,41 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                         }
                 }
         },
-        {/*West Hall A (3)*/
-                { //Empty
+        { /* West Hall A (3) */
+                { // Empty
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &empty_placeholderPal, empty_placeholderPalLen,
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { //Foxy
+                { /* Freddy */ },
+                { // Bonnie
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &b_placeholderPal, b_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }
+                },
+                { /* Freddy Bonnie */ },{ /* Chica */ },
+                { /* Chica Freddy */ },{ /* Chica Bonnie */ },{ /* Chica Bonnie Freddy */ },
+                { // Foxy
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &fo_placeholderPal, fo_placeholderPalLen,
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
+                }
+        },
+        {/* West Hall B (Corner) (4) */
+                { //Empty
+                        { // Std //TODO: remove
+                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
+                                &empty_placeholderPal, empty_placeholderPalLen,
+                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        }
                 },
-                { /*Freddy*/ }, { /*Freddy Foxy*/}, { /*Chica*/}, { /*Chica Foxy*/},
-                { /*Chica Freddy*/}, { /*Chica Freddy Foxy*/},
+                { /*Freddy*/ },
                 { //Bonnie
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
@@ -145,7 +163,7 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                         }
                 }
         },
-        {/*West Hall B (Corner) (4)*/
+        {/* Supply Closet (5) */
                 { //Empty
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
@@ -153,8 +171,7 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /*Foxy*/}, { /*Freddy*/ }, { /*Freddy Foxy*/}, { /*Chica*/}, { /*Chica Foxy*/},
-                { /*Chica Freddy*/}, { /*Chica Freddy Foxy*/},
+                { /* Freddy */ },
                 { //Bonnie
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
@@ -163,41 +180,22 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                         }
                 }
         },
-        {/*Supply Closet (5)*/
-                { //Empty
+        {/* East Hall A (6) */
+                { // Empty
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &empty_placeholderPal, empty_placeholderPalLen,
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /*Foxy*/}, { /*Freddy*/ }, { /*Freddy Foxy*/}, { /*Chica*/},
-                { /*Chica Foxy*/}, { /*Chica Freddy*/}, { /*Chica Freddy Foxy*/},
-                { //Bonnie
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &b_placeholderPal, b_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
-                        }
-                }
-        },
-        {/*East Hall A (6)*/
-                { //Empty
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &empty_placeholderPal, empty_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
-                        }
-                },
-                { /*Foxy*/},
-                { //Freddy
+                { // Freddy
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &fr_placeholderPal, fr_placeholderPalLen,
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /*Freddy Foxy*/},
+                { /* Bonnie */ },{ /* Freddy Bonnie */ },
                 { //Chica
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
@@ -214,16 +212,15 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /*Foxy*/},
-                { //Freddy
+                { // Freddy
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &fr_placeholderPal, fr_placeholderPalLen,
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /*Freddy Foxy*/},
-                { //Chica
+                { /* Bonnie */ },{ /* Freddy Bonnie */ },
+                { // Chica
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &c_placeholderPal, c_placeholderPalLen,
@@ -231,7 +228,7 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                         }
                 }
         },
-        {/*Backstage (8)*/
+        {/* Backstage (8) */
                 { //Empty
                         { // Std
                                 &backstage_emptyTiles, backstage_emptyTilesLen,
@@ -244,9 +241,8 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &backstage_empty_sMap, backstage_empty_sMapLen
                         }
                 },
-                { /*Foxy*/}, { /*Freddy*/ }, { /*Freddy Foxy*/}, { /*Chica*/}, { /*Chica Foxy*/},
-                { /*Chica Freddy*/}, { /*Chica Freddy Foxy*/},
-                { //Bonnie
+                { /*Freddy*/ },
+                { // Bonnie
                         { // Std
                                 &backstage_bonnieTiles, backstage_bonnieTilesLen,
                                 &backstage_bonniePal, backstage_bonniePalLen,
@@ -259,7 +255,7 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                         }
                 }
         },
-        {/*Kitchen (9)*/
+        {/* Kitchen (9) */
                 { //Empty
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
@@ -267,7 +263,6 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /*Foxy*/},
                 { //Freddy
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
@@ -275,8 +270,8 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /*Freddy Foxy*/},
-                { //Chica
+                { /* Bonnie */ },{ /* Freddy Bonnie */ },
+                { // Chica
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &c_placeholderPal, c_placeholderPalLen,
@@ -292,7 +287,6 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /*Foxy*/},
                 { //Freddy
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
@@ -300,8 +294,8 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                                 &bcff_placeholderMap, bcff_placeholderMapLen
                         }
                 },
-                { /*Freddy Foxy*/},
-                { //Chica
+                { /* Bonnie */ },{ /* Freddy Bonnie */ },
+                { // Chica
                         { // Std //TODO: remove
                                 &bcff_placeholderTiles, bcff_placeholderTilesLen,
                                 &c_placeholderPal, c_placeholderPalLen,
@@ -319,10 +313,9 @@ Frame get_cam_img_data(enum RoomNames room) {
     u8 occupants = Animatronics.get_room_occupants(room);
     // if the room is not stage and there are multiple animatronics in room
     if ((occupants & (occupants - 1)) && (room != ROOM_STAGE)) {
-        occupants = (occupants & 1) ? 1 : // Foxy in room
-                (occupants & (1 << 2)) ? 4 : // Chica in room
-                (occupants & (1 << 3)) ? 8 : // Bonnie in room
-                2; // Freddy in room
+        occupants = (occupants > 0b1000) ?  0b1000: // Foxy in room
+                (occupants > 0b0100) ? 0b0100 : // Chica in room
+                0b0010; // Bonnie in room
         // TODO might cause issues for foxy in west hall
     }
     return CAM_IMG_MAP[room][occupants][SpookyEffects.get_effects(room)];

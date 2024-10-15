@@ -413,8 +413,8 @@ void on_hour(int hour) {
 
 // TODO define this in camera.c?
 u8 get_room_occupants(enum RoomNames room) {
-    return ((BONNIE.room_num == room) << 3) | ((CHICA.room_num == room) << 2) |
-           ((FREDDY.room_num == room) << 1) | (FOXY.room_num == room);
+    return ((FOXY.room_num == room) << 3) | ((CHICA.room_num == room) << 2) |
+           ((BONNIE.room_num == room) << 1) | (FREDDY.room_num == room);
 }
 
 struct AnimatronicsWrapper Animatronics = {
