@@ -24,6 +24,14 @@
 #include "images/cams/pirate/pirate_foxy_1.h"
 #include "images/cams/pirate/pirate_foxy_2.h"
 
+/* DINING IMG DATA */
+#include "images/cams/dining/dining_empty.h"
+#include "images/cams/dining/dining_f.h"
+#include "images/cams/dining/dining_b.h"
+#include "images/cams/dining/dining_b_s.h"
+#include "images/cams/dining/dining_c.h"
+#include "images/cams/dining/dining_c_s.h"
+
 
 #include "game/room_names.h"
 #include "components/spooky_effects.h"
@@ -79,32 +87,42 @@ const Frame CAM_IMG_MAP[12][16][5] = {
         },
         { /* Dining Area (1) */
                 { // Empty
-                        { // Std // TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &empty_placeholderPal, empty_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &dining_emptyTiles, dining_emptyTilesLen,
+                                &dining_emptyPal, dining_emptyPalLen,
+                                &dining_emptyMap, dining_emptyMapLen
                         }
                 },
                 { // Freddy
-                        { // Std // TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &fr_placeholderPal, fr_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &dining_fTiles, dining_fTilesLen,
+                                &dining_fPal, dining_fPalLen,
+                                &dining_fMap, dining_fMapLen
                         }
                 },
                 { // Bonnie
-                        { // Std // TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &b_placeholderPal, b_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Far
+                                &dining_bTiles, dining_bTilesLen,
+                                &dining_bPal, dining_bPalLen,
+                                &dining_bMap, dining_bMapLen
+                        },
+                        { // Close
+                                &dining_b_sTiles, dining_b_sTilesLen,
+                                &dining_b_sPal, dining_b_sPalLen,
+                                &dining_b_sMap, dining_b_sMapLen
                         }
                 },
                 { /* Freddy Bonnie */ },
                 { // Chica
-                        { // Std // TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &c_placeholderPal, c_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Far
+                                &dining_cTiles, dining_cTilesLen,
+                                &dining_cPal, dining_cPalLen,
+                                &dining_cMap, dining_cMapLen
+                        },
+                        { // Close
+                                &dining_c_sTiles, dining_c_sTilesLen,
+                                &dining_c_sPal, dining_c_sPalLen,
+                                &dining_c_sMap, dining_c_sMapLen
                         }
                 }
         },
