@@ -17,11 +17,17 @@
 #include "images/cams/backstage/backstage_bonnie.h"
 #include "images/cams/backstage/backstage_bonnie_s.h"
 
+/* PIRATE IMG DATA */
+#include "images/cams/pirate/pirate_empty.h"
+#include "images/cams/pirate/pirate_empty_s.h"
+#include "images/cams/pirate/pirate_foxy_0.h"
+#include "images/cams/pirate/pirate_foxy_1.h"
+#include "images/cams/pirate/pirate_foxy_2.h"
+
 
 #include "game/room_names.h"
 #include "components/spooky_effects.h"
 #include "components/animatronics.h"
-
 // 0  0  0  0
 // Fo C  B  Fr
 
@@ -104,19 +110,34 @@ const Frame CAM_IMG_MAP[12][16][5] = {
         },
         { /* Pirate's Cove (2) */
                 { // Empty
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &empty_placeholderPal, empty_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &pirate_emptyTiles, pirate_emptyTilesLen,
+                                &pirate_emptyPal, pirate_emptyPalLen,
+                                &pirate_emptyMap, pirate_emptyMapLen
+                        },
+                        { // it's me
+                                &pirate_empty_sTiles, pirate_empty_sTilesLen,
+                                &pirate_empty_sPal, pirate_empty_sPalLen,
+                                &pirate_empty_sMap, pirate_empty_sMapLen
                         }
                 },
                 { /* Freddy */ },{ /* Bonnie */ },{ /* Freddy Bonnie */ },{ /* Chica */ },
                 { /* Chica Freddy */ },{ /* Chica Bonnie */ },{ /* Chica Bonnie Freddy */ },
                 { // Foxy
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &fo_placeholderPal, fo_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Hiding
+                                &pirate_foxy_0Tiles, pirate_foxy_0TilesLen,
+                                &pirate_foxy_0Pal, pirate_foxy_0PalLen,
+                                &pirate_foxy_0Map, pirate_foxy_0MapLen
+                        },
+                        { // Peeking
+                                &pirate_foxy_1Tiles, pirate_foxy_1TilesLen,
+                                &pirate_foxy_1Pal, pirate_foxy_1PalLen,
+                                &pirate_foxy_1Map, pirate_foxy_1MapLen
+                        },
+                        { // Out
+                                &pirate_foxy_2Tiles, pirate_foxy_2TilesLen,
+                                &pirate_foxy_2Pal, pirate_foxy_2PalLen,
+                                &pirate_foxy_2Map, pirate_foxy_2MapLen
                         }
                 }
         },

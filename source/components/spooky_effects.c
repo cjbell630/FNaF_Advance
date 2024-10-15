@@ -49,6 +49,8 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
         case ROOM_DINING:
             break;
         case ROOM_PIRATE:
+            room_effects[room_name] = Animatronics.get_room_occupants(room_name) == OCCUPANTS_EMPTY ?
+                                      roll_pirate_empty : FOXY.phase; // TODO remove direct call to FOXY
             break;
         case ROOM_WEST:
             break;
