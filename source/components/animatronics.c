@@ -42,6 +42,16 @@ bool try_move(struct Animatronic *anim) {
     return anim->lvl >= (rnd_max(MAX_LEVEL) + 1);
 }
 
+// TODO make this less cringe
+void bonnie_move(enum RoomNames room) {
+    BONNIE.close_far = room == ROOM_DINING ? rnd_max(2) : 0;
+    BONNIE.room_num = room;
+}
+void chica_move(enum RoomNames room) {
+    CHICA.close_far = (room == ROOM_DINING || room == ROOM_EAST || room == ROOM_RESTROOMS) ? rnd_max(2) : 0;
+    CHICA.room_num = room;
+}
+
 /*  BONNIE  */
 
 // TODO this and chicas code are so similar, combine them somehow
@@ -57,32 +67,32 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
 
     switch (BONNIE.room_num) {
         case ROOM_STAGE:
-            BONNIE.room_num = rnd_max(2) ? ROOM_BACKSTAGE : ROOM_DINING;
+            bonnie_move(rnd_max(2) ? ROOM_BACKSTAGE : ROOM_DINING);
             break;
         case ROOM_DINING:
-            BONNIE.room_num = rnd_max(2) ? ROOM_BACKSTAGE : ROOM_WEST;
+            bonnie_move(rnd_max(2) ? ROOM_BACKSTAGE : ROOM_WEST);
             break;
         case ROOM_BACKSTAGE:
-            BONNIE.room_num = rnd_max(2) ? ROOM_DINING : ROOM_WEST;
+            bonnie_move(rnd_max(2) ? ROOM_DINING : ROOM_WEST);
             break;
         case ROOM_WEST:
-            BONNIE.room_num = rnd_max(2) ? ROOM_CLOSET : ROOM_WEST_CORNER;
+            bonnie_move(rnd_max(2) ? ROOM_CLOSET : ROOM_WEST_CORNER);
             break;
         case ROOM_CLOSET:
-            BONNIE.room_num = rnd_max(2) ? ROOM_LEFT_DOOR : ROOM_WEST;
+            bonnie_move(rnd_max(2) ? ROOM_LEFT_DOOR : ROOM_WEST);
             break;
         case ROOM_WEST_CORNER:
             if (rnd_max(2)) {
-                BONNIE.room_num = ROOM_CLOSET;
+                bonnie_move(ROOM_CLOSET);
             } else {
-                BONNIE.room_num = ROOM_LEFT_DOOR;
+                bonnie_move(ROOM_LEFT_DOOR);
                 Equipment.force_light_off(LEFT_LIGHT);
                 // TODO set windowscare to play
             }
             break;
         case ROOM_LEFT_DOOR:
             if (Equipment.is_on(LEFT_DOOR)) { // if left door is closed
-                BONNIE.room_num = ROOM_DINING;
+                bonnie_move(ROOM_DINING);
                 Equipment.force_light_off(LEFT_LIGHT);
             } else {
                 BONNIE.room_num = ROOM_OFFICE;
@@ -117,35 +127,35 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
 
     switch (CHICA.room_num) {
         case ROOM_STAGE:
-            CHICA.room_num = ROOM_DINING;
+            chica_move(ROOM_DINING);
             break;
         case ROOM_DINING:
-            CHICA.room_num = rnd_max(2) ? ROOM_KITCHEN : ROOM_RESTROOMS;
+            chica_move(rnd_max(2) ? ROOM_KITCHEN : ROOM_RESTROOMS);
             break;
         case ROOM_RESTROOMS:
-            CHICA.room_num = rnd_max(2) ? ROOM_KITCHEN : ROOM_EAST;
+            chica_move(rnd_max(2) ? ROOM_KITCHEN : ROOM_EAST);
             break;
         case ROOM_KITCHEN:
-            CHICA.room_num = rnd_max(2) ? ROOM_RESTROOMS : ROOM_EAST;
+            chica_move( rnd_max(2) ? ROOM_RESTROOMS : ROOM_EAST);
             break;
         case ROOM_EAST:
-            CHICA.room_num = rnd_max(2) ? ROOM_DINING : ROOM_EAST_CORNER;
+            chica_move(rnd_max(2) ? ROOM_DINING : ROOM_EAST_CORNER);
             break;
         case ROOM_EAST_CORNER:
             if (rnd_max(2)) {
-                CHICA.room_num = ROOM_EAST;
+                chica_move(ROOM_EAST);
             } else {
-                CHICA.room_num = ROOM_RIGHT_DOOR;
+                chica_move(ROOM_RIGHT_DOOR);
                 Equipment.force_light_off(RIGHT_LIGHT);
                 // TODO set windowscare to play
             }
             break;
         case ROOM_RIGHT_DOOR:
             if (Equipment.is_on(RIGHT_DOOR)) { // if door is closed
-                CHICA.room_num = ROOM_DINING;
+                chica_move(ROOM_DINING);
                 Equipment.force_light_off(RIGHT_LIGHT);
             } else {
-                CHICA.room_num = ROOM_OFFICE;
+                chica_move(ROOM_OFFICE);
                 Equipment.disable(RIGHT_LIGHT);
                 Equipment.disable(RIGHT_DOOR);
                 // TODO initiate in office phase
@@ -379,6 +389,7 @@ void on_night_start() {
     CHICA.room_num = CHICA.starting_room;
     FOXY.phase = FREDDY.phase = 0;
     FOXY.timer = FREDDY.timer = 0;
+    BONNIE.close_far = CHICA.close_far = 0;
     FREDDY_TIMER_START = 1000 - (100 * FREDDY.lvl);
 }
 

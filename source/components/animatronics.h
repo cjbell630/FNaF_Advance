@@ -25,6 +25,7 @@ struct Animatronic {
     int lvl;
     int room_num;
     int phase;
+    u8 close_far;
     int timer;
     const enum RoomNames starting_room;
 
