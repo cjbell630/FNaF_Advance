@@ -57,8 +57,13 @@ const u8 R_DOOR_PALBANK = 2; // TODO make them use the same pallette
 #define LAYER_1 2
 #define LAYER_2 1
 #define LAYER_3 0
+#define CAM_STUN_AMOUNT 300
+#define cams_dispcnt (DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0)
+#define cams_stun_dispcnt (DCNT_OBJ | /*DCNT_BG0 | DCNT_BG1 |*/ DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0)
 
 /* END CONSTANTS / DEFINITIONS */
+
+u16 cam_stun_timer = 0;
 
 void show_static() {
     REG_BG2CNT = BG_PRIO(LAYER_3) | BG_CBB(3) | BG_SBB(30) | BG_WRAP | BG_AFF_16x16;
@@ -205,7 +210,8 @@ void graphics_switch_to_cams() {
     obj_hide(r_door2);
     memcpy(&tile_mem[BLIP_CBB], &cam_blip_testTiles, cam_blip_testTilesLen);
     //TODO: shouldn't have to do this every time, but setting
-    REG_DISPCNT = DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0;
+    REG_DISPCNT = cam_stun_timer ? cams_stun_dispcnt : cams_dispcnt;
+    // TODO set static opacity based on cam stun level
     BLIP_TIMER = 0;
 }
 
@@ -247,15 +253,6 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
 
     Frame cid = get_cam_img_data(new_room);
 
-    // TODO previously this was
-    // load_bg_pal(cid.cam_pal, cid.cam_pal_len, CAM_STAT ? 0 : CAM_PB);
-    // implying calling it when the camera is not up could cause issues
-    // so make sure this is ONLY called if the camera is up
-    // also TODO wtf even is this 0 supposed to mean anyway
-    // maybe it was meant to be used to like preload cams?
-    // okay this is called at init with camnum=0
-    // and for some reason if palbank is always 0 then the office pal is messed up, and
-    // if palbank is always CAM_PB then the cam pals are messed up
     load_frame(&cid, MAIN_CBB, MAIN_SBB);
     BLIP_TIMER = blip_frames_len;
 }
@@ -302,6 +299,29 @@ void graphics_update_cam() {
         REG_BG3VOFS = frame->vertical_offset;
         BLIP_TIMER--;
     }
+
+    if (cam_stun_timer) {
+        cam_stun_timer--;
+        if (cam_stun_timer == 0) {
+            vbaprint("stun over\n");
+            REG_DISPCNT = cams_dispcnt;
+            // TODO decrease static opacity
+        }
+    }
+}
+
+void graphcis_update_office() {
+    if (cam_stun_timer) {
+        cam_stun_timer--;
+    }
+}
+
+void graphics_stun_cams(enum RoomNames room) {
+    cam_stun_timer = CAM_STUN_AMOUNT;
+    // TOOD assuming this is called when the cams are up
+    REG_DISPCNT = cams_stun_dispcnt;
+    graphics_select_cam(room, room);
+    // TODO increase static opacity
 }
 
 struct GraphicsWrapper Graphics = {
@@ -317,5 +337,7 @@ struct GraphicsWrapper Graphics = {
         .load_left_door_frame = &load_left_door_frame,
         .load_right_door_frame = &load_right_door_frame,
         .enable_office_light = &graphics_enable_office_light,
-        .clear_office_lights = &graphics_clear_office_lights
+        .clear_office_lights = &graphics_clear_office_lights,
+        .stun_cams = &graphics_stun_cams,
+        .update_office = &graphcis_update_office
 };

@@ -18,6 +18,8 @@ struct GraphicsWrapper {
 
     void (*update_cam)();
 
+    void (*update_office)();
+
     void (*set_office_scroll)(s16 value);
 
     void (*enable_office_light)(bool right_side, bool occupied);
@@ -29,7 +31,10 @@ struct GraphicsWrapper {
     void (*select_cam)(enum RoomNames prev_room, enum RoomNames new_room);
 
     void (*load_left_door_frame)(u8 frame_num);
+
     void (*load_right_door_frame)(u8 frame_num);
+
+    void (*stun_cams)(enum RoomNames room);
 };
 
 extern struct GraphicsWrapper Graphics;

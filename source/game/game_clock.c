@@ -9,6 +9,7 @@
 #include "components/spooky_effects.h"
 #include "game_state.h"
 #include "components/controls.h"
+#include "components/graphics.h"
 
 bool cam_is_up;
 enum RoomNames selected_cam;
@@ -33,6 +34,8 @@ void tick() {
     SpookyEffects.update(cam_is_up, selected_cam);
     if (cam_is_up) {
         Cameras.update();
+    } else {
+        Graphics.update_office();
     }
 
     Animatronics.update(cam_is_up, selected_cam);
