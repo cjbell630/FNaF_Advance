@@ -112,7 +112,6 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
         default:
             break;
     }
-    // TODO stun camera
 }
 
 struct Animatronic BONNIE = {
@@ -172,7 +171,6 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
         default:
             break;
     }
-    // TODO stun camera
 }
 
 struct Animatronic CHICA = {
