@@ -47,10 +47,13 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
                                       roll_stage_freddy : 0;
             break;
         case ROOM_DINING:
+            room_effects[room_name] = CHICA.room_num == room_name ? CHICA.close_far :
+                                      BONNIE.room_num == room_name ? BONNIE.close_far :
+                                      0;// TODO remove direct call to BONNIE and CHICA
             break;
         case ROOM_PIRATE:
-            room_effects[room_name] = Animatronics.get_room_occupants(room_name) == OCCUPANTS_EMPTY ?
-                                      roll_pirate_empty : FOXY.phase; // TODO remove direct call to FOXY
+            room_effects[room_name] = FOXY.room_num == room_name ? FOXY.phase :
+                                      roll_pirate_empty; // TODO remove direct call to FOXY
             break;
         case ROOM_WEST:
             break;
