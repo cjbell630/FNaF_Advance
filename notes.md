@@ -108,18 +108,17 @@ static timer will reset (even though you can't technically see them). However, w
 flicker transition does not happen as it normally would when the camera is stunned. (QUESTION: how does the static
 affect the kitchen?)
 
-Once they reach your **door** (separate area from any of the cameras), they will try to enter the **office** on their
-next successful movement opportunity:
+Once they reach your **door** (separate area from any of the cameras),
+Bonnie switches off the hall light if it is on (for some reason Chica does not)
+and they will try to enter the **office** on their next successful movement opportunity:
 
 * If the door is shut, they reset to the **Dining Area**.
 * If the door is open, they "enter the room" and disable the door and lights on their respective side.
 
 They CAN enter when the lights are on, and because they disable the lights, the hall light shuts off when they enter.
 
-Once in the room, they start a timer for 30s/1800f. Once that timer runs out:
-
-* If the camera is up, they will force it down and jumpscare you
-* If the camera is not up, they will jumpscare you
+Once in the room, the next frame that the cameras are up, they start a timer for 30s/1800f.
+Once that timer runs out, if the camera is still up, they will force it down and jumpscare you.
 
 Additionally, if you **lower** the camera at any point before this timer has run out, they will jumpscare you.
 
@@ -377,14 +376,14 @@ set to 1-100 inclusive when the cams are down. I am not sure how often this valu
 
 * Backstage masks looking at camera (unsure, possibly 5/100)
 * East Hall Corner missing kids posters: 97,98,99,100
-  * Order is likely Kids missing, shutdown sanitation, suspect convicted, years end
+    * Order is likely Kids missing, shutdown sanitation, suspect convicted, years end
 * East Hall crying child poster: 99
 * East Hall it's me poster: 100
 * West Hall Corner Freddy ripping head off: 1
 * All of these are 1-10 inclusive (<=10)
-  * Pirate's cove it's me
-  * Stage Freddy staring at camera
-  * Backstage Bonnie staring at camera
+    * Pirate's cove it's me
+    * Stage Freddy staring at camera
+    * Backstage Bonnie staring at camera
 
 ### Bonnie/Chica close/far
 
@@ -417,7 +416,8 @@ Golden Freddy jumpscares the player. If the camera is opened while Golden Freddy
 
 ### Game Over Golden Freddy Jumpscare
 
-On the game over screen, after 10 seconds, every second there is a 1 in 10000 chance Golden Freddy will jumpscare the player.
+On the game over screen, after 10 seconds, every second there is a 1 in 10000 chance Golden Freddy will jumpscare the
+player.
 > NOTE: When does "10s" start? Is it at the static, at the game over text, Mike's death screen?
 
 ### Rare Bonnie Jumpscare
@@ -432,6 +432,11 @@ to the title screen.
 
 Every 5s/300f, if the player is looking at the cams and Bonnie/Chica is in office,
 there is a 1/3 chance a (random?) raspy breath sound plays
+
+### Jumpscare animations
+
+Bonnie and Chica can only jumpscare you when the cameras are up. However, Freddy can only jumpscare when the cams are
+down, and Foxy can do both. This means their jumpscare animations run directly from the office background image.
 
 ## Office Controls
 
