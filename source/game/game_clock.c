@@ -15,7 +15,7 @@ bool cam_is_up;
 enum RoomNames selected_cam;
 
 void init_clock() {
-    FRAME_NUM = 0;
+    FRAME_NUM = 1; // start at 1 so animatronics don't get a movement opportunity on the first frame
 }
 
 void tick() {
