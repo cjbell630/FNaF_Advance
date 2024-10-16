@@ -62,6 +62,10 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
         case ROOM_CLOSET:
             break;
         case ROOM_EAST:
+            occupants = Animatronics.get_room_occupants(room_name);
+            room_effects[room_name] = occupants == OCCUPANTS_EMPTY ? roll_east_empty :
+                                      CHICA.room_num==room_name ? CHICA.close_far :
+                                      0;
             break;
         case ROOM_EAST_CORNER:
             break;

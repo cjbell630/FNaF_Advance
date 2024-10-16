@@ -32,6 +32,14 @@
 #include "images/cams/dining/dining_c.h"
 #include "images/cams/dining/dining_c_s.h"
 
+/* EAST HALL IMG DATA */
+#include  "images/cams/east/east_empty.h"
+#include  "images/cams/east/east_empty_s0.h"
+#include  "images/cams/east/east_empty_s1.h"
+#include  "images/cams/east/east_freddy.h"
+#include  "images/cams/east/east_chica.h"
+#include  "images/cams/east/east_chica_s.h"
+
 
 #include "game/room_names.h"
 #include "components/spooky_effects.h"
@@ -221,25 +229,40 @@ const Frame CAM_IMG_MAP[12][16][5] = {
         },
         {/* East Hall A (6) */
                 { // Empty
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &empty_placeholderPal, empty_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &east_emptyTiles, east_emptyTilesLen,
+                                &east_emptyPal, east_emptyPalLen,
+                                &east_emptyMap, east_emptyMapLen
+                        },
+                        { // Crying children poster
+                                &east_empty_s0Tiles, east_empty_s0TilesLen,
+                                &east_empty_s0Pal, east_empty_s0PalLen,
+                                &east_empty_s0Map, east_empty_s0MapLen
+                        },
+                        { // it's me
+                                &east_empty_s1Tiles, east_empty_s1TilesLen,
+                                &east_empty_s1Pal, east_empty_s1PalLen,
+                                &east_empty_s1Map, east_empty_s1MapLen
                         }
                 },
                 { // Freddy
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &fr_placeholderPal, fr_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std 
+                                &east_freddyTiles, east_freddyTilesLen,
+                                &east_freddyPal, east_freddyPalLen,
+                                &east_freddyMap, east_freddyMapLen
                         }
                 },
                 { /* Bonnie */ },{ /* Freddy Bonnie */ },
                 { //Chica
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &c_placeholderPal, c_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Far
+                                &east_chicaTiles, east_chicaTilesLen,
+                                &east_chicaPal, east_chicaPalLen,
+                                &east_chicaMap, east_chicaMapLen
+                        },
+                        { // Close
+                                &east_chica_sTiles, east_chica_sTilesLen,
+                                &east_chica_sPal, east_chica_sPalLen,
+                                &east_chica_sMap, east_chica_sMapLen
                         }
                 }
         },
