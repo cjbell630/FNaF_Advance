@@ -51,6 +51,7 @@ const u16 LDOOR_TILE_START = 128;
 const u16 RDOOR_TILE_START = LDOOR_TILE_START + 160;
 const u8 L_DOOR_PALBANK = 1;
 const u8 R_DOOR_PALBANK = 2; // TODO make them use the same pallette
+const u8 BLIP_PALBANK = 15;
 #define DOOR_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE
 #define DOOR2_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_WIDE
 #define LAYER_0 3
@@ -63,7 +64,7 @@ const u8 R_DOOR_PALBANK = 2; // TODO make them use the same pallette
 
 /* END CONSTANTS / DEFINITIONS */
 
-u16 cam_stun_timer = 0;
+u16 cam_stun_timer = 0; // TODO set this to 0 on night start
 
 void show_static() {
     REG_BG2CNT = BG_PRIO(LAYER_3) | BG_CBB(3) | BG_SBB(30) | BG_WRAP | BG_AFF_16x16;
@@ -186,6 +187,7 @@ void init_backgrounds() {
     //unsigned short colors[2] = {0x0000, 0x7FFF,};
     //memcpy(&pal_bg_mem[0], &colors, 4);
     REG_BG3CNT = BG_PRIO(LAYER_2) | BG_CBB(BLIP_CBB) | BG_SBB(BLIP_SBB) | BG_8BPP | BG_REG_32x32;
+    // TODO 4BPP PB Blip palbank
     REG_BG3HOFS = 0;
 
     // TODO might need to reaffirm this in switching functions
@@ -209,6 +211,7 @@ void graphics_switch_to_cams() {
     obj_hide(r_door1);
     obj_hide(r_door2);
     memcpy(&tile_mem[BLIP_CBB], &cam_blip_testTiles, cam_blip_testTilesLen);
+    // TODO memcpy(&pal_bg_bank[BLIP_PALBANK], &cam_blip_testPal, cam_blip_testPalLen);
     //TODO: shouldn't have to do this every time, but setting
     REG_DISPCNT = cam_stun_timer ? cams_stun_dispcnt : cams_dispcnt;
     // TODO set static opacity based on cam stun level
@@ -317,11 +320,13 @@ void graphcis_update_office() {
 }
 
 void graphics_stun_cams(enum RoomNames room) {
+    if (cam_stun_timer == 0) {
+        // TOOD assuming this is called when the cams are up
+        REG_DISPCNT = cams_stun_dispcnt;
+        graphics_select_cam(room, room);
+        // TODO increase static opacity
+    }
     cam_stun_timer = CAM_STUN_AMOUNT;
-    // TOOD assuming this is called when the cams are up
-    REG_DISPCNT = cams_stun_dispcnt;
-    graphics_select_cam(room, room);
-    // TODO increase static opacity
 }
 
 struct GraphicsWrapper Graphics = {
