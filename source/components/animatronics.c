@@ -418,12 +418,14 @@ void on_hour(int hour) {
     switch (hour) {
         case 2:
             BONNIE.lvl++;
+            vbaprint("bonnie level increased\n");
             break;
         case 3:
         case 4:
             BONNIE.lvl++;
             FOXY.lvl++;
             CHICA.lvl++;
+            vbaprint("bonnie, foxy, and chica levels increased\n");
             break;
         default:
             break;

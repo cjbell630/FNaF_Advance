@@ -10,12 +10,23 @@
 #include "game_state.h"
 #include "components/controls.h"
 #include "components/graphics.h"
+#include "DWedit/debug.h"
+
+/* CONSTS */
+
+const static int FRAMES_PER_HOUR = 5400;
+const static u8 VICTORY_HOUR = 6;
+
+/* END CONSTS */
 
 bool cam_is_up;
 enum RoomNames selected_cam;
 
+u8 hour;
+
 void init_clock() {
     FRAME_NUM = 1; // start at 1 so animatronics don't get a movement opportunity on the first frame
+    hour = 0;
 }
 
 void tick() {
@@ -46,7 +57,17 @@ void tick() {
         scramble_rng(__key_curr);
     }
 
-    // TODO call hour increase
+    if (frame_multiple(FRAMES_PER_HOUR)) {
+        // NOTE hoping frame skips aren't a thing
+        hour++;
+        vbaprint("next hour\n");
+        if (hour == VICTORY_HOUR) { // if the night has ended
+            GAME_PHASE = NIGHT_VICTORY; // trigger victory
+            return;
+        }
+        Animatronics.on_hour(hour);
+        // TODO call to update hour graphic
+    }
 
     //TODO oh nowww I see why I wanted to keep everything in here, to reduce comparisons for times when the multiple is the same
 
