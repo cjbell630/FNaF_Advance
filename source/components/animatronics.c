@@ -345,7 +345,8 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
                 Power.on_foxy_attack();
                 FOXY.phase = rnd_max(2) ? FOXY_PEEK : FOXY_STAND; // TODO is this correct?
             } else {
-                // TODO jumpscare
+                // TODO set jumpscare character
+                GAME_PHASE = NIGHT_JUMPSCARE;
             }
             break;
         default:
