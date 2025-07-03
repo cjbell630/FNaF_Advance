@@ -93,7 +93,11 @@ void run_power_on() {
  * Transitions to power outage, then runs the game loop for power out
  */
 void run_power_off() {
+    vbaprint("power out!!!!!!! :O\n");
     // TODO power off phase
+    // TODO bring cams down if they are up
+    // TODO change office bg
+    // TODO run w/ restricted office controls and minimal checks in bg
 }
 
 /**

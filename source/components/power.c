@@ -36,11 +36,15 @@ int foxy_drain_counter;
 
 void update_power(byte usage) {
     /* TODO is this correct? when does the timer reset in the original game?*/
-    if (frame_multiple( intervals[usage])) {
+    if (frame_multiple(intervals[usage])) {
         power -= 10000; /* TODO magic number, drains 1% each time */
     }
-    if (frame_multiple( 60/*TODO magic num: 1 second*/)) {
+    if (frame_multiple(60/*TODO magic num: 1 second*/)) {
         power -= bonus_drain_per_second;
+    }
+    if (power <= 0) {
+        GAME_PHASE = NIGHT_POWER_OFF; // TODO maybe call an on_power_empty function somewhere
+        vbaprint("power out!!!!!!! :O\n");
     }
 }
 
