@@ -2,6 +2,7 @@
 #include "util/util.h"
 #include "tonc_types.h"
 #include "game_state.h"
+#include "DWedit/debug.h"
 
 /* PREREQS */
 // some functions in this file use the frame_multiple and NIGHT_NUM globals
@@ -69,6 +70,7 @@ void power_on_night_start() {
 void power_on_foxy_attack() {
     power -= (50000 * foxy_drain_counter) + 10000;
     foxy_drain_counter++;
+    vbaprint("foxy drained power\n");
 }
 
 struct PowerWrapper Power = {

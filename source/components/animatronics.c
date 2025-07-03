@@ -6,6 +6,7 @@
 #include "game_state.h"
 #include "equipment.h"
 #include "graphics.h"
+#include "power.h"
 #include <stdio.h>
 
 /* PREREQS */
@@ -341,7 +342,7 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
         case FOXY_ATTACK:
             vbaprint("foxy is attacking\n");
             if (Equipment.is_on(LEFT_DOOR)) { // if door is closed
-                // TODO steal power
+                Power.on_foxy_attack();
                 FOXY.phase = rnd_max(2) ? FOXY_PEEK : FOXY_STAND; // TODO is this correct?
             } else {
                 // TODO jumpscare
