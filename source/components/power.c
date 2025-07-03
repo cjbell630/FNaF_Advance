@@ -45,7 +45,7 @@ void update_power(byte usage) {
 
 void power_on_night_start() {
     /* CALC INTERVALS */
-    // NOTE skips 0 so we can just use usage
+    // NOTE skips 0 so we can just use usage // TODO these are all 0, is that right?
     intervals[0] = 0; // this is just the base rate per night
     intervals[1] = 0; // 1u/2
     intervals[2] = 0; // 1u/3

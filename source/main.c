@@ -51,7 +51,7 @@ int main() {
     irq_add(II_VBLANK, NULL);
     GAME_PHASE = MENU_HOME;
     NIGHT_NUM = 0;
-    while(1){
+    while (1) {
         init_menu();
         vbaprint("initialized menu\n");
         activate_menu();

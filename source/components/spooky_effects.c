@@ -88,6 +88,7 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
     }
 }
 
+// TODO am I going to use this?
 void spooky_effects_on_room_change() {
 
 }

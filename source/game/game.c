@@ -93,21 +93,21 @@ void run_power_on() {
  * Transitions to power outage, then runs the game loop for power out
  */
 void run_power_off() {
-
+    // TODO power off phase
 }
 
 /**
  * Shows a jumpscare
  */
 void run_jumpscare() {
-
+    // TODO jumpscare
 }
 
 /**
  * Shows the death screen and returns to menu
  */
 void run_death() {
-
+    // TODO death
 }
 
 /**
@@ -118,12 +118,13 @@ void run_death() {
  */
 void run_victory() {
     // TODO show 6am screen
-    if (NIGHT_NUM < 5) {
+    if (NIGHT_NUM < 5) { // if night is 1,2,3,or4, proceed to next night
         NIGHT_NUM++; // set next night
         GAME_PHASE = NIGHT_INTRO; // set the game to show the intro
         return;
     }
 
+    // if night is 5,6,or7
     switch (NIGHT_NUM) {
         // TODO show paycheck screens
     }
@@ -155,7 +156,7 @@ void run_game_loop() {
         if (GAME_PHASE == NIGHT_JUMPSCARE) { // if the player gets jumpscared
             run_jumpscare();
         }
-        if (GAME_PHASE == NIGHT_DEATH) { // I think Death iff Jumpscare so can combine
+        if (GAME_PHASE == NIGHT_DEATH) { // I think the player always dies if jumpscare is triggered so can combine
             run_death();
         }
         if (GAME_PHASE == NIGHT_VICTORY) { // at 6am

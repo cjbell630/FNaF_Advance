@@ -39,7 +39,8 @@ void init_menu() {
     //memcpy(&pal_bg_mem[16], officePal, officePalLen);
 
 
-    saved_night = 5;/* TODO GAMEPAK_RAM[0];*/
+    saved_night = 5;/* TODO GAMEPAK_RAM[0];*/ /* TODO make 0 (the save location) a const/macro */
+    /* TODO load completion data (eg. num stars, whether night 6/7 are unlocked, etc) */
 
     vbaprint("loaded ");
     vbaprint(saved_night == 0 ? "0" : saved_night == 9 ? "9" : "something else");
@@ -61,11 +62,12 @@ void activate_menu() {
     REG_DISPCNT = DCNT_BG0 | DCNT_MODE0; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
 
 
-    while (GAME_PHASE == MENU_HOME) { // -1 means exit menu, start game TODO magic number
+    while (GAME_PHASE == MENU_HOME) {
         Controls.update_menu();
 
+        // TODO is this accurate to the og game? when was this implemented?
+        // TODO once that's checked, replace -1 and 0 with const/macros
         if (timer == -1) { // maybe change to less than 0
-            //TODO: util function for rand
             if (rnd_max(50) == 0) { // 2% chance to change screens every frame
                 //below line forces it to not choose the top left if it's already there
                 //TODO: make it more likely to change multiple times in a row like the original seems to do
@@ -84,7 +86,8 @@ void activate_menu() {
 
 
 
-
+        // TODO names are kind of confusing, they imply start button and select button; change this
+        // TODO also only supports 2 menu choices
         // Selection Keys
         if (CTRL_MENU_SELECT) {
             // swap palette color for cursors
@@ -113,7 +116,8 @@ void activate_menu() {
                     break;
                 case CHOICE_OPTIONS:
                 case CHOICE_CUSTOM_NIGHT:
-                    // TODO
+                    // TODO implement options menu
+                    // TODO implement custom night menu
                     break;
                 default:
                     break;

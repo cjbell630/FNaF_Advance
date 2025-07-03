@@ -339,8 +339,9 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
             }
             break;
         case FOXY_ATTACK:
-            vbaprint("foxy is attacking\n");// TODO steal power or jumpscare
+            vbaprint("foxy is attacking\n");
             if (Equipment.is_on(LEFT_DOOR)) { // if door is closed
+                // TODO steal power
                 FOXY.phase = rnd_max(2) ? FOXY_PEEK : FOXY_STAND; // TODO is this correct?
             } else {
                 // TODO jumpscare
