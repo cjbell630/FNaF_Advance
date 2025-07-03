@@ -9,56 +9,55 @@
 
 /* CONSTANTS */
 
-/**
- * Drain applied each second,
- * where the index is the night num (Night 1: i=1)
- * and the value is the percent represented as an int (100% = 1000000)
- */
-static int DRAIN_LEVELS_PER_SECOND[8] = {
-        0, 0, 250, 300, 375, 500, 500, 500
-};
+// technically the max power would be 100% = 1,000,000
+// but in the og game for whatever reason it starts at 99.9% = 999
+static const int MAX_POWER = 999000;
+
+// the standard amount of power drained at various intervals depending on the night.
+// equal to 0.1% power
+static const int STD_POWER_DRAIN = 1000;
 
 /* END CONSTANTS */
 
 
 int power; // 100% = 1000000 power is floored; so trim last 4 digits when displaying
 
-/**
- * The number of frames between power drain, corresponding to the current usage level.
- * The usage level starts from 0, but does not include fan power as it is impossible to get rid of.
- * Even when the power goes out, the HUD disappears so it is never even shown to be 0.
- * These numbers are constant for each night; so to avoid costly division every frame, calculate at the start of each night
- */
-int intervals[5];
-
-int bonus_drain_per_second;
+int bonus_drain_interval;
 int foxy_drain_counter;
 
 void update_power(byte usage) {
-    /* TODO is this correct? when does the timer reset in the original game?*/
-    if (frame_multiple(intervals[usage])) {
-        power -= 10000; /* TODO magic number, drains 1% each time */
-    }
     if (frame_multiple(60/*TODO magic num: 1 second*/)) {
-        power -= bonus_drain_per_second;
+        // could make this a lookup table but all sources point to this being not any more efficient
+        power -= (usage * STD_POWER_DRAIN); // drains usage*0.1% each second
+        vbaprint("power drained 0.1%*usage (per second)\n");
+
+        // all of the bonus drain intervals are multiples of 60 so this reduces comparisons
+        if (frame_multiple(bonus_drain_interval)) {
+            vbaprint("power drained 0.1% (bonus)\n");
+            power -= STD_POWER_DRAIN; /* TODO magic number, drains 0.1% each time */
+        }
     }
     if (power <= 0) {
         GAME_PHASE = NIGHT_POWER_OFF; // TODO maybe call an on_power_empty function somewhere
-        vbaprint("power out!!!!!!! :O\n");
     }
 }
 
 void power_on_night_start() {
-    /* CALC INTERVALS */
-    // NOTE skips 0 so we can just use usage // TODO these are all 0, is that right?
-    intervals[0] = 0; // this is just the base rate per night
-    intervals[1] = 0; // 1u/2
-    intervals[2] = 0; // 1u/3
-    intervals[3] = 0; // 1u/4
-    intervals[4] = 0; // 1u/5
+    power = MAX_POWER; // set power to max
 
     /* BONUS DRAIN */
-    bonus_drain_per_second = DRAIN_LEVELS_PER_SECOND[NIGHT_NUM];
+    switch (NIGHT_NUM) {
+        case 1: // Night 1 does not have bonus drain
+            bonus_drain_interval = 130881600; //TODO magic number, frame_max from game_state
+        case 2:
+            bonus_drain_interval = 360; // 6s/360f
+        case 3:
+            bonus_drain_interval = 300; // 5s/300f
+        case 4:
+            bonus_drain_interval = 240; // 4s/240f
+        default: // Night 5, 6, and Custom
+            bonus_drain_interval = 180; // 3s/180f
+    }
 
     /* FOXY COUNTER */
     foxy_drain_counter = 0;
