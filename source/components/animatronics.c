@@ -61,6 +61,12 @@ void chica_move(enum RoomNames room, bool cams_are_up, enum RoomNames selected_c
     CHICA.room_num = room;
 }
 
+void trigger_jumpscare(enum Jumpscares character, bool show_cams_animation) {
+    JUMPSCARER = character;
+    SHOW_CAM_ANIM_ON_JUMPSCARE = show_cams_animation;
+    GAME_PHASE = NIGHT_JUMPSCARE;
+}
+
 /*  BONNIE  */
 
 // TODO this and chicas code are so similar, combine them somehow
@@ -124,6 +130,22 @@ struct Animatronic BONNIE = {
 
 // TODO this and chicas code are so similar, combine them somehow
 void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
+    if (CHICA.room_num == ROOM_OFFICE) {
+        if (CHICA.timer > -1) { // if the timer has been started
+            CHICA.timer -= 1;
+            if (CHICA.timer == 0) {
+                trigger_jumpscare(JUMPSCARE_CHICA, cams_are_up);
+            }
+            /*
+             * TODO option 1: check if cams are down here, and trigger jumpscare
+             * (in this case, the cam down animation will have already been started so it might look funny)
+             * option 2: have an "on cams down" function that checks if chica, bonnie, or freddy are in the room
+            if(!cams_are_up){
+            }*/
+        } else if (cams_are_up) {
+            CHICA.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
+        }
+    }
     if (!frame_multiple(CHICA_FRAMECOUNT)) {
         return;
     }
@@ -167,6 +189,7 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
                 Equipment.disable(RIGHT_LIGHT);
                 Equipment.disable(RIGHT_DOOR);
                 // TODO initiate in office phase
+                CHICA.timer = -1; // ensure timer is reset
             }
             break;
         default:
@@ -176,7 +199,8 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
 
 struct Animatronic CHICA = {
         .update = update_chica,
-        .starting_room = ROOM_STAGE
+        .starting_room = ROOM_STAGE,
+        .timer = -1
 };
 
 
@@ -345,8 +369,7 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
                 Power.on_foxy_attack();
                 FOXY.phase = rnd_max(2) ? FOXY_PEEK : FOXY_STAND; // TODO is this correct?
             } else {
-                // TODO set jumpscare character
-                GAME_PHASE = NIGHT_JUMPSCARE;
+                trigger_jumpscare(JUMPSCARE_FOXY, cams_are_up);
             }
             break;
         default:

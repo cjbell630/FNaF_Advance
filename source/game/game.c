@@ -105,6 +105,14 @@ void run_power_off() {
  */
 void run_jumpscare() {
     // TODO jumpscare
+    switch(JUMPSCARER){
+        case JUMPSCARE_FOXY:
+            vbaprint("JUMPSCARE!!!!!! (foxy)\n");
+            break;
+        case JUMPSCARE_CHICA:
+            vbaprint("JUMPSCARE!!!!!! (chica)\n");
+            break;
+    }
 }
 
 /**

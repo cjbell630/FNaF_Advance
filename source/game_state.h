@@ -11,6 +11,14 @@ enum GamePhases {
 
 extern enum GamePhases GAME_PHASE;
 
+enum Jumpscares { // TODO maybe need to fix order
+    JUMPSCARE_NONE, JUMPSCARE_BONNIE, JUMPSCARE_CHICA, JUMPSCARE_FOXY, JUMPSCARE_FREDDY_STD, JUMPSCARE_FREDDY_POWER, JUMPSCARE_GOLDEN
+};
+
+extern enum Jumpscares JUMPSCARER;
+
+extern bool SHOW_CAM_ANIM_ON_JUMPSCARE;
+
 extern u8 NIGHT_NUM;
 
 //TODO: could be smaller num if necessary
