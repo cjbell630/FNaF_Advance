@@ -145,6 +145,7 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
         } else if (cams_are_up) {
             CHICA.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
         }
+        return;
     }
     if (!frame_multiple(CHICA_FRAMECOUNT)) {
         return;
@@ -231,6 +232,23 @@ void move_freddy() {
 }
 
 void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
+    if (FREDDY.room_num == ROOM_OFFICE) {
+        if (cams_are_up) {
+            FREDDY.timer = 60; // TODO magic number: 1s/60f timer for jumpscares
+            // TODO kinda unnecessary to reset every frame but that's how the og game is written
+            return;
+        }
+        if (0 < FREDDY.timer) { // if timer is still ticking down
+            FREDDY.timer--;
+            return;
+        }
+        if (rnd_max(5) == 0) {
+            trigger_jumpscare(JUMPSCARE_FREDDY_STD, cams_are_up);
+            return;
+        }
+        FREDDY.timer = 60;
+        return;
+    }
     if (cams_are_up) { // if cams are up and not a movement opportunity
         switch (FREDDY.phase) {
             case FREDDY_MIGHT_MOVE:
@@ -248,7 +266,7 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
                         FREDDY.room_num = ROOM_EAST;
                     } else {
                         FREDDY.room_num = ROOM_OFFICE;
-                        // TODO initiate in-room phase
+                        FREDDY.timer = 60; // TODO magic number: 1s/60f timer for jumpscares
                     }
                     FREDDY.phase = FREDDY_WONT_MOVE;
                 }

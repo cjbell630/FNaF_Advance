@@ -112,6 +112,9 @@ void run_jumpscare() {
         case JUMPSCARE_CHICA:
             vbaprint("JUMPSCARE!!!!!! (chica)\n");
             break;
+        case JUMPSCARE_FREDDY_STD:
+            vbaprint("JUMPSCARE!!!!!! (freddy standard)\n");
+            break;
     }
 }
 
