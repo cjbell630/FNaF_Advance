@@ -71,6 +71,28 @@ void trigger_jumpscare(enum Jumpscares character, bool show_cams_animation) {
 
 // TODO this and chicas code are so similar, combine them somehow
 void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
+    if (BONNIE.room_num == ROOM_OFFICE) {
+        if(BONNIE.timer == -1) { // if the cams have not been lifted since bonnie got in the office
+            if(cams_are_up){
+                BONNIE.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
+            }
+            return;
+        }
+        if(BONNIE.timer < 1 || !cams_are_up){ // if the timer has been set, and has reached 0 or the cams are down
+            trigger_jumpscare(JUMPSCARE_BONNIE, cams_are_up);
+            return;
+        }
+        // if the cams are up and the timer is ticking
+        BONNIE.timer--;
+
+        /*
+         * TODO option 1: check if cams are down here, and trigger jumpscare
+         * (in this case, the cam down animation will have already been started so it might look funny)
+         * option 2: have an "on cams down" function that checks if chica, bonnie, or freddy are in the room
+        if(!cams_are_up){
+        }*/
+        return;
+    }
     if (!frame_multiple(BONNIE_FRAMECOUNT)) {
         return;
     }
@@ -114,6 +136,7 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
                 Equipment.disable(LEFT_LIGHT);
                 Equipment.disable(LEFT_DOOR);
                 // TODO initiate in office phase
+                BONNIE.timer = -1;
             }
             break;
         default:
@@ -131,20 +154,25 @@ struct Animatronic BONNIE = {
 // TODO this and chicas code are so similar, combine them somehow
 void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
     if (CHICA.room_num == ROOM_OFFICE) {
-        if (CHICA.timer > -1) { // if the timer has been started
-            CHICA.timer -= 1;
-            if (CHICA.timer == 0) {
-                trigger_jumpscare(JUMPSCARE_CHICA, cams_are_up);
+        if(CHICA.timer == -1) { // if the cams have not been lifted since chica got in the office
+            if(cams_are_up){
+                CHICA.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
             }
-            /*
-             * TODO option 1: check if cams are down here, and trigger jumpscare
-             * (in this case, the cam down animation will have already been started so it might look funny)
-             * option 2: have an "on cams down" function that checks if chica, bonnie, or freddy are in the room
-            if(!cams_are_up){
-            }*/
-        } else if (cams_are_up) {
-            CHICA.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
+            return;
         }
+        if(CHICA.timer < 1 || !cams_are_up){ // if the timer has been set, and has reached 0 or the cams are down
+            trigger_jumpscare(JUMPSCARE_CHICA, cams_are_up);
+            return;
+        }
+        // if the cams are up and the timer is ticking
+        CHICA.timer--;
+
+        /*
+         * TODO option 1: check if cams are down here, and trigger jumpscare
+         * (in this case, the cam down animation will have already been started so it might look funny)
+         * option 2: have an "on cams down" function that checks if chica, bonnie, or freddy are in the room
+        if(!cams_are_up){
+        }*/
         return;
     }
     if (!frame_multiple(CHICA_FRAMECOUNT)) {

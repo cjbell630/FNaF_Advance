@@ -111,13 +111,16 @@ void run_jumpscare() {
     // TODO jumpscare
     switch (JUMPSCARER) {
         case JUMPSCARE_FOXY:
-            vbaprint("JUMPSCARE!!!!!! (foxy)\n");
+            vbaprint("JUMPSCARE!!!!!! (foxy)\n\n\n\n\n\n\n\n\n\n");
             break;
         case JUMPSCARE_CHICA:
-            vbaprint("JUMPSCARE!!!!!! (chica)\n");
+            vbaprint("JUMPSCARE!!!!!! (chica)\n\n\n\n\n\n\n\n\n\n");
+            break;
+        case JUMPSCARE_BONNIE:
+            vbaprint("JUMPSCARE!!!!!! (bonnie)\n\n\n\n\n\n\n\n\n\n");
             break;
         case JUMPSCARE_FREDDY_STD:
-            vbaprint("JUMPSCARE!!!!!! (freddy standard)\n");
+            vbaprint("JUMPSCARE!!!!!! (freddy standard)\n\n\n\n\n\n\n\n\n\n");
             break;
     }
 }
