@@ -91,9 +91,10 @@ The resulting number is then compared to each animatronic's AI level. Movement w
 |---------------|:---------------------:|:---------------------:|:--------------------:|:-------------------:|
 | **Frequency** |     3.02s/181.2f      |     4.97s/298.2f      |     4.98s/298.8f     |    5.01s/300.6f     |
 
-> NOTE: Multiple animatronics CAN be in the same room at the same time. From what I can find, as well as from testing,
-> Freddy can never be seen if other animatronics are in the same room as him. However, I'm not definitively sure which
-> of Bonnie or Chica overrides the display.
+> NOTE: Multiple animatronics CAN be in the same room at the same time, but only one is displayed.
+> The order is (front layer > back layer): Chica > Bonnie > Freddy 
+> (also, Foxy's hall animation will play regardless of whether Bonnie is in the hall)
+> Freddy can never be seen if other animatronics are in the same room as him. 
 
 #### Chica and Bonnie
 
@@ -257,6 +258,7 @@ Every 1s/60f Freddy is in the office, if the camera is down, he has a 1 in 5 cha
 
 > NOTE: I'm not 100% sure about this order. Is it "is cam down -> wait 1s -> try jumpscare" or "wait 1s -> is cam
 > down -> try jumpscare"?
+> (the answer is prob the timer counts down every frame the cams are down, and resets every frame the cams are up)
 
 ## Power
 
