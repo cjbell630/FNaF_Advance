@@ -29,6 +29,26 @@ void init_clock() {
     hour = 0;
 }
 
+void update_rng() {
+    if (frame_multiple(2)) { // every other frame
+        scramble_rng(__key_curr);
+    }
+}
+
+void update_in_game_clock() {
+    if (frame_multiple(FRAMES_PER_HOUR)) {
+        // NOTE hoping frame skips aren't a thing
+        hour++;
+        vbaprint("next hour\n");
+        if (hour == VICTORY_HOUR) { // if the night has ended
+            GAME_PHASE = NIGHT_VICTORY; // trigger victory
+            return;
+        }
+        Animatronics.on_hour(hour);
+        // TODO call to update hour graphic
+    }
+}
+
 void tick() {
     // Apply controls based on state of previous frame
     if (cam_is_up) {
@@ -53,23 +73,19 @@ void tick() {
     Power.update(Equipment.get_usage());
     //TODO: reduce these to reduce comparisons run every frame
 
-    if (frame_multiple(2)) { // every other frame
-        scramble_rng(__key_curr);
-    }
-
-    if (frame_multiple(FRAMES_PER_HOUR)) {
-        // NOTE hoping frame skips aren't a thing
-        hour++;
-        vbaprint("next hour\n");
-        if (hour == VICTORY_HOUR) { // if the night has ended
-            GAME_PHASE = NIGHT_VICTORY; // trigger victory
-            return;
-        }
-        Animatronics.on_hour(hour);
-        // TODO call to update hour graphic
-    }
+    update_in_game_clock();
+    update_rng();
 
     //TODO oh nowww I see why I wanted to keep everything in here, to reduce comparisons for times when the multiple is the same
 
+    increment_frame();
+}
+
+void tick_power_off() {
+    Controls.update_office(); // TODO update office power off
+    Graphics.update_office();
+    Animatronics.update(cam_is_up, selected_cam);// TODO update animatronics power off
+    update_in_game_clock();
+    update_rng();
     increment_frame();
 }

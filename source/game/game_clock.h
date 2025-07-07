@@ -5,4 +5,6 @@ void init_clock();
 
 void tick();
 
+void tick_power_off();
+
 #endif //FNAF_ADVANCE_GAME_CLOCK_H

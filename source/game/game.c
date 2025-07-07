@@ -98,6 +98,10 @@ void run_power_off() {
     // TODO bring cams down if they are up
     // TODO change office bg
     // TODO run w/ restricted office controls and minimal checks in bg
+    while (GAME_PHASE == NIGHT_POWER_OFF) { // while player has not been kicked back to menu
+        tick_power_off(); //TODO: should be at top or bottom?
+        VBlankIntrWait();
+    }
 }
 
 /**
@@ -105,7 +109,7 @@ void run_power_off() {
  */
 void run_jumpscare() {
     // TODO jumpscare
-    switch(JUMPSCARER){
+    switch (JUMPSCARER) {
         case JUMPSCARE_FOXY:
             vbaprint("JUMPSCARE!!!!!! (foxy)\n");
             break;
