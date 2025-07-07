@@ -122,7 +122,13 @@ void run_jumpscare() {
         case JUMPSCARE_FREDDY_STD:
             vbaprint("JUMPSCARE!!!!!! (freddy standard)\n\n\n\n\n\n\n\n\n\n");
             break;
+        case JUMPSCARE_GOLDEN:
+            vbaprint("JUMPSCARE!!!!!! (freddy standard)\n\n\n\n\n\n\n\n\n\n");
+            // TODO crash game
+            break;
+
     }
+    GAME_PHASE = NIGHT_DEATH;
 }
 
 /**
@@ -130,6 +136,7 @@ void run_jumpscare() {
  */
 void run_death() {
     // TODO death
+    GAME_PHASE = MENU_HOME;
 }
 
 /**
