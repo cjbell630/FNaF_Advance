@@ -72,13 +72,13 @@ void trigger_jumpscare(enum Jumpscares character, bool show_cams_animation) {
 // TODO this and chicas code are so similar, combine them somehow
 void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
     if (BONNIE.room_num == ROOM_OFFICE) {
-        if(BONNIE.timer == -1) { // if the cams have not been lifted since bonnie got in the office
-            if(cams_are_up){
+        if (BONNIE.timer == -1) { // if the cams have not been lifted since bonnie got in the office
+            if (cams_are_up) {
                 BONNIE.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
             }
             return;
         }
-        if(BONNIE.timer < 1 || !cams_are_up){ // if the timer has been set, and has reached 0 or the cams are down
+        if (BONNIE.timer < 1 || !cams_are_up) { // if the timer has been set, and has reached 0 or the cams are down
             trigger_jumpscare(JUMPSCARE_BONNIE, cams_are_up);
             return;
         }
@@ -116,7 +116,14 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
             bonnie_move(rnd_max(2) ? ROOM_CLOSET : ROOM_WEST_CORNER, cams_are_up, selected_cam);
             break;
         case ROOM_CLOSET:
-            bonnie_move(rnd_max(2) ? ROOM_LEFT_DOOR : ROOM_WEST, cams_are_up, selected_cam);
+            if (rnd_max(2)) {
+                bonnie_move(ROOM_WEST, cams_are_up, selected_cam);
+            } else {
+                bonnie_move(ROOM_LEFT_DOOR, cams_are_up, selected_cam);
+                Equipment.force_light_off(LEFT_LIGHT);
+                vbaprint("bonnie at window\n");
+                // TODO set windowscare to play
+            }
             break;
         case ROOM_WEST_CORNER:
             if (rnd_max(2)) {
@@ -124,6 +131,7 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
             } else {
                 bonnie_move(ROOM_LEFT_DOOR, cams_are_up, selected_cam);
                 Equipment.force_light_off(LEFT_LIGHT);
+                vbaprint("bonnie at window\n");
                 // TODO set windowscare to play
             }
             break;
@@ -136,6 +144,7 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
                 Equipment.disable(LEFT_LIGHT);
                 Equipment.disable(LEFT_DOOR);
                 // TODO initiate in office phase
+                vbaprint("bonnie in office!!\n");
                 BONNIE.timer = -1;
             }
             break;
@@ -154,13 +163,13 @@ struct Animatronic BONNIE = {
 // TODO this and chicas code are so similar, combine them somehow
 void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
     if (CHICA.room_num == ROOM_OFFICE) {
-        if(CHICA.timer == -1) { // if the cams have not been lifted since chica got in the office
-            if(cams_are_up){
+        if (CHICA.timer == -1) { // if the cams have not been lifted since chica got in the office
+            if (cams_are_up) {
                 CHICA.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
             }
             return;
         }
-        if(CHICA.timer < 1 || !cams_are_up){ // if the timer has been set, and has reached 0 or the cams are down
+        if (CHICA.timer < 1 || !cams_are_up) { // if the timer has been set, and has reached 0 or the cams are down
             trigger_jumpscare(JUMPSCARE_CHICA, cams_are_up);
             return;
         }
@@ -207,6 +216,7 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
                 chica_move(ROOM_RIGHT_DOOR, cams_are_up, selected_cam);
                 Equipment.force_light_off(RIGHT_LIGHT);
                 // TODO set windowscare to play
+                vbaprint("chica at window\n");
             }
             break;
         case ROOM_RIGHT_DOOR:
