@@ -64,7 +64,7 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
         case ROOM_EAST:
             occupants = Animatronics.get_room_occupants(room_name);
             room_effects[room_name] = occupants == OCCUPANTS_EMPTY ? roll_east_empty :
-                                      CHICA.room_num==room_name ? CHICA.close_far :
+                                      CHICA.room_num == room_name ? CHICA.close_far :
                                       0;
             break;
         case ROOM_EAST_CORNER:
@@ -93,7 +93,6 @@ void spooky_effects_on_room_change() {
 
 }
 
-
 void update_spooky_effects(bool cams_are_up, enum RoomNames selected_cam) {
     // TODO add cam blip here instead
     if (cams_are_up) {
@@ -114,7 +113,7 @@ void update_spooky_effects(bool cams_are_up, enum RoomNames selected_cam) {
             room_effects[ROOM_OFFICE] = flicker;
             if (flicker) {
                 bool occupied = side ? Animatronics.get_room_occupants(ROOM_RIGHT_DOOR) >> 2 :
-                                Animatronics.get_room_occupants(ROOM_LEFT_DOOR) >> 3;
+                                Animatronics.get_room_occupants(ROOM_LEFT_DOOR) >> 1;
                 Graphics.enable_office_light(side, occupied);
             } else {
                 Graphics.clear_office_lights();
