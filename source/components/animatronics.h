@@ -7,9 +7,9 @@
 //TODO move these to another file about anim identities
 // or make it an attribute of Animatronic?
 #define FREDDY_FRAMECOUNT 181
-#define FOXY_FRAMECOUNT 300
 #define BONNIE_FRAMECOUNT 298
 #define CHICA_FRAMECOUNT 299
+#define FOXY_FRAMECOUNT 300
 
 #define NIGHT_1_START_LEVELS 0, 0, 0, 0
 #define NIGHT_2_START_LEVELS 0, 3, 1, 1
