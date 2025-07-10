@@ -44,6 +44,8 @@
 #include "game/room_names.h"
 #include "components/spooky_effects.h"
 #include "components/animatronics.h"
+#include "images/cams/closet/closet_empty.h"
+#include "images/cams/closet/closet_b.h"
 // 0  0  0  0
 // Fo C  B  Fr
 
@@ -212,18 +214,18 @@ const Frame CAM_IMG_MAP[12][16][5] = {
         },
         {/* Supply Closet (5) */
                 { //Empty
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &empty_placeholderPal, empty_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &closet_emptyTiles, closet_emptyTilesLen,
+                                &closet_emptyPal, closet_emptyPalLen,
+                                &closet_emptyMap, closet_emptyMapLen
                         }
                 },
                 { /* Freddy */ },
                 { //Bonnie
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &b_placeholderPal, b_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &closet_bTiles, closet_bTilesLen,
+                                &closet_bPal, closet_bPalLen,
+                                &closet_bMap, closet_bMapLen
                         }
                 }
         },
