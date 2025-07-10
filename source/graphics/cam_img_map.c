@@ -46,6 +46,10 @@
 #include "components/animatronics.h"
 #include "images/cams/closet/closet_empty.h"
 #include "images/cams/closet/closet_b.h"
+#include "images/cams/restroom/restrooms_c_s.h"
+#include "images/cams/restroom/restrooms_c.h"
+#include "images/cams/restroom/restrooms_fr.h"
+#include "images/cams/restroom/restrooms_empty.h"
 // 0  0  0  0
 // Fo C  B  Fr
 
@@ -345,25 +349,30 @@ const Frame CAM_IMG_MAP[12][16][5] = {
         },
         {/*Restrooms (10)*/
                 { //Empty
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &empty_placeholderPal, empty_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &restrooms_emptyTiles, restrooms_emptyTilesLen,
+                                &restrooms_emptyPal, restrooms_emptyPalLen,
+                                &restrooms_emptyMap, restrooms_emptyMapLen
                         }
                 },
                 { //Freddy
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &fr_placeholderPal, fr_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &restrooms_frTiles, restrooms_frTilesLen,
+                                &restrooms_frPal, restrooms_frPalLen,
+                                &restrooms_frMap, restrooms_frMapLen
                         }
                 },
                 { /* Bonnie */ },{ /* Freddy Bonnie */ },
                 { // Chica
-                        { // Std //TODO: remove
-                                &bcff_placeholderTiles, bcff_placeholderTilesLen,
-                                &c_placeholderPal, c_placeholderPalLen,
-                                &bcff_placeholderMap, bcff_placeholderMapLen
+                        { // Std
+                                &restrooms_cTiles, restrooms_cTilesLen,
+                                &restrooms_cPal, restrooms_cPalLen,
+                                &restrooms_cMap, restrooms_cMapLen
+                        },
+                        { // Close up
+                                &restrooms_c_sTiles, restrooms_c_sTilesLen,
+                                &restrooms_c_sPal, restrooms_c_sPalLen,
+                                &restrooms_c_sMap, restrooms_c_sMapLen
                         }
                 }
         }
