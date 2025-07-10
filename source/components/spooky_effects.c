@@ -78,6 +78,8 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
         case ROOM_KITCHEN:
             break;
         case ROOM_RESTROOMS:
+            room_effects[room_name] = CHICA.room_num == room_name ? CHICA.close_far :
+                                      0;// TODO remove direct call to CHICA
             break;
         case ROOM_OFFICE:
             break;
