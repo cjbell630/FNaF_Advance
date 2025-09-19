@@ -82,8 +82,8 @@ void tick() {
 }
 
 void tick_power_off() {
-    Controls.update_office(); // TODO update office power off
-    Graphics.update_office();
+    Controls.update_office_power_off();
+    Graphics.update_office(); // TODO update office power off?
     Animatronics.update(cam_is_up, selected_cam);// TODO update animatronics power off
     update_in_game_clock();
     update_rng();

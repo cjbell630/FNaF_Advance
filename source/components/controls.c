@@ -13,7 +13,7 @@ const u16 RIGHT_CAP = ART_WIDTH - GBA_SCREEN_WIDTH; // 114
 const u8 BUTTONS_WIDTH = 16;
 const u8 L_BUTTONS_CAP = BUTTONS_WIDTH + 1;
 const u16 R_BUTTONS_CAP = RIGHT_CAP - BUTTONS_WIDTH - 1;
-s16 office_horiz_scroll = 57/*RIGHT_CAP/2*/, y = 0;
+s16 office_horiz_scroll = 57/*RIGHT_CAP/2*/, y = 0; // TODO reset on night start
 
 /* CONTROL MACROS */
 
@@ -42,14 +42,7 @@ void controls_menu() {
     controls_universal();
 }
 
-
-void controls_office() {
-    controls_universal();
-    if (CTRL_OPEN_CAM) {
-        Equipment.toggle(CAMERA);
-        return;
-    }
-    int shoulder_input = CTRL_OFFICE_SCROLL;
+void scroll_cams_controls(int shoulder_input) {
     if (shoulder_input != 0) {
         s16 new_scroll = office_horiz_scroll + (SPEED_SCALE * shoulder_input);
         new_scroll = (new_scroll > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
@@ -63,6 +56,16 @@ void controls_office() {
     //y += key_tri_vert();
 
     //REG_BG0VOFS = y;
+}
+
+
+void controls_office() {
+    controls_universal();
+    if (CTRL_OPEN_CAM) {
+        Equipment.toggle(CAMERA);
+        return;
+    }
+    scroll_cams_controls(CTRL_OFFICE_SCROLL);
     if (can_press_left_buttons) {
         if (CTRL_LIGHT) {
             Equipment.toggle(LEFT_LIGHT);
@@ -78,6 +81,19 @@ void controls_office() {
             Equipment.toggle(RIGHT_DOOR);
         }
     } else if (CTRL_HONK) {
+        // TODO
+        vbaprint("nose honked :)\n");
+    }
+}
+
+
+/**
+ * TODO
+ */
+void controls_office_power_off() {
+    controls_universal();
+    scroll_cams_controls(CTRL_OFFICE_SCROLL);
+    if (!(can_press_left_buttons || can_press_right_buttons) && CTRL_HONK) {
         // TODO
         vbaprint("nose honked :)\n");
     }
@@ -101,5 +117,6 @@ void controls_cam() {
 struct ControlsWrapper Controls = {
         .update_office = &controls_office,
         .update_cam = &controls_cam,
-        .update_menu = &controls_menu
+        .update_menu = &controls_menu,
+        .update_office_power_off = &controls_office_power_off
 };

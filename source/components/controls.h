@@ -4,6 +4,7 @@
 
 struct ControlsWrapper {
     void (*update_office)();
+    void (*update_office_power_off)();
     void (*update_cam)();
     void (*update_menu)();
 
