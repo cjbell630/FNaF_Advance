@@ -279,6 +279,10 @@ Additionally, starting on Night 2, an additional 0.1% is drained at an interval 
 
 All animatronics stop everything when the power goes out.
 
+The camera popup icon disappears, and the doors and lights are no longer responsive.
+(meaning, not only do they not work, but they also do not play the disabled sfx)
+Honking and scrolling the cams still works, however.
+
 Power down phases:
 
 | Number | Description |
