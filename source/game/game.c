@@ -95,7 +95,7 @@ void run_power_on() {
 void run_power_off() {
     vbaprint("power out!!!!!!! :O\n");
     // TODO power off phase
-    // TODO bring cams down if they are up
+    // TODO bring cams down if they are up, bring doors up and switch lights off
     // TODO change office bg
     // TODO run w/ restricted office controls and minimal checks in bg
     while (GAME_PHASE == NIGHT_POWER_OFF) { // while player has not been kicked back to menu
@@ -122,8 +122,11 @@ void run_jumpscare() {
         case JUMPSCARE_FREDDY_STD:
             vbaprint("JUMPSCARE!!!!!! (freddy standard)\n\n\n\n\n\n\n\n\n\n");
             break;
+        case JUMPSCARE_FREDDY_POWER:
+            vbaprint("JUMPSCARE!!!!!! (freddy power)\n\n\n\n\n\n\n\n\n\n");
+            break;
         case JUMPSCARE_GOLDEN:
-            vbaprint("JUMPSCARE!!!!!! (freddy standard)\n\n\n\n\n\n\n\n\n\n");
+            vbaprint("JUMPSCARE!!!!!! (freddy golden)\n\n\n\n\n\n\n\n\n\n");
             // TODO crash game
             break;
 
@@ -136,6 +139,7 @@ void run_jumpscare() {
  */
 void run_death() {
     // TODO death
+    vbaprint("\n\n\n\n\n\nYOU DIED\n\n\n\n\n");
     GAME_PHASE = MENU_HOME;
 }
 
@@ -147,6 +151,7 @@ void run_death() {
  */
 void run_victory() {
     // TODO show 6am screen
+    vbaprint("\n\n\n\n\n\n6AM!!!!!!\n\n\n\n\n");
     if (NIGHT_NUM < 5) { // if night is 1,2,3,or4, proceed to next night
         NIGHT_NUM++; // set next night
         GAME_PHASE = NIGHT_INTRO; // set the game to show the intro

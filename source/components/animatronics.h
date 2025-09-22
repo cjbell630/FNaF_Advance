@@ -47,12 +47,15 @@ extern struct Animatronic FOXY;
 
 struct AnimatronicsWrapper {
     void (*update)(bool cams_are_up, enum RoomNames selected_cam);
+    void (*update_power_off)();
 
     void (*reset)();
 
     void (*on_night_start)();
 
     void (*on_hour)(int hour);
+
+    void (*on_power_off)();
 
     void (*set_levels)(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl); // NOTE keep for custom night
     u8 (*get_room_occupants)(enum RoomNames room);

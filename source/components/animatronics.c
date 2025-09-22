@@ -17,8 +17,13 @@
 enum FoxyPhases {
     FOXY_CLOSED, FOXY_PEEK, FOXY_STAND, FOXY_GONE, FOXY_RUN, FOXY_ATTACK
 };
+
 enum FreddyPhases {
     FREDDY_SLEEPING, FREDDY_WONT_MOVE, FREDDY_MIGHT_MOVE, FREDDY_WILL_MOVE, FREDDY_EAST_CORNER, FREDDY_READY_TO_ATTACK
+};
+
+enum FreddyPowerOffPhases {
+    FREDDY_POWEROFF_WAITING, FREDDY_POWEROFF_MUSIC_BOX, FREDDY_POWEROFF_BLACKOUT
 };
 
 /* END CONSTANTS */
@@ -154,8 +159,8 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
 }
 
 struct Animatronic BONNIE = {
-        .update = update_bonnie,
-        .starting_room = ROOM_STAGE
+    .update = update_bonnie,
+    .starting_room = ROOM_STAGE
 };
 
 /*  CHICA  */
@@ -237,9 +242,9 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
 }
 
 struct Animatronic CHICA = {
-        .update = update_chica,
-        .starting_room = ROOM_STAGE,
-        .timer = -1
+    .update = update_chica,
+    .starting_room = ROOM_STAGE,
+    .timer = -1
 };
 
 
@@ -313,10 +318,11 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
                 break;
         }
         return;
-    } else if (
-            !frame_multiple(FREDDY_FRAMECOUNT) ||
-            !try_move(&FREDDY)
-            ) { // if cams are down and not a successful movement opportunity
+    }
+    if (
+        !frame_multiple(FREDDY_FRAMECOUNT) ||
+        !try_move(&FREDDY)
+    ) { // if cams are down and not a successful movement opportunity
         if (FREDDY.phase == FREDDY_MIGHT_MOVE) {
             FREDDY.timer--;
         }
@@ -362,8 +368,8 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
 }
 
 struct Animatronic FREDDY = {
-        .update = &update_freddy,
-        .starting_room = ROOM_STAGE
+    .update = &update_freddy,
+    .starting_room = ROOM_STAGE
 };
 
 /*  FOXY  */
@@ -407,7 +413,7 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
                 break; // TODO external stuff for jumpscare
             }
             if (selected_cam == ROOM_WEST) {
-                FOXY.phase = FOXY_RUN;// TODO external stuff for foxy running
+                FOXY.phase = FOXY_RUN; // TODO external stuff for foxy running
                 FOXY.room_num = ROOM_WEST;
                 FOXY.timer = 100 /* TODO magic num, can be used to show run animation*/;
             }
@@ -415,7 +421,7 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
         case FOXY_RUN:
             FOXY.timer--;
             if (FOXY.timer < 1) {
-                FOXY.phase = FOXY_ATTACK;// TODO external stuff for jumpscare
+                FOXY.phase = FOXY_ATTACK; // TODO external stuff for jumpscare
                 FOXY.room_num = ROOM_LEFT_DOOR;
             }
             break;
@@ -434,8 +440,8 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
 }
 
 struct Animatronic FOXY = {
-        .update = &update_foxy,
-        .starting_room = ROOM_PIRATE
+    .update = &update_foxy,
+    .starting_room = ROOM_PIRATE
 };
 
 
@@ -489,6 +495,38 @@ void update_anims(bool cams_are_up, enum RoomNames selected_cam) {
     FOXY.update(cams_are_up, selected_cam);
 }
 
+void update_power_off() {
+    // TODO this could be relegated to the game loop to reduce checks, but it might make the loop code a bit messy
+    // TODO magic numbers
+    FREDDY.timer--;
+    switch (FREDDY.phase) {
+        case FREDDY_POWEROFF_WAITING:
+            // TODO this could cause freddy to immediately show his face on power down;
+            // is there a guaranteed 5 seconds before the checks begin?
+            if (FREDDY.timer < 1 || (frame_multiple(300) && rnd_max(5) == 0)) {
+                FREDDY.phase++;
+                FREDDY.timer = 1200;
+                vbaprint("Freddy face is now visible and music box is playing\n");
+                // TODO trigger visual audio etc
+            }
+            break;
+        case FREDDY_POWEROFF_MUSIC_BOX:
+            // TODO trigger freddy face update
+            if (FREDDY.timer < 1 || (frame_multiple(300) && rnd_max(5) == 0)) {
+                FREDDY.phase++;
+                FREDDY.timer = 1200;
+                vbaprint("Full blackout now\n");
+                // TODO trigger visual audio etc
+            }
+            break;
+        case FREDDY_POWEROFF_BLACKOUT:
+            if (FREDDY.timer < 1 || (frame_multiple(120) && rnd_max(5) == 0)) {
+                trigger_jumpscare(JUMPSCARE_FREDDY_POWER, false);
+            }
+            break;
+    }
+}
+
 /**
  * To be called when the hour changes ex. 1->2 3->4
  *
@@ -512,6 +550,11 @@ void on_hour(int hour) {
     }
 }
 
+void on_power_off() {
+    FREDDY.phase = FREDDY_POWEROFF_WAITING;
+    FREDDY.timer = 1200;
+}
+
 // TODO define this in camera.c?
 u8 get_room_occupants(enum RoomNames room) {
     return ((FOXY.room_num == room) << 3) | ((CHICA.room_num == room) << 2) |
@@ -519,9 +562,11 @@ u8 get_room_occupants(enum RoomNames room) {
 }
 
 struct AnimatronicsWrapper Animatronics = {
-        .update = update_anims,
-        .on_night_start = on_night_start,
-        .set_levels = set_levels,
-        .get_room_occupants = get_room_occupants,
-        .on_hour = on_hour
+    .update = update_anims,
+    .on_night_start = on_night_start,
+    .set_levels = set_levels,
+    .get_room_occupants = get_room_occupants,
+    .on_hour = on_hour,
+    .on_power_off = on_power_off,
+    .update_power_off = update_power_off
 };
