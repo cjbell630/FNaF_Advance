@@ -39,11 +39,11 @@ Table of Contents
     * [Office breath (Active 2E)](#Office-breath-Active-2E)
     * [Jumpscare animations](#Jumpscare-animations)
 * [Cinematics Timing](#Cinematics-Timing)
-  * [Newspaper](#Newspaper)
-  * [Night intro](#Night-intro)
-  * [Night Complete Screen](#Night-Complete-Screen)
-  * [Death Screen](#Death-Screen)
-  * [Victory Screen](#Victory-Screen)
+    * [Newspaper](#Newspaper)
+    * [Night intro](#Night-intro)
+    * [Night Complete Screen](#Night-Complete-Screen)
+    * [Death Screen](#Death-Screen)
+    * [Victory Screen](#Victory-Screen)
 * [Office Controls](#Office-Controls)
 * [Intervals](#Intervals)
 * [Questions](#Questions)
@@ -99,9 +99,9 @@ The resulting number is then compared to each animatronic's AI level. Movement w
 | **Frequency** |     3.02s/181.2f      |     4.97s/298.2f      |     4.98s/298.8f     |    5.01s/300.6f     |
 
 > NOTE: Multiple animatronics CAN be in the same room at the same time, but only one is displayed.
-> The order is (front layer > back layer): Chica > Bonnie > Freddy 
+> The order is (front layer > back layer): Chica > Bonnie > Freddy
 > (also, Foxy's hall animation will play regardless of whether Bonnie is in the hall)
-> Freddy can never be seen if other animatronics are in the same room as him. 
+> Freddy can never be seen if other animatronics are in the same room as him.
 
 #### Chica and Bonnie
 
@@ -419,6 +419,9 @@ Starts at 12, incremented 1 every 90s/5400f
 Every 1s/60f, pick random number 0-34464 inclusive. If 1, golden freddy is set to appear.
 > NOTE: intended behavior from Scott was 1 in 100000, but due to Clickteam 2.5 random function integer max value, the
 > true odds are 1 in 34464
+> NOTE: This means that if the appearance is triggered, you have 1 second to view it? It doesn't stay triggered all
+> night?
+> NOTE: What happens if the player is looking at 2b and then golden freddy is set to appear? I've never seen him suddenly appear before.
 
 Whenever cam 2b is viewed, if Bonnie is not there and Golden freddy is set to appear (above value=1),
 the poster will be shown, and Golden Freddy will be in the office when the cam is closed.
@@ -454,6 +457,7 @@ down, and Foxy can do both. This means their jumpscare animations run directly f
 ## Cinematics Timing
 
 ### Newspaper
+
 * fade in 2s/120f (continue menu sounds)
 * show 5s/300f
 * fade out 2s/120f
@@ -479,7 +483,7 @@ down, and Foxy can do both. This means their jumpscare animations run directly f
 ### Victory Screen
 
 * fade in 2s/120f (play Freddy's song)
-* show 15s/900f 
+* show 15s/900f
 * fade out 2s/120f
 
 ## Office Controls
