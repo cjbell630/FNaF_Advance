@@ -26,7 +26,7 @@ void golden_freddy_update(bool cams_are_up, enum RoomNames selected_cam) {
     ) {
         vbaprint("Golden Freddy movement opp\n");
         // TODO like this for debug purposes. uncomment the code below eventually
-        if (rnd_max(10/* TODO is this the number I wanna go with? also magic*/)) {
+        if (rnd_max(34464/* TODO is this the number I wanna go with? also magic*/)) {
             AnimatronicGoldenFreddy.room_num = AnimatronicGoldenFreddy.starting_room;
         } else {
             vbaprint("GOLDEN FREDDY TRIGGERED!!!!!!!!!!!!!!\n\n\n\n\n\n\n\n\n\n");
