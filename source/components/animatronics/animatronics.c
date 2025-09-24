@@ -60,14 +60,10 @@ void on_night_start() {
         default: // custom night
             break;
     }
-    BONNIE.room_num = BONNIE.starting_room;
-    FOXY.room_num = FOXY.starting_room;
-    FREDDY.room_num = FREDDY.starting_room;
-    CHICA.room_num = CHICA.starting_room;
-    FOXY.phase = FREDDY.phase = 0;
-    FOXY.timer = FREDDY.timer = 0;
-    BONNIE.close_far = CHICA.close_far = 0;
     FREDDY.on_night_start();
+    BONNIE.on_night_start();
+    CHICA.on_night_start();
+    FOXY.on_night_start();
 }
 
 void update_anims(bool cams_are_up, enum RoomNames selected_cam) {

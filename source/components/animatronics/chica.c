@@ -92,8 +92,14 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
     }
 }
 
+void chica_on_night_start() {
+    CHICA.room_num = CHICA.starting_room;
+    CHICA.close_far = 0;
+}
+
 struct Animatronic CHICA = {
-    .update = update_chica,
+    .update = &update_chica,
     .starting_room = ROOM_STAGE,
-    .timer = -1
+    .timer = -1,
+    .on_night_start = &chica_on_night_start
 };

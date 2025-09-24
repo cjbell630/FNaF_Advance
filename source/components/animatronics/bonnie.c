@@ -101,7 +101,14 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
     }
 }
 
+
+void bonnie_on_night_start() {
+    BONNIE.room_num = BONNIE.starting_room;
+    BONNIE.close_far = 0;
+}
+
 struct Animatronic BONNIE = {
-    .update = update_bonnie,
-    .starting_room = ROOM_STAGE
+    .update = &update_bonnie,
+    .starting_room = ROOM_STAGE,
+    .on_night_start = &bonnie_on_night_start
 };

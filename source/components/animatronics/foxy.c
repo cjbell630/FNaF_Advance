@@ -75,7 +75,14 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
     }
 }
 
+void foxy_on_night_start() {
+    FOXY.room_num = FOXY.starting_room;
+    FOXY.phase = 0;
+    FOXY.timer = 0;
+}
+
 struct Animatronic FOXY = {
     .update = &update_foxy,
-    .starting_room = ROOM_PIRATE
+    .starting_room = ROOM_PIRATE,
+    .on_night_start = &foxy_on_night_start
 };

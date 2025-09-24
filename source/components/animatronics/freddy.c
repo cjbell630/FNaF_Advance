@@ -138,6 +138,9 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
 
 void freddy_on_night_start() {
     FREDDY_TIMER_START = 1000 - (100 * FREDDY.lvl);
+    FREDDY.phase = 0;
+    FREDDY.timer = 0;
+    FREDDY.room_num = FREDDY.starting_room;
 }
 
 struct Animatronic FREDDY = {
