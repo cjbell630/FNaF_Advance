@@ -89,7 +89,7 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
         return;
     }
     if (
-        !frame_multiple(FREDDY_FRAMECOUNT) ||
+        !frame_multiple(AnimatronicFreddy.movement_framecount) ||
         !try_move(&AnimatronicFreddy)
     ) { // if cams are down and not a successful movement opportunity
         if (AnimatronicFreddy.phase == FREDDY_MIGHT_MOVE) {
@@ -146,5 +146,6 @@ void freddy_on_night_start() {
 struct Animatronic AnimatronicFreddy = {
     .update = &update_freddy,
     .starting_room = ROOM_STAGE,
+    .movement_framecount = 181,
     .on_night_start = &freddy_on_night_start
 };

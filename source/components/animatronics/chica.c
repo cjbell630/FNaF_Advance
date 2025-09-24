@@ -40,7 +40,7 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
         }*/
         return;
     }
-    if (!frame_multiple(CHICA_FRAMECOUNT)) {
+    if (!frame_multiple(AnimatronicChica.movement_framecount)) {
         return;
     }
     vbaprint("Chica movement opp\n");
@@ -101,5 +101,6 @@ struct Animatronic AnimatronicChica = {
     .update = &update_chica,
     .starting_room = ROOM_STAGE,
     .timer = -1,
+    .movement_framecount = 299,
     .on_night_start = &chica_on_night_start
 };

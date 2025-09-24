@@ -41,7 +41,7 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
         }*/
         return;
     }
-    if (!frame_multiple(BONNIE_FRAMECOUNT)) {
+    if (!frame_multiple(AnimatronicBonnie.movement_framecount)) {
         return;
     }
     vbaprint("Bonnie movement opp\n"); // TODO debug merge into one if statement
@@ -110,5 +110,6 @@ void bonnie_on_night_start() {
 struct Animatronic AnimatronicBonnie = {
     .update = &update_bonnie,
     .starting_room = ROOM_STAGE,
+    .movement_framecount = 298,
     .on_night_start = &bonnie_on_night_start
 };

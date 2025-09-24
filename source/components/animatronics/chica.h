@@ -2,8 +2,6 @@
 #define FNAF_ADVANCE_CHICA_H
 #include "animatronic.h"
 
-
-#define CHICA_FRAMECOUNT 299
 extern struct Animatronic AnimatronicChica;
 
 #endif //FNAF_ADVANCE_CHICA_H

@@ -14,6 +14,7 @@ struct Animatronic {
     u8 close_far;
     int timer;
     const enum RoomNames starting_room;
+    const int movement_framecount;
 
     //void (*init)();
 

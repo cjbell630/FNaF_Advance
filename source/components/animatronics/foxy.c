@@ -20,7 +20,7 @@ bool foxy_at_cove(bool cams_are_up) {
         AnimatronicFoxy.timer--; // TODO theoretically could overflow but shouldn't
     }
     /* END HANDLE STUN TIMER */
-    if (AnimatronicFoxy.timer < 1 && frame_multiple(FOXY_FRAMECOUNT) && try_move(&AnimatronicFoxy)) {
+    if (AnimatronicFoxy.timer < 1 && frame_multiple(AnimatronicFoxy.movement_framecount) && try_move(&AnimatronicFoxy)) {
         vbaprint("foxy success\n");
         AnimatronicFoxy.phase++;
         return true;
@@ -84,5 +84,6 @@ void foxy_on_night_start() {
 struct Animatronic AnimatronicFoxy = {
     .update = &update_foxy,
     .starting_room = ROOM_PIRATE,
+    .movement_framecount = 300,
     .on_night_start = &foxy_on_night_start
 };
