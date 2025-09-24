@@ -9,6 +9,10 @@
 #include "images/office/office.h"
 #include "DWedit/debug.h"
 #include <stdio.h>
+#include "components/animatronics/bonnie.h"
+#include "components/animatronics/freddy.h"
+#include "components/animatronics/chica.h"
+#include "components/animatronics/foxy.h"
 
 static enum EffectNames room_effects[NUM_ROOMS];
 bool FLICKER = false;
