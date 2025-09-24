@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "components/camera.h"
-#include "components/animatronics/animatronics._controller.h"
+#include "components/animatronics/animatronics_controller.h"
 #include "util/random.h"
 #include "game_clock.h"
 #include "images/sprites/cam_map/cam_map.h"

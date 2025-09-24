@@ -5,7 +5,7 @@
 #include "graphics/cam_img_map.h"
 #include "util/random.h"
 #include "equipment.h"
-#include "animatronics/animatronics._controller.h"
+#include "animatronics/animatronics_controller.h"
 #include "images/office/office.h"
 #include "DWedit/debug.h"
 #include <stdio.h>

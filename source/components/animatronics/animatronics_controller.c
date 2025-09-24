@@ -1,4 +1,4 @@
-#include "animatronics._controller.h"
+#include "animatronics_controller.h"
 #include "animatronic.h"
 #include "DWedit/debug.h"
 #include "util/random.h"
