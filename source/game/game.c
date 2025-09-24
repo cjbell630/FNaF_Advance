@@ -1,14 +1,6 @@
 #include "game.h"
-#include "tonc.h"
-#include "DWedit/debug.h"
-#include "images/office/office.h"
-#include "images/backgrounds/newspaper/newspaper.h"
-#include "images/backgrounds/static/static.h"
-#include "images/backgrounds/loading/loading.h"
 #include <string.h>
 #include <stdlib.h>
-#include "graphics/bg_pal_handler.h"
-#include "graphics/static_handler.h"
 #include "components/camera.h"
 #include "components/animatronics.h"
 #include "util/random.h"
@@ -20,34 +12,14 @@
 #include "components/spooky_effects.h"
 #include "game_state.h"
 #include "components/graphics.h"
-
-const int NEWSPAPER_PB = 1;
-const int NEWSPAPER_CBB = 0;
-const int NEWSPAPER_SBB = 28;
+#include "components/cinematics.h"
 
 void run_newspaper() {
+
     vbaprint("newspaper now\n");
     //show newspaper
+    Cinematics.play_newspaper();
 
-    vbaprint("done showing newspaper palette\n");
-    REG_BG0HOFS = 0;
-    REG_BG0VOFS = 0;        // load newspaper into memory
-    // Load palette
-    load_bg_pal(newspaperPal, newspaperPalLen, NEWSPAPER_PB);
-    set_bg_palbank(NEWSPAPER_PB);
-
-    // Load tiles into CBB 0
-    memcpy(&tile_mem[NEWSPAPER_CBB][0], newspaperTiles, newspaperTilesLen);
-
-    // Load map into SBB 30
-    memcpy(&se_mem[NEWSPAPER_SBB][0], newspaperMap, newspaperMapLen);
-    REG_BG0CNT = BG_CBB(NEWSPAPER_CBB) | BG_SBB(NEWSPAPER_SBB) | BG_4BPP | BG_REG_32x32;
-    REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
-    int timer = 120;
-    while (timer >= 0) {
-        VBlankIntrWait();
-        timer--;
-    }
     GAME_PHASE = NIGHT_INTRO;
 }
 
@@ -57,7 +29,7 @@ void run_newspaper() {
 void run_night_intro() {
     vbaprint("starting now\n");
 
-    //TODO show night intro screen
+    Cinematics.play_night_intro();
 
     /* INIT COMPONENTS */
     Animatronics.on_night_start();
@@ -139,7 +111,9 @@ void run_jumpscare() {
  */
 void run_death() {
     // TODO death
-    vbaprint("\n\n\n\n\n\nYOU DIED\n\n\n\n\n");
+
+    Cinematics.play_night_death();
+
     GAME_PHASE = MENU_HOME;
 }
 
@@ -151,12 +125,14 @@ void run_death() {
  */
 void run_victory() {
     // TODO show 6am screen
-    vbaprint("\n\n\n\n\n\n6AM!!!!!!\n\n\n\n\n");
     if (NIGHT_NUM < 5) { // if night is 1,2,3,or4, proceed to next night
         NIGHT_NUM++; // set next night
         GAME_PHASE = NIGHT_INTRO; // set the game to show the intro
         return;
     }
+
+    Cinematics.play_night_victory();
+
 
     // if night is 5,6,or7
     switch (NIGHT_NUM) {
