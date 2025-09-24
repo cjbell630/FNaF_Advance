@@ -2,7 +2,7 @@
 #include "DWedit/debug.h"
 #include "menu.h"
 #include "game_state.h"
-#include "game/game.h"
+#include "game/game_loop.h"
 
 //OBJ_AFFINE *obj_aff_buffer = (OBJ_AFFINE *) obj_buffer;
 

@@ -1,4 +1,4 @@
-#include "game.h"
+#include "game_loop.h"
 #include <string.h>
 #include <stdlib.h>
 #include "components/camera.h"
