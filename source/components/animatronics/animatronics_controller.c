@@ -30,10 +30,10 @@ enum FreddyPowerOffPhases {
 
 /*  COLLECTIVE  */
 void set_levels(int fr_lvl, int b_lvl, int c_lvl, int fo_lvl) { // TODO make these orders consistent or something please
-    BONNIE.lvl = b_lvl;
-    FREDDY.lvl = fr_lvl;
-    CHICA.lvl = c_lvl;
-    FOXY.lvl = fo_lvl;
+    AnimatronicBonnie.lvl = b_lvl;
+    AnimatronicFreddy.lvl = fr_lvl;
+    AnimatronicChica.lvl = c_lvl;
+    AnimatronicFoxy.lvl = fo_lvl;
 }
 
 void on_night_start() {
@@ -60,46 +60,46 @@ void on_night_start() {
         default: // custom night
             break;
     }
-    FREDDY.on_night_start();
-    BONNIE.on_night_start();
-    CHICA.on_night_start();
-    FOXY.on_night_start();
+    AnimatronicFreddy.on_night_start();
+    AnimatronicBonnie.on_night_start();
+    AnimatronicChica.on_night_start();
+    AnimatronicFoxy.on_night_start();
 }
 
 void update_anims(bool cams_are_up, enum RoomNames selected_cam) {
     // TODO can I put them in a list or something and do for each, and then say if frame mult of internal attribute
-    BONNIE.update(cams_are_up, selected_cam);
-    FREDDY.update(cams_are_up, selected_cam);
-    CHICA.update(cams_are_up, selected_cam);
-    FOXY.update(cams_are_up, selected_cam);
+    AnimatronicBonnie.update(cams_are_up, selected_cam);
+    AnimatronicFreddy.update(cams_are_up, selected_cam);
+    AnimatronicChica.update(cams_are_up, selected_cam);
+    AnimatronicFoxy.update(cams_are_up, selected_cam);
 }
 
 void update_power_off() {
     // TODO this could be relegated to the game loop to reduce checks, but it might make the loop code a bit messy
     // TODO magic numbers
-    FREDDY.timer--;
-    switch (FREDDY.phase) {
+    AnimatronicFreddy.timer--;
+    switch (AnimatronicFreddy.phase) {
         case FREDDY_POWEROFF_WAITING:
             // TODO this could cause freddy to immediately show his face on power down;
             // is there a guaranteed 5 seconds before the checks begin?
-            if (FREDDY.timer < 1 || (frame_multiple(300) && rnd_max(5) == 0)) {
-                FREDDY.phase++;
-                FREDDY.timer = 1200;
+            if (AnimatronicFreddy.timer < 1 || (frame_multiple(300) && rnd_max(5) == 0)) {
+                AnimatronicFreddy.phase++;
+                AnimatronicFreddy.timer = 1200;
                 vbaprint("Freddy face is now visible and music box is playing\n");
                 // TODO trigger visual audio etc
             }
             break;
         case FREDDY_POWEROFF_MUSIC_BOX:
             // TODO trigger freddy face update
-            if (FREDDY.timer < 1 || (frame_multiple(300) && rnd_max(5) == 0)) {
-                FREDDY.phase++;
-                FREDDY.timer = 1200;
+            if (AnimatronicFreddy.timer < 1 || (frame_multiple(300) && rnd_max(5) == 0)) {
+                AnimatronicFreddy.phase++;
+                AnimatronicFreddy.timer = 1200;
                 vbaprint("Full blackout now\n");
                 // TODO trigger visual audio etc
             }
             break;
         case FREDDY_POWEROFF_BLACKOUT:
-            if (FREDDY.timer < 1 || (frame_multiple(120) && rnd_max(5) == 0)) {
+            if (AnimatronicFreddy.timer < 1 || (frame_multiple(120) && rnd_max(5) == 0)) {
                 trigger_jumpscare(JUMPSCARE_FREDDY_POWER, false);
             }
             break;
@@ -114,14 +114,14 @@ void update_power_off() {
 void on_hour(int hour) {
     switch (hour) {
         case 2:
-            BONNIE.lvl++;
+            AnimatronicBonnie.lvl++;
             vbaprint("bonnie level increased\n");
             break;
         case 3:
         case 4:
-            BONNIE.lvl++;
-            FOXY.lvl++;
-            CHICA.lvl++;
+            AnimatronicBonnie.lvl++;
+            AnimatronicFoxy.lvl++;
+            AnimatronicChica.lvl++;
             vbaprint("bonnie, foxy, and chica levels increased\n");
             break;
         default:
@@ -130,14 +130,14 @@ void on_hour(int hour) {
 }
 
 void on_power_off() {
-    FREDDY.phase = FREDDY_POWEROFF_WAITING;
-    FREDDY.timer = 1200;
+    AnimatronicFreddy.phase = FREDDY_POWEROFF_WAITING;
+    AnimatronicFreddy.timer = 1200;
 }
 
 // TODO define this in camera.c?
 u8 get_room_occupants(enum RoomNames room) {
-    return ((FOXY.room_num == room) << 3) | ((CHICA.room_num == room) << 2) |
-           ((BONNIE.room_num == room) << 1) | (FREDDY.room_num == room);
+    return ((AnimatronicFoxy.room_num == room) << 3) | ((AnimatronicChica.room_num == room) << 2) |
+           ((AnimatronicBonnie.room_num == room) << 1) | (AnimatronicFreddy.room_num == room);
 }
 
 struct AnimatronicsWrapper Animatronics = {

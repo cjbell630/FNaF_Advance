@@ -2,7 +2,7 @@
 #define FNAF_ADVANCE_FREDDY_H
 #include "animatronic.h"
 
-extern struct Animatronic FREDDY;
+extern struct Animatronic AnimatronicFreddy;
 #define FREDDY_FRAMECOUNT 181
 
 #endif //FNAF_ADVANCE_FREDDY_H

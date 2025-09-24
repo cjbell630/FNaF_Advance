@@ -51,12 +51,12 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
                                       roll_stage_freddy : 0;
             break;
         case ROOM_DINING:
-            room_effects[room_name] = CHICA.room_num == room_name ? CHICA.close_far :
-                                      BONNIE.room_num == room_name ? BONNIE.close_far :
+            room_effects[room_name] = AnimatronicChica.room_num == room_name ? AnimatronicChica.close_far :
+                                      AnimatronicBonnie.room_num == room_name ? AnimatronicBonnie.close_far :
                                       0;// TODO remove direct call to BONNIE and CHICA
             break;
         case ROOM_PIRATE:
-            room_effects[room_name] = FOXY.room_num == room_name ? FOXY.phase :
+            room_effects[room_name] = AnimatronicFoxy.room_num == room_name ? AnimatronicFoxy.phase :
                                       roll_pirate_empty; // TODO remove direct call to FOXY
             break;
         case ROOM_WEST:
@@ -68,7 +68,7 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
         case ROOM_EAST:
             occupants = Animatronics.get_room_occupants(room_name);
             room_effects[room_name] = occupants == OCCUPANTS_EMPTY ? roll_east_empty :
-                                      CHICA.room_num == room_name ? CHICA.close_far :
+                                      AnimatronicChica.room_num == room_name ? AnimatronicChica.close_far :
                                       0;
             break;
         case ROOM_EAST_CORNER:
@@ -82,7 +82,7 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
         case ROOM_KITCHEN:
             break;
         case ROOM_RESTROOMS:
-            room_effects[room_name] = CHICA.room_num == room_name ? CHICA.close_far :
+            room_effects[room_name] = AnimatronicChica.room_num == room_name ? AnimatronicChica.close_far :
                                       0;// TODO remove direct call to CHICA
             break;
         case ROOM_OFFICE:

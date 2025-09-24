@@ -8,30 +8,30 @@
 
 // TODO make this less cringe
 void bonnie_move(enum RoomNames room, bool cams_are_up, enum RoomNames selected_cam) {
-    if (cams_are_up && (selected_cam == room || selected_cam == BONNIE.room_num)) {
+    if (cams_are_up && (selected_cam == room || selected_cam == AnimatronicBonnie.room_num)) {
         Graphics.stun_cams(selected_cam);
     }
-    BONNIE.close_far = room == ROOM_DINING ? rnd_max(2) : 0;
-    BONNIE.room_num = room;
+    AnimatronicBonnie.close_far = room == ROOM_DINING ? rnd_max(2) : 0;
+    AnimatronicBonnie.room_num = room;
 }
 
 /*  BONNIE  */
 
 // TODO this and chicas code are so similar, combine them somehow
 void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
-    if (BONNIE.room_num == ROOM_OFFICE) {
-        if (BONNIE.timer == -1) { // if the cams have not been lifted since bonnie got in the office
+    if (AnimatronicBonnie.room_num == ROOM_OFFICE) {
+        if (AnimatronicBonnie.timer == -1) { // if the cams have not been lifted since bonnie got in the office
             if (cams_are_up) {
-                BONNIE.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
+                AnimatronicBonnie.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
             }
             return;
         }
-        if (BONNIE.timer < 1 || !cams_are_up) { // if the timer has been set, and has reached 0 or the cams are down
+        if (AnimatronicBonnie.timer < 1 || !cams_are_up) { // if the timer has been set, and has reached 0 or the cams are down
             trigger_jumpscare(JUMPSCARE_BONNIE, cams_are_up);
             return;
         }
         // if the cams are up and the timer is ticking
-        BONNIE.timer--;
+        AnimatronicBonnie.timer--;
 
         /*
          * TODO option 1: check if cams are down here, and trigger jumpscare
@@ -45,12 +45,12 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
         return;
     }
     vbaprint("Bonnie movement opp\n"); // TODO debug merge into one if statement
-    if (!try_move(&BONNIE)) {
+    if (!try_move(&AnimatronicBonnie)) {
         return;
     }
     vbaprint("bonnie success\n");
 
-    switch (BONNIE.room_num) {
+    switch (AnimatronicBonnie.room_num) {
         case ROOM_STAGE:
             bonnie_move(rnd_max(2) ? ROOM_BACKSTAGE : ROOM_DINING, cams_are_up, selected_cam);
             break;
@@ -88,12 +88,12 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
                 bonnie_move(ROOM_DINING, cams_are_up, selected_cam);
                 Equipment.force_light_off(LEFT_LIGHT);
             } else {
-                BONNIE.room_num = ROOM_OFFICE;
+                AnimatronicBonnie.room_num = ROOM_OFFICE;
                 Equipment.disable(LEFT_LIGHT);
                 Equipment.disable(LEFT_DOOR);
                 // TODO initiate in office phase
                 vbaprint("bonnie in office!!\n");
-                BONNIE.timer = -1;
+                AnimatronicBonnie.timer = -1;
             }
             break;
         default:
@@ -103,11 +103,11 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
 
 
 void bonnie_on_night_start() {
-    BONNIE.room_num = BONNIE.starting_room;
-    BONNIE.close_far = 0;
+    AnimatronicBonnie.room_num = AnimatronicBonnie.starting_room;
+    AnimatronicBonnie.close_far = 0;
 }
 
-struct Animatronic BONNIE = {
+struct Animatronic AnimatronicBonnie = {
     .update = &update_bonnie,
     .starting_room = ROOM_STAGE,
     .on_night_start = &bonnie_on_night_start

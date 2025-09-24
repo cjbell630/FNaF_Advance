@@ -20,22 +20,22 @@ int FREDDY_TIMER_START;
 /*  FREDDY  */
 
 void move_freddy() {
-    switch (FREDDY.room_num) {
+    switch (AnimatronicFreddy.room_num) {
         case ROOM_STAGE:
-            FREDDY.room_num = ROOM_DINING;
+            AnimatronicFreddy.room_num = ROOM_DINING;
             break;
         case ROOM_DINING:
-            FREDDY.room_num = ROOM_RESTROOMS;
+            AnimatronicFreddy.room_num = ROOM_RESTROOMS;
             break;
         case ROOM_RESTROOMS:
-            FREDDY.room_num = ROOM_KITCHEN;
+            AnimatronicFreddy.room_num = ROOM_KITCHEN;
             break;
         case ROOM_KITCHEN:
-            FREDDY.room_num = ROOM_EAST;
+            AnimatronicFreddy.room_num = ROOM_EAST;
             break;
         case ROOM_EAST:
-            FREDDY.room_num = ROOM_EAST_CORNER;
-            FREDDY.phase = FREDDY_EAST_CORNER;
+            AnimatronicFreddy.room_num = ROOM_EAST_CORNER;
+            AnimatronicFreddy.phase = FREDDY_EAST_CORNER;
             vbaprint("Freddy in the east corner\n");
             break;
         default:
@@ -44,43 +44,43 @@ void move_freddy() {
 }
 
 void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
-    if (FREDDY.room_num == ROOM_OFFICE) {
+    if (AnimatronicFreddy.room_num == ROOM_OFFICE) {
         if (cams_are_up) {
-            FREDDY.timer = 60; // TODO magic number: 1s/60f timer for jumpscares
+            AnimatronicFreddy.timer = 60; // TODO magic number: 1s/60f timer for jumpscares
             // TODO kinda unnecessary to reset every frame but that's how the og game is written
             return;
         }
-        if (0 < FREDDY.timer) { // if timer is still ticking down
-            FREDDY.timer--;
+        if (0 < AnimatronicFreddy.timer) { // if timer is still ticking down
+            AnimatronicFreddy.timer--;
             return;
         }
         if (rnd_max(5) == 0) {
             trigger_jumpscare(JUMPSCARE_FREDDY_STD, cams_are_up);
             return;
         }
-        FREDDY.timer = 60;
+        AnimatronicFreddy.timer = 60;
         return;
     }
     if (cams_are_up) { // if cams are up and not a movement opportunity
-        switch (FREDDY.phase) {
+        switch (AnimatronicFreddy.phase) {
             case FREDDY_MIGHT_MOVE:
                 // reset timer if he is being looked at
-                if (selected_cam == FREDDY.room_num) {
-                    FREDDY.timer = FREDDY_TIMER_START; // TODO same as Foxy this could just be set when cams are closed
+                if (selected_cam == AnimatronicFreddy.room_num) {
+                    AnimatronicFreddy.timer = FREDDY_TIMER_START; // TODO same as Foxy this could just be set when cams are closed
                 } else {
-                    FREDDY.timer--;
+                    AnimatronicFreddy.timer--;
                 }
                 break;
             case FREDDY_READY_TO_ATTACK:
                 if (selected_cam != ROOM_EAST_CORNER) {
                     vbaprint("Freddy attacking\n");
                     if (Equipment.is_on(RIGHT_DOOR)) { // if door is closed
-                        FREDDY.room_num = ROOM_EAST;
+                        AnimatronicFreddy.room_num = ROOM_EAST;
                     } else {
-                        FREDDY.room_num = ROOM_OFFICE;
-                        FREDDY.timer = 60; // TODO magic number: 1s/60f timer for jumpscares
+                        AnimatronicFreddy.room_num = ROOM_OFFICE;
+                        AnimatronicFreddy.timer = 60; // TODO magic number: 1s/60f timer for jumpscares
                     }
-                    FREDDY.phase = FREDDY_WONT_MOVE;
+                    AnimatronicFreddy.phase = FREDDY_WONT_MOVE;
                 }
                 break;
             default:
@@ -90,10 +90,10 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
     }
     if (
         !frame_multiple(FREDDY_FRAMECOUNT) ||
-        !try_move(&FREDDY)
+        !try_move(&AnimatronicFreddy)
     ) { // if cams are down and not a successful movement opportunity
-        if (FREDDY.phase == FREDDY_MIGHT_MOVE) {
-            FREDDY.timer--;
+        if (AnimatronicFreddy.phase == FREDDY_MIGHT_MOVE) {
+            AnimatronicFreddy.timer--;
         }
         return;
     }
@@ -103,47 +103,47 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
     vbaprint("Freddy success\n");
 
 
-    switch (FREDDY.phase) {
+    switch (AnimatronicFreddy.phase) {
         case FREDDY_SLEEPING: // TODO confirm this logic
-            if (BONNIE.room_num != ROOM_STAGE && CHICA.room_num != ROOM_STAGE) {
-                FREDDY.phase = FREDDY_MIGHT_MOVE;
-                FREDDY.timer = FREDDY_TIMER_START;
+            if (AnimatronicBonnie.room_num != ROOM_STAGE && AnimatronicChica.room_num != ROOM_STAGE) {
+                AnimatronicFreddy.phase = FREDDY_MIGHT_MOVE;
+                AnimatronicFreddy.timer = FREDDY_TIMER_START;
                 vbaprint("Freddy is awake\n");
             }
             break;
         case FREDDY_WONT_MOVE:
-            FREDDY.phase = FREDDY_MIGHT_MOVE;
-            FREDDY.timer = FREDDY_TIMER_START;
+            AnimatronicFreddy.phase = FREDDY_MIGHT_MOVE;
+            AnimatronicFreddy.timer = FREDDY_TIMER_START;
             vbaprint("Freddy might move\n");
             break;
         case FREDDY_MIGHT_MOVE:
-            FREDDY.timer--;
-            if (FREDDY.timer < 1) {
-                FREDDY.phase = FREDDY_WILL_MOVE;
+            AnimatronicFreddy.timer--;
+            if (AnimatronicFreddy.timer < 1) {
+                AnimatronicFreddy.phase = FREDDY_WILL_MOVE;
                 vbaprint("Freddy will move\n");
             }
             break;
         case FREDDY_WILL_MOVE:
             vbaprint("Freddy moved\n");
-            FREDDY.phase = FREDDY_WONT_MOVE; // do this before moving bc moving to east corner overwrites his phase
+            AnimatronicFreddy.phase = FREDDY_WONT_MOVE; // do this before moving bc moving to east corner overwrites his phase
             move_freddy();
             break;
         case FREDDY_EAST_CORNER:
             vbaprint("Freddy ready to attack\n");
-            FREDDY.phase = FREDDY_READY_TO_ATTACK;
+            AnimatronicFreddy.phase = FREDDY_READY_TO_ATTACK;
         default:
             break;
     }
 }
 
 void freddy_on_night_start() {
-    FREDDY_TIMER_START = 1000 - (100 * FREDDY.lvl);
-    FREDDY.phase = 0;
-    FREDDY.timer = 0;
-    FREDDY.room_num = FREDDY.starting_room;
+    FREDDY_TIMER_START = 1000 - (100 * AnimatronicFreddy.lvl);
+    AnimatronicFreddy.phase = 0;
+    AnimatronicFreddy.timer = 0;
+    AnimatronicFreddy.room_num = AnimatronicFreddy.starting_room;
 }
 
-struct Animatronic FREDDY = {
+struct Animatronic AnimatronicFreddy = {
     .update = &update_freddy,
     .starting_room = ROOM_STAGE,
     .on_night_start = &freddy_on_night_start

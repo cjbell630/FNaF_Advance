@@ -7,30 +7,30 @@
 #include "components/graphics.h"
 
 void chica_move(enum RoomNames room, bool cams_are_up, enum RoomNames selected_cam) {
-    if (cams_are_up && (selected_cam == room || selected_cam == CHICA.room_num)) {
+    if (cams_are_up && (selected_cam == room || selected_cam == AnimatronicChica.room_num)) {
         Graphics.stun_cams(selected_cam);
     }
-    CHICA.close_far = (room == ROOM_DINING || room == ROOM_EAST || room == ROOM_RESTROOMS) ? rnd_max(2) : 0;
-    CHICA.room_num = room;
+    AnimatronicChica.close_far = (room == ROOM_DINING || room == ROOM_EAST || room == ROOM_RESTROOMS) ? rnd_max(2) : 0;
+    AnimatronicChica.room_num = room;
 }
 
 /*  CHICA  */
 
 // TODO this and chicas code are so similar, combine them somehow
 void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
-    if (CHICA.room_num == ROOM_OFFICE) {
-        if (CHICA.timer == -1) { // if the cams have not been lifted since chica got in the office
+    if (AnimatronicChica.room_num == ROOM_OFFICE) {
+        if (AnimatronicChica.timer == -1) { // if the cams have not been lifted since chica got in the office
             if (cams_are_up) {
-                CHICA.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
+                AnimatronicChica.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
             }
             return;
         }
-        if (CHICA.timer < 1 || !cams_are_up) { // if the timer has been set, and has reached 0 or the cams are down
+        if (AnimatronicChica.timer < 1 || !cams_are_up) { // if the timer has been set, and has reached 0 or the cams are down
             trigger_jumpscare(JUMPSCARE_CHICA, cams_are_up);
             return;
         }
         // if the cams are up and the timer is ticking
-        CHICA.timer--;
+        AnimatronicChica.timer--;
 
         /*
          * TODO option 1: check if cams are down here, and trigger jumpscare
@@ -44,12 +44,12 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
         return;
     }
     vbaprint("Chica movement opp\n");
-    if (!try_move(&CHICA)) { // TODO debug merge into one if statement
+    if (!try_move(&AnimatronicChica)) { // TODO debug merge into one if statement
         return;
     }
     vbaprint("chica success\n");
 
-    switch (CHICA.room_num) {
+    switch (AnimatronicChica.room_num) {
         case ROOM_STAGE:
             chica_move(ROOM_DINING, cams_are_up, selected_cam);
             break;
@@ -84,7 +84,7 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
                 Equipment.disable(RIGHT_LIGHT);
                 Equipment.disable(RIGHT_DOOR);
                 // TODO initiate in office phase
-                CHICA.timer = -1; // ensure timer is reset
+                AnimatronicChica.timer = -1; // ensure timer is reset
             }
             break;
         default:
@@ -93,11 +93,11 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
 }
 
 void chica_on_night_start() {
-    CHICA.room_num = CHICA.starting_room;
-    CHICA.close_far = 0;
+    AnimatronicChica.room_num = AnimatronicChica.starting_room;
+    AnimatronicChica.close_far = 0;
 }
 
-struct Animatronic CHICA = {
+struct Animatronic AnimatronicChica = {
     .update = &update_chica,
     .starting_room = ROOM_STAGE,
     .timer = -1,

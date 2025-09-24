@@ -6,7 +6,7 @@
 //TODO move these to another file about anim identities
 // or make it an attribute of Animatronic?
 #define FOXY_FRAMECOUNT 300
-extern struct Animatronic FOXY;
+extern struct Animatronic AnimatronicFoxy;
 
 
 #endif //FNAF_ADVANCE_FOXY_H
