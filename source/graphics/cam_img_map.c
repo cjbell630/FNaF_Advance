@@ -43,7 +43,7 @@
 
 #include "game/room_names.h"
 #include "components/spooky_effects.h"
-#include "components/animatronics.h"
+#include "components/animatronics/animatronics.h"
 #include "images/cams/closet/closet_empty.h"
 #include "images/cams/closet/closet_b.h"
 #include "images/cams/restroom/restrooms_c_s.h"

@@ -3,7 +3,7 @@
 #include "util/util.h"
 #include "components/camera.h"
 #include "graphics/static_handler.h"
-#include "components/animatronics.h"
+#include "components/animatronics/animatronics.h"
 #include "components/power.h"
 #include "components/equipment.h"
 #include "components/spooky_effects.h"

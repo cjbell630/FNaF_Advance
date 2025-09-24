@@ -4,9 +4,9 @@
 #include "util/util.h"
 #include "game/room_names.h"
 #include "game_state.h"
-#include "equipment.h"
-#include "graphics.h"
-#include "power.h"
+#include "components/equipment.h"
+#include "components/graphics.h"
+#include "components/power.h"
 #include <stdio.h>
 
 /* PREREQS */
