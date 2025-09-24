@@ -37,6 +37,13 @@ Table of Contents
     * [Game Over Golden Freddy Jumpscare](#Game-Over-Golden-Freddy-Jumpscare)
     * [Rare Bonnie Jumpscare](#Rare-Bonnie-Jumpscare)
     * [Office breath (Active 2E)](#Office-breath-Active-2E)
+    * [Jumpscare animations](#Jumpscare-animations)
+* [Cinematics Timing](#Cinematics-Timing)
+  * [Newspaper](#Newspaper)
+  * [Night intro](#Night-intro)
+  * [Night Complete Screen](#Night-Complete-Screen)
+  * [Death Screen](#Death-Screen)
+  * [Victory Screen](#Victory-Screen)
 * [Office Controls](#Office-Controls)
 * [Intervals](#Intervals)
 * [Questions](#Questions)
@@ -443,6 +450,33 @@ there is a 1/3 chance a (random?) raspy breath sound plays
 
 Bonnie and Chica can only jumpscare you when the cameras are up. However, Freddy can only jumpscare when the cams are
 down, and Foxy can do both. This means their jumpscare animations run directly from the office background image.
+
+## Cinematics Timing
+
+### Newspaper
+* fade in 2s/120f
+* show 5s/300f
+* fade out 2s/120f
+
+### Night intro
+
+* show 2s/120f
+* fade out 1s/60f
+
+### Night Complete Screen
+
+* fade in 1s/60f
+* scroll 5s/300f
+* show 3s/180f
+* fade out 1s/60f
+
+### Death Screen
+
+* show static 10s/600f
+* fade in death screen 1s/60f
+* show death screen 10s/600f
+
+### Victory Screen
 
 ## Office Controls
 
