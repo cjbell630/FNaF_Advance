@@ -454,29 +454,33 @@ down, and Foxy can do both. This means their jumpscare animations run directly f
 ## Cinematics Timing
 
 ### Newspaper
-* fade in 2s/120f
+* fade in 2s/120f (continue menu sounds)
 * show 5s/300f
 * fade out 2s/120f
 
 ### Night intro
 
-* show 2s/120f
+* show 2s/120f (play flicker, flicker sound)
 * fade out 1s/60f
 
 ### Night Complete Screen
 
-* fade in 1s/60f
+* fade in 1s/60f (play victory sound)
 * scroll 5s/300f
 * show 3s/180f
 * fade out 1s/60f
 
 ### Death Screen
 
-* show static 10s/600f
-* fade in death screen 1s/60f
+* show static 10s/600f (play static sound)
+* fade in death screen 1s/60f (pause static, stop static sound)
 * show death screen 10s/600f
 
 ### Victory Screen
+
+* fade in 2s/120f (play Freddy's song)
+* show 15s/900f 
+* fade out 2s/120f
 
 ## Office Controls
 
