@@ -20,6 +20,8 @@ struct Animatronic {
 
     void (*update)(bool cams_are_up, enum RoomNames selected_cam);
     void (*on_night_start)();
+    void (*on_cams_down)();
+    void (*on_cams_up)();
 };
 
 bool try_move(struct Animatronic *anim);

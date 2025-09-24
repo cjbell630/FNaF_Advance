@@ -13,6 +13,7 @@
 #include "bonnie.h"
 #include "freddy.h"
 #include "chica.h"
+#include "golden_freddy.h"
 
 /* PREREQS */
 // some functions in this file use the frame_multiple and NIGHT_NUM globals
@@ -64,6 +65,7 @@ void on_night_start() {
     AnimatronicBonnie.on_night_start();
     AnimatronicChica.on_night_start();
     AnimatronicFoxy.on_night_start();
+    AnimatronicGoldenFreddy.on_night_start();
 }
 
 void update_anims(bool cams_are_up, enum RoomNames selected_cam) {
@@ -72,6 +74,7 @@ void update_anims(bool cams_are_up, enum RoomNames selected_cam) {
     AnimatronicFreddy.update(cams_are_up, selected_cam);
     AnimatronicChica.update(cams_are_up, selected_cam);
     AnimatronicFoxy.update(cams_are_up, selected_cam);
+    AnimatronicGoldenFreddy.update(cams_are_up, selected_cam);
 }
 
 void update_power_off() {
@@ -140,6 +143,14 @@ u8 get_room_occupants(enum RoomNames room) {
            ((AnimatronicBonnie.room_num == room) << 1) | (AnimatronicFreddy.room_num == room);
 }
 
+void animatronics_on_cams_up() {
+    AnimatronicGoldenFreddy.on_cams_up();
+}
+
+void animatronics_on_cams_down() {
+    AnimatronicGoldenFreddy.on_cams_down();
+}
+
 struct AnimatronicsWrapper Animatronics = {
     .update = update_anims,
     .on_night_start = on_night_start,
@@ -147,5 +158,7 @@ struct AnimatronicsWrapper Animatronics = {
     .get_room_occupants = get_room_occupants,
     .on_hour = on_hour,
     .on_power_off = on_power_off,
-    .update_power_off = update_power_off
+    .on_cams_up = &animatronics_on_cams_up,
+    .on_cams_down = &animatronics_on_cams_down,
+    .update_power_off = update_power_off,
 };

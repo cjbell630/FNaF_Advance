@@ -9,6 +9,7 @@
 #include "graphics.h"
 #include "game_state.h"
 #include "spooky_effects.h"
+#include "animatronics/animatronics_controller.h"
 
 #define SHOULD_PAN(n) (n != ROOM_CLOSET && n != ROOM_KITCHEN)
 
@@ -43,6 +44,7 @@ void cam_select_room(enum RoomNames room) {
 
 void set_cam_display_visible() {
     SpookyEffects.on_cam_up();
+    Animatronics.on_cams_up();
     Graphics.game_display_cams();
     cam_select_room(CURR_CAM);
 }

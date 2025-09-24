@@ -4,6 +4,7 @@
 #include "game/cam_nav.h"
 #include "DWedit/debug.h"
 #include "graphics.h"
+#include "animatronics/animatronics_controller.h"
 
 // TODO move this to graphics
 const u8 SPEED_SCALE = 3;
@@ -105,6 +106,7 @@ void controls_cam() {
         // TODO this doesn't really need to be toggle tho, esp since there are no side effects of disabling camera
         Equipment.toggle(CAMERA);
         Graphics.game_display_office();
+        Animatronics.on_cams_down();
         return;
     }
     navigate_cams(

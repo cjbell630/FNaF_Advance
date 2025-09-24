@@ -31,6 +31,8 @@ struct AnimatronicsWrapper {
     void (*on_hour)(int hour);
 
     void (*on_power_off)();
+    void (*on_cams_down)();
+    void (*on_cams_up)();
 
     void (*set_levels)(int b_lvl, int c_lvl, int fr_lvl, int fo_lvl); // NOTE keep for custom night
     u8 (*get_room_occupants)(enum RoomNames room);

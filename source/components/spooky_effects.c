@@ -9,6 +9,8 @@
 #include "images/office/office.h"
 #include "DWedit/debug.h"
 #include <stdio.h>
+
+#include "animatronics/golden_freddy.h"
 #include "components/animatronics/bonnie.h"
 #include "components/animatronics/freddy.h"
 #include "components/animatronics/chica.h"
@@ -62,6 +64,9 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
         case ROOM_WEST:
             break;
         case ROOM_WEST_CORNER:
+            occupants = Animatronics.get_room_occupants(room_name);
+            room_effects[room_name] = (AnimatronicGoldenFreddy.room_num == ROOM_WEST_CORNER || AnimatronicGoldenFreddy.room_num == ROOM_OFFICE) && occupants == OCCUPANTS_EMPTY;
+            // TODO be careful about this
             break;
         case ROOM_CLOSET:
             break;
