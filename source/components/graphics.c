@@ -5,13 +5,12 @@
 #include "images/sprites/cam_map/cam_map.h"
 #include "DWedit/debug.h"
 #include "graphics/cam_img_map.h"
-#include "images/effects/cam_blip_test.h"
 #include "graphics/frames.h"
 #include "images/office/door/l_door.h"
 #include "images/office/door/r_door.h"
 #include "images/office/office.h"
+#include "graphics/effects/cam_blip.h"
 
-int BLIP_TIMER;
 
 /* BUFFERS */
 // OBJ_ATTR OBJ_BUFFER[128];
@@ -44,14 +43,11 @@ const int CAM_CBB = 1;
 const int CAM_SBB = 22;*/
 const int MAIN_CBB = 0;
 const int MAIN_SBB = 30;
-const int BLIP_CBB = 3;
-const int BLIP_SBB = 25;
 const int MAP_TILE_START = 50;
 const u16 LDOOR_TILE_START = 128;
 const u16 RDOOR_TILE_START = LDOOR_TILE_START + 160;
 const u8 L_DOOR_PALBANK = 1;
 const u8 R_DOOR_PALBANK = 2; // TODO make them use the same pallette
-const u8 BLIP_PALBANK = 15;
 #define DOOR_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE
 #define DOOR2_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_WIDE
 #define LAYER_0 3
@@ -186,8 +182,7 @@ void init_objects() {
 void init_backgrounds() {
     //unsigned short colors[2] = {0x0000, 0x7FFF,};
     //memcpy(&pal_bg_mem[0], &colors, 4);
-    REG_BG3CNT = BG_PRIO(LAYER_2) | BG_CBB(BLIP_CBB) | BG_SBB(BLIP_SBB) | BG_8BPP | BG_REG_32x32;
-    // TODO 4BPP PB Blip palbank
+    CamBlipEffect.init();
     REG_BG3HOFS = 0;
 
     // TODO might need to reaffirm this in switching functions
@@ -210,12 +205,11 @@ void graphics_switch_to_cams() {
     obj_hide(r_door0);
     obj_hide(r_door1);
     obj_hide(r_door2);
-    memcpy(&tile_mem[BLIP_CBB], &cam_blip_testTiles, cam_blip_testTilesLen);
-    // TODO memcpy(&pal_bg_bank[BLIP_PALBANK], &cam_blip_testPal, cam_blip_testPalLen);
+    CamBlipEffect.load();
     //TODO: shouldn't have to do this every time, but setting
     REG_DISPCNT = cam_stun_timer ? cams_stun_dispcnt : cams_dispcnt;
     // TODO set static opacity based on cam stun level
-    BLIP_TIMER = 0;
+    CamBlipEffect.reset();
 }
 
 void graphics_switch_to_office() {
@@ -257,7 +251,7 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
     Frame cid = get_cam_img_data(new_room);
 
     load_frame(&cid, MAIN_CBB, MAIN_SBB);
-    BLIP_TIMER = blip_frames_len;
+    CamBlipEffect.start();
 }
 
 
@@ -294,14 +288,7 @@ void graphics_on_room_visual_change(Frame *new_frame) {
 }
 
 void graphics_update_cam() {
-    if (BLIP_TIMER >= 0) {
-        Frame *frame = blip_frames[BLIP_TIMER];
-        //memset(&se_mem[BLIP_SBB], 0, 1280*8);
-        //memset((SE *)0x0600CCC0, 0, 1280*8);
-        dma3_cpy(&se_mem[BLIP_SBB], frame->screen_entry, 1280);
-        REG_BG3VOFS = frame->vertical_offset;
-        BLIP_TIMER--;
-    }
+    CamBlipEffect.update();
 
     if (cam_stun_timer) {
         cam_stun_timer--;
