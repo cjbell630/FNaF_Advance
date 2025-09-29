@@ -4,6 +4,7 @@ out/* linguist-generated
 assets/**/*.[chs] linguist-generated
 assets/**/**/*.[chs] linguist-generated
 assets/**/**/**/*.[chs] linguist-generated
+assets/**/**/**/**/*.[chs] linguist-generated
+assets/**/**/**/**/**/*.[chs] linguist-generated
 
-include/tonc/* linguist-vendored
 include/DWedit/* linguist-vendored
