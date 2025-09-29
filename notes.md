@@ -5,6 +5,8 @@
 * [Fnaf 1 Decompiled: Frame by Frame (imgur, pastebin, pastebin)][2]
 * [Easter Egg Chances Video][4]
 * [Tech Rules YT Video][1] (contains a lot of inaccurate information)
+* [Golden Freddy notes][6]
+* [Golden Freddy appearing live][5]
 
 Table of Contents
 =================
@@ -416,12 +418,12 @@ Starts at 12, incremented 1 every 90s/5400f
 
 ### Golden Freddy
 
-Every 1s/60f, pick random number 0-34464 inclusive. If 1, golden freddy is set to appear.
+Every 1s/60f, pick random number 0-34464 inclusive. If 1, set Golden Freddy to appear.
+Golden Freddy will not be reset until the next night, so once he is set to appear, he will not be set to appear again.
+This can happen even when the player is looking at 2B, in which case the poster will update live and the audio file will
+be played.
 > NOTE: intended behavior from Scott was 1 in 100000, but due to Clickteam 2.5 random function integer max value, the
 > true odds are 1 in 34464
-> NOTE: This means that if the appearance is triggered, you have 1 second to view it? It doesn't stay triggered all
-> night?
-> NOTE: What happens if the player is looking at 2b and then golden freddy is set to appear? I've never seen him suddenly appear before.
 
 Whenever cam 2b is viewed, if Bonnie is not there and Golden freddy is set to appear (above value=1),
 the poster will be shown, and Golden Freddy will be in the office when the cam is closed.
@@ -513,3 +515,7 @@ ALTHOUGH if one night is `6 hours = 6*60*90 = 32400 frames` then isn't the 13088
 [3]: https://www.reddit.com/r/technicalFNaF/comments/17zsw8e/comment/ka73aln/
 
 [4]: https://youtu.be/shAkfUracYA
+
+[5]: https://youtu.be/EoQGWi5jl_s
+
+[6]: https://www.reddit.com/r/technicalFNaF/comments/15jxmxz/comment/k0s1c0d/
