@@ -7,6 +7,7 @@
 #include "DWedit/debug.h"
 #include "graphics/bg_pal_handler.h"
 #include "graphics/static_handler.h"
+#include "graphics/effects/cam_blip.h"
 
 const int NEWSPAPER_PB = 1;
 const int NEWSPAPER_CBB = 0;
@@ -52,9 +53,16 @@ void cinematics_play_night_intro() {
 
     vbaprint("\n\n\n\n\n\nNIGHT XXXX 12AM\n\n\n\n\n\n\n");
 
+    CamBlipEffect.init();
+    CamBlipEffect.load();
+    CamBlipEffect.reset();
+    CamBlipEffect.start();
+    // TODO play blip sound
+
     /* SHOW 2 SECONDS */
     int timer = 120;
     while (timer >= 0) {
+        CamBlipEffect.update();
         VBlankIntrWait();
         timer--;
     }
