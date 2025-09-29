@@ -5,6 +5,8 @@
 
 bool GOLDEN_FREDDY_APPEARED;
 
+#define GOLDEN_FREDDY_ODDS 34464
+
 void golden_freddy_update(bool cams_are_up, enum RoomNames selected_cam) {
     if (GOLDEN_FREDDY_APPEARED) {
         return;
@@ -28,7 +30,7 @@ void golden_freddy_update(bool cams_are_up, enum RoomNames selected_cam) {
         && frame_multiple(AnimatronicGoldenFreddy.movement_framecount)
     ) {
         vbaprint("Golden Freddy movement opp\n");
-        if (rnd_max(10/* 34464TODO is this the number I wanna go with? also magic*/)==0) {
+        if (rnd_max(GOLDEN_FREDDY_ODDS)==0) {
             vbaprint("GOLDEN FREDDY TRIGGERED!!!!!!!!!!!!!!\n\n\n\n\n\n\n\n\n\n");
             AnimatronicGoldenFreddy.room_num = ROOM_WEST_CORNER;
         }
