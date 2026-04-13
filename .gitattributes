@@ -1,4 +1,5 @@
 *.h linguist-language=C
+* text=auto
 
 out/* linguist-generated
 assets/**/*.[chs] linguist-generated
