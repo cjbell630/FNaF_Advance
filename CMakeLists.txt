@@ -1,19 +1,76 @@
+# ENVIRONMENT CHECKS!!
+
+message(STATUS "Checking environment... ")
+
+if(NOT CMAKE_TOOLCHAIN_FILE)
+    message(FATAL_ERROR
+            "\nPlease call CMake with: \n"
+            "  -DCMAKE_TOOLCHAIN_FILE=[path to /devkitpro/ directory]/cmake/GBA.cmake\n"
+    )
+endif()
+
+if(NOT DEFINED DKP_GBA_PLATFORM_LIBRARY OR
+        NOT DKP_GBA_PLATFORM_LIBRARY STREQUAL "libtonc")
+    message(FATAL_ERROR
+            "\nPlease call CMake with:\n"
+            "  -DDKP_GBA_PLATFORM_LIBRARY=libtonc\n"
+    )
+endif()
+
+message(STATUS "Passed checks! :)")
+
+
 cmake_minimum_required(VERSION 3.17)
-project(FNaF_Advance)
+project(FNaF_Advance C ASM)
 
 set(CMAKE_C_STANDARD 17)
 
-find_library(TONC_LIB libtonc)
+file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS source/*.c)
+file(GLOB_RECURSE ASSET_FILES CONFIGURE_DEPENDS assets/*.c)
 
-include_directories(
-        ${CMAKE_SOURCE_DIR}/source
-        ${CMAKE_SOURCE_DIR}/assets
-        ${CMAKE_SOURCE_DIR}/include
+set(ALL_SOURCES ${SRC_FILES} ${ASSET_FILES})
+find_program(gbafix gbafix HINTS "$ENV{DEVKITPRO}/tools/bin")
+
+set(DEBUG_S_FILE include/DWedit/debug.s)
+set(DEBUG_C_FILE include/DWedit/debug.c)
+
+add_executable(${PROJECT_NAME} ${ALL_SOURCES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+        source
+        assets
+        include
 )
 
-file(GLOB_RECURSE SOURCE_C "source/*.c")
-file(GLOB_RECURSE SOURCE_H "source/*.h")
+target_sources(${PROJECT_NAME} PRIVATE
+        $<$<CONFIG:Debug>:${DEBUG_S_FILE}>
+        $<$<CONFIG:Release>:${DEBUG_C_FILE}>
+)
 
-add_executable(FNaF_Advance ${SOURCE_C} ${SOURCE_H})
+target_compile_options(${PROJECT_NAME} PRIVATE
+        -O2
+        -Wall
+        -fno-strict-aliasing
+)
+target_link_libraries(${PROJECT_NAME} tonc)
+target_link_options(${PROJECT_NAME} PRIVATE -specs=gba.specs)
 
-target_link_libraries(FNaF_Advance ${TONC_LIB})
+set_target_properties(${PROJECT_NAME} PROPERTIES
+        OUTPUT_NAME ${PROJECT_NAME}
+        SUFFIX ".elf"
+)
+
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_OBJCOPY} -O binary
+        $<TARGET_FILE:${PROJECT_NAME}>
+        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.gba
+        COMMAND ${DEVKITPRO}/tools/bin/gbafix ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.gba -t${PROJECT_NAME}
+        COMMENT "Fixing ROM..."
+)
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.gba ${PROJECT_SOURCE_DIR}/out/${PROJECT_NAME}.gba
+        COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.*
+        COMMENT "Cleaning and moving ROM to ${PROJECT_SOURCE_DIR}/out ..."
+)
