@@ -2,14 +2,27 @@
 # Makefile for FNaF Advance
 #
 
-.PHONY : release
+all : release
 
-ifeq ($(MAKECMDGOALS),rom)
-$(error Please do not directly call the "rom" target! Instead, use "debug", "release", or "rebuild-assets")
+
+
+#ifeq ($(MAKECMDGOALS),)
+#	MAKECMDGOALS := release
+#	$(info "Target not set, built release by default.")
+#	$(info "If you don't want to build release, please call `make debug` or another target." )
+#endif
+
+ifndef DEVKITPRO
+	$(error DEVKITPRO is undefined (if using an IDE, check the environment variables the IDE can see))
+endif
+
+ifndef DEVKITARM
+	$(error DEVKITARM is undefined (if using an IDE, check the environment variables the IDE can see))
 endif
 
 PATH := $(DEVKITARM)/bin:$(PATH)
-LIBTONC_PATH := $(DEVKITARM)/lib/tonclib
+PATH := $(DEVKITPRO)/tools/bin:$(PATH)
+LIBTONC_PATH := $(DEVKITPRO)/libtonc
 LIBTONC_INCLUDE := $(LIBTONC_PATH)/include
 LIBTONC_A := $(LIBTONC_PATH)/lib/libtonc.a
 
@@ -32,9 +45,8 @@ COBJS := $(patsubst %.c,%.o,$(C_FILES))
 
 ifeq ($(MAKECMDGOALS),debug)
 	SOBJS := $(DEBUG_OBJ)
-endif
-
-ifeq ($(MAKECMDGOALS),release)
+else
+	#ifeq ($(MAKECMDGOALS),release)
 	COBJS += $(DEBUG_OBJ)
 endif
 
@@ -49,15 +61,11 @@ OBJS	:= $(COBJS) $(SOBJS) $(LIBTONC_A)
 MB = 0
 
 ifeq ($(MB),1)
-
-TARGET	:= out/$(PROJ).mb
-SPECS	:= -specs=gba_mb.specs
-
+	TARGET	:= out/$(PROJ).mb
+	SPECS	:= -specs=gba_mb.specs
 else
-
-TARGET	:= out/$(PROJ)
-SPECS	:= -specs=gba.specs
-
+	TARGET	:= out/$(PROJ)
+	SPECS	:= -specs=gba.specs
 endif
 
 # --- Compiling -------------------------------------------------------
@@ -76,7 +84,7 @@ CFLAGS	:= $(ARCH) -O2 -Wall -fno-strict-aliasing -I$(LIBTONC_INCLUDE) -Isource -
 LDFLAGS	:= $(ARCH) $(SPECS)
 
 
-# --- Build -----------------------------------------------------------
+# --- Targets -----------------------------------------------------------
 
 debug: clean-deps clean-code rom
 
