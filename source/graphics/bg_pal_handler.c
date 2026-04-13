@@ -11,7 +11,7 @@ int curr_bg_palbank = 0;
 }*/
 
 // TODO remove
-void load_bg_pal(COLOR *pal, int palLen, int palbank) {
+void load_bg_pal(COLOR* pal, int palLen, int palbank) {
     memcpy(&pal_bg_mem[16 * palbank], pal, palLen);
 }
 

@@ -1,7 +1,3 @@
-//
-// Created by cb106 on 1/26/2021.
-//
-
 #include <string.h>
 #include "static_handler.h"
 #include "graphics/bg_pal_handler.h"

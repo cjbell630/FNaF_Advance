@@ -20,13 +20,15 @@ void bonnie_move(enum RoomNames room, bool cams_are_up, enum RoomNames selected_
 // TODO this and chicas code are so similar, combine them somehow
 void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
     if (AnimatronicBonnie.room_num == ROOM_OFFICE) {
-        if (AnimatronicBonnie.timer == -1) { // if the cams have not been lifted since bonnie got in the office
+        if (AnimatronicBonnie.timer == -1) {
+            // if the cams have not been lifted since bonnie got in the office
             if (cams_are_up) {
                 AnimatronicBonnie.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
             }
             return;
         }
-        if (AnimatronicBonnie.timer < 1 || !cams_are_up) { // if the timer has been set, and has reached 0 or the cams are down
+        if (AnimatronicBonnie.timer < 1 || !cams_are_up) {
+            // if the timer has been set, and has reached 0 or the cams are down
             trigger_jumpscare(JUMPSCARE_BONNIE, cams_are_up);
             return;
         }
@@ -84,7 +86,8 @@ void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
             }
             break;
         case ROOM_LEFT_DOOR:
-            if (Equipment.is_on(LEFT_DOOR)) { // if left door is closed
+            if (Equipment.is_on(LEFT_DOOR)) {
+                // if left door is closed
                 bonnie_move(ROOM_DINING, cams_are_up, selected_cam);
                 Equipment.force_light_off(LEFT_LIGHT);
             } else {

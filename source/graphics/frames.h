@@ -3,12 +3,12 @@
 
 #include "tonc_types.h"
 
-typedef struct Frame{
-    u16 *tiles;
+typedef struct Frame {
+    u16* tiles;
     u16 tiles_length;
-    COLOR *palette;
+    COLOR* palette;
     u16 palette_length;
-    SE *screen_entry;
+    SE* screen_entry;
     u16 screen_entry_length;
     u8 vertical_offset;
 } Frame;
@@ -17,7 +17,7 @@ typedef struct Frame{
 /**
  * Frames for screen blip IN REVERSE ORDER
  */
-extern struct Frame *blip_frames[10];
+extern struct Frame* blip_frames[10];
 extern const Frame office_base_frame;
 extern struct Frame empty_screen;
 

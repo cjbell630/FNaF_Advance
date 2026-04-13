@@ -28,7 +28,7 @@ void cam_blip_load() {
 
 void cam_blip_update() {
     if (BLIP_TIMER >= 0) {
-        Frame *frame = blip_frames[BLIP_TIMER];
+        Frame* frame = blip_frames[BLIP_TIMER];
         //memset(&se_mem[BLIP_SBB], 0, 1280*8);
         //memset((SE *)0x0600CCC0, 0, 1280*8);
         dma3_cpy(&se_mem[BLIP_SBB], frame->screen_entry, 1280);

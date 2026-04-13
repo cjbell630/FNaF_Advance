@@ -12,7 +12,7 @@
  * @param anim a pointer to the anim to check for
  * @return true if the anim can move on this opportunity, false if not
  */
-bool try_move(struct Animatronic *anim) {
+bool try_move(struct Animatronic* anim) {
     return anim->lvl >= (rnd_max(MAX_LEVEL) + 1);
 }
 

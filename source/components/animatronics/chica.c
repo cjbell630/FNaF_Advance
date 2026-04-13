@@ -19,13 +19,15 @@ void chica_move(enum RoomNames room, bool cams_are_up, enum RoomNames selected_c
 // TODO this and chicas code are so similar, combine them somehow
 void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
     if (AnimatronicChica.room_num == ROOM_OFFICE) {
-        if (AnimatronicChica.timer == -1) { // if the cams have not been lifted since chica got in the office
+        if (AnimatronicChica.timer == -1) {
+            // if the cams have not been lifted since chica got in the office
             if (cams_are_up) {
                 AnimatronicChica.timer = 1800; // TODO magic num; 30s/1800f timer until jumpscare
             }
             return;
         }
-        if (AnimatronicChica.timer < 1 || !cams_are_up) { // if the timer has been set, and has reached 0 or the cams are down
+        if (AnimatronicChica.timer < 1 || !cams_are_up) {
+            // if the timer has been set, and has reached 0 or the cams are down
             trigger_jumpscare(JUMPSCARE_CHICA, cams_are_up);
             return;
         }
@@ -44,7 +46,8 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
         return;
     }
     vbaprint("Chica movement opp\n");
-    if (!try_move(&AnimatronicChica)) { // TODO debug merge into one if statement
+    if (!try_move(&AnimatronicChica)) {
+        // TODO debug merge into one if statement
         return;
     }
     vbaprint("chica success\n");
@@ -76,7 +79,8 @@ void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
             }
             break;
         case ROOM_RIGHT_DOOR:
-            if (Equipment.is_on(RIGHT_DOOR)) { // if door is closed
+            if (Equipment.is_on(RIGHT_DOOR)) {
+                // if door is closed
                 chica_move(ROOM_DINING, cams_are_up, selected_cam);
                 Equipment.force_light_off(RIGHT_LIGHT);
             } else {

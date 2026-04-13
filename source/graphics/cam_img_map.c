@@ -252,7 +252,7 @@ const Frame CAM_IMG_MAP[12][16][5] = {
                         }
                 },
                 { // Freddy
-                        { // Std 
+                        { // Std
                                 east_freddyTiles, east_freddyTilesLen,
                                 east_freddyPal, east_freddyPalLen,
                                 east_freddyMap, east_freddyMapLen
@@ -386,7 +386,7 @@ Frame get_cam_img_data(enum RoomNames room) {
     u8 occupants = Animatronics.get_room_occupants(room);
     // if the room is not stage and there are multiple animatronics in room
     if ((occupants & (occupants - 1)) && (room != ROOM_STAGE)) {
-        occupants = (occupants > 0b1000) ?  0b1000: // Foxy in room
+        occupants = (occupants > 0b1000) ?  0b1000 : // Foxy in room // TODO figure this out and dont use magic numbers
                 (occupants > 0b0100) ? 0b0100 : // Chica in room
                 0b0010; // Bonnie in room
         // TODO might cause issues for foxy in west hall

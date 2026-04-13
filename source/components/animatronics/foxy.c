@@ -20,7 +20,11 @@ bool foxy_at_cove(bool cams_are_up) {
         AnimatronicFoxy.timer--; // TODO theoretically could overflow but shouldn't
     }
     /* END HANDLE STUN TIMER */
-    if (AnimatronicFoxy.timer < 1 && frame_multiple(AnimatronicFoxy.movement_framecount) && try_move(&AnimatronicFoxy)) {
+    if (
+        AnimatronicFoxy.timer < 1 &&
+        frame_multiple(AnimatronicFoxy.movement_framecount) &&
+        try_move(&AnimatronicFoxy)
+    ) {
         vbaprint("foxy success\n");
         AnimatronicFoxy.phase++;
         return true;
@@ -63,7 +67,8 @@ void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
             break;
         case FOXY_ATTACK:
             vbaprint("foxy is attacking\n");
-            if (Equipment.is_on(LEFT_DOOR)) { // if door is closed
+            if (Equipment.is_on(LEFT_DOOR)) {
+                // if door is closed
                 Power.on_foxy_attack();
                 AnimatronicFoxy.phase = rnd_max(2) ? FOXY_PEEK : FOXY_STAND; // TODO is this correct?
             } else {

@@ -4,15 +4,16 @@
 #include "tonc.h"
 
 typedef struct {
-    unsigned x: 3;
-    unsigned y: 3;
+    unsigned x : 3;
+    unsigned y : 3;
 } TRIBIT_2D_POINT;
 
 //represents information for use in the map for moving around the cam map
 typedef struct {
-    unsigned type: 2;
+    unsigned type : 2;
     TRIBIT_2D_POINT warp_point;
-    u8 cam_num; //fuck this, no matter what I try, it keeps truncating it down to 2 bits or something when I try to make it an 3 bits long
+    u8 cam_num;
+    //fuck this, no matter what I try, it keeps truncating it down to 2 bits or something when I try to make it an 3 bits long
 } CAM_NAV_POINT;
 
 /* Control point macros*/

@@ -24,7 +24,7 @@ struct Animatronic {
     void (*on_cams_up)();
 };
 
-bool try_move(struct Animatronic *anim);
+bool try_move(struct Animatronic* anim);
 
 void trigger_jumpscare(enum Jumpscares character, bool show_cams_animation);
 

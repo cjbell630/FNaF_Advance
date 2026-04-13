@@ -38,7 +38,7 @@ INLINE bool is_multiple(int number, int factor) {
     return number % factor == 0;
 }
 
-INLINE bool any(bool *bools, int boolc) {
+INLINE bool any(bool* bools, int boolc) {
     for (int i = 0; i < boolc; i++) {
         if (bools[i]) {
             return true;
@@ -47,7 +47,7 @@ INLINE bool any(bool *bools, int boolc) {
     return false;
 }
 
-INLINE bool all(bool *bools, int boolc) {
+INLINE bool all(bool* bools, int boolc) {
     for (int i = 0; i < boolc; i++) {
         if (~bools[i]) {
             return false;

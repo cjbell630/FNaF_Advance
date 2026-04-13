@@ -26,7 +26,7 @@ struct GraphicsWrapper {
 
     void (*clear_office_lights)();
 
-    void (*on_room_visual_change)(Frame *new_frame);
+    void (*on_room_visual_change)(Frame* new_frame);
 
     void (*select_cam)(enum RoomNames prev_room, enum RoomNames new_room);
 

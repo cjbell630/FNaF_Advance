@@ -30,7 +30,8 @@ void init_clock() {
 }
 
 void update_rng() {
-    if (frame_multiple(2)) { // every other frame
+    if (frame_multiple(2)) {
+        // every other frame
         scramble_rng(__key_curr);
     }
 }
@@ -40,7 +41,8 @@ void update_in_game_clock() {
         // NOTE hoping frame skips aren't a thing
         hour++;
         vbaprint("next hour\n");
-        if (hour == VICTORY_HOUR) { // if the night has ended
+        if (hour == VICTORY_HOUR) {
+            // if the night has ended
             GAME_PHASE = NIGHT_VICTORY; // trigger victory
             return;
         }

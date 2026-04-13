@@ -46,9 +46,13 @@ void controls_menu() {
 void scroll_cams_controls(int shoulder_input) {
     if (shoulder_input != 0) {
         s16 new_scroll = office_horiz_scroll + (SPEED_SCALE * shoulder_input);
-        new_scroll = (new_scroll > RIGHT_CAP) ? RIGHT_CAP : // if too far right, fix
-                     (new_scroll < 0) ? 0 : // if too far left, fix
-                     new_scroll; // otherwise, don't change
+        new_scroll = (new_scroll > RIGHT_CAP)
+                         ? RIGHT_CAP
+                         : // if too far right, fix
+                         (new_scroll < 0)
+                         ? 0
+                         : // if too far left, fix
+                         new_scroll; // otherwise, don't change
         if (office_horiz_scroll != new_scroll) {
             office_horiz_scroll = new_scroll;
             Graphics.set_office_scroll(office_horiz_scroll);
@@ -110,15 +114,14 @@ void controls_cam() {
         return;
     }
     navigate_cams(
-            key_hit(KEY_RIGHT) ? 1 : key_hit(KEY_LEFT) ? -1 : 0,
-            key_hit(KEY_UP) ? 1 : key_hit(KEY_DOWN) ? -1 : 0
+        key_hit(KEY_RIGHT) ? 1 : key_hit(KEY_LEFT) ? -1 : 0,
+        key_hit(KEY_UP) ? 1 : key_hit(KEY_DOWN) ? -1 : 0
     );
-
 }
 
 struct ControlsWrapper Controls = {
-        .update_office = &controls_office,
-        .update_cam = &controls_cam,
-        .update_menu = &controls_menu,
-        .update_office_power_off = &controls_office_power_off
+    .update_office = &controls_office,
+    .update_cam = &controls_cam,
+    .update_menu = &controls_menu,
+    .update_office_power_off = &controls_office_power_off
 };

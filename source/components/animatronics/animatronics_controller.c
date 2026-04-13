@@ -28,9 +28,9 @@ enum FreddyPowerOffPhases {
 /* END CONSTANTS */
 
 
-
 /*  COLLECTIVE  */
-void set_levels(int fr_lvl, int b_lvl, int c_lvl, int fo_lvl) { // TODO make these orders consistent or something please
+void set_levels(int fr_lvl, int b_lvl, int c_lvl, int fo_lvl) {
+    // TODO make these orders consistent or something please
     AnimatronicBonnie.lvl = b_lvl;
     AnimatronicFreddy.lvl = fr_lvl;
     AnimatronicChica.lvl = c_lvl;
@@ -140,7 +140,7 @@ void on_power_off() {
 // TODO define this in camera.c?
 u8 get_room_occupants(enum RoomNames room) {
     return ((AnimatronicFoxy.room_num == room) << 3) | ((AnimatronicChica.room_num == room) << 2) |
-           ((AnimatronicBonnie.room_num == room) << 1) | (AnimatronicFreddy.room_num == room);
+        ((AnimatronicBonnie.room_num == room) << 1) | (AnimatronicFreddy.room_num == room);
 }
 
 void animatronics_on_cams_up() {

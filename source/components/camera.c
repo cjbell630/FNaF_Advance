@@ -77,7 +77,8 @@ void pan_cam() {
 }
 
 void update_camera() {
-    if (SHOULD_PAN(CURR_CAM) && frame_multiple(CAM_SCROLL_FRAME_INTERVAL)) { // TODO move to graphics?
+    if (SHOULD_PAN(CURR_CAM) && frame_multiple(CAM_SCROLL_FRAME_INTERVAL)) {
+        // TODO move to graphics?
         pan_cam();
     }
     Graphics.update_cam();
@@ -89,9 +90,9 @@ enum RoomNames get_selected_room() {
 
 
 struct CameraWrapper Cameras = {
-        .update = update_camera,
-        .on_night_start = camera_on_night_start,
-        .set_visible = set_cam_display_visible,
-        .select_room = cam_select_room,
-        .get_selected_room = get_selected_room
+    .update = update_camera,
+    .on_night_start = camera_on_night_start,
+    .set_visible = set_cam_display_visible,
+    .select_room = cam_select_room,
+    .get_selected_room = get_selected_room
 };

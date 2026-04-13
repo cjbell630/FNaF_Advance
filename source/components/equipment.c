@@ -24,8 +24,10 @@ byte equipment_get_usage() {
 
 void equipment_on_night_start() {
     /* INIT EQUIPMENT VARS */
-    statuses[RIGHT_DOOR] = statuses[LEFT_DOOR] = statuses[RIGHT_LIGHT] = statuses[LEFT_LIGHT] = statuses[CAMERA] = false;
-    disabled[RIGHT_DOOR] = disabled[LEFT_DOOR] = disabled[RIGHT_LIGHT] = disabled[LEFT_LIGHT] = disabled[CAMERA] = false;
+    statuses[RIGHT_DOOR] = statuses[LEFT_DOOR] = statuses[RIGHT_LIGHT] = statuses[LEFT_LIGHT] = statuses[CAMERA] =
+        false;
+    disabled[RIGHT_DOOR] = disabled[LEFT_DOOR] = disabled[RIGHT_LIGHT] = disabled[LEFT_LIGHT] = disabled[CAMERA] =
+        false;
 }
 
 /**
@@ -58,7 +60,8 @@ void equipment_disable(enum EquipmentNames target) {
  * @param other the enum of the other light
  */
 void toggle_light(enum EquipmentNames toggled, enum EquipmentNames other) {
-    if (!equipment_force_light_off(toggled)) { // turn off if on. if the light was already off, then
+    if (!equipment_force_light_off(toggled)) {
+        // turn off if on. if the light was already off, then
         // TODO force enable lights
         // TODO play windowscare sound
         statuses[toggled] = true;
@@ -93,9 +96,11 @@ void equipment_toggle(enum EquipmentNames target) {
             toggle_left_light();
             break;
         case CAMERA: // activating the camera disables both lights
-            if (statuses[CAMERA]) { // if this will close the cam
+            if (statuses[CAMERA]) {
+                // if this will close the cam
                 cam_device_anim_offset = -11;
-            } else { // if this will open the cam
+            } else {
+                // if this will open the cam
                 cam_device_anim_offset = 0;
                 statuses[RIGHT_LIGHT] = statuses[LEFT_LIGHT] = false;
             }
@@ -103,13 +108,15 @@ void equipment_toggle(enum EquipmentNames target) {
             statuses[CAMERA] = false;
             break;
         case LEFT_DOOR:
-            if (l_door_anim_frame == 0) { // TODO check if bonnie is in room
+            if (l_door_anim_frame == 0) {
+                // TODO check if bonnie is in room
                 l_door_anim_frame = NUM_DOOR_FRAMES;
                 statuses[LEFT_DOOR] = !statuses[LEFT_DOOR];
             }
             break;
         case RIGHT_DOOR:
-            if (r_door_anim_frame == 0) { // TODO check if freddy or chica is in room
+            if (r_door_anim_frame == 0) {
+                // TODO check if freddy or chica is in room
                 r_door_anim_frame = NUM_DOOR_FRAMES;
                 statuses[RIGHT_DOOR] = !statuses[RIGHT_DOOR];
             }
@@ -125,7 +132,8 @@ bool equipment_is_animating_cam() {
         // TODO graphics get frame timer+offset
         if (cam_device_anim_timer == 0) {
             vbaprint("cam anim timer is 0\n");
-            if (cam_device_anim_offset == 0) { // if cams are now up
+            if (cam_device_anim_offset == 0) {
+                // if cams are now up
                 vbaprint("cams are now up\n");
                 Cameras.set_visible();
                 statuses[CAMERA] = true;
@@ -142,23 +150,25 @@ void equipment_update() {
         l_door_anim_frame--;
         vbaprint("l door frame\n");
         Graphics.load_left_door_frame(
-                statuses[LEFT_DOOR] ? NUM_DOOR_FRAMES - l_door_anim_frame - 1 : l_door_anim_frame);
+            statuses[LEFT_DOOR] ? NUM_DOOR_FRAMES - l_door_anim_frame - 1 : l_door_anim_frame
+        );
     }
     if (r_door_anim_frame) {
         r_door_anim_frame--;
         vbaprint("r door frame\n");
         Graphics.load_right_door_frame(
-                statuses[RIGHT_DOOR] ? NUM_DOOR_FRAMES - r_door_anim_frame - 1 : r_door_anim_frame);
+            statuses[RIGHT_DOOR] ? NUM_DOOR_FRAMES - r_door_anim_frame - 1 : r_door_anim_frame
+        );
     }
 }
 
 struct EquipmentWrapper Equipment = {
-        .get_usage = equipment_get_usage,
-        .on_night_start = equipment_on_night_start,
-        .toggle = equipment_toggle,
-        .is_on = equipment_is_on,
-        .is_animating_cam = equipment_is_animating_cam,
-        .update = equipment_update,
-        .disable = &equipment_disable,
-        .force_light_off = &equipment_force_light_off
+    .get_usage = equipment_get_usage,
+    .on_night_start = equipment_on_night_start,
+    .toggle = equipment_toggle,
+    .is_on = equipment_is_on,
+    .is_animating_cam = equipment_is_animating_cam,
+    .update = equipment_update,
+    .disable = &equipment_disable,
+    .force_light_off = &equipment_force_light_off
 };

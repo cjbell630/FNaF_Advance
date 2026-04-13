@@ -7,10 +7,11 @@
 
 int rng_seed = 42;
 
-void scramble_rng(int modifier) { // raw key value = 1023
+void scramble_rng(int modifier) {
+    // raw key value = 1023
     //1664 * 1000 ~= 1664525
     //1013904 * 1000 ~= 1013904223
-    rng_seed = 1664 */* modifier */ rng_seed + (1013904 + rand() * (modifier+1)); //magic rng nums
+    rng_seed = 1664 * /* modifier */ rng_seed + (1013904 + rand() * (modifier + 1)); //magic rng nums
     // return (seed >> 16) & 0x7FFF;
 }
 

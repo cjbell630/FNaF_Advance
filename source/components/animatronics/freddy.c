@@ -50,7 +50,8 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
             // TODO kinda unnecessary to reset every frame but that's how the og game is written
             return;
         }
-        if (0 < AnimatronicFreddy.timer) { // if timer is still ticking down
+        if (0 < AnimatronicFreddy.timer) {
+            // if timer is still ticking down
             AnimatronicFreddy.timer--;
             return;
         }
@@ -61,12 +62,14 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
         AnimatronicFreddy.timer = 60;
         return;
     }
-    if (cams_are_up) { // if cams are up and not a movement opportunity
+    if (cams_are_up) {
+        // if cams are up and not a movement opportunity
         switch (AnimatronicFreddy.phase) {
             case FREDDY_MIGHT_MOVE:
                 // reset timer if he is being looked at
                 if (selected_cam == AnimatronicFreddy.room_num) {
-                    AnimatronicFreddy.timer = FREDDY_TIMER_START; // TODO same as Foxy this could just be set when cams are closed
+                    AnimatronicFreddy.timer = FREDDY_TIMER_START;
+                    // TODO same as Foxy this could just be set when cams are closed
                 } else {
                     AnimatronicFreddy.timer--;
                 }
@@ -74,7 +77,8 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
             case FREDDY_READY_TO_ATTACK:
                 if (selected_cam != ROOM_EAST_CORNER) {
                     vbaprint("Freddy attacking\n");
-                    if (Equipment.is_on(RIGHT_DOOR)) { // if door is closed
+                    if (Equipment.is_on(RIGHT_DOOR)) {
+                        // if door is closed
                         AnimatronicFreddy.room_num = ROOM_EAST;
                     } else {
                         AnimatronicFreddy.room_num = ROOM_OFFICE;
@@ -91,7 +95,8 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
     if (
         !frame_multiple(AnimatronicFreddy.movement_framecount) ||
         !try_move(&AnimatronicFreddy)
-    ) { // if cams are down and not a successful movement opportunity
+    ) {
+        // if cams are down and not a successful movement opportunity
         if (AnimatronicFreddy.phase == FREDDY_MIGHT_MOVE) {
             AnimatronicFreddy.timer--;
         }
@@ -125,7 +130,8 @@ void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
             break;
         case FREDDY_WILL_MOVE:
             vbaprint("Freddy moved\n");
-            AnimatronicFreddy.phase = FREDDY_WONT_MOVE; // do this before moving bc moving to east corner overwrites his phase
+            AnimatronicFreddy.phase = FREDDY_WONT_MOVE;
+            // do this before moving bc moving to east corner overwrites his phase
             move_freddy();
             break;
         case FREDDY_EAST_CORNER:

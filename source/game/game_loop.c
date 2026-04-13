@@ -15,7 +15,6 @@
 #include "components/cinematics.h"
 
 void run_newspaper() {
-
     vbaprint("newspaper now\n");
     //show newspaper
     Cinematics.play_newspaper();
@@ -70,7 +69,8 @@ void run_power_off() {
     // TODO bring cams down if they are up, bring doors up and switch lights off
     // TODO change office bg
     // TODO run w/ restricted office controls and minimal checks in bg
-    while (GAME_PHASE == NIGHT_POWER_OFF) { // while player has not been kicked back to menu
+    while (GAME_PHASE == NIGHT_POWER_OFF) {
+        // while player has not been kicked back to menu
         tick_power_off(); //TODO: should be at top or bottom?
         VBlankIntrWait();
     }
@@ -101,7 +101,6 @@ void run_jumpscare() {
             vbaprint("JUMPSCARE!!!!!! (freddy golden)\n\n\n\n\n\n\n\n\n\n");
             // TODO crash game
             break;
-
     }
     GAME_PHASE = NIGHT_DEATH;
 }
@@ -125,7 +124,8 @@ void run_death() {
  */
 void run_victory() {
     // TODO show 6am screen
-    if (NIGHT_NUM < 5) { // if night is 1,2,3,or4, proceed to next night
+    if (NIGHT_NUM < 5) {
+        // if night is 1,2,3,or4, proceed to next night
         NIGHT_NUM++; // set next night
         GAME_PHASE = NIGHT_INTRO; // set the game to show the intro
         return;
@@ -136,7 +136,7 @@ void run_victory() {
 
     // if night is 5,6,or7
     switch (NIGHT_NUM) {
-        // TODO show paycheck screens
+            // TODO show paycheck screens
     }
     GAME_PHASE = MENU_HOME;
 }
@@ -156,20 +156,25 @@ void run_game_loop() {
     if (GAME_PHASE == NIGHT_NEWSPAPER) {
         run_newspaper();
     }
-    while (GAME_PHASE > NIGHT_NEWSPAPER) { // while player has not been kicked back to menu
+    while (GAME_PHASE > NIGHT_NEWSPAPER) {
+        // while player has not been kicked back to menu
         Graphics.init_backgrounds();
         run_night_intro(); // show "Night #/n12AM" screen (and do loading in background)
         run_power_on(); // run the game loop with the power on
-        if (GAME_PHASE == NIGHT_POWER_OFF) { // if the power goes out
+        if (GAME_PHASE == NIGHT_POWER_OFF) {
+            // if the power goes out
             run_power_off(); // run the game loop for when the power is out
         }
-        if (GAME_PHASE == NIGHT_JUMPSCARE) { // if the player gets jumpscared
+        if (GAME_PHASE == NIGHT_JUMPSCARE) {
+            // if the player gets jumpscared
             run_jumpscare();
         }
-        if (GAME_PHASE == NIGHT_DEATH) { // I think the player always dies if jumpscare is triggered so can combine
+        if (GAME_PHASE == NIGHT_DEATH) {
+            // I think the player always dies if jumpscare is triggered so can combine
             run_death();
         }
-        if (GAME_PHASE == NIGHT_VICTORY) { // at 6am
+        if (GAME_PHASE == NIGHT_VICTORY) {
+            // at 6am
             run_victory();
         }
     } // return to menu when exit loop

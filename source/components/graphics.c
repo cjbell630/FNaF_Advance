@@ -17,13 +17,13 @@
 /* END BUFFERS */
 
 /* OBJECTS */
-OBJ_ATTR *cam_map;
-OBJ_ATTR *l_door0;
-OBJ_ATTR *l_door1;
-OBJ_ATTR *l_door2;
-OBJ_ATTR *r_door0;
-OBJ_ATTR *r_door1;
-OBJ_ATTR *r_door2;
+OBJ_ATTR* cam_map;
+OBJ_ATTR* l_door0;
+OBJ_ATTR* l_door1;
+OBJ_ATTR* l_door2;
+OBJ_ATTR* r_door0;
+OBJ_ATTR* r_door1;
+OBJ_ATTR* r_door2;
 
 /* END OBJECTS */
 
@@ -79,8 +79,8 @@ void graphics_set_office_scroll(s16 value) {
     obj_set_pos(r_door2, r_door_x, 128);
 }
 
-void load_door_frame(u8 frame_num, u16 tile_start, u16 *tiles) {
-    u16 offset = frame_num * 2560;//(1024+1024+512)
+void load_door_frame(u8 frame_num, u16 tile_start, u16* tiles) {
+    u16 offset = frame_num * 2560; //(1024+1024+512)
     memcpy(&tile_mem[4][tile_start], &tiles[offset], 2048/*32 * 64*/);
     memcpy(&tile_mem[4][tile_start + 64], &tiles[offset + 1024], 2048/*32 * 64*/);
     memcpy(&tile_mem[4][tile_start + 128/*64*2*/], &tiles[offset + 2048/*1024*2*/], 1024/*32 * 32*/);
@@ -100,10 +100,10 @@ void init_objects() {
     //oam_init(oam_mem, 128);
     cam_map = &oam_mem[0];
     obj_set_attr(
-            cam_map,
-            ATTR0_HIDE,
-            ATTR1_SIZE_64x64,                    // 16x16p,
-            ATTR2_PALBANK(0) | ATTR2_ID(MAP_TILE_START) | ATTR2_PRIO(LAYER_1)
+        cam_map,
+        ATTR0_HIDE,
+        ATTR1_SIZE_64x64, // 16x16p,
+        ATTR2_PALBANK(0) | ATTR2_ID(MAP_TILE_START) | ATTR2_PRIO(LAYER_1)
     ); // palbank 0, tile 0
     memcpy(&tile_mem[4][MAP_TILE_START], &cam_mapTiles, cam_mapTilesLen);
     memcpy(&pal_obj_bank[0], &cam_mapPal, cam_mapPalLen);
@@ -113,48 +113,48 @@ void init_objects() {
     // TODO clean
     l_door0 = &oam_mem[1];
     obj_set_attr(
-            l_door0,
-            ATTR0_HIDE,
-            ATTR1_SIZE_64x64,
-            ATTR2_PALBANK(L_DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
+        l_door0,
+        ATTR0_HIDE,
+        ATTR1_SIZE_64x64,
+        ATTR2_PALBANK(L_DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     //obj_set_pos(l_door0, 16, 0);
     l_door1 = &oam_mem[2];
     obj_set_attr(
-            l_door1,
-            ATTR0_HIDE,
-            ATTR1_SIZE_64x64,
-            ATTR2_PALBANK(L_DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START + 64) | ATTR2_PRIO(LAYER_0)
+        l_door1,
+        ATTR0_HIDE,
+        ATTR1_SIZE_64x64,
+        ATTR2_PALBANK(L_DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START + 64) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     //obj_set_pos(l_door1, 16, 64);
     l_door2 = &oam_mem[3];
     obj_set_attr(
-            l_door2,
-            ATTR0_HIDE,
-            ATTR1_SIZE_64x32,
-            ATTR2_PALBANK(L_DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START + 128) | ATTR2_PRIO(LAYER_0)
+        l_door2,
+        ATTR0_HIDE,
+        ATTR1_SIZE_64x32,
+        ATTR2_PALBANK(L_DOOR_PALBANK) | ATTR2_ID(LDOOR_TILE_START + 128) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     r_door0 = &oam_mem[4];
     obj_set_attr(
-            r_door0,
-            ATTR0_HIDE,
-            ATTR1_SIZE_64x64,
-            ATTR2_PALBANK(R_DOOR_PALBANK) | ATTR2_ID(RDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
+        r_door0,
+        ATTR0_HIDE,
+        ATTR1_SIZE_64x64,
+        ATTR2_PALBANK(R_DOOR_PALBANK) | ATTR2_ID(RDOOR_TILE_START) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     //obj_set_pos(l_door0, 16, 0);
     r_door1 = &oam_mem[5];
     obj_set_attr(
-            r_door1,
-            ATTR0_HIDE,
-            ATTR1_SIZE_64x64,
-            ATTR2_PALBANK(R_DOOR_PALBANK) | ATTR2_ID(RDOOR_TILE_START + 64) | ATTR2_PRIO(LAYER_0)
+        r_door1,
+        ATTR0_HIDE,
+        ATTR1_SIZE_64x64,
+        ATTR2_PALBANK(R_DOOR_PALBANK) | ATTR2_ID(RDOOR_TILE_START + 64) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     r_door2 = &oam_mem[6];
     obj_set_attr(
-            r_door2,
-            ATTR0_HIDE,
-            ATTR1_SIZE_64x32,
-            ATTR2_PALBANK(R_DOOR_PALBANK) | ATTR2_ID(RDOOR_TILE_START + 128) | ATTR2_PRIO(LAYER_0)
+        r_door2,
+        ATTR0_HIDE,
+        ATTR1_SIZE_64x32,
+        ATTR2_PALBANK(R_DOOR_PALBANK) | ATTR2_ID(RDOOR_TILE_START + 128) | ATTR2_PRIO(LAYER_0)
     ); // palbank 0, tile 0
     load_left_door_frame(0);
     load_right_door_frame(0);
@@ -190,7 +190,7 @@ void init_backgrounds() {
     REG_BG1CNT = BG_PRIO(LAYER_1) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x64;
 }
 
-void load_frame(Frame *frame, u16 cbb, u16 sbb) {
+void load_frame(Frame* frame, u16 cbb, u16 sbb) {
     dma3_cpy(&pal_bg_mem[0], frame->palette, frame->palette_length);
     dma3_cpy(&tile_mem[cbb][0], frame->tiles, frame->tiles_length);
     dma3_cpy(&se_mem[sbb][0], frame->screen_entry, frame->screen_entry_length);
@@ -256,10 +256,10 @@ void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
 
 
 void (*office_funcs[8])() = {
-        &undo_office_llight_empty, &do_office_llight_empty, // l empty
-        &undo_office_llight_bonnie, &do_office_llight_bonnie, // l bonnie
-        &undo_office_rlight_empty, &do_office_rlight_empty, // r empty
-        &undo_office_rlight_chica, &do_office_rlight_chica // r chica
+    &undo_office_llight_empty, &do_office_llight_empty, // l empty
+    &undo_office_llight_bonnie, &do_office_llight_bonnie, // l bonnie
+    &undo_office_rlight_empty, &do_office_rlight_empty, // r empty
+    &undo_office_rlight_chica, &do_office_rlight_chica // r chica
 };
 
 void do_nothing() {
@@ -283,7 +283,7 @@ void graphics_clear_office_lights() {
     undo_office();
 }
 
-void graphics_on_room_visual_change(Frame *new_frame) {
+void graphics_on_room_visual_change(Frame* new_frame) {
     load_frame(new_frame, MAIN_CBB, MAIN_SBB);
 }
 
@@ -317,19 +317,19 @@ void graphics_stun_cams(enum RoomNames room) {
 }
 
 struct GraphicsWrapper Graphics = {
-        .show_static = &show_static,
-        .init_objects = &init_objects,
-        .game_display_cams = &graphics_switch_to_cams,
-        .game_display_office = &graphics_switch_to_office,
-        .select_cam = &graphics_select_cam,
-        .update_cam= &graphics_update_cam,
-        .init_backgrounds = &init_backgrounds,
-        .on_room_visual_change = &graphics_on_room_visual_change,
-        .set_office_scroll = &graphics_set_office_scroll,
-        .load_left_door_frame = &load_left_door_frame,
-        .load_right_door_frame = &load_right_door_frame,
-        .enable_office_light = &graphics_enable_office_light,
-        .clear_office_lights = &graphics_clear_office_lights,
-        .stun_cams = &graphics_stun_cams,
-        .update_office = &graphcis_update_office
+    .show_static = &show_static,
+    .init_objects = &init_objects,
+    .game_display_cams = &graphics_switch_to_cams,
+    .game_display_office = &graphics_switch_to_office,
+    .select_cam = &graphics_select_cam,
+    .update_cam = &graphics_update_cam,
+    .init_backgrounds = &init_backgrounds,
+    .on_room_visual_change = &graphics_on_room_visual_change,
+    .set_office_scroll = &graphics_set_office_scroll,
+    .load_left_door_frame = &load_left_door_frame,
+    .load_right_door_frame = &load_right_door_frame,
+    .enable_office_light = &graphics_enable_office_light,
+    .clear_office_lights = &graphics_clear_office_lights,
+    .stun_cams = &graphics_stun_cams,
+    .update_office = &graphcis_update_office
 };

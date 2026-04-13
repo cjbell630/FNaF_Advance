@@ -77,7 +77,7 @@ void power_on_foxy_attack() {
 }
 
 struct PowerWrapper Power = {
-        .update = update_power,
-        .on_night_start = power_on_night_start,
-        .on_foxy_attack = power_on_foxy_attack
+    .update = update_power,
+    .on_night_start = power_on_night_start,
+    .on_foxy_attack = power_on_foxy_attack
 };
