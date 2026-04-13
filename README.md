@@ -1,36 +1,66 @@
 # Five Nights at Freddy's: Advance
 
-### Note: This is a work in progress! 
+> Note: This is a work in progress!
 
 A Game Boy Advance demake of Five Nights at Freddy's!
 
-You can find the current demo in [releases][1]!
-
 (also, I made a breakdown of the original game in order to make this port, which you can find [here][7])
 
-#### Controls
+## Usage
+
+1. Download the latest demo (FNaF_Advance.gba) in [releases][1]!
+2. Play it using your favorite method :)
+
+### Controls
+
 * Main Menu
-  * D-pad/Select: Navigate menu
-  * A/Start: Select menu option
+    * D-pad/Select: Navigate menu
+    * A/Start: Select menu option
 * Office
-  * L/R: Look left/right
-  * Select/Any D-pad key: Open cameras
-  * A: Toggle door
-  * B: Toggle light
+    * L/R: Look left/right
+    * Select/Any D-pad key: Open cameras
+    * A: Toggle door
+    * B: Toggle light
 * Cameras
-  * Select/A/B: Close cameras
-  * D-pad: Navigate cam minimap
+    * Select/A/B: Close cameras
+    * D-pad: Navigate cam minimap
 
-### Sources / Credit / Copyright
+## Development Environment
 
-Credit for essentially anything here other than the actual implementation belongs to Scott Cawthon and respective corporations (ie. game concept, graphics, sound, etc).
+I originally made this project on Windows several years ago, but I'm now maintaining it on Arch Linux, so both should be
+possible. I tried to include some helpful error messages in the Makefile and CMakeLists.txt, but if you have trouble,
+feel free to let me know! :)
+
+### Prerequisites
+
+1. devkitPro (follow the tutorial for your system [here][10])
+2. The following from gba-dev (subgroup of devkitPro):
+
+   `libtonc devkitARM gba-cmake catnip devkitarm-cmake devkitarm-gcc`
+
+   (and associated dependencies)
+
+### Building
+
+The project can be built using CMake or make. Both should produce the same output so choose the one that's easier for
+you. If you get the build running but it throws errors about not finding certain libraries or files, make sure your
+environment variables are set correctly as listed in the [devkitPro setup][10]. Windows will likely be very very picky,
+so make sure you follow the instructions as closely as possible.
+
+> The `debug` target can ONLY run in emulators, and not necessarily all of them, due to the usage of the VBAPrint
+> function. Make sure to use `release` unless you're specifically trying to debug something in an emulator.
+
+## Sources / Credit / Copyright
+
+Credit for essentially anything here other than the actual implementation belongs to Scott Cawthon and respective
+corporations (ie. game concept, graphics, sound, etc).
 
 Before playing this game, please support Scott and his team by buying the original game [here][3]!
 
 Any files not containing any code written by me should have a file called `.SOURCE.md` in the same directory as them.
 That will have the source for the corresponding file and an explanation of which file(s) this applies to.
 
-## Big thanks to the following sources! (some in advance):
+### Big thanks to the following sources! (some in advance):
 
 * [Scott Cawthon][4] / [Five Night's at Freddy's (PC)][3]
 * J Vijn ([excellent and extrememly helful GBA tutorial][5]
@@ -53,3 +83,5 @@ That will have the source for the corresponding file and an explanation of which
 [8]: https://www.spriters-resource.com/pc_computer/fivenightsatfreddys/
 
 [9]: https://gbadev.org/docs.php?showinfo=13
+
+[10]: https://devkitpro.org/wiki/devkitPro_pacman "DdevkitPro pacman setup guide"
