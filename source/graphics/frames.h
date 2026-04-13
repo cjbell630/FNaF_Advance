@@ -4,7 +4,7 @@
 #include "tonc_types.h"
 
 typedef struct Frame{
-    TILE *tiles;
+    u16 *tiles;
     u16 tiles_length;
     COLOR *palette;
     u16 palette_length;

@@ -87,11 +87,11 @@ void load_door_frame(u8 frame_num, u16 tile_start, u16 *tiles) {
 }
 
 void load_left_door_frame(u8 frame_num) {
-    load_door_frame(frame_num, LDOOR_TILE_START, &l_doorTiles);
+    load_door_frame(frame_num, LDOOR_TILE_START, l_doorTiles);
 }
 
 void load_right_door_frame(u8 frame_num) {
-    load_door_frame(frame_num, RDOOR_TILE_START, &r_doorTiles);
+    load_door_frame(frame_num, RDOOR_TILE_START, r_doorTiles);
 }
 
 void init_objects() {
