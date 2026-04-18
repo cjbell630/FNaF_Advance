@@ -7,7 +7,7 @@
 #include "components/graphics.h"
 
 // TODO make this less cringe
-void bonnie_move(enum RoomNames room, bool cams_are_up, enum RoomNames selected_cam) {
+void bonnie_move(const enum RoomNames room, const bool cams_are_up, const enum RoomNames selected_cam) {
     if (cams_are_up && (selected_cam == room || selected_cam == AnimatronicBonnie.room_num)) {
         Graphics.stun_cams(selected_cam);
     }
@@ -18,7 +18,7 @@ void bonnie_move(enum RoomNames room, bool cams_are_up, enum RoomNames selected_
 /*  BONNIE  */
 
 // TODO this and chicas code are so similar, combine them somehow
-void update_bonnie(bool cams_are_up, enum RoomNames selected_cam) {
+void update_bonnie(const bool cams_are_up, const enum RoomNames selected_cam) {
     if (AnimatronicBonnie.room_num == ROOM_OFFICE) {
         if (AnimatronicBonnie.timer == -1) {
             // if the cams have not been lifted since bonnie got in the office

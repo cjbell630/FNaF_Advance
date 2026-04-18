@@ -54,7 +54,7 @@ Frame empty_screen = {
     .vertical_offset = 0,
     .screen_entry = empty_frame
 };
-struct Frame* blip_frames[10] = {
+Frame* blip_frames[10] = {
     &empty_screen, &blip_frame_8, &blip_frame_7, &blip_frame_6, &blip_frame_5,
     &blip_frame_4, &blip_frame_3, &blip_frame_2, &blip_frame_1, &blip_frame_0
 };

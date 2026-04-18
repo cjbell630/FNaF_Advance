@@ -44,7 +44,7 @@ void spooky_effects_on_cam_up() {
     general_cam_hallucination_rng = rnd_max(100);
 }
 
-void spooky_effects_on_select_cam(enum RoomNames room_name) {
+void spooky_effects_on_select_cam(const enum RoomNames room_name) {
     u8 occupants; // why can't you declare a variable in the first line of a switch statement ugh
     // TODO is setting to 0 redundant?
     switch (room_name) {
@@ -104,6 +104,7 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
             break;
         case ROOM_RIGHT_DOOR:
             break;
+        default: ;
     }
 }
 
@@ -111,7 +112,7 @@ void spooky_effects_on_select_cam(enum RoomNames room_name) {
 void spooky_effects_on_room_change() {
 }
 
-void update_spooky_effects(bool cams_are_up, enum RoomNames selected_cam) {
+void update_spooky_effects(const bool cams_are_up, enum RoomNames selected_cam) {
     // TODO add cam blip here instead
     if (cams_are_up) {
     } else {
@@ -129,7 +130,7 @@ void update_spooky_effects(bool cams_are_up, enum RoomNames selected_cam) {
         if (flicker != room_effects[ROOM_OFFICE]) {
             room_effects[ROOM_OFFICE] = flicker;
             if (flicker) {
-                bool occupied = side
+                const bool occupied = side
                                     ? Animatronics.get_room_occupants(ROOM_RIGHT_DOOR) >> 2
                                     : Animatronics.get_room_occupants(ROOM_LEFT_DOOR) >> 1;
                 Graphics.enable_office_light(side, occupied);
@@ -140,7 +141,7 @@ void update_spooky_effects(bool cams_are_up, enum RoomNames selected_cam) {
     }
 }
 
-enum EffectNames get_effects(enum RoomNames room) {
+enum EffectNames get_effects(const enum RoomNames room) {
     return room_effects[room];
 }
 

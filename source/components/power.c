@@ -25,7 +25,7 @@ int power; // 100% = 1000000 power is floored; so trim last 4 digits when displa
 int bonus_drain_interval;
 int foxy_drain_counter;
 
-void update_power(byte usage) {
+void update_power(const byte usage) {
     if (frame_multiple(60/*TODO magic num: 1 second*/)) {
         // could make this a lookup table but all sources point to this being not any more efficient
         power -= (usage * STD_POWER_DRAIN); // drains usage*0.1% each second

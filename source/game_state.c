@@ -12,7 +12,7 @@ bool SHOW_CAM_ANIM_ON_JUMPSCARE;
 const int FRAME_MAX = 130881600; // the LCM of all frame intervals, to avoid massive nums in memory
 
 
-bool frame_multiple(int factor) {
+bool frame_multiple(const int factor) {
     return FRAME_NUM % factor == 0;
 }
 

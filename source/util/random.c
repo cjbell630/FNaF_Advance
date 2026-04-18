@@ -7,7 +7,7 @@
 
 int rng_seed = 42;
 
-void scramble_rng(int modifier) {
+void scramble_rng(const int modifier) {
     // raw key value = 1023
     //1664 * 1000 ~= 1664525
     //1013904 * 1000 ~= 1013904223
@@ -24,7 +24,7 @@ int rnd() {
  * TODO: doc
  * max is exclusive
  */
-int rnd_max(int max) {
+int rnd_max(const int max) {
     return rnd() % max;
 }
 
@@ -32,7 +32,7 @@ int rnd_max(int max) {
  * TODO: doc
  * max is exclusive
  */
-int rnd_exclude(int max, int exclude) {
+int rnd_exclude(const int max, const int exclude) {
     int random = rnd_max(max);
     while (random == exclude) {
         random = rnd_max(max);

@@ -6,7 +6,7 @@
 #include "components/equipment.h"
 #include "components/graphics.h"
 
-void chica_move(enum RoomNames room, bool cams_are_up, enum RoomNames selected_cam) {
+void chica_move(const enum RoomNames room, const bool cams_are_up, const enum RoomNames selected_cam) {
     if (cams_are_up && (selected_cam == room || selected_cam == AnimatronicChica.room_num)) {
         Graphics.stun_cams(selected_cam);
     }
@@ -17,7 +17,7 @@ void chica_move(enum RoomNames room, bool cams_are_up, enum RoomNames selected_c
 /*  CHICA  */
 
 // TODO this and chicas code are so similar, combine them somehow
-void update_chica(bool cams_are_up, enum RoomNames selected_cam) {
+void update_chica(const bool cams_are_up, const enum RoomNames selected_cam) {
     if (AnimatronicChica.room_num == ROOM_OFFICE) {
         if (AnimatronicChica.timer == -1) {
             // if the cams have not been lifted since chica got in the office

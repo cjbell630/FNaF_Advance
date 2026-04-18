@@ -48,8 +48,8 @@ const u16 LDOOR_TILE_START = 128;
 const u16 RDOOR_TILE_START = LDOOR_TILE_START + 160;
 const u8 L_DOOR_PALBANK = 1;
 const u8 R_DOOR_PALBANK = 2; // TODO make them use the same pallette
-#define DOOR_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE
-#define DOOR2_ATTR0 ATTR0_REG | ATTR0_4BPP | ATTR0_WIDE
+#define DOOR_ATTR0 (ATTR0_REG | ATTR0_4BPP | ATTR0_SQUARE)
+#define DOOR2_ATTR0 (ATTR0_REG | ATTR0_4BPP | ATTR0_WIDE)
 #define LAYER_0 3
 #define LAYER_1 2
 #define LAYER_2 1
@@ -67,30 +67,30 @@ void show_static() {
     REG_DISPCNT = DCNT_BG0 | DCNT_BG2 | DCNT_MODE1;
 }
 
-void graphics_set_office_scroll(s16 value) {
+void graphics_set_office_scroll(const s16 value) {
     REG_BG0HOFS = value;
-    s16 l_door_x = 16 - value;
+    const s16 l_door_x = 16 - value;
     obj_set_pos(l_door0, l_door_x, 0);
     obj_set_pos(l_door1, l_door_x, 64);
     obj_set_pos(l_door2, l_door_x, 128);
-    s16 r_door_x = 280 - value;
+    const s16 r_door_x = 280 - value;
     obj_set_pos(r_door0, r_door_x, 0);
     obj_set_pos(r_door1, r_door_x, 64);
     obj_set_pos(r_door2, r_door_x, 128);
 }
 
-void load_door_frame(u8 frame_num, u16 tile_start, u16* tiles) {
-    u16 offset = frame_num * 2560; //(1024+1024+512)
+void load_door_frame(const u8 frame_num, const u16 tile_start, const u16* tiles) {
+    const u16 offset = frame_num * 2560; //(1024+1024+512)
     memcpy(&tile_mem[4][tile_start], &tiles[offset], 2048/*32 * 64*/);
     memcpy(&tile_mem[4][tile_start + 64], &tiles[offset + 1024], 2048/*32 * 64*/);
     memcpy(&tile_mem[4][tile_start + 128/*64*2*/], &tiles[offset + 2048/*1024*2*/], 1024/*32 * 32*/);
 }
 
-void load_left_door_frame(u8 frame_num) {
+void load_left_door_frame(const u8 frame_num) {
     load_door_frame(frame_num, LDOOR_TILE_START, l_doorTiles);
 }
 
-void load_right_door_frame(u8 frame_num) {
+void load_right_door_frame(const u8 frame_num) {
     load_door_frame(frame_num, RDOOR_TILE_START, r_doorTiles);
 }
 
@@ -190,7 +190,7 @@ void init_backgrounds() {
     REG_BG1CNT = BG_PRIO(LAYER_1) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x64;
 }
 
-void load_frame(Frame* frame, u16 cbb, u16 sbb) {
+void load_frame(const Frame* frame, const u16 cbb, const u16 sbb) {
     dma3_cpy(&pal_bg_mem[0], frame->palette, frame->palette_length);
     dma3_cpy(&tile_mem[cbb][0], frame->tiles, frame->tiles_length);
     dma3_cpy(&se_mem[sbb][0], frame->screen_entry, frame->screen_entry_length);
@@ -238,7 +238,7 @@ void graphics_switch_to_office() {
     //REG_BLDALPHA = BLDA_BUILD(0b01000, 0b01000);
 }
 
-void graphics_select_cam(enum RoomNames prev_room, enum RoomNames new_room) {
+void graphics_select_cam(const enum RoomNames prev_room, const enum RoomNames new_room) {
     //Swap pal of curr cam with new cam (green marker)
     /*
     COLOR temp = pal_obj_mem[prev_room + 3];
@@ -268,8 +268,8 @@ void do_nothing() {
 
 void (*undo_office)() = &do_nothing;
 
-void graphics_enable_office_light(bool right_side, bool occupied) {
-    u8 offset = (4 * right_side) + (2 * occupied);
+void graphics_enable_office_light(const bool right_side, const bool occupied) {
+    const u8 offset = (4 * right_side) + (2 * occupied);
     undo_office = office_funcs[offset];
     office_funcs[offset + 1]();
     /*
@@ -306,7 +306,7 @@ void graphcis_update_office() {
     }
 }
 
-void graphics_stun_cams(enum RoomNames room) {
+void graphics_stun_cams(const enum RoomNames room) {
     if (cam_stun_timer == 0) {
         // TOOD assuming this is called when the cams are up
         REG_DISPCNT = cams_stun_dispcnt;

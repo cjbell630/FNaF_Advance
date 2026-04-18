@@ -10,7 +10,7 @@ enum FoxyPhases {
     FOXY_CLOSED, FOXY_PEEK, FOXY_STAND, FOXY_GONE, FOXY_RUN, FOXY_ATTACK
 };
 
-bool foxy_at_cove(bool cams_are_up) {
+bool foxy_at_cove(const bool cams_are_up) {
     /* HANDLE STUN TIMER */
     if (cams_are_up) {
         if (frame_multiple(6/*TODO magic num*/)) {
@@ -32,7 +32,7 @@ bool foxy_at_cove(bool cams_are_up) {
     return false;
 }
 
-void update_foxy(bool cams_are_up, enum RoomNames selected_cam) {
+void update_foxy(const bool cams_are_up, const enum RoomNames selected_cam) {
     // TODO do the later phases really not need a move check?
     switch (AnimatronicFoxy.phase) {
         case FOXY_CLOSED:

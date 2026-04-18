@@ -11,14 +11,15 @@ int curr_bg_palbank = 0;
 }*/
 
 // TODO remove
-void load_bg_pal(COLOR* pal, int palLen, int palbank) {
+void load_bg_pal(const COLOR* pal, const int palLen, const int palbank) {
     memcpy(&pal_bg_mem[16 * palbank], pal, palLen);
 }
 
-void swap_bg_pal(int pb0, int pb1) {
+void swap_bg_pal(const int pb0, const int pb1) {
     COLOR temp[32];
 
-    int color_index0 = 16 * pb0, color_index1 = 16 * pb1;
+    const int color_index0 = 16 * pb0;
+    const int color_index1 = 16 * pb1;
     //TODO: elarn how to do this better
 
     //vbaprint("storing 0\n");
@@ -44,7 +45,7 @@ void swap_bg_pal(int pb0, int pb1) {
     //vbaprint("-----------done swapping once------------\n");
 }
 
-void set_bg_palbank(int palbank) {
+void set_bg_palbank(const int palbank) {
     //vbaprint(curr_bg_palbank == 0 ? "curr palbank is 0\n" : "not 0\n");
 
     //swap 0 and curr

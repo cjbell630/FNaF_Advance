@@ -382,7 +382,7 @@ const Frame CAM_IMG_MAP[12][16][5] = {
 
 // when multiple animatronics are in the same room (excluding the stage), the display order is:
 // Foxy > Chica > Bonnie > Freddy
-Frame get_cam_img_data(enum RoomNames room) {
+Frame get_cam_img_data(const enum RoomNames room) {
     u8 occupants = Animatronics.get_room_occupants(room);
     // if the room is not stage and there are multiple animatronics in room
     if ((occupants & (occupants - 1)) && (room != ROOM_STAGE)) {

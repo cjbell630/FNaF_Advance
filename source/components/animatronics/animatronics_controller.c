@@ -29,7 +29,7 @@ enum FreddyPowerOffPhases {
 
 
 /*  COLLECTIVE  */
-void set_levels(int fr_lvl, int b_lvl, int c_lvl, int fo_lvl) {
+void set_levels(const int fr_lvl, const int b_lvl, const int c_lvl, const int fo_lvl) {
     // TODO make these orders consistent or something please
     AnimatronicBonnie.lvl = b_lvl;
     AnimatronicFreddy.lvl = fr_lvl;
@@ -68,7 +68,7 @@ void on_night_start() {
     AnimatronicGoldenFreddy.on_night_start();
 }
 
-void update_anims(bool cams_are_up, enum RoomNames selected_cam) {
+void update_anims(const bool cams_are_up, const enum RoomNames selected_cam) {
     // TODO can I put them in a list or something and do for each, and then say if frame mult of internal attribute
     AnimatronicBonnie.update(cams_are_up, selected_cam);
     AnimatronicFreddy.update(cams_are_up, selected_cam);
@@ -106,6 +106,7 @@ void update_power_off() {
                 trigger_jumpscare(JUMPSCARE_FREDDY_POWER, false);
             }
             break;
+        default: ;
     }
 }
 
@@ -114,7 +115,7 @@ void update_power_off() {
  *
  * @param hour the CURRENT hour
  */
-void on_hour(int hour) {
+void on_hour(const int hour) {
     switch (hour) {
         case 2:
             AnimatronicBonnie.lvl++;
@@ -138,7 +139,7 @@ void on_power_off() {
 }
 
 // TODO define this in camera.c?
-u8 get_room_occupants(enum RoomNames room) {
+u8 get_room_occupants(const enum RoomNames room) {
     return ((AnimatronicFoxy.room_num == room) << 3) | ((AnimatronicChica.room_num == room) << 2) |
         ((AnimatronicBonnie.room_num == room) << 1) | (AnimatronicFreddy.room_num == room);
 }

@@ -8,7 +8,7 @@
 
 extern int curr_bg_palbank;
 
-void load_bg_pal(COLOR* pal, int palLen, int palbank);
+void load_bg_pal(const COLOR* pal, int palLen, int palbank);
 
 void swap_bg_pal(int pb0, int pb1);
 

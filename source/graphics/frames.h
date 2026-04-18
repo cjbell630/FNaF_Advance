@@ -17,8 +17,8 @@ typedef struct Frame {
 /**
  * Frames for screen blip IN REVERSE ORDER
  */
-extern struct Frame* blip_frames[10];
+extern Frame* blip_frames[10];
 extern const Frame office_base_frame;
-extern struct Frame empty_screen;
+extern Frame empty_screen;
 
 #endif //FNAF_ADVANCE_FRAMES_H

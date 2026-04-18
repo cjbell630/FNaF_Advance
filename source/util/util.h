@@ -5,7 +5,7 @@
 
 //https://stackoverflow.com/a/7919546/12861567
 //generates a number such as 0b11111 where the number of 1s equals n
-#define GET_N_SET_BITS(n) (1U << n) - 1U
+#define GET_N_SET_BITS(n) ((1U << (n)) - 1U)
 
 /**
  * Returns the modulo of the given number such that negative numbers indicate that number of steps from the origin (0),
@@ -27,18 +27,18 @@
  * @param modulus  the modulus (second number in standard modulo notation)
  * @return the resulting value (see above)
  */
-INLINE int continuous_modulo(int number, int modulus) {
+INLINE int continuous_modulo(const int number, const int modulus) {
     //Calculates a corrected value (left of outside %),
     //then returns the modulo of that value.
     return (modulus + (number % modulus)) % modulus;
 }
 
 //TODO: could return a single bit
-INLINE bool is_multiple(int number, int factor) {
+INLINE bool is_multiple(const int number, const int factor) {
     return number % factor == 0;
 }
 
-INLINE bool any(bool* bools, int boolc) {
+INLINE bool any(const bool* bools, const int boolc) {
     for (int i = 0; i < boolc; i++) {
         if (bools[i]) {
             return true;
@@ -47,7 +47,7 @@ INLINE bool any(bool* bools, int boolc) {
     return false;
 }
 
-INLINE bool all(bool* bools, int boolc) {
+INLINE bool all(const bool* bools, int boolc) {
     for (int i = 0; i < boolc; i++) {
         if (~bools[i]) {
             return false;

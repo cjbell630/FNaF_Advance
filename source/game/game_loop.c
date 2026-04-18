@@ -101,6 +101,7 @@ void run_jumpscare() {
             vbaprint("JUMPSCARE!!!!!! (freddy golden)\n\n\n\n\n\n\n\n\n\n");
             // TODO crash game
             break;
+        default: ;
     }
     GAME_PHASE = NIGHT_DEATH;
 }

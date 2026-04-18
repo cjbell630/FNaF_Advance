@@ -43,7 +43,7 @@ void controls_menu() {
     controls_universal();
 }
 
-void scroll_cams_controls(int shoulder_input) {
+void scroll_cams_controls(const int shoulder_input) {
     if (shoulder_input != 0) {
         s16 new_scroll = office_horiz_scroll + (SPEED_SCALE * shoulder_input);
         new_scroll = (new_scroll > RIGHT_CAP)

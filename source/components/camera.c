@@ -11,7 +11,7 @@
 #include "spooky_effects.h"
 #include "animatronics/animatronics_controller.h"
 
-#define SHOULD_PAN(n) (n != ROOM_CLOSET && n != ROOM_KITCHEN)
+#define SHOULD_PAN(n) ((n) != ROOM_CLOSET && (n) != ROOM_KITCHEN)
 
 enum RoomNames CURR_CAM = ROOM_STAGE;
 
@@ -26,10 +26,9 @@ const s8 CAM_SCROLL_NEG_INC = 0 - CAM_SCROLL_POS_INC;
 // Also, the aspect ratio in the original is wider so more of the image is shown at once.
 // It still doesn't really look like the original, but it fits better I think.
 
-// TODO init on night start
-s16 cam_scroll = 0;
-u8 turnaround_timer = 0; // TODO set to max when cam opened
-s8 cam_scroll_dir = 1;
+s16 cam_scroll;
+u8 turnaround_timer;
+s8 cam_scroll_dir;
 
 
 void cam_select_room(enum RoomNames room) {
@@ -51,6 +50,9 @@ void set_cam_display_visible() {
 
 void camera_on_night_start() {
     CURR_CAM = ROOM_STAGE;
+    cam_scroll = 0;
+    turnaround_timer = 0;
+    cam_scroll_dir = 1;
 }
 
 
@@ -77,6 +79,8 @@ void pan_cam() {
 }
 
 void update_camera() {
+    // TODO this isn't really how it works - the camera should be constantly panning even when the cams are down
+    // simply ignore the pan values for cams that don't pan, but still update on every frame regardless
     if (SHOULD_PAN(CURR_CAM) && frame_multiple(CAM_SCROLL_FRAME_INTERVAL)) {
         // TODO move to graphics?
         pan_cam();

@@ -12,12 +12,12 @@
  * @param anim a pointer to the anim to check for
  * @return true if the anim can move on this opportunity, false if not
  */
-bool try_move(struct Animatronic* anim) {
+bool try_move(const struct Animatronic* anim) {
     return anim->lvl >= (rnd_max(MAX_LEVEL) + 1);
 }
 
 
-void trigger_jumpscare(enum Jumpscares character, bool show_cams_animation) {
+void trigger_jumpscare(const enum Jumpscares character, const bool show_cams_animation) {
     JUMPSCARER = character;
     SHOW_CAM_ANIM_ON_JUMPSCARE = show_cams_animation;
     GAME_PHASE = NIGHT_JUMPSCARE;

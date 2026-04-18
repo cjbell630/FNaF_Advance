@@ -35,11 +35,11 @@ void equipment_on_night_start() {
  * @param target enum EquipmentNames, the target to check
  * @return true if the target was set to on, false if off
  */
-bool equipment_is_on(enum EquipmentNames target) {
+bool equipment_is_on(const enum EquipmentNames target) {
     return statuses[target];
 }
 
-bool equipment_force_light_off(enum EquipmentNames light) {
+bool equipment_force_light_off(const enum EquipmentNames light) {
     if (statuses[light]) {
         statuses[light] = false;
         Graphics.clear_office_lights();
@@ -48,7 +48,7 @@ bool equipment_force_light_off(enum EquipmentNames light) {
     return false;
 }
 
-void equipment_disable(enum EquipmentNames target) {
+void equipment_disable(const enum EquipmentNames target) {
     disabled[target] = true;
     equipment_force_light_off(target); // TODO could theoretically cause issues when disabling doors
 }
@@ -59,7 +59,7 @@ void equipment_disable(enum EquipmentNames target) {
  * @param toggled the enum of the light to toggle
  * @param other the enum of the other light
  */
-void toggle_light(enum EquipmentNames toggled, enum EquipmentNames other) {
+void toggle_light(const enum EquipmentNames toggled, const enum EquipmentNames other) {
     if (!equipment_force_light_off(toggled)) {
         // turn off if on. if the light was already off, then
         // TODO force enable lights
@@ -77,7 +77,7 @@ void toggle_light(enum EquipmentNames toggled, enum EquipmentNames other) {
  *
  * @param target enum EquipmentNames, the target to toggle
  */
-void equipment_toggle(enum EquipmentNames target) {
+void equipment_toggle(const enum EquipmentNames target) {
     if (disabled[target]) {
         // TODO play disabled sound
         return;

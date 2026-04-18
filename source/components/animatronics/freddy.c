@@ -43,7 +43,7 @@ void move_freddy() {
     }
 }
 
-void update_freddy(bool cams_are_up, enum RoomNames selected_cam) {
+void update_freddy(const bool cams_are_up, const enum RoomNames selected_cam) {
     if (AnimatronicFreddy.room_num == ROOM_OFFICE) {
         if (cams_are_up) {
             AnimatronicFreddy.timer = 60; // TODO magic number: 1s/60f timer for jumpscares

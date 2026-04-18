@@ -7,7 +7,7 @@ bool GOLDEN_FREDDY_APPEARED;
 
 #define GOLDEN_FREDDY_ODDS 34464
 
-void golden_freddy_update(bool cams_are_up, enum RoomNames selected_cam) {
+void golden_freddy_update(const bool cams_are_up, const enum RoomNames selected_cam) {
     if (GOLDEN_FREDDY_APPEARED) {
         return;
     }
