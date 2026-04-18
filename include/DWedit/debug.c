@@ -1,10 +1,10 @@
 #include "debug.h"
 
 /**
- * Override for vbaprint (see debug.s)
+ * Override for mgba_printf (see debug.s)
  * When a ROM is compiled with this (debug.c) instead of debug.s,
- * vbaprint calls will not cause a crash when run on real hardware.
+ * mgba_printf calls will not cause a crash when run on real hardware.
  */
-void vbaprint(const char* message) {
+void mgba_printf(const char* message) {
     return;
 }

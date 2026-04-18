@@ -131,10 +131,10 @@ bool equipment_is_animating_cam() {
         cam_device_anim_timer--;
         // TODO graphics get frame timer+offset
         if (cam_device_anim_timer == 0) {
-            vbaprint("cam anim timer is 0\n");
+            mgba_printf("cam anim timer is 0\n");
             if (cam_device_anim_offset == 0) {
                 // if cams are now up
-                vbaprint("cams are now up\n");
+                mgba_printf("cams are now up\n");
                 Cameras.set_visible();
                 statuses[CAMERA] = true;
             }
@@ -148,14 +148,14 @@ void equipment_update() {
     // TODO repetitive, clean
     if (l_door_anim_frame) {
         l_door_anim_frame--;
-        vbaprint("l door frame\n");
+        mgba_printf("l door frame\n");
         Graphics.load_left_door_frame(
             statuses[LEFT_DOOR] ? NUM_DOOR_FRAMES - l_door_anim_frame - 1 : l_door_anim_frame
         );
     }
     if (r_door_anim_frame) {
         r_door_anim_frame--;
-        vbaprint("r door frame\n");
+        mgba_printf("r door frame\n");
         Graphics.load_right_door_frame(
             statuses[RIGHT_DOOR] ? NUM_DOOR_FRAMES - r_door_anim_frame - 1 : r_door_anim_frame
         );

@@ -2,7 +2,7 @@
 #include "controls.h"
 #include "equipment.h"
 #include "game/cam_nav.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "graphics.h"
 #include "animatronics/animatronics_controller.h"
 
@@ -87,7 +87,7 @@ void controls_office() {
         }
     } else if (CTRL_HONK) {
         // TODO
-        vbaprint("nose honked :)\n");
+        mgba_printf("nose honked :)\n");
     }
 }
 
@@ -100,7 +100,7 @@ void controls_office_power_off() {
     scroll_cams_controls(CTRL_OFFICE_SCROLL);
     if (!(can_press_left_buttons || can_press_right_buttons) && CTRL_HONK) {
         // TODO
-        vbaprint("nose honked :)\n");
+        mgba_printf("nose honked :)\n");
     }
 }
 

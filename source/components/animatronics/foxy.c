@@ -1,5 +1,5 @@
 #include "foxy.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "game/room_names.h"
 #include "animatronic.h"
 #include "util/random.h"
@@ -25,7 +25,7 @@ bool foxy_at_cove(const bool cams_are_up) {
         frame_multiple(AnimatronicFoxy.movement_framecount) &&
         try_move(&AnimatronicFoxy)
     ) {
-        vbaprint("foxy success\n");
+        mgba_printf("foxy success\n");
         AnimatronicFoxy.phase++;
         return true;
     }
@@ -66,7 +66,7 @@ void update_foxy(const bool cams_are_up, const enum RoomNames selected_cam) {
             }
             break;
         case FOXY_ATTACK:
-            vbaprint("foxy is attacking\n");
+            mgba_printf("foxy is attacking\n");
             if (Equipment.is_on(LEFT_DOOR)) {
                 // if door is closed
                 Power.on_foxy_attack();

@@ -22,31 +22,31 @@ void swap_bg_pal(const int pb0, const int pb1) {
     const int color_index1 = 16 * pb1;
     //TODO: elarn how to do this better
 
-    //vbaprint("storing 0\n");
+    //mgba_printf("storing 0\n");
 
     //store first pallete
     memcpy(&temp, &pal_bg_mem[color_index0], 32);
 
-    //vbaprint("done storing 0\n");
+    //mgba_printf("done storing 0\n");
 
 
-    //vbaprint("coping 0 to 1\n");
+    //mgba_printf("coping 0 to 1\n");
     //copy second to first location
     memcpy(&pal_bg_mem[color_index0], &pal_bg_mem[color_index1], 32);
-    //vbaprint("done coping 0 to 1\n");
+    //mgba_printf("done coping 0 to 1\n");
 
 
-    //vbaprint("coping 1 to 0\n");
+    //mgba_printf("coping 1 to 0\n");
     //copy first to second location
     memcpy(&pal_bg_mem[color_index1], &temp[0], 32);
 
-    //vbaprint("done coping 1 to 0\n");
+    //mgba_printf("done coping 1 to 0\n");
 
-    //vbaprint("-----------done swapping once------------\n");
+    //mgba_printf("-----------done swapping once------------\n");
 }
 
 void set_bg_palbank(const int palbank) {
-    //vbaprint(curr_bg_palbank == 0 ? "curr palbank is 0\n" : "not 0\n");
+    //mgba_printf(curr_bg_palbank == 0 ? "curr palbank is 0\n" : "not 0\n");
 
     //swap 0 and curr
     swap_bg_pal(0, curr_bg_palbank);

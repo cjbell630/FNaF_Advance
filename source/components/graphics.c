@@ -3,7 +3,7 @@
 #include "graphics.h"
 #include "game/room_names.h"
 #include "images/sprites/cam_map/cam_map.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "graphics/cam_img_map.h"
 #include "graphics/frames.h"
 #include "images/office/door/l_door.h"
@@ -229,7 +229,7 @@ void graphics_switch_to_office() {
 
     //show office
     //set_bg_palbank(OFFICE_PB);
-    vbaprint("office now\n");
+    mgba_printf("office now\n");
     load_frame(&office_base_frame, MAIN_CBB, MAIN_SBB);
     REG_DISPCNT = DCNT_OBJ | DCNT_BG0 /*| DCNT_BG1*/ | DCNT_OBJ_1D | DCNT_MODE0;
 
@@ -293,7 +293,7 @@ void graphics_update_cam() {
     if (cam_stun_timer) {
         cam_stun_timer--;
         if (cam_stun_timer == 0) {
-            vbaprint("stun over\n");
+            mgba_printf("stun over\n");
             REG_DISPCNT = cams_dispcnt;
             // TODO decrease static opacity
         }

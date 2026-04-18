@@ -12,3 +12,5 @@ __pycache__
 /helpers/*.pal
 /helpers/old
 /helpers/.idea
+
+*.sh

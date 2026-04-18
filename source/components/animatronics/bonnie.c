@@ -1,5 +1,5 @@
 #include "bonnie.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "game/room_names.h"
 #include "animatronic.h"
 #include "util/random.h"
@@ -46,11 +46,11 @@ void update_bonnie(const bool cams_are_up, const enum RoomNames selected_cam) {
     if (!frame_multiple(AnimatronicBonnie.movement_framecount)) {
         return;
     }
-    vbaprint("Bonnie movement opp\n"); // TODO debug merge into one if statement
+    mgba_printf("Bonnie movement opp\n"); // TODO debug merge into one if statement
     if (!try_move(&AnimatronicBonnie)) {
         return;
     }
-    vbaprint("bonnie success\n");
+    mgba_printf("bonnie success\n");
 
     switch (AnimatronicBonnie.room_num) {
         case ROOM_STAGE:
@@ -71,7 +71,7 @@ void update_bonnie(const bool cams_are_up, const enum RoomNames selected_cam) {
             } else {
                 bonnie_move(ROOM_LEFT_DOOR, cams_are_up, selected_cam);
                 Equipment.force_light_off(LEFT_LIGHT);
-                vbaprint("bonnie at window\n");
+                mgba_printf("bonnie at window\n");
                 // TODO set windowscare to play
             }
             break;
@@ -81,7 +81,7 @@ void update_bonnie(const bool cams_are_up, const enum RoomNames selected_cam) {
             } else {
                 bonnie_move(ROOM_LEFT_DOOR, cams_are_up, selected_cam);
                 Equipment.force_light_off(LEFT_LIGHT);
-                vbaprint("bonnie at window\n");
+                mgba_printf("bonnie at window\n");
                 // TODO set windowscare to play
             }
             break;
@@ -95,7 +95,7 @@ void update_bonnie(const bool cams_are_up, const enum RoomNames selected_cam) {
                 Equipment.disable(LEFT_LIGHT);
                 Equipment.disable(LEFT_DOOR);
                 // TODO initiate in office phase
-                vbaprint("bonnie in office!!\n");
+                mgba_printf("bonnie in office!!\n");
                 AnimatronicBonnie.timer = -1;
             }
             break;

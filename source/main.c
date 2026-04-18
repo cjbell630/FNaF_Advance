@@ -1,5 +1,5 @@
 #include <tonc_irq.h>
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "menu.h"
 #include "game_state.h"
 #include "game/game_loop.h"
@@ -46,16 +46,16 @@ int main() {
                   */
 
     //scroll_test();
-    vbaprint("entry\n");
+    mgba_printf("entry\n");
     irq_init(NULL);
     irq_add(II_VBLANK, NULL);
     GAME_PHASE = MENU_HOME;
     NIGHT_NUM = 0;
     while (1) {
         init_menu();
-        vbaprint("initialized menu\n");
+        mgba_printf("initialized menu\n");
         activate_menu();
-        vbaprint("activate menu exited\n");
+        mgba_printf("activate menu exited\n");
         run_game_loop();
     }
     return 0;

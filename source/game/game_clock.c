@@ -10,7 +10,7 @@
 #include "game_state.h"
 #include "components/controls.h"
 #include "components/graphics.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 
 /* CONSTS */
 
@@ -40,7 +40,7 @@ void update_in_game_clock() {
     if (frame_multiple(FRAMES_PER_HOUR)) {
         // NOTE hoping frame skips aren't a thing
         hour++;
-        vbaprint("next hour\n");
+        mgba_printf("next hour\n");
         if (hour == VICTORY_HOUR) {
             // if the night has ended
             GAME_PHASE = NIGHT_VICTORY; // trigger victory

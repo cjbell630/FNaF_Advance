@@ -1,7 +1,7 @@
 #include "freddy.h"
 #include "bonnie.h"
 #include "chica.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "game/room_names.h"
 #include "animatronic.h"
 #include "util/random.h"
@@ -36,7 +36,7 @@ void move_freddy() {
         case ROOM_EAST:
             AnimatronicFreddy.room_num = ROOM_EAST_CORNER;
             AnimatronicFreddy.phase = FREDDY_EAST_CORNER;
-            vbaprint("Freddy in the east corner\n");
+            mgba_printf("Freddy in the east corner\n");
             break;
         default:
             break;
@@ -76,7 +76,7 @@ void update_freddy(const bool cams_are_up, const enum RoomNames selected_cam) {
                 break;
             case FREDDY_READY_TO_ATTACK:
                 if (selected_cam != ROOM_EAST_CORNER) {
-                    vbaprint("Freddy attacking\n");
+                    mgba_printf("Freddy attacking\n");
                     if (Equipment.is_on(RIGHT_DOOR)) {
                         // if door is closed
                         AnimatronicFreddy.room_num = ROOM_EAST;
@@ -105,7 +105,7 @@ void update_freddy(const bool cams_are_up, const enum RoomNames selected_cam) {
 
 
     // if cams are down and successful movement opportunity
-    vbaprint("Freddy success\n");
+    mgba_printf("Freddy success\n");
 
 
     switch (AnimatronicFreddy.phase) {
@@ -113,29 +113,29 @@ void update_freddy(const bool cams_are_up, const enum RoomNames selected_cam) {
             if (AnimatronicBonnie.room_num != ROOM_STAGE && AnimatronicChica.room_num != ROOM_STAGE) {
                 AnimatronicFreddy.phase = FREDDY_MIGHT_MOVE;
                 AnimatronicFreddy.timer = FREDDY_TIMER_START;
-                vbaprint("Freddy is awake\n");
+                mgba_printf("Freddy is awake\n");
             }
             break;
         case FREDDY_WONT_MOVE:
             AnimatronicFreddy.phase = FREDDY_MIGHT_MOVE;
             AnimatronicFreddy.timer = FREDDY_TIMER_START;
-            vbaprint("Freddy might move\n");
+            mgba_printf("Freddy might move\n");
             break;
         case FREDDY_MIGHT_MOVE:
             AnimatronicFreddy.timer--;
             if (AnimatronicFreddy.timer < 1) {
                 AnimatronicFreddy.phase = FREDDY_WILL_MOVE;
-                vbaprint("Freddy will move\n");
+                mgba_printf("Freddy will move\n");
             }
             break;
         case FREDDY_WILL_MOVE:
-            vbaprint("Freddy moved\n");
+            mgba_printf("Freddy moved\n");
             AnimatronicFreddy.phase = FREDDY_WONT_MOVE;
             // do this before moving bc moving to east corner overwrites his phase
             move_freddy();
             break;
         case FREDDY_EAST_CORNER:
-            vbaprint("Freddy ready to attack\n");
+            mgba_printf("Freddy ready to attack\n");
             AnimatronicFreddy.phase = FREDDY_READY_TO_ATTACK;
         default:
             break;

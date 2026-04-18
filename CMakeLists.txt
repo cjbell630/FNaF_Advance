@@ -27,12 +27,10 @@ set(CMAKE_C_STANDARD 17)
 
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS source/*.c)
 file(GLOB_RECURSE ASSET_FILES CONFIGURE_DEPENDS assets/*.c)
+set(DEBUG_H_FILE include/debug.h)
 
-set(ALL_SOURCES ${SRC_FILES} ${ASSET_FILES})
+set(ALL_SOURCES ${SRC_FILES} ${ASSET_FILES} ${DEBUG_H_FILE})
 find_program(gbafix gbafix HINTS "$ENV{DEVKITPRO}/tools/bin")
-
-set(DEBUG_S_FILE include/DWedit/debug.s)
-set(DEBUG_C_FILE include/DWedit/debug.c)
 
 add_executable(${PROJECT_NAME} ${ALL_SOURCES})
 
@@ -43,8 +41,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-        $<$<CONFIG:Debug>:${DEBUG_S_FILE}>
-        $<$<CONFIG:Release>:${DEBUG_C_FILE}>
+        $<$<CONFIG:Debug>:DEBUG>
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE

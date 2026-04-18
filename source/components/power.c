@@ -2,7 +2,7 @@
 #include "util/util.h"
 #include "tonc_types.h"
 #include "game_state.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 
 /* PREREQS */
 // some functions in this file use the frame_multiple and NIGHT_NUM globals
@@ -29,11 +29,11 @@ void update_power(const byte usage) {
     if (frame_multiple(60/*TODO magic num: 1 second*/)) {
         // could make this a lookup table but all sources point to this being not any more efficient
         power -= (usage * STD_POWER_DRAIN); // drains usage*0.1% each second
-        vbaprint("power drained 0.1%*usage (per second)\n");
+        mgba_printf("power drained 0.1%*usage (per second)\n");
 
         // all of the bonus drain intervals are multiples of 60 so this reduces comparisons
         if (frame_multiple(bonus_drain_interval)) {
-            vbaprint("power drained 0.1% (bonus)\n");
+            mgba_printf("power drained 0.1% (bonus)\n");
             power -= STD_POWER_DRAIN; /* TODO magic number, drains 0.1% each time */
         }
     }
@@ -73,7 +73,7 @@ void power_on_night_start() {
 void power_on_foxy_attack() {
     power -= (50000 * foxy_drain_counter) + 10000;
     foxy_drain_counter++;
-    vbaprint("foxy drained power\n");
+    mgba_printf("foxy drained power\n");
 }
 
 struct PowerWrapper Power = {

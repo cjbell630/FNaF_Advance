@@ -1,5 +1,5 @@
 #include "golden_freddy.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "util/random.h"
 #include "game/room_names.h"
 
@@ -14,7 +14,7 @@ void golden_freddy_update(const bool cams_are_up, const enum RoomNames selected_
     if (cams_are_up && selected_cam == ROOM_WEST_CORNER) {
         if (AnimatronicGoldenFreddy.room_num == ROOM_WEST_CORNER) {
             AnimatronicGoldenFreddy.room_num = ROOM_OFFICE;
-            vbaprint("GOLDEN FREDDY IN OFFICE\n\n\n\n");
+            mgba_printf("GOLDEN FREDDY IN OFFICE\n\n\n\n");
         }
         return;
     }
@@ -29,9 +29,9 @@ void golden_freddy_update(const bool cams_are_up, const enum RoomNames selected_
         AnimatronicGoldenFreddy.room_num == AnimatronicGoldenFreddy.starting_room
         && frame_multiple(AnimatronicGoldenFreddy.movement_framecount)
     ) {
-        vbaprint("Golden Freddy movement opp\n");
+        mgba_printf("Golden Freddy movement opp\n");
         if (rnd_max(GOLDEN_FREDDY_ODDS) == 0) {
-            vbaprint("GOLDEN FREDDY TRIGGERED!!!!!!!!!!!!!!\n\n\n\n\n\n\n\n\n\n");
+            mgba_printf("GOLDEN FREDDY TRIGGERED!!!!!!!!!!!!!!\n\n\n\n\n\n\n\n\n\n");
             AnimatronicGoldenFreddy.room_num = ROOM_WEST_CORNER;
         }
     }
@@ -40,7 +40,7 @@ void golden_freddy_update(const bool cams_are_up, const enum RoomNames selected_
 void golden_freddy_on_cams_up() {
     // if golden freddy is in the office and the cams are brought up, end his appearance
     if (AnimatronicGoldenFreddy.room_num == ROOM_OFFICE) {
-        vbaprint("GOLDEN FREDDY RESET\n\n\n\n");
+        mgba_printf("GOLDEN FREDDY RESET\n\n\n\n");
         AnimatronicGoldenFreddy.room_num = AnimatronicGoldenFreddy.starting_room;
         GOLDEN_FREDDY_APPEARED = true;
         AnimatronicGoldenFreddy.timer = -1;
@@ -49,7 +49,7 @@ void golden_freddy_on_cams_up() {
 
 void golden_freddy_on_cams_down() {
     if (AnimatronicGoldenFreddy.room_num == ROOM_OFFICE) {
-        vbaprint("GOLDEN FREDDY JUMPSCARE TIMER STARTED\n\n\n\n");
+        mgba_printf("GOLDEN FREDDY JUMPSCARE TIMER STARTED\n\n\n\n");
         AnimatronicGoldenFreddy.timer = 300;
     }
 }

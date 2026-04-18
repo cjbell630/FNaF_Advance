@@ -15,7 +15,7 @@
 #include "components/cinematics.h"
 
 void run_newspaper() {
-    vbaprint("newspaper now\n");
+    mgba_printf("newspaper now\n");
     //show newspaper
     Cinematics.play_newspaper();
 
@@ -26,7 +26,7 @@ void run_newspaper() {
  * Shows the "Night #\n12AM" screen while loading and initializing the night
  */
 void run_night_intro() {
-    vbaprint("starting now\n");
+    mgba_printf("starting now\n");
 
     Cinematics.play_night_intro();
 
@@ -53,7 +53,7 @@ void run_power_on() {
     Graphics.game_display_office();
     REG_BG0VOFS = 0;
 
-    vbaprint("starting loop now\n");
+    mgba_printf("starting loop now\n");
     while (GAME_PHASE == NIGHT_POWER_ON) {
         tick(); //TODO: should be at top or bottom?
         VBlankIntrWait();
@@ -64,7 +64,7 @@ void run_power_on() {
  * Transitions to power outage, then runs the game loop for power out
  */
 void run_power_off() {
-    vbaprint("power out!!!!!!! :O\n");
+    mgba_printf("power out!!!!!!! :O\n");
     // TODO power off phase
     // TODO bring cams down if they are up, bring doors up and switch lights off
     // TODO change office bg
@@ -83,22 +83,22 @@ void run_jumpscare() {
     // TODO jumpscare
     switch (JUMPSCARER) {
         case JUMPSCARE_FOXY:
-            vbaprint("JUMPSCARE!!!!!! (foxy)\n\n\n\n\n\n\n\n\n\n");
+            mgba_printf("JUMPSCARE!!!!!! (foxy)\n\n\n\n\n\n\n\n\n\n");
             break;
         case JUMPSCARE_CHICA:
-            vbaprint("JUMPSCARE!!!!!! (chica)\n\n\n\n\n\n\n\n\n\n");
+            mgba_printf("JUMPSCARE!!!!!! (chica)\n\n\n\n\n\n\n\n\n\n");
             break;
         case JUMPSCARE_BONNIE:
-            vbaprint("JUMPSCARE!!!!!! (bonnie)\n\n\n\n\n\n\n\n\n\n");
+            mgba_printf("JUMPSCARE!!!!!! (bonnie)\n\n\n\n\n\n\n\n\n\n");
             break;
         case JUMPSCARE_FREDDY_STD:
-            vbaprint("JUMPSCARE!!!!!! (freddy standard)\n\n\n\n\n\n\n\n\n\n");
+            mgba_printf("JUMPSCARE!!!!!! (freddy standard)\n\n\n\n\n\n\n\n\n\n");
             break;
         case JUMPSCARE_FREDDY_POWER:
-            vbaprint("JUMPSCARE!!!!!! (freddy power)\n\n\n\n\n\n\n\n\n\n");
+            mgba_printf("JUMPSCARE!!!!!! (freddy power)\n\n\n\n\n\n\n\n\n\n");
             break;
         case JUMPSCARE_GOLDEN:
-            vbaprint("JUMPSCARE!!!!!! (freddy golden)\n\n\n\n\n\n\n\n\n\n");
+            mgba_printf("JUMPSCARE!!!!!! (freddy golden)\n\n\n\n\n\n\n\n\n\n");
             // TODO crash game
             break;
         default: ;

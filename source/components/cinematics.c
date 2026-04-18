@@ -4,7 +4,7 @@
 #include "images/backgrounds/static/static.h"
 #include "images/backgrounds/loading/loading.h"
 #include "tonc.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "graphics/bg_pal_handler.h"
 #include "graphics/static_handler.h"
 #include "graphics/effects/cam_blip.h"
@@ -14,7 +14,7 @@ const int NEWSPAPER_CBB = 0;
 const int NEWSPAPER_SBB = 28;
 
 void cinematics_play_newspaper() {
-    vbaprint("done showing newspaper palette\n");
+    mgba_printf("done showing newspaper palette\n");
     REG_BG0HOFS = 0;
     REG_BG0VOFS = 0; // load newspaper into memory
     // Load palette
@@ -51,7 +51,7 @@ void cinematics_play_newspaper() {
 void cinematics_play_night_intro() {
     //TODO show night intro screen
 
-    vbaprint("\n\n\n\n\n\nNIGHT XXXX 12AM\n\n\n\n\n\n\n");
+    mgba_printf("\n\n\n\n\n\nNIGHT XXXX 12AM\n\n\n\n\n\n\n");
 
     CamBlipEffect.init();
     CamBlipEffect.load();
@@ -75,7 +75,7 @@ void cinematics_play_night_intro() {
 }
 
 void cinematics_play_night_victory() {
-    vbaprint("\n\n\n\n\n\n5AM..........\n\n\n\n\n");
+    mgba_printf("\n\n\n\n\n\n5AM..........\n\n\n\n\n");
     /* TODO FADE IN 1 SECOND */
     int timer = 60;
     while (timer >= 0) {
@@ -90,7 +90,7 @@ void cinematics_play_night_victory() {
         timer--;
     }
 
-    vbaprint("\n\n\n\n\n\n6AM!!!!!!\n\n\n\n\n");
+    mgba_printf("\n\n\n\n\n\n6AM!!!!!!\n\n\n\n\n");
 
     /* SHOW 3 SECONDS */
     timer = 180;
@@ -107,7 +107,7 @@ void cinematics_play_night_victory() {
 }
 
 void cinematics_play_night_death() {
-    vbaprint("\n\n\n\n\n\nSTATIC\n\n\n\n\n");
+    mgba_printf("\n\n\n\n\n\nSTATIC\n\n\n\n\n");
 
     /* TODO SHOW STATIC 10 SECONDS */
     int timer = 600;
@@ -123,7 +123,7 @@ void cinematics_play_night_death() {
         timer--;
     }
 
-    vbaprint("\n\n\n\n\n\nYOU DIED\n\n\n\n\n");
+    mgba_printf("\n\n\n\n\n\nYOU DIED\n\n\n\n\n");
     /* SHOW 10 SECONDS */
     timer = 600;
     while (timer >= 0) {

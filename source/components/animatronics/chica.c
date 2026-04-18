@@ -1,5 +1,5 @@
 #include "chica.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "game/room_names.h"
 #include "animatronic.h"
 #include "util/random.h"
@@ -45,12 +45,12 @@ void update_chica(const bool cams_are_up, const enum RoomNames selected_cam) {
     if (!frame_multiple(AnimatronicChica.movement_framecount)) {
         return;
     }
-    vbaprint("Chica movement opp\n");
+    mgba_printf("Chica movement opp\n");
     if (!try_move(&AnimatronicChica)) {
         // TODO debug merge into one if statement
         return;
     }
-    vbaprint("chica success\n");
+    mgba_printf("chica success\n");
 
     switch (AnimatronicChica.room_num) {
         case ROOM_STAGE:
@@ -75,7 +75,7 @@ void update_chica(const bool cams_are_up, const enum RoomNames selected_cam) {
                 chica_move(ROOM_RIGHT_DOOR, cams_are_up, selected_cam);
                 Equipment.force_light_off(RIGHT_LIGHT);
                 // TODO set windowscare to play
-                vbaprint("chica at window\n");
+                mgba_printf("chica at window\n");
             }
             break;
         case ROOM_RIGHT_DOOR:

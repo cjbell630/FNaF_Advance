@@ -1,6 +1,6 @@
 #include "animatronics_controller.h"
 #include "animatronic.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "util/random.h"
 #include "util/util.h"
 #include "game/room_names.h"
@@ -88,7 +88,7 @@ void update_power_off() {
             if (AnimatronicFreddy.timer < 1 || (frame_multiple(300) && rnd_max(5) == 0)) {
                 AnimatronicFreddy.phase++;
                 AnimatronicFreddy.timer = 1200;
-                vbaprint("Freddy face is now visible and music box is playing\n");
+                mgba_printf("Freddy face is now visible and music box is playing\n");
                 // TODO trigger visual audio etc
             }
             break;
@@ -97,7 +97,7 @@ void update_power_off() {
             if (AnimatronicFreddy.timer < 1 || (frame_multiple(300) && rnd_max(5) == 0)) {
                 AnimatronicFreddy.phase++;
                 AnimatronicFreddy.timer = 1200;
-                vbaprint("Full blackout now\n");
+                mgba_printf("Full blackout now\n");
                 // TODO trigger visual audio etc
             }
             break;
@@ -119,14 +119,14 @@ void on_hour(const int hour) {
     switch (hour) {
         case 2:
             AnimatronicBonnie.lvl++;
-            vbaprint("bonnie level increased\n");
+            mgba_printf("bonnie level increased\n");
             break;
         case 3:
         case 4:
             AnimatronicBonnie.lvl++;
             AnimatronicFoxy.lvl++;
             AnimatronicChica.lvl++;
-            vbaprint("bonnie, foxy, and chica levels increased\n");
+            mgba_printf("bonnie, foxy, and chica levels increased\n");
             break;
         default:
             break;
