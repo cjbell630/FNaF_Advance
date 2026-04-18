@@ -36,7 +36,7 @@ feel free to let me know! :)
 1. devkitPro (follow the tutorial for your system [here][10])
 2. The following from gba-dev (subgroup of devkitPro):
 
-   `libtonc devkitARM gba-cmake catnip devkitarm-cmake devkitarm-gcc`
+   `libtonc devkitARM gba-cmake catnip devkitarm-cmake devkitarm-gcc devkit-env`
 
    (and associated dependencies)
 
