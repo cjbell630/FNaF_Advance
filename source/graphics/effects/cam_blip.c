@@ -1,6 +1,6 @@
 #include "cam_blip.h"
 #include "images/effects/cam_blip_test.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "tonc.h"
 #include "graphics/frames.h"
 #include <string.h>

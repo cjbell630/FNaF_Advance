@@ -7,7 +7,7 @@
 #include "equipment.h"
 #include "animatronics/animatronics_controller.h"
 #include "images/office/office.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include <stdio.h>
 
 #include "animatronics/golden_freddy.h"

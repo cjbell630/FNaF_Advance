@@ -1,6 +1,6 @@
 //#include "screen_handler.h"
 #include "tonc.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include <string.h>
 
 int curr_bg_palbank = 0;
