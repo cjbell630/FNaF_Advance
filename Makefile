@@ -34,27 +34,29 @@ TITLE   := $(PROJ)
 # https://stackoverflow.com/a/18258352
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
+# .h file for debug functions
+DEBUG_H := include/debug.h
+
 # get .c files
 SRC_FILES := $(call rwildcard,source,*.c)
 ASSET_FILES := $(call rwildcard,assets,*.c)
 C_FILES := $(SRC_FILES) $(ASSET_FILES)
 
 # .o files to compile
-DEBUG_OBJ := include/DWedit/debug.o
 COBJS := $(patsubst %.c,%.o,$(C_FILES))
 
 ifeq ($(MAKECMDGOALS),debug)
-	SOBJS := $(DEBUG_OBJ)
+	FLAGS := -DDEBUG
 else
 	#ifeq ($(MAKECMDGOALS),release)
-	COBJS += $(DEBUG_OBJ)
+	FLAGS := -DRELEASE
 endif
 
 #DEPS := $(patsubst %.o,%.d,$(COBJS))
 #-include $(DEPS)
 
 # targets for .elf (all .o, plus libtonc.a)
-OBJS	:= $(COBJS) $(SOBJS) $(LIBTONC_A)
+OBJS	:= $(COBJS) $(SOBJS) $(DEBUG_H) $(LIBTONC_A)
 
 # --- boot type (MB=0 : normal. MB=1 : multiboot) ---
 
@@ -80,7 +82,7 @@ OBJCOPY	:= $(CROSS)objcopy
 ARCH	:= -mthumb-interwork -mthumb
 
 ASFLAGS	:= -mthumb-interwork
-CFLAGS	:= $(ARCH) -O2 -Wall -fno-strict-aliasing -I$(LIBTONC_INCLUDE) -Isource -Iassets -Iinclude
+CFLAGS	:= $(ARCH) -O2 -Wall -fno-strict-aliasing -I$(LIBTONC_INCLUDE) -Isource -Iassets -Iinclude $(FLAGS)
 LDFLAGS	:= $(ARCH) $(SPECS)
 
 
