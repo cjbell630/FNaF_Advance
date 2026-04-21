@@ -4,18 +4,21 @@
 #include "menu.h"
 #include "tonc.h"
 #include "images/backgrounds/menu/menu.h"
-#include "DWedit/debug.h"
+#include "debug.h"
 #include "graphics/bg_pal_handler.h"
 #include "util/random.h"
 #include "game_state.h"
 #include "components/controls.h"
+#include "graphics/cursor.h"
 
 /* CONSTANTS */
 const int MAX_FRAMES_FOR_FACE_GLITCH = 10;
 const int MIN_FRAMES_FOR_FACE_GLITCH = 2;
+
 enum MenuChoices {
     CHOICE_NEW_GAME, CHOICE_CONTINUE, CHOICE_NIGHT_6, CHOICE_CUSTOM_NIGHT, CHOICE_OPTIONS
 };
+
 /* END CONSTANTS */
 
 /* Menu */
@@ -37,14 +40,16 @@ void init_menu() {
 
     // TODO remove
     //memcpy(&pal_bg_mem[16], officePal, officePalLen);
+    Cursor.init();
+    Cursor.load();
 
 
     saved_night = 5;/* TODO GAMEPAK_RAM[0];*/ /* TODO make 0 (the save location) a const/macro */
     /* TODO load completion data (eg. num stars, whether night 6/7 are unlocked, etc) */
 
-    vbaprint("loaded ");
-    vbaprint(saved_night == 0 ? "0" : saved_night == 9 ? "9" : "something else");
-    vbaprint("\n");
+    mgba_printf("loaded ");
+    mgba_printf(saved_night == 0 ? "0" : saved_night == 9 ? "9" : "something else");
+    mgba_printf("\n");
 }
 
 void activate_menu() {
@@ -67,11 +72,13 @@ void activate_menu() {
 
         // TODO is this accurate to the og game? when was this implemented?
         // TODO once that's checked, replace -1 and 0 with const/macros
-        if (timer == -1) { // maybe change to less than 0
-            if (rnd_max(50) == 0) { // 2% chance to change screens every frame
+        if (timer == -1) {
+            // maybe change to less than 0
+            if (rnd_max(50) == 0) {
+                // 2% chance to change screens every frame
                 //below line forces it to not choose the top left if it's already there
                 //TODO: make it more likely to change multiple times in a row like the original seems to do
-                int force_offset = !((REG_BG0HOFS % 240) && (REG_BG0VOFS % 160)); //0 if on tl, 1 or 2 otherwise
+                const int force_offset = !((REG_BG0HOFS % 240) && (REG_BG0VOFS % 160)); //0 if on tl, 1 or 2 otherwise
                 REG_BG0HOFS = (rnd_max(2) + force_offset) * 240; //
                 REG_BG0VOFS = (rnd_max(2) + force_offset) * 160;
                 timer = rnd_max(MAX_FRAMES_FOR_FACE_GLITCH - MIN_FRAMES_FOR_FACE_GLITCH) + MIN_FRAMES_FOR_FACE_GLITCH;
@@ -85,13 +92,12 @@ void activate_menu() {
         }
 
 
-
         // TODO names are kind of confusing, they imply start button and select button; change this
         // TODO also only supports 2 menu choices
         // Selection Keys
         if (CTRL_MENU_SELECT) {
             // swap palette color for cursors
-            COLOR temp = pal_bg_mem[15];
+            const COLOR temp = pal_bg_mem[15];
             pal_bg_mem[15] = pal_bg_mem[14];
             pal_bg_mem[14] = temp;
 
@@ -115,8 +121,8 @@ void activate_menu() {
                     NIGHT_NUM = 6;
                     break;
                 case CHOICE_OPTIONS:
-                case CHOICE_CUSTOM_NIGHT:
                     // TODO implement options menu
+                case CHOICE_CUSTOM_NIGHT:
                     // TODO implement custom night menu
                     break;
                 default:
