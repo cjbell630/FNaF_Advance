@@ -29,11 +29,11 @@ void update_power(const byte usage) {
     if (frame_multiple(60/*TODO magic num: 1 second*/)) {
         // could make this a lookup table but all sources point to this being not any more efficient
         power -= (usage * STD_POWER_DRAIN); // drains usage*0.1% each second
-        mgba_printf("power drained 0.1%*usage (per second)\n");
+        mgba_printf("power drained 0.1%%*usage (per second)\n");
 
         // all of the bonus drain intervals are multiples of 60 so this reduces comparisons
         if (frame_multiple(bonus_drain_interval)) {
-            mgba_printf("power drained 0.1% (bonus)\n");
+            mgba_printf("power drained 0.1%% (bonus)\n");
             power -= STD_POWER_DRAIN; /* TODO magic number, drains 0.1% each time */
         }
     }
