@@ -40,7 +40,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         include
 )
 
-target_sources(${PROJECT_NAME} PRIVATE
+target_compile_definitions(${PROJECT_NAME} PRIVATE
         $<$<CONFIG:Debug>:DEBUG>
 )
 
