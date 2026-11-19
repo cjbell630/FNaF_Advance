@@ -132,4 +132,6 @@ void activate_menu() {
         //TODO: random flickering
         VBlankIntrWait();
     }
+    
+    Cursor.hide();
 }
