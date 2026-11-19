@@ -40,8 +40,8 @@ void init_menu() {
 
     // TODO remove
     //memcpy(&pal_bg_mem[16], officePal, officePalLen);
-    Cursor.init();
     Cursor.load();
+    Cursor.set_choice(0);
 
 
     saved_night = 5;/* TODO GAMEPAK_RAM[0];*/ /* TODO make 0 (the save location) a const/macro */
