@@ -231,7 +231,7 @@ void graphics_switch_to_office() {
     //set_bg_palbank(OFFICE_PB);
     mgba_printf("office now\n");
     load_frame(&office_base_frame, MAIN_CBB, MAIN_SBB);
-    REG_DISPCNT = DCNT_OBJ | DCNT_BG0 /*| DCNT_BG1*/ | DCNT_OBJ_1D | DCNT_MODE0;
+    REG_DISPCNT = DCNT_OBJ | DCNT_BG0 /*| DCNT_BG1*/ | DCNT_OBJ_1D | DCNT_MODE0; // TODO simlpify
 
 
     //REG_BLDCNT = BLD_BUILD(BLD_BG0, BLD_BG1, BLD_OFF);

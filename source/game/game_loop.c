@@ -51,7 +51,7 @@ void run_power_on() {
     //REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
     //REG_DISPCNT = DCNT_BG0 | DCNT_BG3 | DCNT_MODE0;
     Graphics.game_display_office();
-    REG_BG0VOFS = 0;
+    REG_BG0VOFS = 0; // TODO move
 
     mgba_printf("starting loop now\n");
     while (GAME_PHASE == NIGHT_POWER_ON) {
