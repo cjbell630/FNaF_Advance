@@ -3,7 +3,7 @@ __pycache__
 .idea
 
 /build
-/ignore
+/temp
 /out
 /cmake-build-*
 
