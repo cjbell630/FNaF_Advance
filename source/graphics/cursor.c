@@ -37,6 +37,10 @@ void cursor_load() {
     //cursor_set_choice(choice);
 }
 
+void cursor_hide() {
+    obj_hide(cursor);
+}
+
 
 bool cursor_set_choice(enum MainMenuOption newChoice) {
     // TODO check if option is selectable based on game progress
@@ -63,6 +67,7 @@ void cursor_up() {
 
 struct CursorWrapper Cursor = {
     .load = &cursor_load,
+    .hide = &cursor_hide,
     .down = &cursor_down,
     .up = &cursor_up,
     .set_choice = &cursor_set_choice,

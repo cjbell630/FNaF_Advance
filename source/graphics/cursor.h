@@ -8,6 +8,7 @@ enum MainMenuOption {
 
 struct CursorWrapper {
     void (*load)();
+    void (*hide)();
     void (*down)();
     void (*up)();
     bool (*set_choice)(enum MainMenuOption choice);
