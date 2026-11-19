@@ -17,11 +17,6 @@ OBJ_ATTR *cursor;
 #define OPTION_Y(n) (95+15*(n))
 
 
-void cursor_set_choice(enum MainMenuOption newChoice) {
-    // TODO check if option is selectable based on game progress
-    choice = newChoice;
-    obj_set_pos(cursor, CURSOR_X, OPTION_Y(choice));
-}
 
 enum MainMenuOption cursor_get_choice() {
     return choice;
@@ -43,8 +38,33 @@ void cursor_load() {
 }
 
 
+bool cursor_set_choice(enum MainMenuOption newChoice) {
+    // TODO check if option is selectable based on game progress
+
+    choice = newChoice;
+    obj_set_pos(cursor, CURSOR_X, OPTION_Y(choice));
+    return true;
+}
+
+void cursor_down() {
+    int new_choice = choice + 1;
+    while (new_choice < 2/*TODO magic*/ && !cursor_set_choice(new_choice)) {
+        new_choice++;
+    }
+}
+
+void cursor_up() {
+    int new_choice = choice - 1;
+    while (new_choice > -1 && !cursor_set_choice(new_choice)) {
+        new_choice--;
+    }
+}
+
+
 struct CursorWrapper Cursor = {
     .load = &cursor_load,
+    .down = &cursor_down,
+    .up = &cursor_up,
     .set_choice = &cursor_set_choice,
     .get_choice = &cursor_get_choice
 };

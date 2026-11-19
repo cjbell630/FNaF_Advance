@@ -18,7 +18,9 @@ const int MIN_FRAMES_FOR_FACE_GLITCH = 2;
 /* END CONSTANTS */
 
 /* Menu */
-#define CTRL_MENU_SELECT key_hit(KEY_UP | KEY_DOWN | KEY_SELECT) // Change selected option
+// TODO move to controls?
+#define CTRL_MENU_UP key_hit(KEY_UP)
+#define CTRL_MENU_DOWN key_hit(KEY_DOWN | KEY_SELECT)
 #define CTRL_MENU_START key_hit(KEY_START | KEY_A) // Choose option
 
 u8 saved_night;
@@ -89,14 +91,11 @@ void activate_menu() {
         // TODO names are kind of confusing, they imply start button and select button; change this
         // TODO also only supports 2 menu choices
         // Selection Keys
-        if (CTRL_MENU_SELECT) {
-            // swap palette color for cursors
-            const COLOR temp = pal_bg_mem[15];
-            pal_bg_mem[15] = pal_bg_mem[14];
-            pal_bg_mem[14] = temp;
-
-            // update menu choice
-            //menu_choice = !menu_choice; // TODO
+        if (CTRL_MENU_DOWN) {
+            Cursor.down();
+        }
+        if (CTRL_MENU_UP) {
+            Cursor.up();
         }
 
         // Start keys
