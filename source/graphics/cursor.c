@@ -3,7 +3,7 @@
 #include <string.h>
 #include "images/sprites/cursor/cursor_image.h"
 
-int choice;
+enum MainMenuOption choice; // TODO handle for other menus
 OBJ_ATTR *cursor;
 // TODO move
 #define CURSOR_TILE_START 1
@@ -17,10 +17,14 @@ OBJ_ATTR *cursor;
 #define OPTION_Y(n) (95+15*(n))
 
 
-void cursor_set_choice(int newChoice) {
+void cursor_set_choice(enum MainMenuOption newChoice) {
     // TODO check if option is selectable based on game progress
     choice = newChoice;
     obj_set_pos(cursor, CURSOR_X, OPTION_Y(choice));
+}
+
+enum MainMenuOption cursor_get_choice() {
+    return choice;
 }
 
 void cursor_load() {
@@ -41,5 +45,6 @@ void cursor_load() {
 
 struct CursorWrapper Cursor = {
     .load = &cursor_load,
-    .set_choice = &cursor_set_choice
+    .set_choice = &cursor_set_choice,
+    .get_choice = &cursor_get_choice
 };

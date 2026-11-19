@@ -15,17 +15,12 @@
 const int MAX_FRAMES_FOR_FACE_GLITCH = 10;
 const int MIN_FRAMES_FOR_FACE_GLITCH = 2;
 
-enum MenuChoices {
-    CHOICE_NEW_GAME, CHOICE_CONTINUE, CHOICE_NIGHT_6, CHOICE_CUSTOM_NIGHT, CHOICE_OPTIONS
-};
-
 /* END CONSTANTS */
 
 /* Menu */
 #define CTRL_MENU_SELECT key_hit(KEY_UP | KEY_DOWN | KEY_SELECT) // Change selected option
 #define CTRL_MENU_START key_hit(KEY_START | KEY_A) // Choose option
 
-enum MenuChoices menu_choice = CHOICE_NEW_GAME;
 u8 saved_night;
 
 void init_menu() {
@@ -41,7 +36,7 @@ void init_menu() {
     // TODO remove
     //memcpy(&pal_bg_mem[16], officePal, officePalLen);
     Cursor.load();
-    Cursor.set_choice(0);
+    Cursor.set_choice(MENU_NEW_GAME);
 
 
     saved_night = 5;/* TODO GAMEPAK_RAM[0];*/ /* TODO make 0 (the save location) a const/macro */
@@ -63,7 +58,7 @@ void activate_menu() {
 
     // set up BG0 for a 4bpp 64x32t map, using
     //   using charblock 0 and screenblock 31
-    REG_BG0CNT = BG_CBB(0) | BG_SBB(13) | BG_4BPP | BG_REG_64x64; // TODO move
+    REG_BG0CNT = BG_PRIO(3) | BG_CBB(0) | BG_SBB(13) | BG_4BPP | BG_REG_64x64; // TODO move
     REG_DISPCNT = DCNT_OBJ | DCNT_BG0 | DCNT_OBJ_1D | DCNT_MODE0 ; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
 
     while (GAME_PHASE == MENU_HOME) {
@@ -101,27 +96,25 @@ void activate_menu() {
             pal_bg_mem[14] = temp;
 
             // update menu choice
-            menu_choice = !menu_choice; // TODO
+            //menu_choice = !menu_choice; // TODO
         }
 
         // Start keys
         if (CTRL_MENU_START) {
-            switch (menu_choice) {
-                case CHOICE_NEW_GAME:
+            switch (Cursor.get_choice()) {
+                case MENU_NEW_GAME:
                     GAME_PHASE = NIGHT_NEWSPAPER;
                     NIGHT_NUM = 1;
                     break;
-                case CHOICE_CONTINUE:
+                case MENU_CONTINUE:
                     GAME_PHASE = NIGHT_INTRO;
                     NIGHT_NUM = saved_night;
                     break;
-                case CHOICE_NIGHT_6:
+                case MENU_NIGHT_SIX:
                     GAME_PHASE = NIGHT_INTRO;
                     NIGHT_NUM = 6;
                     break;
-                case CHOICE_OPTIONS:
-                    // TODO implement options menu
-                case CHOICE_CUSTOM_NIGHT:
+                case MENU_CUSTOM_NIGHT:
                     // TODO implement custom night menu
                     break;
                 default:
