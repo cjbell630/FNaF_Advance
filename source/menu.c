@@ -63,9 +63,8 @@ void activate_menu() {
 
     // set up BG0 for a 4bpp 64x32t map, using
     //   using charblock 0 and screenblock 31
-    REG_BG0CNT = BG_CBB(0) | BG_SBB(13) | BG_4BPP | BG_REG_64x64;
-    REG_DISPCNT = DCNT_BG0 | DCNT_MODE0; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
-
+    REG_BG0CNT = BG_CBB(0) | BG_SBB(13) | BG_4BPP | BG_REG_64x64; // TODO move
+    REG_DISPCNT = DCNT_OBJ | DCNT_BG0 | DCNT_OBJ_1D | DCNT_MODE0 ; //IMPORTANT: MUST BE IN ORDER OF BITS FROM LEFT TO RIGHT (this order)
 
     while (GAME_PHASE == MENU_HOME) {
         Controls.update_menu();
