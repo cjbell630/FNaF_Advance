@@ -6,6 +6,7 @@
 #include "tonc.h"
 #include "debug.h"
 #include "graphics/bg_pal_handler.h"
+#include "graphics/display.h"
 #include "graphics/static_handler.h"
 #include "graphics/effects/cam_blip.h"
 
@@ -27,7 +28,7 @@ void cinematics_play_newspaper() {
     // Load map into SBB 30
     memcpy(&se_mem[NEWSPAPER_SBB][0], newspaperMap, newspaperMapLen);
     REG_BG0CNT = BG_CBB(NEWSPAPER_CBB) | BG_SBB(NEWSPAPER_SBB) | BG_4BPP | BG_REG_32x32;
-    REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
+    Display.set_still_cinematic();
     /* TODO FADE in 2 SECONDS */
     int timer = 120;
     while (timer >= 0) {
@@ -51,7 +52,9 @@ void cinematics_play_newspaper() {
 void cinematics_play_night_intro() {
     //TODO show night intro screen
 
+    Display.set_still_cinematic();
     mgba_printf("\n\n\n\n\n\nNIGHT XXXX 12AM\n\n\n\n\n\n\n");
+
 
     CamBlipEffect.init();
     CamBlipEffect.load();

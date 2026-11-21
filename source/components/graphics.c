@@ -5,6 +5,7 @@
 #include "images/sprites/cam_map/cam_map.h"
 #include "debug.h"
 #include "graphics/cam_img_map.h"
+#include "graphics/display.h"
 #include "graphics/frames.h"
 #include "images/office/door/l_door.h"
 #include "images/office/door/r_door.h"
@@ -55,9 +56,6 @@ const u8 R_DOOR_PALBANK = 2; // TODO make them use the same pallette
 #define LAYER_2 1
 #define LAYER_3 0
 #define CAM_STUN_AMOUNT 300
-#define cams_dispcnt (DCNT_OBJ | /*DCNT_BG0 |*/ DCNT_BG1 | DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0)
-#define cams_stun_dispcnt (DCNT_OBJ | /*DCNT_BG0 | DCNT_BG1 |*/ DCNT_BG3 | DCNT_OBJ_1D | DCNT_MODE0)
-
 /* END CONSTANTS / DEFINITIONS */
 
 u16 cam_stun_timer = 0; // TODO set this to 0 on night start
@@ -207,7 +205,7 @@ void graphics_switch_to_cams() {
     obj_hide(r_door2);
     CamBlipEffect.load();
     //TODO: shouldn't have to do this every time, but setting
-    REG_DISPCNT = cam_stun_timer ? cams_stun_dispcnt : cams_dispcnt;
+    Display.set_cams(cam_stun_timer);
     // TODO set static opacity based on cam stun level
     CamBlipEffect.reset();
 }
@@ -231,7 +229,7 @@ void graphics_switch_to_office() {
     //set_bg_palbank(OFFICE_PB);
     mgba_printf("office now\n");
     load_frame(&office_base_frame, MAIN_CBB, MAIN_SBB);
-    REG_DISPCNT = DCNT_OBJ | DCNT_BG0 /*| DCNT_BG1*/ | DCNT_OBJ_1D | DCNT_MODE0; // TODO simlpify
+    Display.set_office();
 
 
     //REG_BLDCNT = BLD_BUILD(BLD_BG0, BLD_BG1, BLD_OFF);
@@ -294,7 +292,7 @@ void graphics_update_cam() {
         cam_stun_timer--;
         if (cam_stun_timer == 0) {
             mgba_printf("stun over\n");
-            REG_DISPCNT = cams_dispcnt;
+            Display.set_cams(false);
             // TODO decrease static opacity
         }
     }
@@ -309,7 +307,7 @@ void graphcis_update_office() {
 void graphics_stun_cams(const enum RoomNames room) {
     if (cam_stun_timer == 0) {
         // TOOD assuming this is called when the cams are up
-        REG_DISPCNT = cams_stun_dispcnt;
+        Display.set_cams(true);
         graphics_select_cam(room, room);
         // TODO increase static opacity
     }
