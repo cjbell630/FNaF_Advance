@@ -3,12 +3,12 @@
 #include <stdlib.h>
 #include "menu.h"
 #include "tonc.h"
-#include "images/backgrounds/menu/menu.h"
 #include "debug.h"
 #include "graphics/bg_pal_handler.h"
 #include "util/random.h"
 #include "game_state.h"
 #include "components/controls.h"
+#include "graphics/background.h"
 #include "graphics/cursor.h"
 #include "graphics/display.h"
 
@@ -27,14 +27,6 @@ const int MIN_FRAMES_FOR_FACE_GLITCH = 2;
 u8 saved_night;
 
 void init_menu() {
-    // Load palette
-    memcpy(pal_bg_mem, menuPal, menuPalLen);
-
-    // Load tiles into CBB 0
-    memcpy(&tile_mem[0][0], menuTiles, menuTilesLen);
-
-    // Load map into SBB 30
-    memcpy(&se_mem[13][0], menuMap, menuMapLen);
 
     // TODO remove
     //memcpy(&pal_bg_mem[16], officePal, officePalLen);
@@ -56,12 +48,9 @@ void activate_menu() {
     //int menu_choice = 0;
     int timer = -1;
 
-    REG_BG0HOFS = 0;
-    REG_BG0VOFS = 0;
-
     // set up BG0 for a 4bpp 64x32t map, using
     //   using charblock 0 and screenblock 31
-    REG_BG0CNT = BG_PRIO(3) | BG_CBB(0) | BG_SBB(13) | BG_4BPP | BG_REG_64x64; // TODO move
+    Background.set_main_menu(); // TODO move
     Display.set_main_menu();
 
     while (GAME_PHASE == MENU_HOME) {

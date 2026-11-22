@@ -5,29 +5,16 @@
 #include "images/backgrounds/loading/loading.h"
 #include "tonc.h"
 #include "debug.h"
+#include "graphics/background.h"
 #include "graphics/bg_pal_handler.h"
 #include "graphics/display.h"
 #include "graphics/static_handler.h"
 #include "graphics/effects/cam_blip.h"
 
-const int NEWSPAPER_PB = 1;
-const int NEWSPAPER_CBB = 0;
-const int NEWSPAPER_SBB = 28;
 
 void cinematics_play_newspaper() {
     mgba_printf("done showing newspaper palette\n");
-    REG_BG0HOFS = 0;
-    REG_BG0VOFS = 0; // load newspaper into memory
-    // Load palette
-    load_bg_pal(newspaperPal, newspaperPalLen, NEWSPAPER_PB);
-    set_bg_palbank(NEWSPAPER_PB);
-
-    // Load tiles into CBB 0
-    memcpy(&tile_mem[NEWSPAPER_CBB][0], newspaperTiles, newspaperTilesLen);
-
-    // Load map into SBB 30
-    memcpy(&se_mem[NEWSPAPER_SBB][0], newspaperMap, newspaperMapLen);
-    REG_BG0CNT = BG_CBB(NEWSPAPER_CBB) | BG_SBB(NEWSPAPER_SBB) | BG_4BPP | BG_REG_32x32;
+    Background.set_newspaper();
     Display.set_still_cinematic();
     /* TODO FADE in 2 SECONDS */
     int timer = 120;

@@ -4,6 +4,7 @@
 #include "game/room_names.h"
 #include "images/sprites/cam_map/cam_map.h"
 #include "debug.h"
+#include "graphics/background.h"
 #include "graphics/cam_img_map.h"
 #include "graphics/display.h"
 #include "graphics/frames.h"
@@ -42,8 +43,6 @@ const int OFFICE_SBB = 20;
 const int CAM_PB = 2;
 const int CAM_CBB = 1;
 const int CAM_SBB = 22;*/
-const int MAIN_CBB = 0;
-const int MAIN_SBB = 30;
 const int MAP_TILE_START = 50;
 const u16 LDOOR_TILE_START = 128;
 const u16 RDOOR_TILE_START = LDOOR_TILE_START + 160;
@@ -181,18 +180,10 @@ void init_backgrounds() {
     //unsigned short colors[2] = {0x0000, 0x7FFF,};
     //memcpy(&pal_bg_mem[0], &colors, 4);
     CamBlipEffect.init();
-    REG_BG3HOFS = 0;
-
-    // TODO might need to reaffirm this in switching functions
-    REG_BG0CNT = BG_PRIO(LAYER_0) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x32;
-    REG_BG1CNT = BG_PRIO(LAYER_1) | BG_CBB(MAIN_CBB) | BG_SBB(MAIN_SBB) | BG_8BPP | BG_REG_64x64;
+    Background.set_cams();
+    Background.set_office();
 }
 
-void load_frame(const Frame* frame, const u16 cbb, const u16 sbb) {
-    dma3_cpy(&pal_bg_mem[0], frame->palette, frame->palette_length);
-    dma3_cpy(&tile_mem[cbb][0], frame->tiles, frame->tiles_length);
-    dma3_cpy(&se_mem[sbb][0], frame->screen_entry, frame->screen_entry_length);
-}
 
 void graphics_switch_to_cams() {
     obj_unhide(cam_map, ATTR0_REG);
@@ -228,7 +219,7 @@ void graphics_switch_to_office() {
     //show office
     //set_bg_palbank(OFFICE_PB);
     mgba_printf("office now\n");
-    load_frame(&office_base_frame, MAIN_CBB, MAIN_SBB);
+    Background.load_frame(&office_base_frame, MAIN_CBB, MAIN_SBB);
     Display.set_office();
 
 
@@ -242,13 +233,14 @@ void graphics_select_cam(const enum RoomNames prev_room, const enum RoomNames ne
     COLOR temp = pal_obj_mem[prev_room + 3];
     pal_obj_mem[prev_room + 3] = pal_obj_mem[new_room + 3];
     pal_obj_mem[new_room + 3] = temp;*/
+    // TODO move to special object controls file
     pal_obj_mem[prev_room + 3] = CAM_MAP_UNSELECTED;
     pal_obj_mem[new_room + 3] = CAM_MAP_SELECTED;
 
 
     Frame cid = get_cam_img_data(new_room);
 
-    load_frame(&cid, MAIN_CBB, MAIN_SBB);
+    Background.load_frame(&cid, MAIN_CBB, MAIN_SBB);
     CamBlipEffect.start();
 }
 
@@ -282,7 +274,7 @@ void graphics_clear_office_lights() {
 }
 
 void graphics_on_room_visual_change(Frame* new_frame) {
-    load_frame(new_frame, MAIN_CBB, MAIN_SBB);
+    Background.load_frame(new_frame, MAIN_CBB, MAIN_SBB);
 }
 
 void graphics_update_cam() {
