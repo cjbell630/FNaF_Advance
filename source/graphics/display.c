@@ -6,7 +6,7 @@ void display_settings_main_menu() {
 }
 
 void display_settings_still_cinematic() {
-    REG_DISPCNT = DCNT_BG0 | DCNT_MODE0;
+    REG_DISPCNT = DCNT_BG0 | DCNT_BG3 | DCNT_MODE0;
 }
 
 void display_settings_office() {

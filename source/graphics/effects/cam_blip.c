@@ -18,12 +18,12 @@ const u8 BLIP_PALBANK = 15;
 
 void cam_blip_init() {
     REG_BG3CNT = BG_PRIO(LAYER_2) | BG_CBB(BLIP_CBB) | BG_SBB(BLIP_SBB) | BG_4BPP | BG_REG_32x32;
-    // TODO 4BPP PB Blip palbank
 }
 
 void cam_blip_load() {
     memcpy(&tile_mem[BLIP_CBB], &cam_blip_test2Tiles, cam_blip_test2TilesLen);
     memcpy(&pal_bg_bank[BLIP_PALBANK], &cam_blip_test2Pal, cam_blip_test2PalLen);
+    dma3_cpy(&se_mem[BLIP_SBB], blip_frames[0]->screen_entry, 1280);
 }
 
 void cam_blip_update() {

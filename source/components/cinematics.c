@@ -13,6 +13,10 @@
 
 
 void cinematics_play_newspaper() {
+    // TODO temp to clear BG03
+    CamBlipEffect.init();
+    CamBlipEffect.load();
+
     Background.set_newspaper();
     Display.set_still_cinematic();
     /* TODO FADE in 2 SECONDS */
