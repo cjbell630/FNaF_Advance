@@ -1,5 +1,4 @@
 #include "frames.h"
-#include "images/effects/cam_blip_test.h"
 #include "images/effects/cam_blip_maps.h"
 #include "images/office/office.h"
 

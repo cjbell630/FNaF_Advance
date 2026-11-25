@@ -1,5 +1,5 @@
 #include "cam_blip.h"
-#include "images/effects/cam_blip_test.h"
+#include "images/effects/cam_blip.h"
 #include "debug.h"
 #include "tonc.h"
 #include "graphics/frames.h"
@@ -17,13 +17,13 @@ const int BLIP_SBB = 25;
 const u8 BLIP_PALBANK = 15;
 
 void cam_blip_init() {
-    REG_BG3CNT = BG_PRIO(LAYER_2) | BG_CBB(BLIP_CBB) | BG_SBB(BLIP_SBB) | BG_8BPP | BG_REG_32x32;
+    REG_BG3CNT = BG_PRIO(LAYER_2) | BG_CBB(BLIP_CBB) | BG_SBB(BLIP_SBB) | BG_4BPP | BG_REG_32x32;
     // TODO 4BPP PB Blip palbank
 }
 
 void cam_blip_load() {
-    memcpy(&tile_mem[BLIP_CBB], &cam_blip_testTiles, cam_blip_testTilesLen);
-    // TODO memcpy(&pal_bg_bank[BLIP_PALBANK], &cam_blip_testPal, cam_blip_testPalLen);
+    memcpy(&tile_mem[BLIP_CBB], &cam_blip_test2Tiles, cam_blip_test2TilesLen);
+    memcpy(&pal_bg_bank[BLIP_PALBANK], &cam_blip_test2Pal, cam_blip_test2PalLen);
 }
 
 void cam_blip_update() {
