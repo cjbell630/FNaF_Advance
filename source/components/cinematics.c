@@ -13,7 +13,7 @@
 
 
 void cinematics_play_newspaper() {
-    // TODO temp to clear BG03
+    // TODO this is temp just to clear BG03
     CamBlipEffect.init();
     CamBlipEffect.load();
 
