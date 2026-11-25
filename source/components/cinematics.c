@@ -13,7 +13,6 @@
 
 
 void cinematics_play_newspaper() {
-    mgba_printf("done showing newspaper palette\n");
     Background.set_newspaper();
     Display.set_still_cinematic();
     /* TODO FADE in 2 SECONDS */
@@ -37,8 +36,7 @@ void cinematics_play_newspaper() {
 }
 
 void cinematics_play_night_intro() {
-    //TODO show night intro screen
-
+    Background.set_night_intro();
     Display.set_still_cinematic();
     mgba_printf("\n\n\n\n\n\nNIGHT XXXX 12AM\n\n\n\n\n\n\n");
 

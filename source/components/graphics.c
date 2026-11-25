@@ -213,6 +213,7 @@ void graphics_switch_to_office() {
     obj_unhide(r_door1, ATTR0_REG);
     obj_unhide(r_door2, ATTR0_REG);
     obj_hide(cam_map);
+    Background.set_office();
     //cam_map->attr0 = ATTR0_HIDE;
     /* END HIDE OBJECTS */
 

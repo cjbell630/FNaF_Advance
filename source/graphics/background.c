@@ -6,6 +6,7 @@
 #include "bg_pal_handler.h"
 #include "tonc.h"
 #include "images/backgrounds/newspaper/newspaper.h"
+#include "images/backgrounds/transition/night.h"
 
 
 
@@ -47,6 +48,20 @@ void background_settings_newspaper() {
     REG_BG0CNT = BG_CBB(NEWSPAPER_CBB) | BG_SBB(NEWSPAPER_SBB) | BG_4BPP | BG_REG_32x32;
 }
 
+void background_settings_night_intro() {
+    REG_BG0HOFS = 0;
+    REG_BG0VOFS = 0; // load newspaper into memory
+    // Load palette
+    memcpy(pal_bg_mem, nightPal, nightPalLen);
+
+    // Load tiles into CBB 0
+    memcpy(&tile_mem[NEWSPAPER_CBB][0], nightTiles, nightTilesLen);
+
+    // Load map into SBB 30
+    memcpy(&se_mem[NEWSPAPER_SBB][0], nightMap, nightMapLen);
+    REG_BG0CNT = BG_CBB(NEWSPAPER_CBB) | BG_SBB(NEWSPAPER_SBB) | BG_8BPP | BG_REG_32x32;
+}
+
 void background_settings_office() {
     REG_BG3HOFS = 0;
     // TODO might need to reaffirm this in switching functions
@@ -75,6 +90,7 @@ void background_load_frame(const Frame* frame, const u16 cbb, const u16 sbb) {
 struct BackgroundWrapper Background = {
     .set_main_menu = &background_settings_main_menu,
     .set_newspaper = &background_settings_newspaper,
+    .set_night_intro = &background_settings_night_intro,
     .set_office = &background_settings_office,
     .set_cams = &background_set_cams,
     .load_frame = &background_load_frame
