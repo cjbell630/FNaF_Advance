@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "util/random.h"
 #include "util/util.h"
-#include "game/room_names.h"
+#include "const/room_names.h"
 #include "game_state.h"
 #include "components/equipment.h"
 #include "components/graphics.h"

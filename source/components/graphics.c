@@ -1,7 +1,7 @@
 #include <string.h>
 #include "tonc.h"
 #include "graphics.h"
-#include "game/room_names.h"
+#include "const/room_names.h"
 #include "images/sprites/cam_map/cam_map.h"
 #include "debug.h"
 #include "graphics/background.h"

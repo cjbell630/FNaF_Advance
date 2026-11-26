@@ -1,7 +1,7 @@
 #ifndef FNAF_ADVANCE_GRAPHICS_H
 #define FNAF_ADVANCE_GRAPHICS_H
 
-#include "game/room_names.h"
+#include "const/room_names.h"
 #include "graphics/frames/cam_img_map.h"
 
 

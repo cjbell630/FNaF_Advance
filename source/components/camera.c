@@ -4,7 +4,7 @@
 #include "util/util.h"
 #include "tonc.h"
 
-#include "game/room_names.h"
+#include "const/room_names.h"
 #include "graphics/frames/cam_img_map.h"
 #include "graphics.h"
 #include "game_state.h"

@@ -1,7 +1,7 @@
 #include "golden_freddy.h"
 #include "debug.h"
 #include "util/random.h"
-#include "game/room_names.h"
+#include "const/room_names.h"
 
 bool GOLDEN_FREDDY_APPEARED;
 

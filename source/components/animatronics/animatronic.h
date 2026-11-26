@@ -1,7 +1,7 @@
 #ifndef FNAF_ADVANCE_ANIMATRONIC_H
 #define FNAF_ADVANCE_ANIMATRONIC_H
 
-#include "game/room_names.h"
+#include "const/room_names.h"
 #include <tonc_types.h>
 #include "game_state.h"
 

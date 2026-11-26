@@ -2,7 +2,7 @@
 #define FNAF_ADVANCE_CAMERA_H
 
 #include "graphics/bg_pal_handler.h"
-#include "game/room_names.h"
+#include "const/room_names.h"
 
 struct CameraWrapper {
     void (*update)();

@@ -1,5 +1,5 @@
 #include "spooky_effects.h"
-#include "game/room_names.h"
+#include "const/room_names.h"
 #include "graphics.h"
 #include "graphics/frames/frames.h"
 #include "graphics/frames/cam_img_map.h"

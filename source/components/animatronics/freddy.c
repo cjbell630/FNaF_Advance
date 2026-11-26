@@ -2,7 +2,7 @@
 #include "bonnie.h"
 #include "chica.h"
 #include "debug.h"
-#include "game/room_names.h"
+#include "const/room_names.h"
 #include "animatronic.h"
 #include "util/random.h"
 #include "components/equipment.h"

@@ -2,7 +2,7 @@
 #define FNAF_ADVANCE_ANIMATRONICS_H
 
 #include <tonc_types.h>
-#include "game/room_names.h"
+#include "const/room_names.h"
 #include "animatronic.h"
 
 #define NIGHT_1_START_LEVELS 0, 0, 0, 0

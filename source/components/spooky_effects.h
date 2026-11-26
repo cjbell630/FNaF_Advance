@@ -2,7 +2,7 @@
 #define FNAF_ADVANCE_SPOOKY_EFFECTS_H
 
 #include "tonc_types.h"
-#include "game/room_names.h"
+#include "const/room_names.h"
 
 enum EffectNames {
     NORMAL = 0, LIGHTS_OFF = 1, SNAP1, SNAP2, STARE, ITS_ME

@@ -1,6 +1,6 @@
 #include "components/cam_minimap.h"
 #include "components/camera.h"
-#include "game/room_names.h"
+#include "const/room_names.h"
 
 typedef struct {
         unsigned x : 3;

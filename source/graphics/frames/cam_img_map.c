@@ -41,7 +41,7 @@
 #include  "images/cams/east/east_chica_s.h"
 
 
-#include "game/room_names.h"
+#include "const/room_names.h"
 #include "components/spooky_effects.h"
 #include "components/animatronics/animatronics_controller.h"
 #include "images/cams/closet/closet_empty.h"
