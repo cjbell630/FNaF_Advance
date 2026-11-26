@@ -10,7 +10,7 @@
 #include "components/spooky_effects.h"
 #include "game_state.h"
 #include "graphics/graphics.h"
-#include "components/cinematics.h"
+#include "cinematics.h"
 
 void run_newspaper() {
     mgba_printf("newspaper now\n");
