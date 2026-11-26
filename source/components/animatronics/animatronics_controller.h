@@ -3,7 +3,6 @@
 
 #include <tonc_types.h>
 #include "const/room_names.h"
-#include "animatronic.h"
 
 #define NIGHT_1_START_LEVELS 0, 0, 0, 0
 #define NIGHT_2_START_LEVELS 0, 3, 1, 1

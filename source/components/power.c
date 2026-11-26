@@ -1,5 +1,4 @@
 #include "power.h"
-#include "util/util.h"
 #include "tonc_types.h"
 #include "ctrl/game_state.h"
 #include "debug.h"

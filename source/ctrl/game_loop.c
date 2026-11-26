@@ -1,9 +1,6 @@
 #include "game_loop.h"
-#include <string.h>
-#include <stdlib.h>
 #include "components/camera/camera.h"
 #include "components/animatronics/animatronics_controller.h"
-#include "util/random.h"
 #include "game_clock.h"
 #include "components/equipment.h"
 #include "components/power.h"
@@ -11,6 +8,9 @@
 #include "game_state.h"
 #include "graphics/graphics.h"
 #include "cinematics.h"
+#include "debug.h"
+#include <tonc_memmap.h>
+#include <tonc_bios.h>
 
 void run_newspaper() {
     mgba_printf("newspaper now\n");

@@ -2,7 +2,7 @@
 #include "tonc_types.h"
 #include "camera/camera.h"
 #include "graphics/graphics.h"
-#include "animatronics/animatronics_controller.h"
+#include "debug.h"
 
 const u8 NUM_DOOR_FRAMES = 15; // TODO move
 

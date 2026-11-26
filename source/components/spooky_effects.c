@@ -1,18 +1,12 @@
 #include "spooky_effects.h"
 #include "const/room_names.h"
 #include "graphics/graphics.h"
-#include "graphics/frames/frames.h"
-#include "graphics/frames/cam_img_map.h"
 #include "util/random.h"
 #include "equipment.h"
 #include "animatronics/animatronics_controller.h"
-#include "images/backgrounds/office/office.h"
-#include "debug.h"
-#include <stdio.h>
 
 #include "animatronics/golden_freddy.h"
 #include "components/animatronics/bonnie.h"
-#include "components/animatronics/freddy.h"
 #include "components/animatronics/chica.h"
 #include "components/animatronics/foxy.h"
 

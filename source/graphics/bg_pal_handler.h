@@ -2,7 +2,6 @@
 #define FNAF_ADVANCE_BG_PAL_HANDLER_H
 
 #include "tonc.h"
-#include "debug.h"
 #include <string.h>
 
 

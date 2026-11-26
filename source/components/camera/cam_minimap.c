@@ -1,6 +1,7 @@
 #include "components/camera/cam_minimap.h"
 #include "components/camera/camera.h"
 #include "const/room_names.h"
+#include <tonc_types.h>
 
 typedef struct {
         unsigned x : 3;

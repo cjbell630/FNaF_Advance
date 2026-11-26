@@ -1,14 +1,9 @@
 #include "cinematics.h"
-#include "images/backgrounds/office/office.h"
-#include "images/backgrounds/newspaper/newspaper.h"
-#include "images/backgrounds/static/static.h"
-#include "images/backgrounds/loading/loading.h"
 #include "tonc.h"
 #include "debug.h"
 #include "graphics/background.h"
 #include "graphics/bg_pal_handler.h"
 #include "graphics/display.h"
-#include "components/static_handler.h"
 #include "components/camera/cam_blip.h"
 
 

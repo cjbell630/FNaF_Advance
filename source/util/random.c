@@ -3,7 +3,6 @@
 //
 
 #include <stdlib.h>
-#include "tonc.h"
 
 int rng_seed = 42;
 

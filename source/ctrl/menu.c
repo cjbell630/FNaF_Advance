@@ -1,10 +1,7 @@
 #include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "ctrl/menu.h"
 #include "tonc.h"
 #include "debug.h"
-#include "graphics/bg_pal_handler.h"
 #include "util/random.h"
 #include "game_state.h"
 #include "components/controls.h"

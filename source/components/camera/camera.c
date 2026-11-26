@@ -1,11 +1,8 @@
-#include <stdlib.h>
 #include "camera.h"
-#include "graphics/bg_pal_handler.h"
 #include "util/util.h"
 #include "tonc.h"
 
 #include "const/room_names.h"
-#include "graphics/frames/cam_img_map.h"
 #include "graphics/graphics.h"
 #include "ctrl/game_state.h"
 #include "components/spooky_effects.h"

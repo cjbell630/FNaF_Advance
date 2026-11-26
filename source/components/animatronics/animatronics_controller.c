@@ -2,13 +2,8 @@
 #include "animatronic.h"
 #include "debug.h"
 #include "util/random.h"
-#include "util/util.h"
 #include "const/room_names.h"
 #include "ctrl/game_state.h"
-#include "components/equipment.h"
-#include "graphics/graphics.h"
-#include "components/power.h"
-#include <stdio.h>
 #include "foxy.h"
 #include "bonnie.h"
 #include "freddy.h"
