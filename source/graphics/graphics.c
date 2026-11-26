@@ -1,7 +1,7 @@
 #include "graphics/graphics.h"
 #include "const/room_names.h"
 #include "graphics/background.h"
-#include "graphics/frames/cam_img_map.h"
+#include "graphics/frames/cam_frames.h"
 #include "graphics/display.h"
 #include "graphics/frames/frame.h"
 #include "components/camera/cam_blip.h"

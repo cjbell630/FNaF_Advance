@@ -1,4 +1,4 @@
-#include "cam_img_map.h"
+#include "cam_frames.h"
 
 /* PLACEHOLDER IMG DATA */
 #include "images/backgrounds/cams/placeholder/bcff_placeholder.h"
