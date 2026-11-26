@@ -1,5 +1,7 @@
 #include "display.h"
-#include "tonc.h"
+
+#include <tonc_memdef.h>
+#include <tonc_memmap.h>
 
 void display_settings_main_menu() {
     REG_DISPCNT = DCNT_OBJ | DCNT_BG0 | DCNT_OBJ_1D | DCNT_MODE0;

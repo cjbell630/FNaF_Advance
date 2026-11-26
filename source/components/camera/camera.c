@@ -1,7 +1,5 @@
 #include "camera.h"
 #include "util/util.h"
-#include "tonc.h"
-
 #include "const/room_names.h"
 #include "graphics/graphics.h"
 #include "ctrl/game_state.h"

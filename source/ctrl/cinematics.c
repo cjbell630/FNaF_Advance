@@ -1,10 +1,12 @@
 #include "cinematics.h"
-#include "tonc.h"
-#include "debug.h"
+
+
 #include "graphics/background.h"
-#include "graphics/bg_pal_handler.h"
 #include "graphics/display.h"
 #include "components/camera/cam_blip.h"
+
+#include "debug.h"
+#include <tonc_bios.h>
 
 
 void cinematics_play_newspaper() {

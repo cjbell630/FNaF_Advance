@@ -1,10 +1,14 @@
 #include "components/camera/cam_blip.h"
-#include "images/backgrounds/effects/cam_blip.h"
-#include "debug.h"
-#include "tonc.h"
 #include "graphics/frames/frames.h"
 #include "sound/sound.h"
+
+#include "images/backgrounds/effects/cam_blip.h"
+
+#include "debug.h"
 #include <string.h>
+#include <tonc_core.h>
+#include <tonc_memdef.h>
+#include <tonc_memmap.h>
 
 int BLIP_TIMER;
 

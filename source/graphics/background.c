@@ -1,13 +1,14 @@
 #include "background.h"
-#include "images/backgrounds/menu/menu.h"
-
-#include <string.h>
-
 #include "bg_pal_handler.h"
-#include "tonc.h"
+
+#include "images/backgrounds/menu/menu.h"
 #include "images/backgrounds/newspaper/newspaper.h"
 #include "images/backgrounds/transition/night.h"
 
+#include <string.h>
+#include <tonc_core.h>
+#include <tonc_memdef.h>
+#include <tonc_memmap.h>
 
 
 const int NEWSPAPER_PB = 1;

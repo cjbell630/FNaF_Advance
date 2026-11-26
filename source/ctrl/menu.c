@@ -1,13 +1,16 @@
-#include <string.h>
 #include "ctrl/menu.h"
-#include "tonc.h"
-#include "debug.h"
 #include "util/random.h"
 #include "game_state.h"
 #include "components/controls.h"
 #include "graphics/background.h"
 #include "components/cursor.h"
 #include "graphics/display.h"
+
+#include <string.h>
+#include <tonc_bios.h>
+#include <tonc_input.h>
+#include <tonc_memmap.h>
+#include "debug.h"
 
 /* CONSTANTS */
 const int MAX_FRAMES_FOR_FACE_GLITCH = 10;
@@ -75,8 +78,7 @@ void activate_menu() {
         }
 
 
-        // TODO names are kind of confusing, they imply start button and select button; change this
-        // TODO also only supports 2 menu choices
+        // TODO move to controls.c
         // Selection Keys
         if (CTRL_MENU_DOWN) {
             Cursor.down();

@@ -1,7 +1,7 @@
-//#include "screen_handler.h"
-#include "tonc.h"
+
 #include "debug.h"
 #include <string.h>
+#include <tonc_memmap.h>
 
 int curr_bg_palbank = 0;
 

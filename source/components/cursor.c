@@ -1,7 +1,10 @@
 #include "components/cursor.h"
-#include "tonc.h"
-#include <string.h>
+
 #include "images/sprites/cursor/cursor_image.h"
+
+#include <string.h>
+#include <tonc_oam.h>
+#include <tonc_types.h>
 
 enum MainMenuOption choice; // TODO handle for other menus
 OBJ_ATTR *cursor;

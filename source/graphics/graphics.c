@@ -1,17 +1,22 @@
-#include <string.h>
-#include "tonc.h"
 #include "graphics/graphics.h"
 #include "const/room_names.h"
-#include "images/sprites/cam_map/cam_map.h"
-#include "debug.h"
 #include "graphics/background.h"
 #include "graphics/frames/cam_img_map.h"
 #include "graphics/display.h"
 #include "graphics/frames/frames.h"
+#include "components/camera/cam_blip.h"
+
+#include "images/sprites/cam_map/cam_map.h"
 #include "images/sprites/door/l_door.h"
 #include "images/sprites/door/r_door.h"
 #include "images/backgrounds/office/office.h"
-#include "components/camera/cam_blip.h"
+
+#include "debug.h"
+#include <string.h>
+#include <tonc_memdef.h>
+#include <tonc_memmap.h>
+#include <tonc_oam.h>
+
 
 
 /* BUFFERS */

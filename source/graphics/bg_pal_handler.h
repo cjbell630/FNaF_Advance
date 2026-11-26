@@ -1,9 +1,6 @@
 #ifndef FNAF_ADVANCE_BG_PAL_HANDLER_H
 #define FNAF_ADVANCE_BG_PAL_HANDLER_H
 
-#include "tonc.h"
-#include <string.h>
-
 
 extern int curr_bg_palbank;
 

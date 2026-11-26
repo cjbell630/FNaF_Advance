@@ -1,9 +1,11 @@
-#include <string.h>
 #include "components/static_handler.h"
-#include "graphics/bg_pal_handler.h"
 #include "util/random.h"
 #include "images/backgrounds/static/static.h"
-#include "tonc.h"
+
+#include <string.h>
+#include <tonc_memmap.h>
+#include <tonc_types.h>
+#include <tonc_video.h>
 
 const int STATIC_OFFSET_MAX = 256;
 
