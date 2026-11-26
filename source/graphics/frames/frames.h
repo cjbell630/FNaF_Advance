@@ -14,7 +14,6 @@ typedef struct Frame {
 } Frame;
 
 
-extern const Frame office_base_frame;
 extern Frame empty_screen;
 
 #endif //FNAF_ADVANCE_FRAMES_H

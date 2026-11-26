@@ -17,6 +17,7 @@
 #include <tonc_memmap.h>
 #include <tonc_oam.h>
 
+#include "frames/office_frames.h"
 
 
 /* BUFFERS */
