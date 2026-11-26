@@ -14,6 +14,4 @@ typedef struct Frame {
 } Frame;
 
 
-extern Frame empty_screen;
-
 #endif //FNAF_ADVANCE_FRAMES_H

@@ -1,7 +1,7 @@
 #ifndef FNAF_ADVANCE_BACKGROUND_H
 #define FNAF_ADVANCE_BACKGROUND_H
 
-#include "frames/frames.h"
+#include "frames/frame.h"
 
 #define MAIN_CBB 0
 #define MAIN_SBB 30

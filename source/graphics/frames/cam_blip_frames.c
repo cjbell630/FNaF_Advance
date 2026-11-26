@@ -1,4 +1,7 @@
 #include "cam_blip_frames.h"
+
+#include "empty_frame.h"
+
 #include "images/backgrounds/effects/cam_blip_maps.h"
 
 Frame blip_frame_0 = {

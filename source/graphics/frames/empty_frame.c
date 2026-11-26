@@ -1,4 +1,4 @@
-#include "frames.h"
+#include "empty_frame.h"
 
 unsigned short empty_frame[32 * 20] = {0};
 

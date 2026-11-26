@@ -3,7 +3,7 @@
 #include "graphics/background.h"
 #include "graphics/frames/cam_img_map.h"
 #include "graphics/display.h"
-#include "graphics/frames/frames.h"
+#include "graphics/frames/frame.h"
 #include "components/camera/cam_blip.h"
 
 #include "images/sprites/cam_map/cam_map.h"

@@ -1,7 +1,7 @@
 #ifndef FNAF_ADVANCE_CAM_BLIP_FRAMES_H
 #define FNAF_ADVANCE_CAM_BLIP_FRAMES_H
 
-#include "frames.h"
+#include "frame.h"
 
 #define blip_frames_len 10
 
