@@ -19,3 +19,8 @@ bool frame_multiple(const int factor) {
 void increment_frame() {
     FRAME_NUM = (FRAME_NUM + 1) % FRAME_MAX;
 }
+
+void reset_game_state() {
+    GAME_PHASE = MENU_HOME;
+    NIGHT_NUM = 0;
+}

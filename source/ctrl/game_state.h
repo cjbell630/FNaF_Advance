@@ -28,5 +28,6 @@ extern int FRAME_NUM;
 
 bool frame_multiple(int factor);
 void increment_frame();
+void reset_game_state();
 
 #endif //FNAF_ADVANCE_GAME_STATE_H
