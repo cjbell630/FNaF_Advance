@@ -2,7 +2,7 @@
 #define FNAF_ADVANCE_GRAPHICS_H
 
 #include "game/room_names.h"
-#include "graphics/cam_img_map.h"
+#include "graphics/frames/cam_img_map.h"
 
 
 struct GraphicsWrapper {

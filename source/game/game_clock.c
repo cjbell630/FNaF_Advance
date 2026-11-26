@@ -2,7 +2,7 @@
 #include "util/random.h"
 #include "util/util.h"
 #include "components/camera.h"
-#include "graphics/static_handler.h"
+#include "components/static_handler.h"
 #include "components/animatronics/animatronics_controller.h"
 #include "components/power.h"
 #include "components/equipment.h"

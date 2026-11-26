@@ -9,7 +9,7 @@
 #include "game_state.h"
 #include "components/controls.h"
 #include "graphics/background.h"
-#include "graphics/cursor.h"
+#include "components/cursor.h"
 #include "graphics/display.h"
 
 /* CONSTANTS */

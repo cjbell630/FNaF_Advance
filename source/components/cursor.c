@@ -1,4 +1,4 @@
-#include "cursor.h"
+#include "components/cursor.h"
 #include "tonc.h"
 #include <string.h>
 #include "images/sprites/cursor/cursor_image.h"

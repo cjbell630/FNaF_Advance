@@ -5,7 +5,7 @@
 #include "tonc.h"
 
 #include "game/room_names.h"
-#include "graphics/cam_img_map.h"
+#include "graphics/frames/cam_img_map.h"
 #include "graphics.h"
 #include "game_state.h"
 #include "spooky_effects.h"

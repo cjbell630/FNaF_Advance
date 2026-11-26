@@ -5,13 +5,13 @@
 #include "images/sprites/cam_map/cam_map.h"
 #include "debug.h"
 #include "graphics/background.h"
-#include "graphics/cam_img_map.h"
+#include "graphics/frames/cam_img_map.h"
 #include "graphics/display.h"
-#include "graphics/frames.h"
+#include "graphics/frames/frames.h"
 #include "images/office/door/l_door.h"
 #include "images/office/door/r_door.h"
 #include "images/office/office.h"
-#include "graphics/effects/cam_blip.h"
+#include "cam_blip.h"
 
 
 /* BUFFERS */

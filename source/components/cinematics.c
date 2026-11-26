@@ -8,8 +8,8 @@
 #include "graphics/background.h"
 #include "graphics/bg_pal_handler.h"
 #include "graphics/display.h"
-#include "graphics/static_handler.h"
-#include "graphics/effects/cam_blip.h"
+#include "static_handler.h"
+#include "cam_blip.h"
 
 
 void cinematics_play_newspaper() {

@@ -1,8 +1,8 @@
-#include "cam_blip.h"
+#include "components/cam_blip.h"
 #include "images/effects/cam_blip.h"
 #include "debug.h"
 #include "tonc.h"
-#include "graphics/frames.h"
+#include "graphics/frames/frames.h"
 #include <string.h>
 
 int BLIP_TIMER;

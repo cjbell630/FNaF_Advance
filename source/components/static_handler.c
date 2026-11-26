@@ -1,5 +1,5 @@
 #include <string.h>
-#include "static_handler.h"
+#include "components/static_handler.h"
 #include "graphics/bg_pal_handler.h"
 #include "util/random.h"
 #include "images/backgrounds/static/static.h"
