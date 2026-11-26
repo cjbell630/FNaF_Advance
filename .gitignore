@@ -4,6 +4,7 @@ __pycache__
 
 /build
 /temp
+/notes
 /out
 /cmake-build-*
 
