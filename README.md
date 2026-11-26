@@ -78,7 +78,7 @@ That will have the source for the corresponding file and an explanation of which
 
 [6]: https://www.jetbrains.com/clion/
 
-[7]: /notes.md
+[7]: /breakdown.md
 
 [8]: https://www.spriters-resource.com/pc_computer/fivenightsatfreddys/
 
