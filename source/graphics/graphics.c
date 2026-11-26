@@ -8,9 +8,9 @@
 #include "graphics/frames/cam_img_map.h"
 #include "graphics/display.h"
 #include "graphics/frames/frames.h"
-#include "images/office/door/l_door.h"
-#include "images/office/door/r_door.h"
-#include "images/office/office.h"
+#include "images/sprites/door/l_door.h"
+#include "images/sprites/door/r_door.h"
+#include "images/backgrounds/office/office.h"
 #include "components/camera/cam_blip.h"
 
 

@@ -1,5 +1,5 @@
 #include "cinematics.h"
-#include "images/office/office.h"
+#include "images/backgrounds/office/office.h"
 #include "images/backgrounds/newspaper/newspaper.h"
 #include "images/backgrounds/static/static.h"
 #include "images/backgrounds/loading/loading.h"

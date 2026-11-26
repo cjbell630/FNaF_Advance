@@ -1,6 +1,6 @@
 #include "frames.h"
-#include "images/effects/cam_blip_maps.h"
-#include "images/office/office.h"
+#include "images/backgrounds/effects/cam_blip_maps.h"
+#include "images/backgrounds/office/office.h"
 
 unsigned short empty_frame[32 * 20] = {0};
 Frame blip_frame_0 = {

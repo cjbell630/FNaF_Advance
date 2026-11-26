@@ -6,7 +6,7 @@
 #include "util/random.h"
 #include "equipment.h"
 #include "animatronics/animatronics_controller.h"
-#include "images/office/office.h"
+#include "images/backgrounds/office/office.h"
 #include "debug.h"
 #include <stdio.h>
 

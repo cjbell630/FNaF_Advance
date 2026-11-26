@@ -1,55 +1,55 @@
 #include "cam_img_map.h"
 
 /* PLACEHOLDER IMG DATA */
-#include "images/cams/placeholder/bcff_placeholder.h"
+#include "images/backgrounds/cams/placeholder/bcff_placeholder.h"
 
 /* STAGE IMG DATA */
-#include "images/cams/stage/stage_empty.h"
-#include "images/cams/stage/stage_bcf.h"
-#include "images/cams/stage/stage_bf.h"
-#include "images/cams/stage/stage_cf.h"
-#include "images/cams/stage/stage_f.h"
-#include "images/cams/stage/stage_f_s.h"
+#include "images/backgrounds/cams/stage/stage_empty.h"
+#include "images/backgrounds/cams/stage/stage_bcf.h"
+#include "images/backgrounds/cams/stage/stage_bf.h"
+#include "images/backgrounds/cams/stage/stage_cf.h"
+#include "images/backgrounds/cams/stage/stage_f.h"
+#include "images/backgrounds/cams/stage/stage_f_s.h"
 
 /* BACKSTAGE IMG DATA */
-#include "images/cams/backstage/backstage_empty.h"
-#include "images/cams/backstage/backstage_empty_s.h"
-#include "images/cams/backstage/backstage_bonnie.h"
-#include "images/cams/backstage/backstage_bonnie_s.h"
+#include "images/backgrounds/cams/backstage/backstage_empty.h"
+#include "images/backgrounds/cams/backstage/backstage_empty_s.h"
+#include "images/backgrounds/cams/backstage/backstage_bonnie.h"
+#include "images/backgrounds/cams/backstage/backstage_bonnie_s.h"
 
 /* PIRATE IMG DATA */
-#include "images/cams/pirate/pirate_empty.h"
-#include "images/cams/pirate/pirate_empty_s.h"
-#include "images/cams/pirate/pirate_foxy_0.h"
-#include "images/cams/pirate/pirate_foxy_1.h"
-#include "images/cams/pirate/pirate_foxy_2.h"
+#include "images/backgrounds/cams/pirate/pirate_empty.h"
+#include "images/backgrounds/cams/pirate/pirate_empty_s.h"
+#include "images/backgrounds/cams/pirate/pirate_foxy_0.h"
+#include "images/backgrounds/cams/pirate/pirate_foxy_1.h"
+#include "images/backgrounds/cams/pirate/pirate_foxy_2.h"
 
 /* DINING IMG DATA */
-#include "images/cams/dining/dining_empty.h"
-#include "images/cams/dining/dining_f.h"
-#include "images/cams/dining/dining_b.h"
-#include "images/cams/dining/dining_b_s.h"
-#include "images/cams/dining/dining_c.h"
-#include "images/cams/dining/dining_c_s.h"
+#include "images/backgrounds/cams/dining/dining_empty.h"
+#include "images/backgrounds/cams/dining/dining_f.h"
+#include "images/backgrounds/cams/dining/dining_b.h"
+#include "images/backgrounds/cams/dining/dining_b_s.h"
+#include "images/backgrounds/cams/dining/dining_c.h"
+#include "images/backgrounds/cams/dining/dining_c_s.h"
 
 /* EAST HALL IMG DATA */
-#include  "images/cams/east/east_empty.h"
-#include  "images/cams/east/east_empty_s0.h"
-#include  "images/cams/east/east_empty_s1.h"
-#include  "images/cams/east/east_freddy.h"
-#include  "images/cams/east/east_chica.h"
-#include  "images/cams/east/east_chica_s.h"
+#include  "images/backgrounds/cams/east/east_empty.h"
+#include  "images/backgrounds/cams/east/east_empty_s0.h"
+#include  "images/backgrounds/cams/east/east_empty_s1.h"
+#include  "images/backgrounds/cams/east/east_freddy.h"
+#include  "images/backgrounds/cams/east/east_chica.h"
+#include  "images/backgrounds/cams/east/east_chica_s.h"
 
 
 #include "const/room_names.h"
 #include "components/spooky_effects.h"
 #include "components/animatronics/animatronics_controller.h"
-#include "images/cams/closet/closet_empty.h"
-#include "images/cams/closet/closet_b.h"
-#include "images/cams/restroom/restrooms_c_s.h"
-#include "images/cams/restroom/restrooms_c.h"
-#include "images/cams/restroom/restrooms_fr.h"
-#include "images/cams/restroom/restrooms_empty.h"
+#include "images/backgrounds/cams/closet/closet_empty.h"
+#include "images/backgrounds/cams/closet/closet_b.h"
+#include "images/backgrounds/cams/restroom/restrooms_c_s.h"
+#include "images/backgrounds/cams/restroom/restrooms_c.h"
+#include "images/backgrounds/cams/restroom/restrooms_fr.h"
+#include "images/backgrounds/cams/restroom/restrooms_empty.h"
 // 0  0  0  0
 // Fo C  B  Fr
 
