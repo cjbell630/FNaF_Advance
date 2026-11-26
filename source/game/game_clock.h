@@ -3,7 +3,7 @@
 
 void init_clock();
 
-void tick();
+void tick_power_on();
 
 void tick_power_off();
 

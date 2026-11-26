@@ -51,7 +51,7 @@ void update_in_game_clock() {
     }
 }
 
-void tick() {
+void tick_power_on() {
     // Apply controls based on state of previous frame
     if (cam_is_up) {
         Controls.update_cam();

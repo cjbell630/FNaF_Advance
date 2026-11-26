@@ -53,7 +53,7 @@ void run_power_on() {
 
     mgba_printf("starting loop now\n");
     while (GAME_PHASE == NIGHT_POWER_ON) {
-        tick(); //TODO: should be at top or bottom?
+        tick_power_on(); //TODO: should be at top or bottom?
         VBlankIntrWait();
     }
 }

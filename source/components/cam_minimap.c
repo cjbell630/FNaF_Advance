@@ -118,4 +118,4 @@ void navigate_cams(const int horizontal, const int vertical) {
 
 struct CamMinimapWrapper CamMinimap = {
         .move_focus = &navigate_cams
-    };
+};
