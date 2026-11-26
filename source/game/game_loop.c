@@ -5,8 +5,6 @@
 #include "components/animatronics/animatronics_controller.h"
 #include "util/random.h"
 #include "game_clock.h"
-#include "images/sprites/cam_map/cam_map.h"
-#include "cam_nav.h"
 #include "components/equipment.h"
 #include "components/power.h"
 #include "components/spooky_effects.h"

@@ -1,7 +1,7 @@
 #include "tonc_input.h"
 #include "controls.h"
 #include "equipment.h"
-#include "game/cam_nav.h"
+#include "components/cam_minimap.h"
 #include "debug.h"
 #include "graphics.h"
 #include "animatronics/animatronics_controller.h"
@@ -113,7 +113,7 @@ void controls_cam() {
         Animatronics.on_cams_down();
         return;
     }
-    navigate_cams(
+    CamMinimap.move_focus(
         key_hit(KEY_RIGHT) ? 1 : key_hit(KEY_LEFT) ? -1 : 0,
         key_hit(KEY_UP) ? 1 : key_hit(KEY_DOWN) ? -1 : 0
     );
