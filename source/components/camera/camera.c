@@ -6,10 +6,10 @@
 
 #include "const/room_names.h"
 #include "graphics/frames/cam_img_map.h"
-#include "graphics.h"
+#include "components/graphics.h"
 #include "game_state.h"
-#include "spooky_effects.h"
-#include "animatronics/animatronics_controller.h"
+#include "components/spooky_effects.h"
+#include "components/animatronics/animatronics_controller.h"
 
 #define SHOULD_PAN(n) ((n) != ROOM_CLOSET && (n) != ROOM_KITCHEN)
 

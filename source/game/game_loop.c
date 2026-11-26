@@ -1,7 +1,7 @@
 #include "game_loop.h"
 #include <string.h>
 #include <stdlib.h>
-#include "components/camera.h"
+#include "components/camera/camera.h"
 #include "components/animatronics/animatronics_controller.h"
 #include "util/random.h"
 #include "game_clock.h"

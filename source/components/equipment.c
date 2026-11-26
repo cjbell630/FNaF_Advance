@@ -1,6 +1,6 @@
 #include "equipment.h"
 #include "tonc_types.h"
-#include "camera.h"
+#include "camera/camera.h"
 #include "graphics.h"
 #include "animatronics/animatronics_controller.h"
 

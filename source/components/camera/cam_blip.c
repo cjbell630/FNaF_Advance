@@ -1,4 +1,4 @@
-#include "components/cam_blip.h"
+#include "components/camera/cam_blip.h"
 #include "images/effects/cam_blip.h"
 #include "debug.h"
 #include "tonc.h"

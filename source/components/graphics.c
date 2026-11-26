@@ -11,7 +11,7 @@
 #include "images/office/door/l_door.h"
 #include "images/office/door/r_door.h"
 #include "images/office/office.h"
-#include "cam_blip.h"
+#include "camera/cam_blip.h"
 
 
 /* BUFFERS */

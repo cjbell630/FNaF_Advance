@@ -1,5 +1,5 @@
-#include "components/cam_minimap.h"
-#include "components/camera.h"
+#include "components/camera/cam_minimap.h"
+#include "components/camera/camera.h"
 #include "const/room_names.h"
 
 typedef struct {

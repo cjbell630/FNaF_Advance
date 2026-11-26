@@ -1,7 +1,7 @@
 #include "tonc_input.h"
 #include "controls.h"
 #include "equipment.h"
-#include "components/cam_minimap.h"
+#include "camera/cam_minimap.h"
 #include "debug.h"
 #include "graphics.h"
 #include "animatronics/animatronics_controller.h"
