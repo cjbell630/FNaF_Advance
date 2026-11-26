@@ -53,7 +53,7 @@
 // 0  0  0  0
 // Fo C  B  Fr
 
-const Frame CAM_IMG_MAP[12][16][5] = {
+const Frame CAM_FRAMES[12][16][5] = {
         { /* STAGE (0) */
                 { // Empty
                         { // Std
@@ -391,5 +391,5 @@ Frame get_cam_img_data(const enum RoomNames room) {
                 0b0010; // Bonnie in room
         // TODO might cause issues for foxy in west hall
     }
-    return CAM_IMG_MAP[room][occupants][SpookyEffects.get_effects(room)];
+    return CAM_FRAMES[room][occupants][SpookyEffects.get_effects(room)];
 }
