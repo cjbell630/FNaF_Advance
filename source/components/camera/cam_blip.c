@@ -3,6 +3,7 @@
 #include "debug.h"
 #include "tonc.h"
 #include "graphics/frames/frames.h"
+#include "sound/sound.h"
 #include <string.h>
 
 int BLIP_TIMER;
@@ -39,6 +40,7 @@ void cam_blip_update() {
 
 void cam_blip_start() {
     BLIP_TIMER = blip_frames_len;
+    Sound.play(SOUND_CAM_BLIP);
 }
 
 void cam_blip_reset() {

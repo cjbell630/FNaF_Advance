@@ -2,7 +2,7 @@
 #define FNAF_ADVANCE_SOUND_H
 
 enum Sounds {
-    SOUND_WINDOWSCARE
+    SOUND_WINDOWSCARE, SOUND_CAM_BLIP, SOUND_EQUIPMENT_DISABLED
 };
 
 struct SoundController {

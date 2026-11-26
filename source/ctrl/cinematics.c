@@ -44,7 +44,6 @@ void cinematics_play_night_intro() {
     CamBlipEffect.load();
     CamBlipEffect.reset();
     CamBlipEffect.start();
-    // TODO play blip sound
 
     /* SHOW 2 SECONDS */
     int timer = 120;

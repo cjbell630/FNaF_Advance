@@ -3,6 +3,7 @@
 #include "camera/camera.h"
 #include "graphics/graphics.h"
 #include "debug.h"
+#include "sound/sound.h"
 
 const u8 NUM_DOOR_FRAMES = 15; // TODO move
 
@@ -63,7 +64,7 @@ void toggle_light(const enum EquipmentNames toggled, const enum EquipmentNames o
     if (!equipment_force_light_off(toggled)) {
         // turn off if on. if the light was already off, then
         // TODO force enable lights
-        // TODO play windowscare sound
+        Sound.play(SOUND_WINDOWSCARE);
         statuses[toggled] = true;
         statuses[other] = false;
     }
@@ -79,7 +80,7 @@ void toggle_light(const enum EquipmentNames toggled, const enum EquipmentNames o
  */
 void equipment_toggle(const enum EquipmentNames target) {
     if (disabled[target]) {
-        // TODO play disabled sound
+        Sound.play(SOUND_EQUIPMENT_DISABLED);
         return;
     }
     // TODO visual effects
