@@ -6,7 +6,7 @@
 #include "const/room_names.h"
 #include "game_state.h"
 #include "components/equipment.h"
-#include "components/graphics.h"
+#include "graphics/graphics.h"
 #include "components/power.h"
 #include <stdio.h>
 #include "foxy.h"

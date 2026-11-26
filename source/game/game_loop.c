@@ -9,7 +9,7 @@
 #include "components/power.h"
 #include "components/spooky_effects.h"
 #include "game_state.h"
-#include "components/graphics.h"
+#include "graphics/graphics.h"
 #include "components/cinematics.h"
 
 void run_newspaper() {

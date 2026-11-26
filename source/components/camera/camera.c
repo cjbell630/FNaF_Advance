@@ -6,7 +6,7 @@
 
 #include "const/room_names.h"
 #include "graphics/frames/cam_img_map.h"
-#include "components/graphics.h"
+#include "graphics/graphics.h"
 #include "game_state.h"
 #include "components/spooky_effects.h"
 #include "components/animatronics/animatronics_controller.h"

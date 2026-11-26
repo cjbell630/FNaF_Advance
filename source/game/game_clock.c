@@ -9,7 +9,7 @@
 #include "components/spooky_effects.h"
 #include "game_state.h"
 #include "components/controls.h"
-#include "components/graphics.h"
+#include "graphics/graphics.h"
 #include "debug.h"
 
 /* CONSTS */

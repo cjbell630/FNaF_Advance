@@ -1,6 +1,6 @@
 #include <string.h>
 #include "tonc.h"
-#include "graphics.h"
+#include "graphics/graphics.h"
 #include "const/room_names.h"
 #include "images/sprites/cam_map/cam_map.h"
 #include "debug.h"
@@ -11,7 +11,7 @@
 #include "images/office/door/l_door.h"
 #include "images/office/door/r_door.h"
 #include "images/office/office.h"
-#include "camera/cam_blip.h"
+#include "components/camera/cam_blip.h"
 
 
 /* BUFFERS */

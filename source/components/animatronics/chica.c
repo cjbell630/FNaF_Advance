@@ -4,7 +4,7 @@
 #include "animatronic.h"
 #include "util/random.h"
 #include "components/equipment.h"
-#include "components/graphics.h"
+#include "graphics/graphics.h"
 
 void chica_move(const enum RoomNames room, const bool cams_are_up, const enum RoomNames selected_cam) {
     if (cams_are_up && (selected_cam == room || selected_cam == AnimatronicChica.room_num)) {

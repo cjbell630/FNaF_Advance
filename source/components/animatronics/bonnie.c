@@ -4,7 +4,7 @@
 #include "animatronic.h"
 #include "util/random.h"
 #include "components/equipment.h"
-#include "components/graphics.h"
+#include "graphics/graphics.h"
 
 // TODO make this less cringe
 void bonnie_move(const enum RoomNames room, const bool cams_are_up, const enum RoomNames selected_cam) {

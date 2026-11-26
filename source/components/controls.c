@@ -3,7 +3,7 @@
 #include "equipment.h"
 #include "camera/cam_minimap.h"
 #include "debug.h"
-#include "graphics.h"
+#include "graphics/graphics.h"
 #include "animatronics/animatronics_controller.h"
 
 // TODO move this to graphics

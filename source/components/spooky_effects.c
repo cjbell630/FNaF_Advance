@@ -1,6 +1,6 @@
 #include "spooky_effects.h"
 #include "const/room_names.h"
-#include "graphics.h"
+#include "graphics/graphics.h"
 #include "graphics/frames/frames.h"
 #include "graphics/frames/cam_img_map.h"
 #include "util/random.h"
