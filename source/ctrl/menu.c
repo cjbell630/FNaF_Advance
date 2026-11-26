@@ -19,10 +19,6 @@ const int MIN_FRAMES_FOR_FACE_GLITCH = 2;
 /* END CONSTANTS */
 
 /* Menu */
-// TODO move to controls?
-#define CTRL_MENU_UP key_hit(KEY_UP)
-#define CTRL_MENU_DOWN key_hit(KEY_DOWN | KEY_SELECT)
-#define CTRL_MENU_START key_hit(KEY_START | KEY_A) // Choose option
 
 u8 saved_night;
 
@@ -54,7 +50,6 @@ void activate_menu() {
     Display.set_main_menu();
 
     while (GAME_PHASE == MENU_HOME) {
-        Controls.update_menu();
 
         // TODO is this accurate to the og game? when was this implemented?
         // TODO once that's checked, replace -1 and 0 with const/macros
@@ -78,38 +73,7 @@ void activate_menu() {
         }
 
 
-        // TODO move to controls.c
-        // Selection Keys
-        if (CTRL_MENU_DOWN) {
-            Cursor.down();
-        }
-        if (CTRL_MENU_UP) {
-            Cursor.up();
-        }
-
-        // Start keys
-        if (CTRL_MENU_START) {
-            switch (Cursor.get_choice()) {
-                case MENU_NEW_GAME:
-                    GAME_PHASE = NIGHT_NEWSPAPER;
-                    NIGHT_NUM = 1;
-                    break;
-                case MENU_CONTINUE:
-                    GAME_PHASE = NIGHT_INTRO;
-                    NIGHT_NUM = saved_night;
-                    break;
-                case MENU_NIGHT_SIX:
-                    GAME_PHASE = NIGHT_INTRO;
-                    NIGHT_NUM = 6;
-                    break;
-                case MENU_CUSTOM_NIGHT:
-                    // TODO implement custom night menu
-                    break;
-                default:
-                    break;
-            }
-            //return;
-        }
+        Controls.update_menu();
 
         /*
         if (key_hit(KEY_B)) {

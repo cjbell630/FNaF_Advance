@@ -1,10 +1,13 @@
 #include "tonc_input.h"
 #include "controls.h"
+
+#include "cursor.h"
 #include "equipment.h"
 #include "camera/cam_minimap.h"
 #include "debug.h"
 #include "graphics/graphics.h"
 #include "animatronics/animatronics_controller.h"
+#include "ctrl/game_state.h"
 
 // TODO move this to graphics
 const u8 SPEED_SCALE = 3;
@@ -30,6 +33,11 @@ s16 office_horiz_scroll = 57/*RIGHT_CAP/2*/, y = 0; // TODO reset on night start
 #define CTRL_OPEN_CAM key_hit(KEY_SELECT | KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT) //D-Pad or Select
 #define CTRL_CLOSE_CAM key_hit(KEY_SELECT | KEY_B | KEY_A) // Face buttons or Select
 
+/* MENU */
+#define CTRL_MENU_UP key_hit(KEY_UP)
+#define CTRL_MENU_DOWN key_hit(KEY_DOWN | KEY_SELECT)
+#define CTRL_MENU_START key_hit(KEY_START | KEY_A) // Choose option
+
 /* END CONTROL MACROS */
 
 /**
@@ -41,6 +49,41 @@ void controls_universal() {
 
 void controls_menu() {
     controls_universal();
+
+    // TODO make menu a component or something along those lines and
+    // move some logic back to menu.c
+
+    // Selection Keys
+    if (CTRL_MENU_DOWN) {
+        Cursor.down();
+    }
+    if (CTRL_MENU_UP) {
+        Cursor.up();
+    }
+
+    // Start keys
+    if (CTRL_MENU_START) {
+        switch (Cursor.get_choice()) {
+            case MENU_NEW_GAME:
+                GAME_PHASE = NIGHT_NEWSPAPER;
+                NIGHT_NUM = 1;
+                break;
+            case MENU_CONTINUE:
+                GAME_PHASE = NIGHT_INTRO;
+                NIGHT_NUM = 5; // saved_night
+                break;
+            case MENU_NIGHT_SIX:
+                GAME_PHASE = NIGHT_INTRO;
+                NIGHT_NUM = 6;
+                break;
+            case MENU_CUSTOM_NIGHT:
+                // TODO implement custom night menu
+                break;
+            default:
+                break;
+        }
+        //return;
+    }
 }
 
 void scroll_cams_controls(const int shoulder_input) {
