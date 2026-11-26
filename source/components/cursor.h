@@ -1,10 +1,7 @@
 #ifndef FNAF_ADVANCE_CURSOR_H
 #define FNAF_ADVANCE_CURSOR_H
 #include <stdbool.h>
-
-enum MainMenuOption {
-    MENU_NEW_GAME, MENU_CONTINUE, MENU_NIGHT_SIX, MENU_CUSTOM_NIGHT
-};
+#include "const/menu_options.h"
 
 struct CursorWrapper {
     void (*load)();
