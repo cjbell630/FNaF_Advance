@@ -1,6 +1,7 @@
 #include "components/camera/cam_blip.h"
 #include "graphics/frames/frames.h"
 #include "sound/sound.h"
+#include "graphics/frames/cam_blip_frames.h"
 
 #include "images/backgrounds/effects/cam_blip.h"
 

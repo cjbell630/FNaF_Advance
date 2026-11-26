@@ -13,11 +13,7 @@ typedef struct Frame {
     u8 vertical_offset;
 } Frame;
 
-#define blip_frames_len 10
-/**
- * Frames for screen blip IN REVERSE ORDER
- */
-extern Frame* blip_frames[10];
+
 extern const Frame office_base_frame;
 extern Frame empty_screen;
 
