@@ -1,4 +1,4 @@
-#include "game_state.h"
+#include "ctrl/game_state.h"
 #include "util/util.h"
 
 // kinda dumb but necessary for compilation

@@ -3,7 +3,7 @@
 
 #include "const/room_names.h"
 #include <tonc_types.h>
-#include "game_state.h"
+#include "ctrl/game_state.h"
 
 #define MAX_LEVEL 20
 

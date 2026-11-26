@@ -1,5 +1,5 @@
 #include "animatronic.h"
-#include "game_state.h"
+#include "ctrl/game_state.h"
 #include "util/random.h"
 
 /**

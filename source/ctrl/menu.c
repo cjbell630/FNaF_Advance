@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "menu.h"
+#include "ctrl/menu.h"
 #include "tonc.h"
 #include "debug.h"
 #include "graphics/bg_pal_handler.h"
