@@ -75,14 +75,7 @@ void activate_menu() {
 
         Controls.update_menu();
 
-        /*
-        if (key_hit(KEY_B)) {
-            int data = 9;
-            memcpy((void *) DMA_GAMEPAK, &data, 4);
-            set_bg_palbank(!curr_bg_palbank);
-        }*/
-
-        //TODO: random flickering
+        // TODO: random flickering
         VBlankIntrWait();
     }
 
