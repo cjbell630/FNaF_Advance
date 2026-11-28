@@ -36,14 +36,14 @@ void cursor_load() {
             ATTR2_PALBANK(CURSOR_PALBANK) | ATTR2_ID(CURSOR_TILE_START) | ATTR2_PRIO(LAYER_0)
     );
 
-    obj_unhide(cursor, ATTR0_REG);
+    Objects.show(OBJECT_CURSOR);
     memcpy(&tile_mem[4][CURSOR_TILE_START], &cursor_imageTiles, cursor_imageTilesLen);
     memcpy(&pal_obj_bank[CURSOR_PALBANK], &cursor_imagePal, cursor_imagePalLen);
     //cursor_set_choice(choice);
 }
 
 void cursor_hide() {
-    obj_hide(cursor);
+    Objects.hide(OBJECT_CURSOR);
 }
 
 
