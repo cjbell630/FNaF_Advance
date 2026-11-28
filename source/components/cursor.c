@@ -6,6 +6,8 @@
 #include <tonc_oam.h>
 #include <tonc_types.h>
 
+#include "graphics/objects.h"
+
 enum MainMenuOption choice; // TODO handle for other menus
 OBJ_ATTR *cursor;
 // TODO move
@@ -47,9 +49,12 @@ void cursor_hide() {
 
 bool cursor_set_choice(enum MainMenuOption newChoice) {
     // TODO check if option is selectable based on game progress
+    // create menu state item and progress state item in game_state and use those
+    // and the current choice to determine here
+
 
     choice = newChoice;
-    obj_set_pos(cursor, CURSOR_X, OPTION_Y(choice));
+    Objects.set_position(OBJECT_CURSOR, CURSOR_X, OPTION_Y(choice));
     return true;
 }
 
